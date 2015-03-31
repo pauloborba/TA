@@ -9,7 +9,7 @@ Scenario: vizualize evaluation
 	When i click on the Vizualize button
 	Then I should see the Vizualization Page
 	When i put the name of the evaluation
-	and click on search
+	And click on search
 	Then I should see all the evaluations that have the name writted
 
 Scenario: try to see an evaluation that dont exist
@@ -17,12 +17,12 @@ Scenario: try to see an evaluation that dont exist
 	When i click on the Vizualize button
 	Then I should see the Vizualization Page
 	When i put the name of the evaluation
-	and click on search
+	And click on search
 	Then I should see an report error informing that there is no evaluation with this name
 
 Scenario: select an evaluation to see it
 	Given I am on the vizualization page
-	and i searched for a name
-	and get the results
+	And i searched for a name
+	And get the results
 	When i click on a evaluation
 	Then the evaluation open
