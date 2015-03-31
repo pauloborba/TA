@@ -22,7 +22,8 @@ Scenario: try to see an evaluation that dont exist
 
 Scenario: select an evaluation to see it
 	Given I am on the vizualization page
-	And i searched for a name
-	And get the results
+	And i put the name of the "evaluation1" on the "search" field
+	And i click on "search" button
+  	And get the results
 	When i click on a evaluation
-	Then the evaluation open
+	Then the evaluation is open
