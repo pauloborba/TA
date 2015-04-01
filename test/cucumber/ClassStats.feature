@@ -7,7 +7,7 @@ Feature: Show statistics about the class
 Scenario: Show percentage of students class
 	Given all students received their evaluations
 	And I am at the Assistant Teacher's statistics page
-	When I click the "Show Statistics" button
+	When I pres the "Show Statistics"
 	Then I should see the percentage of students who achieved MANA
 	And I should see the percentage of students who achieved MPA
 	And I should see the percentage of students who achieved MA
@@ -15,7 +15,7 @@ Scenario: Show percentage of students class
 Scenario: Show percentage of students who passed before evaluation
 	Given not all students received their evaluations
 	And I am at the Assistant Teacher's statistics page
-	When I click the "Show Statistics" button
+	When I press the "Show Statistics"
 	Then I should see the names of the students with missing evaluations
 	And I should see which evaluations are missing for each student
 
