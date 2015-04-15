@@ -22,5 +22,5 @@ Scenario: try to see an evaluation that dont exist
 Scenario: select an evaluation to see it
   	Given I am on Teaching Assistant Teacher's home page
   	When I search for "evaluation"
-	And Choose an evaluation
+	And I Choose an evaluation
 	Then the evaluation is open
