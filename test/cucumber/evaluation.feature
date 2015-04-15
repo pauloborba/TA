@@ -6,6 +6,8 @@ Feature: vizualize evaluation
 
 Scenario: search evaluation
 	Given I am on Teaching Assistant Teacher's home page
+  	And add the evaluation "evaluation1"
+  	And add the evaluation "evaluation12"
 	When I search for "evaluation1"
   	Then I should see the Vizualization Page
 	When I search for "evaluation1" on the "search" field
@@ -21,6 +23,8 @@ Scenario: try to see an evaluation that dont exist
 
 Scenario: select an evaluation to see it
   	Given I am on Teaching Assistant Teacher's home page
+  	And add the evaluation "evaluation1"
+  	And add the evaluation "evaluation12"
   	When I search for "evaluation"
-	And I Choose an evaluation
-	Then the evaluation is open
+	And I Choose "evaluation1"
+	Then "evaluation1" is open
