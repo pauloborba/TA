@@ -8,7 +8,7 @@ Scenario: search evaluation
 	Given I am on Teaching Assistant Teacher's home page
   	And add the evaluation "evaluation E1"
   	And add the evaluation "evaluation E2"
-	When I search for "evaluations"
+	When I select for "evaluations"
   	Then I should see the Visualization Page
 	When I search for "evaluation" on the "search" field
 	Then I should see all the evaluations that have the name writted
