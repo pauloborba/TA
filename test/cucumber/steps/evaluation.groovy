@@ -33,13 +33,12 @@ Then (~'^I should see the Visualization Page$'){
 When (~'^I search for "([^"]*)" on the Search field$'){
 	String title ->
 	at VisualizationPage
-	def evaluationList = PicaProsCus.findByTitle(title)
-
+	def l = UVisualizeEvaluation.search(title)
 }
 //	Then I should see all the evaluations that have the name writted
 Then(~'^I should see the all the evaluations that have the name writted$'){
 	at VisualizationPage
-	$('li').find(evaluationList)
+	$('li').find(l)
 }
 
 /*
@@ -52,9 +51,17 @@ Scenario: select an evaluation to see it
 	And I Choose "evaluation E1"
 	*/
 When(~'^I Choose "([^"]*)" on the Search field$'){
-	String evaluationTitle -> 
+	String evaluationTitle ->
+	def evaluation = Evaluation.findByTitle(evaluationTitle)
+	assert evaluation != null
 }
 	/*
 	Then "evaluation E1" is open
 */
+Then(~'^"([^"]*)" is open$'){
+	String evaluationTitle ->
+	at VisualizationPage
+	def o = $('#evaluationTitle')
+	assert evaluationTitle.equals(o.title)
+}
 
