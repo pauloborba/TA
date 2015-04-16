@@ -49,7 +49,50 @@ Then (~'^I should see the message "([^"]*)"$') {
 	String messageText ->
 
 	at RegisterEvaluationPage
-	//def messageBoxText = page.getElementTextById('messageBox')
-	def messageBoxText = $('#messageBox')
-	assert Commom.compatibleTo(messageBoxText, messageText)
+	//def messageBoxText = page.getElementTextById('messageBoxText')
+	def messageBoxText = $('#messageBoxText')
+	assert messageBoxText.Equals(messageText)
+}
+
+/*
+Given the system has no evaluation entitled "Git evaluation" stored
+When I create an evaluation entitled "Git evaluation"
+Then the evaluation "Git evaluation" should be stored in the system
+*/
+
+//Given the system has no evaluation entitled "Git evaluation" stored
+Given (~'^the system has no evaluation entitled "([^"]*)" stored$') {
+	String evaluationTitle ->
+
+	def evaluation = RegisterEvaluation.getByTitle(evaluationTitle)
+	assert evaluation == null
+}
+
+//When I create an evaluation entitled "Git evaluation"
+When (~'^I create an evaluation entitled "([^"]*)"$') {
+	String evaluationTitle ->
+
+	RegisterEvaluation.EvaluationBuilder.createEvaluation()
+
+	RegisterEvaluation.EvaluationBuilder.setEvaluationTitle(evaluationTitle)
+
+	def evaluation = RegisterEvaluation.EvaluationBuilder.getEvaluation()
+
+	RegisterEvaluation.saveEvaluation(evaluation, flush: true, failOnError: true)
+}
+
+//Then the evaluation "Git evaluation" should be stored in the system
+Then (the evaluation "([^"]*)" should be stored in the system) {
+	String evaluationTitle ->
+
+	def evaluation = RegisterEvaluation.getByTitle(evaluationTitle)
+	assert evaluation.title == evaluationTitle
+}
+
+builder {
+	private Evaluation e;
+
+	def setEvaluationTitle(String title) {
+		e.title = title
+	}
 }

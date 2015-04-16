@@ -36,8 +36,8 @@ Feature: Register evaluation
 	Scenario: register evaluation
 		Given the system has no evaluation entitled "Git evaluation" stored
 		When I create an evaluation entitled "Git evaluation"
-		Then the evaluation should be stored in the system
-
+		Then the evaluation "Git evaluation" should be stored in the system
+		
 	# before review
 	#Scenario: register duplicate evaluation
 	#	Given I am on Register evaluation page
