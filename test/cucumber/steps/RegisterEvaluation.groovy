@@ -1,19 +1,13 @@
 import pages.*
 
 /*
-// Given I am on Teaching Assistant Teacher's home page
-Given (~'^I am on Teaching Assistant Teachers home page$') {
-	->
-	to TeacherIndexPage
-	at TeacherIndexPage
-}
-
-//When I follow "register evaluation"
-When (~'^I follow register evaluation button$') {
-	->
-	at TeacherIndexPage
-	page.registerEvaluation()
-}
+Given I am on Register evaluation page
+When I fill in the field "title" with "Git evaluation"
+And I fill in the field "question" "1" with "How does 'git push' works?"
+And I fill in the field "alternative" "1" with "Sends a file to cloud repositorie"
+And I fill in the field "alternative" "2" with "gets a file from cloud repositorie"
+And I press "Register evaluation" button
+Then I should see the message "Git evaluation registered"
 */
 
 //Given I am on Register evaluation page
@@ -24,43 +18,37 @@ Given (~'^I am on Register evaluation page$') {
 
 }
 
-//When I fill in title with "Git evaluation"
-When (~'^I fill in title with "([^"]*)"$') {
-	String evaluationTitle ->
+//When I fill in the field "title" with "Git evaluation"
+When (~'^I fill in the field "([^"]*)" with "([^"]*)"$') {
+	String field, text ->
+
 	at RegisterEvaluationPage
-	def evaluation = URegisterEvaluation.EvaluationBuilder.createEvaluation(evaluationTitle)
-	assert evaluation.title == evaluationTitle
+	page.fillData(field, text)
 }
 
-//And I fill in question one with "How does 'git push' work?"
-And (~'^I fill in question one with "([^"]*)"$') {
-	String questionDescription ->
-	at RegisterEvaluationPage
-	def evaluation = URegisterEvaluation.EvaluationBuilder.setEvaluationQuestion(1, questionDescription)
-	assert evaluation.questions[1].description == questionDescription
+//And I fill in the field "question" "1" with "How does 'git push' works?"
+//And I fill in the field "alternative" "1" with "Sends a file to cloud repositorie"
+//And I fill in the field "alternative" "2" with "gets a file from cloud repositorie"
+And (~'^I fill in the field "([^"]*)" "([9-0])" with "([^"]*)"$') {
+	String field, int fieldIndex, String fieldData ->
 
+	at RegisterEvaluationPage
+	page.fillData(field, fieldIndex, fieldData)
 }
 
-//And I fill in "alternative one" with "Sends a file to cloud repositorie"
-And (~'^I fill in alternative one with "([^"]*)"$') {
-	String alternativeDescription ->
+//And I press "Register evaluation" button
+And (~'^I press "([^"]*)" button$') {
+	String button ->
+
 	at RegisterEvaluationPage
-	def evaluation = URegisterEvaluation.EvaluationBuilder.getEvaluationQuestion(1).setQuestionAlternative(alternativeDescription)
-	assert evaluation.questions[1].alternatives[1].description == alternativeDescription
+	page.click(button)
 }
 
-//And I fill in "alternative two" with "gets a file from cloud repositorie"
-And (~'^I fill in alternative two with "([^"]*)"$') {
-	String alternativeDescription ->
-	at RegisterEvaluationPage
-	def evaluation = URegisterEvaluation.EvaluationBuilder.getEvaluationQuestion(1).setQuestionAlternative(alternativeDescription)
-	assert evaluation.questions[2].alternatives[2].description == alternativeDescription
-}
+//Then I should see the message "Git evaluation registered"
+Then (~'^I should see the message "([^"]*)"$') {
+	String messageText ->
 
-//Then the evaluation "Git evaluation" should be stored in the system
-Then (~'^the evaluation "([^"]*))" should be stored in the system$') {
-	String evaluationTitle ->
 	at RegisterEvaluationPage
-	def evaluation = Evaluation.findByTitle(evaluationTitle)
-	assert URegisterEvaluation.compatibleTo(evaluation, evaluationTitle)
+	def messageBoxText = page.getElementTextByClass('messageBox')
+	assert Commom.compatibleTo(messageBoxText, messageText)
 }

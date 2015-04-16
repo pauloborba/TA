@@ -15,13 +15,14 @@ Feature: Register evaluation
 	#	Then I should see "Evaluation registered"
 
 	# after review
-	Scenario: register evaluation
+	Scenario: register evaluation GUI
 			Given I am on Register evaluation page
-			When I fill in title with "Git evaluation"
-			And I fill in question one with "How does 'git push' works?"
-			And I fill in "alternative one" with "Sends a file to cloud repositorie"
-			And I fill in "alternative two" with "gets a file from cloud repositorie"
-			Then the evaluation "Git evaluation" should be stored in the system
+			When I fill in the field "title" with "Git evaluation"
+			And I fill in the field "question" "1" with "How does 'git push' works?"
+			And I fill in the field "alternative" "1" with "Sends a file to cloud repositorie"
+			And I fill in the field "alternative" "2" with "gets a file from cloud repositorie"
+			And I press "Register evaluation" button
+			Then I should see the message "Git evaluation registered"
 
 	# before review
 	#Scenario: register evaluation with no items
@@ -32,9 +33,9 @@ Feature: Register evaluation
 	#	Then I should see "Evaluation registered"
 
 	# after review
-	Scenario: register evaluation with no questions
-		Given I am on Register evaluation page
-		When I fill in "title" with "Git evaluation"
+	Scenario: register evaluation
+		Given the system has no evaluation entitled "Git evaluation" stored
+		When I create an evaluation entitled "Git evaluation"
 		Then the evaluation should be stored in the system
 
 	# before review
@@ -48,9 +49,8 @@ Feature: Register evaluation
 	# after review
 	@ignore
 	Scenario: register duplicate evaluation
-		Given I am on Register evaluation page
-		And the evaluation "Git evaluation" is stored in the system
-		When I fill "title" with "Git evaluation"
+		Given the system already has an evaluation entitled "Git evaluation" stored
+		When I create evaluation entitledGit evaluation"
 		Then no evaluation should be store in the system
 
 	# before review
@@ -61,6 +61,7 @@ Feature: Register evaluation
 
 	# after review
 	@ignore
-	Scenario: register evaluation with no title
+	Scenario: register evaluation with no title GUI
 		Given I am on Register evaluation page
-		Then no evaluation should be store in the system
+		When I press "Register evaluation" button
+		Then I should see the message "Title field is required. no evaluation stored"
