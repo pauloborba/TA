@@ -1,33 +1,43 @@
 # Bruno Cipriano Minhaqui da Silva - bcms
-Feature: Sign up
+Feature: Sign Up
 	As a student
-	I want to sign up to the Teaching Assistant system
+	I want to sign up on the Teaching Assistant system
 	So I can login into the system, get evaluations from the teacher and do the self-evaluation
 	
-	Scenario: sign up
+	Scenario: Sign Up
 		Given I am on the Teaching Assistant home page
-		When I follow "sign up"
-		Then I should be on the  Sign up page
+		When I press "Sign Up"
+		Then I should be on the Sign Up page
 		When I fill in "name" with "Bruno Minhaqui"
 		And I fill in "login" with "bcms@cin.ufpe.br"
-		Then I should see "Student registered"
+		And I press "Sign Up"
+		And a student with this name or this login is not yet on the system
+		Then the student should be properly stored by the system
 	
-	Scenario: sign up with name field blank
-		Given I fill in "login" with "bcms@cin.ufpe.br"
-		And no name is informed
-		Then I should see "Student not registered"
+	Scenario: Sign Up with name field blank
+		Given I fill in "login" with "bcms@cin.ufpe.br" on the Sign Up page
+		And I let "name" blank
+		And I press "Sign Up"
+		Then I should see a error message
+		And nothing is stored by the system
 		
-	Scenario: sign up with a login not on Cin's domain
-		Given I fill in "name" with "Bruno Minhaqui"
+	Scenario: Sign Up with a login not on Cin's domain
+		Given I fill in "name" with "Bruno Minhaqui" on the Sign Up page
 		And I fill in "login" with "minhaqui@gmail.com"
-		Then I should see "Student not registered"
+		And I press "Sign Up"
+		Then the system shows an error message
+		And nothing is stored by the system
 	
-	Scenario: sign up with duplicated name
-		Given I Sign up "Bruno Minhaqui" with login "bcms@cin.ufpe.br"
-		And later I Sign up "Bruno Minhaqui" with any login
-		Then I should see "Student already exist"
+	Scenario: Sign Up with duplicated name
+		Given I Sign Up "Bruno Minhaqui" with login "bcms2@cin.ufpe.br" on the Sign Up page
+		And "Bruno minhaqui" with login "bcms@cin.ufpe.br" is already stored in the system
+		And I press "Sign Up"
+		Then the system shows an error message
+		And nothing is stored by the system
 	
-	Scenario: sign up with duplicated login
-		Given I Sign up "Bruno Minhaqui" with login "bcms@cin.ufpe.br"
-		And later I Sign up with any name and login "bcms@cin.ufpe.br" 
-		Then I should see "Student already exist"
+	Scenario: Sign Up with duplicated login
+		Given I am on the Sign Up page
+		When I Sign Up with name "Bruno Minhaqui" and login "bcms@cin.ufpe.br"
+		And I try to Sign Up with name "Bruno Cipriano" and login "bcms@cin.ufpe.br" 
+		Then the system shows an error message
+		And nothing is stored by the system
