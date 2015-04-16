@@ -51,7 +51,9 @@ Scenario: select an evaluation to see it
   	ps: passo já implementado até aqui
 	And I Choose "evaluation E1"
 	*/
-When()
+When(~'^I Choose "([^"]*)" on the Search field$'){
+	String evaluationTitle -> 
+}
 	/*
 	Then "evaluation E1" is open
 */
