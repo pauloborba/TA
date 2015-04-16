@@ -49,6 +49,7 @@ Then (~'^I should see the message "([^"]*)"$') {
 	String messageText ->
 
 	at RegisterEvaluationPage
-	def messageBoxText = page.getElementTextByClass('messageBox')
+	//def messageBoxText = page.getElementTextById('messageBox')
+	def messageBoxText = $('#messageBox')
 	assert Commom.compatibleTo(messageBoxText, messageText)
 }
