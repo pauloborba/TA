@@ -16,14 +16,12 @@ Feature: Register evaluation
 
 	# after review
 	Scenario: register evaluation
-			Given I am on Teaching Assistant Teacher's home page
-			When I follow "register evaluation"
-			Then I should be on the Register evaluation page
-			When I fill in "title" with "Git evaluation"
-			And I fill in "question one" with "How does 'git push' do?"
+			Given I am on Register evaluation page
+			When I fill in title with "Git evaluation"
+			And I fill in question one with "How does 'git push' works?"
 			And I fill in "alternative one" with "Sends a file to cloud repositorie"
 			And I fill in "alternative two" with "gets a file from cloud repositorie"
-			Then the evaluation should be stored in the system
+			Then the evaluation "Git evaluation" should be stored in the system
 
 	# before review
 	#Scenario: register evaluation with no items
@@ -34,7 +32,7 @@ Feature: Register evaluation
 	#	Then I should see "Evaluation registered"
 
 	# after review
-	Scenario: register evaluation with no items
+	Scenario: register evaluation with no questions
 		Given I am on Register evaluation page
 		When I fill in "title" with "Git evaluation"
 		Then the evaluation should be stored in the system
@@ -48,6 +46,7 @@ Feature: Register evaluation
 	#	Then I should see "Evaluation already exist"
 
 	# after review
+	@ignore
 	Scenario: register duplicate evaluation
 		Given I am on Register evaluation page
 		And the evaluation "Git evaluation" is stored in the system
@@ -61,6 +60,7 @@ Feature: Register evaluation
 	#	Then I should see "Evaluation's title is required"
 
 	# after review
+	@ignore
 	Scenario: register evaluation with no title
 		Given I am on Register evaluation page
 		Then no evaluation should be store in the system
