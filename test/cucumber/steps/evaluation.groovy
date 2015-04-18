@@ -13,8 +13,14 @@ Given (~'^I am on Teaching Assistant Teacher's home page$') {
 	to TeacherHomePage
 	at TeacherHomePage
 
-	def evaluation_E1 = UEvaluation.createEvaluation()
-	def evaluation_E2 = UEvaluation.createEvaluation()
+	UEvaluation.builder.createEvaluation()
+	UEvaluation.builder.setEvaluationTitle("evaluation E1")
+	def evaluation_E1 = UEvaluation.builder.getEvaluation()
+	Uevaluation.save(evaluation_E1)
+	UEvaluation.builder.createEvaluation()
+	UEvaluation.builder.setEvaluationTitle("evaluation E2")
+	def evaluation_E2 = UEvaluation.builder.getEvaluation()
+	Uevaluation.save(evaluation_E2)
 
 }
 
