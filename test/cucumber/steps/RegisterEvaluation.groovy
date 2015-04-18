@@ -64,7 +64,7 @@ Then the evaluation "Git evaluation" should be stored in the system
 Given (~'^the system has no evaluation entitled "([^"]*)" stored$') {
 	String evaluationTitle ->
 
-	def evaluation = RegisterEvaluation.getByTitle(evaluationTitle)
+	def evaluation = UEvaluation.getByTitle(evaluationTitle)
 	assert evaluation == null
 }
 
@@ -72,20 +72,20 @@ Given (~'^the system has no evaluation entitled "([^"]*)" stored$') {
 When (~'^I create an evaluation entitled "([^"]*)"$') {
 	String evaluationTitle ->
 
-	RegisterEvaluation.EvaluationBuilder.createEvaluation()
+	UEvaluation.builder.createEvaluation()
 
-	RegisterEvaluation.EvaluationBuilder.setEvaluationTitle(evaluationTitle)
+	UEvaluation.builder.setEvaluationTitle(evaluationTitle)
 
-	def evaluation = RegisterEvaluation.EvaluationBuilder.getEvaluation()
+	def evaluation = UEvaluation.builder.getEvaluation()
 
-	RegisterEvaluation.saveEvaluation(evaluation, flush: true, failOnError: true)
+	UEvaluation.saveEvaluation(evaluation)
 }
 
 //Then the evaluation "Git evaluation" should be stored in the system
 Then (the evaluation "([^"]*)" should be stored in the system) {
 	String evaluationTitle ->
 
-	def evaluation = RegisterEvaluation.getByTitle(evaluationTitle)
+	def evaluation = UEvaluation.getByTitle(evaluationTitle)
 	assert evaluation.title == evaluationTitle
 }
 
