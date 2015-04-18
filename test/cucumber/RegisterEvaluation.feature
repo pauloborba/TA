@@ -21,7 +21,7 @@ Feature: Register evaluation
 			And I fill in the field "question" "1" with "How does 'git push' works?"
 			And I fill in the field "alternative" "1" with "Sends a file to cloud repositorie"
 			And I fill in the field "alternative" "2" with "gets a file from cloud repositorie"
-			And I press "Register evaluation" button
+			And I press "register" button
 			Then I should see the message "Git evaluation registered"
 
 	# before review

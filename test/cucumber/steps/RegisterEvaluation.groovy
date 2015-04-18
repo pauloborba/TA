@@ -36,7 +36,7 @@ And (~'^I fill in the field "([^"]*)" "([9-0])" with "([^"]*)"$') {
 	page.fillData(field, fieldIndex, fieldData)
 }
 
-//And I press "Register evaluation" button
+//And I press "Register" button
 And (~'^I press "([^"]*)" button$') {
 	String button ->
 
