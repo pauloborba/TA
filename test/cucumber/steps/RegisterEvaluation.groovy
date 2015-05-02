@@ -1,4 +1,5 @@
 import pages.*
+import ta.UEvaluation
 
 /*
 Given I am on Register evaluation page
@@ -87,12 +88,4 @@ Then (the evaluation "([^"]*)" should be stored in the system) {
 
 	def evaluation = UEvaluation.getByTitle(evaluationTitle)
 	assert evaluation.title == evaluationTitle
-}
-
-builder {
-	private Evaluation e;
-
-	def setEvaluationTitle(String title) {
-		e.title = title
-	}
 }

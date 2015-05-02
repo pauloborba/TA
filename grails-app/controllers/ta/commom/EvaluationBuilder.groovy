@@ -1,5 +1,7 @@
 package ta.commom
 
+import taL.Evaluation
+
 class EvaluationBuilder implements IEvaluationBuilder {
 
 	private Evaluation _Evaluation
@@ -13,7 +15,7 @@ class EvaluationBuilder implements IEvaluationBuilder {
 	}
 
 	public int addEvaluationQuestion(String question) {
-		_Evaluation.questions.add(questioin)
+		_Evaluation.questions.add(question)
 
 	}
 

@@ -9,12 +9,14 @@ class RegisterEvaluationPage extends Page {
         title ==~ /Criar Avaliação/
     }
 
-        // Could parametrize, obtaining data from class TestDataAndOperations
-    }
-
     def fillData(elementId, text) {
     	elementId = ("#" + elementId)
         $(elementId).val(text)
+    }
+
+    def fillData(elementId, elementIndex, data) {
+        elementId = ("#" + elementId + elementIndex)
+        $(elementId).val(data)
     }
 
     def click(elementId) {
