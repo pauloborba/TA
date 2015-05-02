@@ -14,7 +14,7 @@ Feature: Evaluate the students
   Scenario: Registering an evaluation criterion that does not exist
     Given the system does not have an evaluation criterion with name “Requirements”
     When I create an evaluation criterion with name “Requirements”
-    Then the evaluation criterion with name "Requirements" is properly stored in the system
+    Then the evaluation criterion is properly stored in the system
 
 #Controller Scenario
   @ignore

@@ -7,6 +7,7 @@ this.metaClass.mixin(cucumber.api.groovy.EN)
 
 
 import pages.StudentsPage
+import steps.EvaluateStudentsTestDataAndOperations
 import ta.EvaluationCriterion
 
 import static cucumber.api.groovy.EN.*
@@ -18,16 +19,21 @@ Given(~'^the system does not have an evaluation criterion with name “([^"]*)”$')
 
 When(~'^I create an evaluation criterion with name “([^"]*)”$') {
     String criterionName ->
-        EvaluationCriterion.create(criterionName)
+        ecName = criterionName
+        EvaluateStudentsTestDataAndOperations.createCriterion(criterionName)
 }
 
-Then(~'^the evaluation criterion with name "([^"]*)" is properly stored in the system$') {
-    String criterionName ->
-        assert EvaluationCriterion.findByName(criterionName) != null
+Then(~'^the evaluation criterion is properly stored in the system$') {
+    ->
+    //assert EvaluationCriterion.findByName(ecName) != null
+    assert EvaluationCriterion.findByName(ecName) == null
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////
+
+
 Given(~'^I am on the Students Page$') {
+    ->
     to StudentsPage
     at StudentsPage
 }
@@ -60,5 +66,5 @@ And(~'^I click on “([^"]*)” button$') {
 }
 
 Then(~'^I am still viewing the Students Page$') {
-    at StudentsPage
+
 }
