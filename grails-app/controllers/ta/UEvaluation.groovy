@@ -8,6 +8,9 @@ class UEvaluation {
 	// responsavel por contruir a avaluacao
 	EvaluationBuilder builder = new EvaluationBuilder()
 	String pageMessage
+
+    static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+
 	/*
 	def index() {
 		// redirect to list action
