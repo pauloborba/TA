@@ -1,0 +1,27 @@
+import TA*
+
+class UVisualizeEvaluation{
+	List novaLista
+    def evaluationTitle
+    def alternatives
+    def questions
+
+	
+	def search(String title){
+		novaLista = new List()
+        for(i = 0; i<listaAvaliacao.length(); i++){
+            if(listaAvaliacao[i].title.contains(text)){
+                novaLista.add(listaAvaliacao[i])
+            }
+        }
+        
+	}
+
+    def show(String title){
+        evaluationTitle = title
+
+        evaluation = Evaluation.findByTitle(title)
+        questions = evaluation.question
+        alternatives = evaluation.alternatives
+    }
+}
