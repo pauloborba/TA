@@ -3,7 +3,8 @@ package ta
 class Student {
     String login
     String name
-    HashMap<EvaluationCriterion, String> evaluationCriteria = new HashMap<>()
+    List evaluationCriteria = []
+    static hasMany = [evaluationCriteria: EvaluationCriterion]
 
     static constraints = {
         login unique: true
@@ -12,13 +13,13 @@ class Student {
 
     public void afterCreateAddCriteria(List<EvaluationCriterion> evaluationCriteria) {
         for(EvaluationCriterion evaluationCriterion : evaluationCriteria) {
-            this.evaluationCriteria.put(evaluationCriterion, "")
+            this.evaluationCriteria.add(evaluationCriterion)
         }
     }
 
     public void addCriterion(EvaluationCriterion evaluationCriterion) {
-        if(evaluationCriteria.get(evaluationCriterion) == null) {
-            evaluationCriteria.put(evaluationCriterion, "")
+        if(!evaluationCriteria.contains(evaluationCriterion)) {
+            evaluationCriteria.add(evaluationCriterion)
         }
     }
 }

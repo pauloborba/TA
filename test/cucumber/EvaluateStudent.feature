@@ -23,18 +23,17 @@ Feature: Evaluate the students
     Then the evaluation criterion with name "Requirements" was not stored in the system
 
 #Controller Scenario
-  @ignore
   Scenario: Updating the list of criteria for registered students
-    Given the system does not have an evaluation criterion with name "Requirements"
-    And the student "Peter" is registered in the system
-    When I create an evaluation criterion with name "Requirements"
-    Then the system evaluates "Peter" also using the criterion "requirements"
+    Given the system does not have an evaluation criterion with name "Project management"2
+    And the student "Peter Parker" with login "pp2" is registered in the system
+    When I create an evaluation criterion with name "Project management"3
+    Then the system evaluates "Peter Parker" also using the criterion "Project management"
 
 #GUI Scenario
   @ignore
   Scenario: Evaluate a registered student
     Given I am on the Students Page
-    And the student "Peter" is registered in the system
+    And the student "Peter Parker" with login "pp2" is registered in the system
     And there is a criterion called "Requirements" registered in the system
     And I should see a table with "Peter" in a row and "Requirements" in a column
     When I change the value of the cell in line "Peter" and column "Requirements" to "MPA"

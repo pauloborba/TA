@@ -39,8 +39,8 @@ class StudentController {
     public void updateStudentEvaluationCriteria() {
         for(Student student : Student.getAll()) {
             for(EvaluationCriterion evCriterion : EvaluationCriterion.getAll()) {
-                if(student.evaluationCriteria.get(evCriterion) == null) {
-                    student.evaluationCriteria.put(evCriterion, "")
+                if(!student.evaluationCriteria.contains(evCriterion)) {
+                    student.evaluationCriteria.add(evCriterion)
                 }
             }
         }

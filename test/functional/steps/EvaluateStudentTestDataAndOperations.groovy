@@ -1,5 +1,6 @@
 package steps
 
+import ta.EvaluationCriterion
 import ta.EvaluationCriterionController
 import ta.StudentController
 
