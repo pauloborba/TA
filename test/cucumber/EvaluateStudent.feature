@@ -11,14 +11,12 @@ Feature: Evaluate the students
 #[16:27:26] Paulo Borba: quero dizer a ele o que eu achei dele com relação a vários critérios
 
 #Controller Scenario
-  @ignore
   Scenario: Registering an evaluation criterion that does not exist
     Given the system does not have an evaluation criterion with name "Requirements"
     When I create an evaluation criterion with name "Requirements"
     Then the evaluation criterion with name "Requirements" is properly stored in the system
 
 #Controller Scenario
-  @ignore
   Scenario: Registering an evaluation criterion that already exists
     Given the system already has an evaluation criterion named "requirements"
     When I create an evaluation criterion with name "Requirements"2
