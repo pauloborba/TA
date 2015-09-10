@@ -4,7 +4,6 @@ Feature : edit auto evaluation
 
   #Controller Scenarios
 
-
   Scenario: edit auto evaluation before the time limit has ended
     Given that the time limit for the auto evaluation of a criterion hasn’t passed yet
     When a student edits this criterion’s concept
@@ -17,7 +16,6 @@ Feature : edit auto evaluation
     Then the new concept will not be saved in the system
 
   #GUI Scenarios
-
 
   Scenario: edit auto evaluation before the time limit has ended
     Given that the time limit for the auto evaluation of a criterion hasn’t passed yet
