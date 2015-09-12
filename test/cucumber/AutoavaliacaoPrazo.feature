@@ -1,0 +1,26 @@
+Requerimento: Autoavaliação (divulgação com prazo)
+
+Feature A: Requisição de autoavaliação.
+	Como um professor da disciplina.
+	Eu quero definir o prazo em que será possível divulgar autoavaliações e notificar os alunos.
+	De modo que eles estejam avisados e divulguem-nas dentro do período de tempo programado.
+
+Cenário 1: Criação do prazo.
+	Dado que estou logado no sistema na minha página de perfil.
+	Quando eu solicitar a criação de um prazo de autoavaliação.
+	Em seguida o sistema registrará o período de tempo pedido e enviará um e-mail de notificação desse prazo para os alunos da disciplina.
+
+Cenário 2: Edição de prazo.
+	Dado que preciso modificar a data do prazo.
+	Quando eu solicitar a edição do prazo de autoavaliação.
+	Em seguida, o sistema registrará o novo período de tempo pedido e enviará um e-mail avisando sobre a alteração aos alunos da disciplina.
+
+Cenário 3: Data inexistente ou anterior ao período da disciplina.
+	Dado que tento criar um prazo de autoavaliação.
+	Quando registro uma data inexistente ou que existe anteriormente à data de início da disciplina.
+	Em seguida, o sistema me avisa do erro e solicita uma nova data.
+
+Cenário 4: Data posterior ao período da disciplina.
+	Dado que tento criar um prazo de autoavaliação.
+	Quando registro uma data que existe posteriormente à data de início da disciplina.
+	Em seguida, o sistema me pergunta se desejo mesmo registrar a nova data solicitada.
