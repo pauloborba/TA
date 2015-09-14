@@ -1,26 +1,40 @@
-Requerimento: Autoavaliação (divulgação com prazo)
+Requerimento: AutoavaliaÃ§Ã£o (divulgaÃ§Ã£o com prazo)
 
-Feature A: Requisição de autoavaliação.
+Feature A: RequisiÃ§Ã£o de autoavaliaÃ§Ã£o.
 	Como um professor da disciplina.
-	Eu quero definir o prazo em que será possível divulgar autoavaliações e notificar os alunos.
-	De modo que eles estejam avisados e divulguem-nas dentro do período de tempo programado.
+	Eu quero definir o prazo em que serÃ¡ possÃ­vel divulgar autoavaliaÃ§Ãµes e notificar os alunos.
+	De modo que eles estejam avisados e divulguem-nas dentro do perÃ­odo de tempo programado.
 
-Cenário 1: Criação do prazo.
-	Dado que estou logado no sistema na minha página de perfil.
-	Quando eu solicitar a criação de um prazo de autoavaliação.
-	Em seguida o sistema registrará o período de tempo pedido e enviará um e-mail de notificação desse prazo para os alunos da disciplina.
+# (Eduardo Ximenes - diest)
+# VocÃª poderia ter dividido o passo "Em seguida" em dois com um passo 'And' (ou 'E') para facilitar a visÃ£o.
+# Priorizar passos curtos Ã© uma boa prÃ¡tica da escrita de cenÃ¡rios.
 
-Cenário 2: Edição de prazo.
+CenÃ¡rio 1: CriaÃ§Ã£o do prazo.
+	Dado que estou logado no sistema na minha pÃ¡gina de perfil.
+	Quando eu solicitar a criaÃ§Ã£o de um prazo de autoavaliaÃ§Ã£o.
+	Em seguida o sistema registrarÃ¡ o perÃ­odo de tempo pedido e enviarÃ¡ um e-mail de notificaÃ§Ã£o desse prazo para os alunos da disciplina.
+
+# (Eduardo Ximenes - diest)
+# Igual ao cenÃ¡rio 1, o passo "Em seguida" estÃ¡ demasiadamente longo.
+
+CenÃ¡rio 2: EdiÃ§Ã£o de prazo.
 	Dado que preciso modificar a data do prazo.
-	Quando eu solicitar a edição do prazo de autoavaliação.
-	Em seguida, o sistema registrará o novo período de tempo pedido e enviará um e-mail avisando sobre a alteração aos alunos da disciplina.
+	Quando eu solicitar a ediÃ§Ã£o do prazo de autoavaliaÃ§Ã£o.
+	Em seguida, o sistema registrarÃ¡ o novo perÃ­odo de tempo pedido e enviarÃ¡ um e-mail avisando sobre a alteraÃ§Ã£o aos alunos da disciplina.
 
-Cenário 3: Data inexistente ou anterior ao período da disciplina.
-	Dado que tento criar um prazo de autoavaliação.
-	Quando registro uma data inexistente ou que existe anteriormente à data de início da disciplina.
+# (Eduardo Ximenes - diest)
+# VocÃª estÃ¡ colocando duas situaÃ§Ãµes diferentes de erro. Segundo Paulo, dever-se-ia fazer um cenÃ¡rio para cada uma.
+# O "Em seguida" nÃ£o estÃ¡ longo, mas poderia estar dividido para separar bem cada aÃ§Ã£o.
+
+CenÃ¡rio 3: Data inexistente ou anterior ao perÃ­odo da disciplina.
+	Dado que tento criar um prazo de autoavaliaÃ§Ã£o.
+	Quando registro uma data inexistente ou que existe anteriormente Ã  data de inÃ­cio da disciplina.
 	Em seguida, o sistema me avisa do erro e solicita uma nova data.
 
-Cenário 4: Data posterior ao período da disciplina.
-	Dado que tento criar um prazo de autoavaliação.
-	Quando registro uma data que existe posteriormente à data de início da disciplina.
+CenÃ¡rio 4: Data posterior ao perÃ­odo da disciplina.
+	Dado que tento criar um prazo de autoavaliaÃ§Ã£o.
+	Quando registro uma data que existe posteriormente Ã  data de inÃ­cio da disciplina.
 	Em seguida, o sistema me pergunta se desejo mesmo registrar a nova data solicitada.
+
+# (Eduardo Ximenes - diest)
+# Faltaram cenÃ¡rios de interface grÃ¡fica.
