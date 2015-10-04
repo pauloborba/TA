@@ -1,152 +1,101 @@
 package steps
 
-import pages.RegisterEvaluationPage
-import pages.ShowEvaluationPage
-import ta.Evaluation
-import ta.EvaluationController
+
+import ta.ConceptController
 
 this.metaClass.mixin(cucumber.api.groovy.Hooks)
 this.metaClass.mixin(cucumber.api.groovy.EN)
 
 // controller Scenario: Importing valid spreadsheet
 
-def sheetTitle
-// Given the spreadsheet "sheet.csv" is on valid file format // modificar
+def sheet
+// Given the spreadsheet "sheet.csv" is on valid file format
 Given (~'^the spreadsheet "([^"]*)" is on valid file format$'){ String filename ->
-	conceptController = new ConceptControler();
+	conceptController = new ConceptController();
 	conceptController.builder.createSheet()
 	conceptController.builder.setSheetFilename(filename)
-	conceptController = conceptController.builder.getSheet()
+	sheet = conceptController.builder.getSheet()
 
-	conceptController.saveEvaluation(expectedEvaluation)
-	sheetTitle = evaluationTitle
-
-	assert Con.findByTitle(evaluationTitle) != null
+	assert sheet.validFileFormat()
 }
 
 // When I import it’s data
 When (~'^I import it’s data$'){
-
+	conceptController.importSheet(sheet)
 }
 // Then update system data accordingly
 Then (~'^update system data accordingly$'){
+	conceptController.save();
+}
+// controller Scenario: Importing invalid spreadsheet
+
+// Given the spreadsheet "sheet.csv" is not on valid file format
+Given (~'^the spreadsheet "([^"]*)" is not on valid file format$'){ String filename ->
+	conceptController = new ConceptController();
+	conceptController.builder.createSheet()
+	conceptController.builder.setSheetFilename(filename)
+	sheet = conceptController.builder.getSheet()
+
+	assert sheet.validFileFormat()
+}
+
+// When I try to import it’s data
+When (~'^I try to import it’s data$'){
+	conceptController.importSheet(sheet)
+}
+// Then do not update system data
+Then (~'^do not update system data$'){
 
 }
 
-def evTitle
+// GUI Scenario: Importing valid spreadsheet
 
-// Given the system already has an evaluation entitled "Git evaluation" stored
-Given (~'^the system already has an evaluation entitled "([^"]*)" stored$') { String evaluationTitle ->
-	evController = new EvaluationController()
-	evController.builder.createEvaluation()
-	evController.builder.setEvaluationTitle(evaluationTitle)
-	expectedEvaluation = evController.builder.getEvaluation()
-
-	evController.saveEvaluation(expectedEvaluation)
-	evTitle = evaluationTitle
-
-	assert Evaluation.findByTitle(evaluationTitle) != null
-}
-
-// When I create an evaluation entitled "Git evaluation" with question "How to send files to your repository"
-When (~'^I create an evaluation entitled "([^"]*)" with question "([^"]*)"$') { String evaluationTitle, evaluationQuestion ->
-	evController.builder.createEvaluation()
-	evController.builder.setEvaluationTitle(evaluationTitle)
-	evController.builder.addEvaluationQuestion(evaluationQuestion)
-	def evaluation = evController.builder.getEvaluation()
-
-	evController.saveEvaluation(evaluation)
-}
-
-// Then no evaluation should be store in the system
-Then (~'^no evaluation should be store in the system$') { ->
-	def actualEvaluation = Evaluation.findByTitle(evTitle)
-	// apenas a avaliacao anterior deve estar salva
-	assert actualEvaluation != null
-	assert actualEvaluation.equals(expectedEvaluation)
-}
-
-/*
-Given I am on Register evaluation page
-When I fill in the field "title" with "Git evaluation"
-And I press register button
-Then I should see the message "Git evaluation registered"
-*/
-
-//Given I am on Register evaluation page
-Given (~'^I am on Register evaluation page$') {
+//Given that I am at the Concept page
+Given (~'^I am at the Concept page$') {
 	->
-	to RegisterEvaluationPage
-	at RegisterEvaluationPage
+	to ConceptPage
+	at ConceptPage
 
 }
-
-//When I fill in the field title with "Refactor evaluation"
-When (~'^I fill in the field title with "([^"]*)"$') {
-	String text ->
-
-	at RegisterEvaluationPage
-	page.fillData(text)
+//When I select the option to import spreadsheet "sheet.csv"
+When (~'^I select the option to import a spreadsheet "([^"]*)"$') {
+	String file ->
+		at ConceptPage
+		page.import(file)
 }
 
-//And I press register button
-And (~'^I press register button$') { ->
-
-	at RegisterEvaluationPage
-	page.click()
+//And the spreadsheet is on valid format
+And (~'^the spreadsheet is on valid format$') { ->
+	assert page.validFormat
+}
+//Then the Concept page displays new data accordingly
+Then (~'^the Concepts page displays new data accordingly$') { ->
+	at ConceptPage
+	page.update()
 }
 
-//Then I should be on show evaluation page
-Then (~'^I should be on show evaluation page$') { ->
+// GUI Scenario: Importing invalid spreadsheet
 
-	at ShowEvaluationPage
+//Given that I am at the Concept page
+Given (~'^I am at the Concept page$') {
+	->
+	to ConceptPage
+	at ConceptPage
+
+}
+//When I select the option to import a spreadsheet
+When (~'^I select the option to import a spreadsheet "([^"]*)"$') {
+	String file ->
+		at ConceptPage
+		page.importSheet(file)
 }
 
-
-/*
-Given I am on Register evaluation page
-When I press "Register" button
-Then I should see the message "Campo de título é obrigatório. Nenhuma avaliação foi registrada."
-*/
-
-//Given I am on Register evaluation page
-
-//And I press register button
-
-//Then I should stay in register evaluation page
-Then (~'^I should stay in register evaluation page$') { ->
-	at RegisterEvaluationPage
+//And the spreadsheet is not on valid format
+And (~'^the spreadsheet is not on valid format$') { ->
+	assert page.validFormat == false
 }
-
-/*
-Given the system has no evaluation entitled "Git evaluation" stored
-When I create an evaluation entitled "Git evaluation"
-Then the evaluation "Git evaluation" should be stored in the system
-*/
-
-// Given the system has no evaluation entitled "Git evaluation" stored
-Given (~'^the system has no evaluation entitled "([^"]*)" stored$') { String evaluationTitle ->
-	assert Evaluation.findByTitle(evaluationTitle) == null
+//Then displays error message
+Then (~'^the Concepts page displays new data accordingly$') { ->
+	at ConceptPage
+	page.displayError()
 }
-
-// When I create an evaluation entitled "Git evaluation"
-When (~'^I create an evaluation entitled "([^"]*)"$') { String evaluationTitle ->
-	def evController = new EvaluationController()
-	evController.builder.createEvaluation()
-	evController.builder.setEvaluationTitle(evaluationTitle)
-	def evaluation = evController.builder.getEvaluation()
-
-	evController.saveEvaluation(evaluation)
-}
-
-// Then the evaluation "Git evaluation" should be stored in the system
-Then (~'^the evaluation "([^"]*)" should be stored in the system$') { String evaluationTitle ->
-	assert Evaluation.findByTitle(evaluationTitle) != null
-}
-
-/*
-Given the system already has an evaluation entitled "Git evaluation" stored
-When I create an evaluation entitled "Git evaluation" with question "How to send files to your repository"
-Then no evaluation should be store in the system
-*/
-
