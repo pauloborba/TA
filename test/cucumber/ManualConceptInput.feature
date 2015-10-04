@@ -28,3 +28,4 @@ Feature: Manual Concept Input
     Given that I am on the Manual Concept Input page
     And there are no students or criteria on the spreadsheet
     Then I can not select a cell to input a new concept
+    And the page displays a error message.

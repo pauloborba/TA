@@ -27,7 +27,11 @@ Then (~'the final criterion concept is updated in the system$'){ ->
 
 //Scenario: Spreadsheet without students or criteria
 Given (~'that the spreadsheet does not contain students or criteria$') { ->
+    manualInputController = new ManualConceptInputController()
+    criteria = manualInputController.checkCriteria()
+    students = manualInputController.checkStudents()
 
+    assert manualInputController.checkSpreadsheet(criteria, students)
 }
 
 Then (~'the system does nothing$'){ ->
@@ -76,4 +80,9 @@ And (~'there are no student or criteria on the spreeadsheet$'){->
 
 Then (~'I can not choose a cell to add a new concept$'){->
 
+}
+
+And (~'The page displays a error message$'){->
+    at ManualConceptInputPage
+    page.displayError()
 }
