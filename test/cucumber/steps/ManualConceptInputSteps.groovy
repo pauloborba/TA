@@ -44,10 +44,6 @@ Given(~'that I am on the Manual Concept Input Page$'){ ->
     at ManualConceptInputPage
 }
 
-And (~'there are at least one student and one criterion on the spreeadsheet$'){->
-
-}
-
 When (~'I choose a cell "([^"]*)"$'){ String cell ->
     at ManualConceptInputPage
     page.choose(cell)
@@ -74,15 +70,7 @@ Given(~'that I am on the Manual Concept Input Page$'){ ->
     at ManualConceptInputPage
 }
 
-And (~'there are no student or criteria on the spreeadsheet$'){->
-
-}
-
-Then (~'I can not choose a cell to add a new concept$'){->
-
-}
-
-And (~'The page displays a error message$'){->
+Then (~'The page displays a error message$'){->
     at ManualConceptInputPage
     page.displayError()
 }

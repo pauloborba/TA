@@ -17,7 +17,6 @@ Feature: Manual Concept Input
 #GUI Scenario
   Scenario: Spreadsheet with at least one student and one criterion
     Given that I am on the Manual Concept Input page
-    And there are at least one student and one criterion on the spreadsheet
     When I choose a cell
     And I fill it with a new concept "MA" with a description "Questão 1 da Prova 1"
     And I click the button to confirm the operation
@@ -26,6 +25,4 @@ Feature: Manual Concept Input
 #GUI Scenario
   Scenario: Spreadsheet without students or criteria
     Given that I am on the Manual Concept Input page
-    And there are no students or criteria on the spreadsheet
-    Then I can not select a cell to input a new concept
-    And the page displays a error message.
+    Then the page displays a error message.
