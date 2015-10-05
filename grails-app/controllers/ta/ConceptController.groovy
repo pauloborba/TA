@@ -1,8 +1,10 @@
 package ta
 
+import commom.SheetBuilder
+
 class ConceptController {
 
-    
+    SheetBuilder builder = new SheetBuilder()
 
     def index() {}
 

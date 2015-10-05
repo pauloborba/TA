@@ -21,7 +21,7 @@ Given (~'^the spreadsheet "([^"]*)" is on valid file format$'){ String filename 
 }
 
 // When I import it’s data
-When (~'^I import it’s data$'){ ->
+When (~'^I import its data$'){ ->
 	conceptController.importSheet(sheet)
 }
 // Then update system data accordingly
@@ -41,7 +41,7 @@ Given (~'^the spreadsheet "([^"]*)" is not on valid file format$'){ String filen
 }
 
 // When I try to import it’s data
-When (~'^I try to import it’s data$'){ ->
+When (~'^I try to import its data$'){ ->
 	conceptController.importSheet(sheet)
 }
 // Then do not update system data
@@ -52,14 +52,14 @@ Then (~'^do not update system data$'){ ->
 // GUI Scenario: Importing valid spreadsheet
 
 //Given that I am at the Concept page
-Given (~'^I am at the Concept page$') {
+Given (~'^that I am at the Concepts page$') {
 	->
 	to ConceptPage
 	at ConceptPage
 
 }
 //When I select the option to import spreadsheet "sheet.csv"
-When (~'^I select the option to import a spreadsheet "([^"]*)"$') {
+When (~'^I select the option to import spreadsheet "([^"]*)"$') {
 	String file ->
 		at ConceptPage
 		page.import(file)
@@ -77,26 +77,12 @@ Then (~'^the Concepts page displays new data accordingly$') { ->
 
 // GUI Scenario: Importing invalid spreadsheet
 
-//Given that I am at the Concept page
-Given (~'^I am at the Concept page$') {
-	->
-	to ConceptPage
-	at ConceptPage
-
-}
-//When I select the option to import a spreadsheet
-When (~'^I select the option to import a spreadsheet "([^"]*)"$') {
-	String file ->
-		at ConceptPage
-		page.importSheet(file)
-}
-
 //And the spreadsheet is not on valid format
 And (~'^the spreadsheet is not on valid format$') { ->
 	assert page.validFormat == false
 }
 //Then displays error message
-Then (~'^the Concepts page displays error message$') { ->
+Then (~'^display error message$') { ->
 	at ConceptPage
-	page.displayError()
+	assert page.displayError()
 }
