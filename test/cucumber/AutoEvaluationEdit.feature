@@ -6,27 +6,26 @@ Feature : edit auto evaluation
   #Controller Scenarios
 
   Scenario: edit auto evaluation before the time limit has ended
-    Given that the time limit for the auto evaluation of the criterion "Requirements" hasn’t passed yet
-    When the student "Clark Wayne" edits the concept of "Requirements"
-    Then the new concept of "Requirements" will be saved for "Clark Wayne" in the system
+    Given that the time limit for the auto evaluation of the criterion "Requirements" has not ended yet
+    When the user inputs a new concept "MPA" of the criterion "Requirements"
+    Then the new concept will be saved in the system
 
 
   Scenario: edit auto evaluation after the time limit has ended
-    Given that the time limit for the auto evaluation of the criterion "Requirements" has already passed
-    When the student "Clark Wayne" edits the concept of "Requirements"
-    Then the new concept of "Requirements" will not be saved in the system
+    Given that the time limit for the auto evaluation of the criterion "Requirements" has ended
+    Then the system does nothing
 
   #GUI Scenarios
 
   Scenario: edit auto evaluation before the time limit has ended
-    Given that the time limit for the auto evaluation of the criterion "Requirements" hasn’t passed yet
-    When  the student "Clark Wayne" chooses the option to edit the concept of "Requirements"
-    And chooses the new concept
-    Then the new concept of "Requirements" will be saved
-    And showed under the name "Requirements"
+    Given I am at the auto evaluation page
+    When  I choose the criterion "Requirements"
+    And I put the new concept "MPA"
+    And I click the button to confirm
+    Then the concept for that criterion is updated
 
 
   Scenario: edit auto evaluation after the time limit has ended
-    Given that the time limit for the auto evaluation of the criterion "Requirements" has already passed
-    When the student "Clark Wayne" chooses the option to edit the concept of "Requirements"
-    Then a warning will appear saying that this can’t be done
+    Given I am at the auto evaluation page
+    When I choose the criterion "Requirements"
+    Then a warning will appear
