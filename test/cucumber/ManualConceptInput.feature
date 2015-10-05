@@ -13,7 +13,7 @@ Feature: Manual Concept Input
   Scenario: Spreadsheet without students and at least one criterion
     Given that the spreadsheet does not contain students
     And there is at least one criterion
-    When the system requires a cell
+    When the user try to input manually a new concept "MA" with a description "Questão 1 da Prova 1" into the cell "B2"
     Then the system returns a exception
 
 #GUI Scenario
