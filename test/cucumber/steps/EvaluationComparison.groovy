@@ -110,6 +110,6 @@ When (~'^the system requires the  Evaluation -> Auto-evaluation comparison$') {
 }
 
 Then (~'^the system returns an exception$'){->
-    //
+    //check steps
     
 }
