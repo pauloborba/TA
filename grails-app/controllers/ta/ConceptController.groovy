@@ -8,5 +8,7 @@ class ConceptController {
 
     def importSheet(sheet){}
 
+    def reset(){}
+
     def save(){}
 }

@@ -2,6 +2,7 @@ package steps
 
 
 import ta.ConceptController
+import pages.ConceptPages.ConceptPage
 
 this.metaClass.mixin(cucumber.api.groovy.Hooks)
 this.metaClass.mixin(cucumber.api.groovy.EN)
@@ -20,12 +21,12 @@ Given (~'^the spreadsheet "([^"]*)" is on valid file format$'){ String filename 
 }
 
 // When I import it’s data
-When (~'^I import it’s data$'){
+When (~'^I import it’s data$'){ ->
 	conceptController.importSheet(sheet)
 }
 // Then update system data accordingly
-Then (~'^update system data accordingly$'){
-	conceptController.save();
+Then (~'^update system data accordingly$'){ ->
+	assert conceptController.save();
 }
 // controller Scenario: Importing invalid spreadsheet
 
@@ -36,16 +37,16 @@ Given (~'^the spreadsheet "([^"]*)" is not on valid file format$'){ String filen
 	conceptController.builder.setSheetFilename(filename)
 	sheet = conceptController.builder.getSheet()
 
-	assert sheet.validFileFormat()
+	assert sheet.validFileFormat() == false
 }
 
 // When I try to import it’s data
-When (~'^I try to import it’s data$'){
+When (~'^I try to import it’s data$'){ ->
 	conceptController.importSheet(sheet)
 }
 // Then do not update system data
-Then (~'^do not update system data$'){
-
+Then (~'^do not update system data$'){ ->
+	assert conceptController.reset()
 }
 
 // GUI Scenario: Importing valid spreadsheet
@@ -95,7 +96,7 @@ And (~'^the spreadsheet is not on valid format$') { ->
 	assert page.validFormat == false
 }
 //Then displays error message
-Then (~'^the Concepts page displays new data accordingly$') { ->
+Then (~'^the Concepts page displays error message$') { ->
 	at ConceptPage
 	page.displayError()
 }
