@@ -7,7 +7,7 @@ Feature: Final grade
   Scenario: Calculating final grade
     Given that every criteria has a grade for student "Eduardo"
     When I request the system to register grades from "Eduardo"
-    Then the final grade is calculated based on the grades from each criteria
+    Then the final grade for "Eduardo" is calculated based on the grades from each criteria
     And the result is stored by the system
 
   #Controller scenario
