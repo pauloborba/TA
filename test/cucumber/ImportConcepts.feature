@@ -7,15 +7,15 @@ Feature: Import concepts from spreadsheet
 
 #Controller Scenario
   Scenario: Importing valid spreadsheet
-    Given Given the spreadsheet "sheet.csv" is on valid file format
-    When I import it�s data
+    Given the spreadsheet "sheet.csv" is on valid file format
+    When I import its data
     Then update system data accordingly
 
 #Controller Scenario
   Scenario: Importing invalid spreadsheet
-    Given Given the spreadsheet "sheet.csv" is not on valid file format
-    When I try to import it�s data
-    Then do not update system data accordingly
+    Given the spreadsheet "sheet.csv" is not on valid file format
+    When I try to import its data
+    Then do not update system data
 
 #GUI Scenario
   Scenario: Importing valid spreadsheet
