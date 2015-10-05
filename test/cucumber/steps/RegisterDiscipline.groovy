@@ -96,5 +96,4 @@ And(~'I am taken to the list of disciplines page where "([^"]*)" is already list
     to DisciplinePage
     at DisciplinePage
     assert discipline == disciplineSaved
-
 }
