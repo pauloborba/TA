@@ -5,27 +5,27 @@ Feature: Final grade
   
   #Controller scenario
   Scenario: Calculating final grade
-    Given that every criteria has a grade
+    Given that every criteria has a grade for student "Eduardo"
     When I request the system to calculate the final grade
     Then the final grade is calculated based on the grades from each criteria
     And the result is stored by the system
 
   #Controller scenario
   Scenario: Inability to calculate grade
-    Given that at least one criteria has no grades
+    Given that at least one criteria has no grades for student "Eduardo"
     When I request the system to calculate the final grade
     Then the final grade is not calculated
 
   #GUI scenario
   Scenario: Calculating final grade
-    Given that I can see a table relating students to their grandes on each criteria
+    Given that I can see a table relating students to their grades on each criteria
     And one of the sections is named "Media final"
     When a student has a grade shown in each criteria
     Then "Media final" displays the student's final grade
 
   #GUI scenario
   Scenario: Inability to calculate grade
-    Given that I can see a table relating students to their grandes on each criteria
-    And one of the sectopms is named "Media final"
+    Given that I can see a table relating students to their grades on each criteria
+    And one of the sections is named "Media final"
     When a student has at least one criteria without a grade
     Then "Media final" displays the message "Avaliacoes insuficientes"
