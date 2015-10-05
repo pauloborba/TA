@@ -1,7 +1,6 @@
 package steps
 
 import pages.ShowNotificationsPage
-import ta.Controller
 import ta.EvaluationCriterion
 import ta.Notification
 import ta.Student
@@ -13,9 +12,9 @@ this.metaClass.mixin(cucumber.api.groovy.EN)
 //Scenario: Registering a grade that requests a notification
 
 Given(~'^that the system has a student named "([^"]*)" with login "([^"]*)" registered$') { String name, login ->
-	savedLogin = login
 	EvaluateStudentTestDataAndOperations.createStudent(login, name)
-	assert Student.findLogin(name, login) != null
+	savedStudent = Student.findByLogin(login)
+	assert savedStudent != null
 }
 And(~'^that the system has evaluation criteria named "([^"]*)", "([^"]*)", and "([^"]*)" registered$') { String criteria1, criteria2, criteria3 ->
 	EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria1)
@@ -30,19 +29,22 @@ And(~'^that the system has evaluation criteria named "([^"]*)", "([^"]*)", and "
 	savedCriteria1 = criteria1
 	savedCriteria2 = criteria2
 	savedCriteria3 = criteria3
+
+	Set<EvaluationCriterion> a = new HashSet<EvaluationCriterion>()
+	a.add(criteria1)
+	a.add(criteria2)
+	a.add(criteria3)
 }
-And(~'^that "([^"]*)" only has a "MANA" registered as a grade for the "([^"]*)" and "([^"]*)" criteria$') { String name, criteria1, criteria2 ->
-	//TODO: add "MANA" grade to criteria 1 and 2 and assert both	
+And(~'^that "([^"]*)" only has a MANA registered as a grade for the "([^"]*)" and "([^"]*)" criteria$') { String name, criteria1, criteria2 ->
+	//TODO: add "MANA" grade to criteria 1 and 2 and assert bot
 }
-When(~'^I register "MANA" as the grade for "([^"]*)" for the "([^"]*)" criteria$') { String name, criteria3 ->
+When(~'^I register MANA as the grade for "([^"]*)" for the "([^"]*)" criteria$') { String name, criteria3 ->
 	//TODO: add "MANA" grade to criteira3
-	def newNotification = Controller.builder.Notification()
-	newNotification.setStudent(Student.findByLogin(savedLogin)
-	newNotification.setEvaluationCriterions({criteria1, criteria2, criteria3})
-	Controller.builder.createNotification(newNotification)
+	def newNotification = NotificationsTestDataAndOperations.createNotification(savedStudent, a)
+	assert newNotification != null
 }	
 Then(~'^the system stores a low performance notification$') {  ->
-	notification = Notification.findByStudent(studentName)
+	notification = Notification.findByStudent(savedStudent)
 	assert notification != null
 }
 
@@ -65,14 +67,14 @@ And(~'^that the system has evaluation criteria named "([^"]*)", "([^"]*)", and "
 	EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria3)
 	assert EvaluationCriterion.findByName(criteria3) != null
 }
-And(~'^that "([^"]*)" only has a "MANA" registered as a grade for the "([^"]*)" and "([^"]*)" criteria$') { String name, criteria1, criteria2 ->
+And(~'^that "([^"]*)" only has a MANA registered as a grade for the "([^"]*)" and "([^"]*)" criteria$') { String name, criteria1, criteria2 ->
 	//TODO: add "MANA" grade to criteria 1 and 2 and assert both
 
 	studentName = name
 	savedCriteria1 = criteria1
 	savedCriteria2 = criteria2
 }
-When(~'^I register "MA" as the grade for "([^"]*)" for the "([^"]*)" criteria$') { String name, criteria3 ->
+When(~'^I register MA as the grade for "([^"]*)" for the "([^"]*)" criteria$') { String name, criteria3 ->
 	//TODO: add "MA" grade to criteira3	
 }		
 Then(~'^the system does not store a low performance notification$') { ->
@@ -85,8 +87,8 @@ Then(~'^the system does not store a low performance notification$') { ->
 //GUI Scenario (happy path)
 //Scenario: Requesting notifications with at least one stored notification
 Given(~'^that I am on the Notifications Page$') { ->
-	to NotificationPage
-	at NotificationPage
+	to ShowNotificationsPage
+	at ShowNotificationsPage
 }
 And(~'^there is at least one registered notification$') { ->
 	assert Notification.count > 0
@@ -103,8 +105,8 @@ Then(~'^I can see all notifications$') { ->
 //GUI Scenario (sad path)
 //Scenario: Requesting notifications with no stored notifications
 Given(~'^that I am on the Notifications Page$') { ->
-	to NotificationPage
-	at NotificationPage
+	to ShowNotificationsPage
+	at ShowNotificationsPage
 }
 And(~'^there is no registered notifications$') { ->
 	assert Notification.count == 0
@@ -113,5 +115,5 @@ When(~'^I select "Read Notifications$') { ->
 	page.selectReadNotifications()
 }		
 Then(~'^I can see "There are no new notifications"$') { ->
-	//TODO: check if string appears on page
+	assert page.readFlashMessage() != null
 }
