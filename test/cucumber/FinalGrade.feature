@@ -18,7 +18,7 @@ Feature: Final grade
 
   #GUI scenario
   Scenario: Calculating final grade
-    Given that I am at evaluations page
+    Given that I am at student page
     And I can see a table relating students to their grades on each criteria
     And one of the sections is named "Media final"
     When a student has a grade shown in each criteria
@@ -26,8 +26,8 @@ Feature: Final grade
 
   #GUI scenario
   Scenario: Inability to calculate grade
-    Given that I am at evaluations page
+    Given that I am at student page
     And I can see a table relating students to their grades on each criteria
-    And one of the sections is named Media final
+    And one of the sections is named "Media final"
     When a student has at least one criteria without a grade
     Then "Media final" displays the message Avaliacoes insuficientes
