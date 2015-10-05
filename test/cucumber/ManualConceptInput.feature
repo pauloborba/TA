@@ -12,8 +12,8 @@ Feature: Manual Concept Input
 #Controller Scenario
   Scenario: Spreadsheet without students and at least one criterion
     Given that the spreadsheet does not contain students
+    And there is at least one criterion
     When the system requires a cell
-    And there is no student
     Then the system returns a exception
 
 #GUI Scenario
