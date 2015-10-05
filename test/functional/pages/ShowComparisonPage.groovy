@@ -9,4 +9,9 @@ class ShowComparisonPage extends Page{
     static at = {
         title ==~ /Show Comparison/
     }
+    
+    def showError(){
+        
+        
+    }
 }
