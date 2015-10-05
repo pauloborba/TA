@@ -110,7 +110,6 @@ When (~'^the system requires the  Evaluation -> Auto-evaluation comparison$') {
 }
 
 Then (~'^the system returns an exception$'){->
-    at ShowComparisionPage
-    assert page.AutoEvaContent==null
-    page.showError();
+    //
+    
 }
