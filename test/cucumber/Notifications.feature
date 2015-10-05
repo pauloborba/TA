@@ -32,6 +32,5 @@ Scenario: Requesting notifications with no stored notifications
     	Given that I am on the Notifications Page 
 	And there is no registered notifications
 	When I select "Read Notifications"
-    	Then I should see "There are no new notifications" on the screen
-	And I should not see any notifications
+    	Then I can see "There are no new notifications"
 
