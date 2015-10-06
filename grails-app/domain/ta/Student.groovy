@@ -10,6 +10,7 @@ class Student {
     }
 
     Map<String, String> evaluations
+    Map<String, String> AutoEvaluations
 
     static constraints = {
         login unique: true
@@ -25,12 +26,30 @@ class Student {
         }
     }
 
+    public void afterCreateAddAutoCriteria(List<AutoEvaluationCriterion> autoEvaluationCriteria) {
+        AutoEvaluations = new HashMap<>()
+        for(AutoEvaluationCriterion autoEvaluationCriterion : autoEvaluationCriteria) {
+            if(this.AutoEvaluations.get(autoEvaluationCriterion.name) == null) {
+                this.AutoEvaluations.put(autoEvaluationCriterion.name, Concept.CONCEPTS.get(3))
+            }
+        }
+    }
+
     public void addCriterion(EvaluationCriterion evaluationCriterion) {
         if(evaluations == null) {
             evaluations = new HashMap<>()
         }
         if(this.evaluations.get(evaluationCriterion.name) == null) {
             this.evaluations.put(evaluationCriterion.name, Concept.CONCEPTS.get(3))
+        }
+    }
+
+    public void addAutoCriterion(AutoEvaluationCriterion autoEvaluationCriterion) {
+        if(AutoEvaluations == null) {
+            AutoEvaluations = new HashMap<>()
+        }
+        if(this.AutoEvaluations.get(autoEvaluationCriterion.name) == null) {
+            this.AutoEvaluations.put(autoEvaluationCriterion.name, Concept.CONCEPTS.get(3))
         }
     }
 }
