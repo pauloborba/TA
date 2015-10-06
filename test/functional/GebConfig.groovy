@@ -14,7 +14,12 @@ environments {
    // run as “grails -Dgeb.env=chrome test-app”
    // See: http://code.google.com/p/selenium/wiki/ChromeDriver
    chrome {
-     driver = { new ChromeDriver() }
+     driver = { 
+        File file = new File("/home/ess/TA/chromedrivers/chromedriverlinux64");
+        System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
+        new ChromeDriver();
+        //gio colocou só new ChromeDriver acredito que tava incompleto
+     }
    }
 
    // run as “grails -Dgeb.env=firefox test-app”
@@ -23,12 +28,9 @@ environments {
     driver = { new FirefoxDriver() }
   }
 }
-/*
-    linux
-    File file = new File("/home/ess/TA/chromedrivers/chromedriverlinux64");
-    System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
-    new ChromeDriver();
-   windows
+
+    
+/*   windows(pra qm usa a propria maquina tb)
  File file = new File("C:/SDK/Chromedriver/chromedriver.exe");
     System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
     new ChromeDriver();
