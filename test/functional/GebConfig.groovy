@@ -24,9 +24,14 @@ environments {
   }
 }
 /*
+    linux
     File file = new File("/home/ess/TA/chromedrivers/chromedriverlinux64");
     System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
     new ChromeDriver();
-}
+   windows
+ File file = new File("C:/SDK/Chromedriver/chromedriver.exe");
+    System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
+    new ChromeDriver();
+
 */
 baseUrl = "http://localhost:8070/"
