@@ -16,6 +16,10 @@ Feature: Access Control
 +    When "joao" request to sign in with an incorrect password "321"
 +    Then "joao" have no access to the system
 +
+  # (Eduardo Ximenes - diest)
+  # Evite ser específico demais usando coisas como "click" e "button". A ideia é ser mais genérico quanto à
+  # interação com a interface, pois facilita a portabilidade para outra plataforma, tipo mobile. É uma boa prática.
+  
 +  #GUI scenario
 +  Scenario: Signing in web
 +    Given that I am on login page
