@@ -18,7 +18,6 @@ environments {
         File file = new File("/home/ess/TA/chromedrivers/chromedriverlinux64");
         System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
         new ChromeDriver();
-        //gio colocou só new ChromeDriver acredito que tava incompleto
      }
    }
 
