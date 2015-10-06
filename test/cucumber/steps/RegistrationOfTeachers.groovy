@@ -1,14 +1,17 @@
+/*
+
 package steps
 
 import pages.RegistrationPage
 import pages.ConfirmationPage
 import ta.Controller
 
-/*
+/**
 * Given the system doesn't have the teacher with cpf "111.111.111-11"
 * When I create the teacher "John" with the cpf "111.111.111-11"
 * Then the teacher "John" is properly stored by the system
-* */
+* /
+
 
 //Given the system doesn't have the teacher with cpf "111.111.111-11"
 Given (~'^the system doesn\'t have the teacher with cpf "([^"]*)"$'){
@@ -32,11 +35,11 @@ Then (~'^the teacher "([^"]*)" is properly stored by the system$'){
         assert Controller.findByName(teacher) != null
 }
 
-/*
+/**
 * Given the teacher with cpf "111.111.111-11" is stored in the system
 * When I try to create the teacher with cpf "111.111.111-11"
 * Then the teacher with cpf "111.111.111-11" is not stored twice
-* */
+* /
 
 //Given the teacher with cpf "111.111.111-11" is stored in the system
 Given (~'^the teacher with cpf "([^"]*)" is stored in the system$'){
@@ -62,13 +65,13 @@ Then (~'^the teacher with cpf "([^"]*)" is not stored twice$'){
         //?
 }
 
-/*
+/**
 * Given I am at the "registration" menu
 * And the system doesn't have the teacher with cpf "111.111.111-11"
-* When I register the teacher with cpf “111.111.111-11”
+* When I register the teacher with cpf ï¿½111.111.111-11ï¿½
 * Then I can see a confirmation message
 * And I can see the saved teacher information
-* */
+* /
 
 //Given I am at the "registration" menu
 Given (~'^I am at the "([^"]*)" menu$'){
@@ -83,8 +86,8 @@ And (~'^the system doesn\'t have the teacher with cpf "([^"]*)"$'){
         assert Controller.findByCpf(cpf) == null
 }
 
-//When I register the teacher with cpf “111.111.111-11”
-When (~'^I register the teacher with cpf “([^"]*)”$'){
+//When I register the teacher with cpf ï¿½111.111.111-11ï¿½
+When (~'^I register the teacher with cpf ï¿½([^"]*)ï¿½$'){
     String cpf ->
         at RegistrationPage
         page.fillCpf(cpf)
@@ -102,12 +105,12 @@ And (~'^I can see the saved teacher information$'){
     at ConfirmationPage
 }
 
-/*
+/**
 * Given I am at the "registration" menu
 * And the teacher with cpf "111.111.111-11" is stored in the system
 * When I try to register the teacher with cpf "111.111.111-11"
 * Then I can see an error message
-* */
+* /
 
 //Given I am at the "registration" menu
 Given (~'^I am at the "([^"]*)" menu$'){
@@ -139,3 +142,5 @@ Then (~'^I can see an error message$'){
     ->
     Controller.builder.showErrorMessage()
 }
+
+*/
