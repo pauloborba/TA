@@ -29,11 +29,6 @@ Given(~'The system already has a discipline named "([^"]*)"$') { String discipli
     assert Discipline.findByName(discipline) != null
 }
 
-When(~'I create the discipline "([^"]*)" with teacher "([^"]*)" and concepts "([^"]*)"$') { String discipline, teacher,
-                                                                                            String[] concepts ->
-    saved = RegisterNewDiscipline.createDiscipline(discipline, teacher, concepts)
-}
-
 Then(~'The discipline "([^"]*)" is not stored more than one time in the system$') { String discipline ->
     assert Discipline.findByName(discipline) != null && !saved
 }
@@ -67,22 +62,6 @@ And(~'I am taken to the list of disciplines page where "([^"]*)" is listed as a 
 }
 
 ////////////////////////////////
-
-Given(~'I am at the homepage$') { ->
-    to homePage // checar se essa
-    at homePage // p�gina existe mesmo
-}
-
-When(~'I select create new discipline$') { ->
-    to RegisterNewDisciplinePage
-    at RegisterNewDisciplinePage
-}
-
-And(~'fill the form with name "([^"]*)" with teacher "([^"]*)" and concepts "([^"]*)"$') { String discipline, teacher,
-                                                                                           String[] concepts ->
-    page.fillDisciplineForm(discipline, teacher, concepts)
-    disciplineSaved = discipline
-}
 
 And(~'the system already has a discipline named "([^"]*)"$') { ->
     //
