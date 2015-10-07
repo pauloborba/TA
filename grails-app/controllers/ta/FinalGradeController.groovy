@@ -1,7 +1,10 @@
 package ta
 
-interface FinalGradeController {
-    save();
-    calculateFinalGrade(HashMap evaluations);
-    create();
+class FinalGradeController {
+
+    def index() {}
+
+    def save(){}
+    def calculateFinalGrade(evaluations){}
+    def create(){}
 }

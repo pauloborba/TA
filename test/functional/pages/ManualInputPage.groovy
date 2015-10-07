@@ -26,5 +26,4 @@ class ManualConceptInputPage extends Page{
     
     def checkStudents(){}
     
-    }
 }

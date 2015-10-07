@@ -42,7 +42,7 @@ When(~'^I register MANA as the grade for "([^"]*)" for the "([^"]*)" criteria$')
 	//TODO: add "MANA" grade to criteira3
 	def newNotification = NotificationsTestDataAndOperations.createNotification(savedStudent, a)
 	assert newNotification != null
-}	
+}
 Then(~'^the system stores a low performance notification$') {  ->
 	notification = Notification.findByStudent(savedStudent)
 	assert notification != null
@@ -75,8 +75,8 @@ And(~'^that "([^"]*)" only has a MANA registered as a grade for the "([^"]*)" an
 	savedCriteria2 = criteria2
 }
 When(~'^I register MA as the grade for "([^"]*)" for the "([^"]*)" criteria$') { String name, criteria3 ->
-	//TODO: add "MA" grade to criteira3	
-}		
+	//TODO: add "MA" grade to criteira3
+}
 Then(~'^the system does not store a low performance notification$') { ->
 	//TODO: assert notification not found
 	assert Notification.findByStudent(studentName) == null
@@ -95,7 +95,7 @@ And(~'^there is at least one registered notification$') { ->
 }
 When(~'^I select "Read Notifications$') { ->
 	page.selectReadNotifications()
-}		
+}
 Then(~'^I can see all notifications$') { ->
 	//TODO: check shown notifications
 }
@@ -113,7 +113,7 @@ And(~'^there is no registered notifications$') { ->
 }
 When(~'^I select "Read Notifications$') { ->
 	page.selectReadNotifications()
-}		
+}
 Then(~'^I can see "There are no new notifications"$') { ->
 	assert page.readFlashMessage() != null
 }

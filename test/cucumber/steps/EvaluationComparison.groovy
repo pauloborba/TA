@@ -87,7 +87,7 @@ When (~'^the system requires the  Evaluation -> Auto-evaluation comparison$') {
 }
 
 Then (~'^the system returns a detailed table with both student and the professor grades$'){->
-    //check steps 
+    //check steps
 }
 
 
@@ -111,5 +111,5 @@ When (~'^the system requires the  Evaluation -> Auto-evaluation comparison$') {
 
 Then (~'^the system returns an exception$'){->
     //check steps
-    
+
 }

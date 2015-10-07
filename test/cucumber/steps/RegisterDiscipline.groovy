@@ -42,7 +42,7 @@ Then(~'The discipline "([^"]*)" is not stored more than one time in the system$'
 
 Given(~'I am at the homepage$') { ->
     to homePage // checar se essa
-    at homePage // página existe mesmo
+    at homePage // pï¿½gina existe mesmo
 }
 
 When(~'I select create new discipline$') { ->
@@ -70,7 +70,7 @@ And(~'I am taken to the list of disciplines page where "([^"]*)" is listed as a 
 
 Given(~'I am at the homepage$') { ->
     to homePage // checar se essa
-    at homePage // página existe mesmo
+    at homePage // pï¿½gina existe mesmo
 }
 
 When(~'I select create new discipline$') { ->
