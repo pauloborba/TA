@@ -7,15 +7,9 @@ class ShowNotificationsPage extends Page{
 
     static at = {
         title ==~ /Notifications/
-stati c    }
+    }
 
     def selectShowNotifications(){
         $("input", name:"show").click()
-    }
-
-    static content = {
-        flashmessage = {
-            $("div", class: "message")
-        }
     }
 }

@@ -5,6 +5,7 @@ Feature: Low student performance notifications
 	So that I can better assess my class' performance and to know which students need more attention.
 
 #Controller Scenario (happy path)
+  @imvm
 Scenario: Registering a grade that requests a notification
 	Given that the system has a student named "Peter Parker" with login "pp2" registered
 	And that the system has evaluation criteria named "Project Management", "Change Management", and "Team Management" registered
@@ -13,6 +14,7 @@ Scenario: Registering a grade that requests a notification
   	Then the system stores a low performance notification
 
 #Controller Scenario (sad path)
+
 Scenario: Registering a grade that does not request a notification
 	Given that the system has a student named "Peter Parker" with login "pp2" registered
 	And that the system has evaluation criteria named "Project Management", "Change Management", and "Team Management" registered
@@ -28,6 +30,7 @@ Scenario: Requesting notifications with at least one stored notification
   	Then I can see all notifications
 
 #GUI Scenario (sad path)
+  @imvm
 Scenario: Requesting notifications with no stored notifications
   	Given that I am on the Notifications Page
 	And there is no registered notifications

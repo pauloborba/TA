@@ -30,17 +30,14 @@ And(~'^that the system has evaluation criteria named "([^"]*)", "([^"]*)", and "
 	savedCriteria2 = criteria2
 	savedCriteria3 = criteria3
 
-	Set<EvaluationCriterion> a = new HashSet<EvaluationCriterion>()
-	a.add(criteria1)
-	a.add(criteria2)
-	a.add(criteria3)
+	evals = [EvaluationCriterion.findByName(criteria1), EvaluationCriterion.findByName(criteria2), EvaluationCriterion.findByName(criteria3)]
 }
 And(~'^that "([^"]*)" only has a MANA registered as a grade for the "([^"]*)" and "([^"]*)" criteria$') { String name, criteria1, criteria2 ->
-	//TODO: add "MANA" grade to criteria 1 and 2 and assert bot
+	//TODO: add "MANA" grade to criteria 1 and 2 and assert both
 }
 When(~'^I register MANA as the grade for "([^"]*)" for the "([^"]*)" criteria$') { String name, criteria3 ->
 	//TODO: add "MANA" grade to criteira3
-	def newNotification = NotificationsTestDataAndOperations.createNotification(savedStudent, a)
+ 	def newNotification = NotificationsTestDataAndOperations.createNotification(savedStudent, evals)
 	assert newNotification != null
 }
 Then(~'^the system stores a low performance notification$') {  ->
@@ -111,9 +108,10 @@ Given(~'^that I am on the Notifications Page$') { ->
 And(~'^there is no registered notifications$') { ->
 	assert Notification.count == 0
 }
-When(~'^I select "Read Notifications$') { ->
+When(~'^I select "Read Notifications"$') { ->
 	page.selectReadNotifications()
 }
 Then(~'^I can see "There are no new notifications"$') { ->
 	assert page.readFlashMessage() != null
 }
+
