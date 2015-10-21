@@ -4,7 +4,7 @@ class AutoEvaluationController {
 
     def index() {}
 
-    def checkAvailability(AutoEvaluation autoEvaluation){
+    def checkAvailability(autoEvaluation){
 
     }
 

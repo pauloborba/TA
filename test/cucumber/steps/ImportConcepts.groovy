@@ -11,6 +11,7 @@ this.metaClass.mixin(cucumber.api.groovy.EN)
 
 def sheet
 // Given the spreadsheet "sheet.csv" is on valid file format
+
 Given (~'^the spreadsheet "([^"]*)" is on valid file format$'){ String filename ->
 	conceptController = new ConceptController();
 	conceptController.builder.createSheet()

@@ -81,12 +81,6 @@ Then (~'the final concept in that criterion is updated$'){->
     assert page.update()
 }
 
-//Scenario: Spreadsheet without students or criteria
-Given(~'that I am on the Manual Concept Input Page$'){ ->
-    to ManualConceptInputPage
-    at ManualConceptInputPage
-}
-
 And (~'there are no students$'){->
     at ManualConceptInputPage
     assert !page.checkStudentes()
