@@ -1,7 +1,5 @@
 
 <%@ page import="ta.Student" %>
-<%@ page import="ta.EvaluationCriterion" %>
-
 <!DOCTYPE html>
 <html>
 	<head>
@@ -26,11 +24,17 @@
 			<thead>
 					<tr>
 					
-						<g:sortableColumn property="login" title="${message(code: 'student.login.label', default: 'Login')}" />
-					
 						<g:sortableColumn property="name" title="${message(code: 'student.name.label', default: 'Name')}" />
 					
-						<g:sortableColumn property="evaluations" title="${message(code: 'student.evaluations.label', default: 'Evaluations')}" />
+						<g:sortableColumn property="login" title="${message(code: 'student.login.label', default: 'Login')}" />
+					
+						<g:sortableColumn property="email" title="${message(code: 'student.email.label', default: 'Email')}" />
+					
+						<g:sortableColumn property="active" title="${message(code: 'student.active.label', default: 'Active')}" />
+					
+						<g:sortableColumn property="enabled" title="${message(code: 'student.enabled.label', default: 'Enabled')}" />
+					
+						<g:sortableColumn property="autoEvaluations" title="${message(code: 'student.autoEvaluations.label', default: 'Auto Evaluations')}" />
 					
 					</tr>
 				</thead>
@@ -38,11 +42,17 @@
 				<g:each in="${studentInstanceList}" status="i" var="studentInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${studentInstance.id}">${fieldValue(bean: studentInstance, field: "login")}</g:link></td>
+						<td><g:link action="show" id="${studentInstance.id}">${fieldValue(bean: studentInstance, field: "name")}</g:link></td>
 					
-						<td>${fieldValue(bean: studentInstance, field: "name")}</td>
+						<td>${fieldValue(bean: studentInstance, field: "login")}</td>
 					
-						<td>${fieldValue(bean: studentInstance, field: "evaluations")}</td>
+						<td>${fieldValue(bean: studentInstance, field: "email")}</td>
+					
+						<td><g:formatBoolean boolean="${studentInstance.active}" /></td>
+					
+						<td><g:formatBoolean boolean="${studentInstance.enabled}" /></td>
+					
+						<td>${fieldValue(bean: studentInstance, field: "autoEvaluations")}</td>
 					
 					</tr>
 				</g:each>
@@ -52,45 +62,5 @@
 				<g:paginate total="${studentInstanceCount ?: 0}" />
 			</div>
 		</div>
-	<!--Eu que fiz essa parte-->
-	<div>
-		<table>
-			<thead>
-			<tr>
-
-				<g:sortableColumn property="login" title="${message(code: 'student.login.label', default: 'Login')}" />
-
-				<g:sortableColumn property="name" title="${message(code: 'student.name.label', default: 'Name')}" />
-
-				<g:each in="${EvaluationCriterion.findAll()}" var="evCriterion">
-					<g:sortableColumn property="evaluations" title="${evCriterion.name}" />
-				</g:each>
-			</tr>
-			</thead>
-			<tbody>
-			<g:each in="${studentInstanceList}" status="i" var="studentInstance">
-				<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-
-					<td><g:link action="show" id="${studentInstance.id}">${fieldValue(bean: studentInstance, field: "login")}</g:link></td>
-
-					<td>${fieldValue(bean: studentInstance, field: "name")}</td>
-
-					<g:each in="${EvaluationCriterion.findAll()}" var="evCriterion">
-						<td>
-							<g:select id="${studentInstance.login}+/+${evCriterion.name}" name="selector"
-									  from="${ta.Student.Concept.CONCEPTS}"
-									  value="${studentInstance.evaluations.get(evCriterion.name)}"
-									  onchange="${remoteFunction(
-											  action: 'updateConcepts',
-											  params:'\'studentCriterion=\' + this.id + \'&concept=\' + this.value'
-									  )}"
-							/>
-						</td>
-					</g:each>
-				</tr>
-			</g:each>
-			</tbody>
-		</table>
-	</div>
 	</body>
 </html>

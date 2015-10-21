@@ -3,6 +3,10 @@ package ta
 class Student {
     String login
     String name
+    String passwordHash
+    String email
+    Boolean active
+    Boolean enabled
 
     // tentei um enumerador primeiro mas da erro
     static class Concept {
@@ -13,8 +17,12 @@ class Student {
     Map<String, String> AutoEvaluations
 
     static constraints = {
-        login unique: true
-        name blank: false
+
+        name(nullable: false, blank: false)
+        login(unique:true,nullable: false, blank: false,size: 5..20)
+        email(unique:true,email: true, nullable: false)
+        active(nullable: true)
+        enabled(blank: false)
     }
 
     public void afterCreateAddCriteria(List<EvaluationCriterion> evaluationCriteria) {

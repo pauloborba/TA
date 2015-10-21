@@ -14,19 +14,19 @@ class ConceptController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Concept.list(params), model: [conceptInstanceCount: Concept.count()]
+        respond Concept.list(params), model: [conceptInstanceCount: Student.Concept.count()]
     }
 
-    def show(Concept conceptInstance) {
+    def show(Student.Concept conceptInstance) {
         respond conceptInstance
     }
 
     def create() {
-        respond new Concept(params)
+        respond new Student.Concept(params)
     }
 
     @Transactional
-    def save(Concept conceptInstance) {
+    def save(Student.Concept conceptInstance) {
         if (conceptInstance == null) {
             notFound()
             return
@@ -48,12 +48,12 @@ class ConceptController {
         }
     }
 
-    def edit(Concept conceptInstance) {
+    def edit(Student.Concept conceptInstance) {
         respond conceptInstance
     }
 
     @Transactional
-    def update(Concept conceptInstance) {
+    def update(Student.Concept conceptInstance) {
         if (conceptInstance == null) {
             notFound()
             return
@@ -76,7 +76,7 @@ class ConceptController {
     }
 
     @Transactional
-    def delete(Concept conceptInstance) {
+    def delete(Student.Concept conceptInstance) {
 
         if (conceptInstance == null) {
             notFound()
