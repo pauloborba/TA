@@ -31,6 +31,13 @@ class StudentController {
         return student
     }
 
+    def list(){
+        def students = Student.findAll()
+        def criteria = EvaluationCriterion.findAll()
+
+        render view: "manualInput", model:[students: students, criteria: criteria]
+    }
+
     public boolean saveStudent(Student student) {
         if(Student.findByLogin(student.login) == null) {
             student.save flush: true
