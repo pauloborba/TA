@@ -16,21 +16,20 @@ Given(~'^that the system has a student named "([^"]*)" with login "([^"]*)" regi
 	savedStudent = Student.findByLogin(login)
 	assert savedStudent != null
 }
-And(~'^that the system has evaluation criteria named "([^"]*)", "([^"]*)", and "([^"]*)" registered$') { String criteria1, criteria2, criteria3 ->
-	EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria1)
-	assert EvaluationCriterion.findByName(criteria1) != null
+And(~'^that the system has evaluation criteria named "([^"]*)", "([^"]*)", and "([^"]*)" registered$') { String criteria_name1, criteria_name2, criteria_name3 ->
+	EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria_name1)
+	savedCriteria1 = EvaluationCriterion.findByName(criteria_name1)
+	assert savedCriteria1 != null
 
-	EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria2)
-	assert EvaluationCriterion.findByName(criteria2) != null
+	EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria_name2)
+	savedCriteria2 = EvaluationCriterion.findByName(criteria_name2)
+	assert savedCriteria2 != null
 
-	EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria3)
-	assert EvaluationCriterion.findByName(criteria3) != null
+	EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria_name3)
+	savedCriteria3 = EvaluationCriterion.findByName(criteria_name3)
+	assert savedCriteria3 != null
 
-	savedCriteria1 = criteria1
-	savedCriteria2 = criteria2
-	savedCriteria3 = criteria3
-
-	evals = [EvaluationCriterion.findByName(criteria1), EvaluationCriterion.findByName(criteria2), EvaluationCriterion.findByName(criteria3)]
+	evals = [savedCriteria1, savedCriteria2, savedCriteria3]
 }
 And(~'^that "([^"]*)" only has a MANA registered as a grade for the "([^"]*)" and "([^"]*)" criteria$') { String name, criteria1, criteria2 ->
 	//TODO: add "MANA" grade to criteria 1 and 2 and assert both

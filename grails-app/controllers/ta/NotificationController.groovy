@@ -10,7 +10,7 @@ class NotificationController {
     }
 
     def show() {
-        def list = Notifications.getAll()
+        def list = Notification.getAll()
         if (list.empty) {
             flash.message = "There are no new notifications."
         }

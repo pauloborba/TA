@@ -3,10 +3,10 @@ package pages
 import geb.Page
 
 class ShowNotificationsPage extends Page{
-    static url = "/TA/notifications/show"
+    static url = "/TA/notifications/index"
 
     static at = {
-        title ==~ /Notifications/
+        title ==~ /Notification/
     }
 
     def selectShowNotifications(){
