@@ -21,8 +21,12 @@
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
 
-			<input type="file" name = "datafile" size = "40"/>
-			<input type="submit" value="Upload" name ="submit"/>
+			<g:uploadForm controller="concept" action = "submit">
+
+				<input type="file" name = "datafile" size = "40"/>
+				%{--<g:actionSubmit  name="submit" value="submit"/>--}%
+				<g:submitButton  name="submit" value="submit"/>
+			</g:uploadForm>
 		</div>
 	</body>
 </html>

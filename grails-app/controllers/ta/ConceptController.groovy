@@ -107,9 +107,24 @@ class ConceptController {
     def upload(){
 
     }
+    def submit() {
+        //sheet.validFileFormat();
+        sheet = new Sheet()
+        sheet.filename = params.datafile.getOriginalFilename()
+        //System.out.println("PARAMS: " + params.datafile.getOriginalFilename())
+
+        if (!sheet.validFileFormat()) {
+            flash.message = "Invalid file format!"
+        }
+        render view: "upload"
+    }
 
     def importSheet(Sheet sheet){
         this.sheet = sheet;
+    }
+
+    def invalidFileFormatMessage(){
+//        flash.message = "Invalid file format!"
     }
 
     def reset(){
