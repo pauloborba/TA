@@ -4,6 +4,12 @@ import commom.SheetBuilder
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
+<<<<<<< HEAD
+=======
+import static org.springframework.http.HttpStatus.*
+import grails.transaction.Transactional
+
+>>>>>>> 6e87b84962abbf18b068e9aef5aa0b8ae9cb1c47
 @Transactional(readOnly = true)
 class ConceptController {
     SheetBuilder builder = new SheetBuilder()
@@ -13,19 +19,34 @@ class ConceptController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
+<<<<<<< HEAD
         respond Concept.list(params), model: [conceptInstanceCount: Student.Concept.count()]
     }
 
     def show(Student.Concept conceptInstance) {
+=======
+        respond Concept.list(params), model: [conceptInstanceCount: Concept.count()]
+    }
+
+    def show(Concept conceptInstance) {
+>>>>>>> 6e87b84962abbf18b068e9aef5aa0b8ae9cb1c47
         respond conceptInstance
     }
 
     def create() {
+<<<<<<< HEAD
         respond new Student.Concept(params)
     }
 
     @Transactional
     def save(Student.Concept conceptInstance) {
+=======
+        respond new Concept(params)
+    }
+
+    @Transactional
+    def save(Concept conceptInstance) {
+>>>>>>> 6e87b84962abbf18b068e9aef5aa0b8ae9cb1c47
         if (conceptInstance == null) {
             notFound()
             return
@@ -47,16 +68,25 @@ class ConceptController {
         }
     }
 
+<<<<<<< HEAD
     def edit(Student.Concept conceptInstance) {
+=======
+    def edit(Concept conceptInstance) {
+>>>>>>> 6e87b84962abbf18b068e9aef5aa0b8ae9cb1c47
         respond conceptInstance
     }
 
     @Transactional
+<<<<<<< HEAD
     def update(Student.Concept conceptInstance) {
+=======
+    def update(Concept conceptInstance) {
+>>>>>>> 6e87b84962abbf18b068e9aef5aa0b8ae9cb1c47
         if (conceptInstance == null) {
             notFound()
             return
         }
+<<<<<<< HEAD
 
         if (conceptInstance.hasErrors()) {
             respond conceptInstance.errors, view: 'edit'
@@ -111,9 +141,85 @@ class ConceptController {
         this.sheet = sheet;
     }
 
+=======
+
+        if (conceptInstance.hasErrors()) {
+            respond conceptInstance.errors, view: 'edit'
+            return
+        }
+
+        conceptInstance.save flush: true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'Concept.label', default: 'Concept'), conceptInstance.id])
+                redirect conceptInstance
+            }
+            '*' { respond conceptInstance, [status: OK] }
+        }
+    }
+
+    @Transactional
+    def delete(Concept conceptInstance) {
+
+        if (conceptInstance == null) {
+            notFound()
+            return
+        }
+
+        conceptInstance.delete flush: true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Concept.label', default: 'Concept'), conceptInstance.id])
+                redirect action: "index", method: "GET"
+            }
+            '*' { render status: NO_CONTENT }
+        }
+    }
+
+    protected void notFound() {
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'concept.label', default: 'Concept'), params.id])
+                redirect action: "index", method: "GET"
+            }
+            '*' { render status: NOT_FOUND }
+        }
+    }
+
+    def upload(){
+
+    }
+    def submit() {
+        //sheet.validFileFormat();
+        sheet = new Sheet()
+        sheet.filename = params.datafile.getOriginalFilename()
+        //System.out.println("PARAMS: " + params.datafile.getOriginalFilename())
+
+        if (!sheet.validFileFormat()) {
+            flash.message = "Invalid file format!"
+        }
+        render view: "upload"
+    }
+
+    def importSheet(Sheet sheet){
+        this.sheet = sheet;
+    }
+
+    def invalidFileFormatMessage(){
+//        flash.message = "Invalid file format!"
+    }
+
+>>>>>>> 6e87b84962abbf18b068e9aef5aa0b8ae9cb1c47
     def reset(){
         builder.removeSheet();
         this.sheet = null;
         return true;
     }
 }
+
+
+//def save(){
+//    return this.sheet.save();
+//}
