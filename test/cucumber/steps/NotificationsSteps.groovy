@@ -16,31 +16,27 @@ Given(~'^that the system has a student named "([^"]*)" with login "([^"]*)" regi
 	savedStudent = Student.findByLogin(login)
 	assert savedStudent != null
 }
-And(~'^that the system has evaluation criteria named "([^"]*)", "([^"]*)", and "([^"]*)" registered$') { String criteria1, criteria2, criteria3 ->
-	EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria1)
-	assert EvaluationCriterion.findByName(criteria1) != null
+And(~'^that the system has evaluation criteria named "([^"]*)", "([^"]*)", and "([^"]*)" registered$') { String criteria_name1, criteria_name2, criteria_name3 ->
+	EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria_name1)
+	savedCriteria1 = EvaluationCriterion.findByName(criteria_name1)
+	assert savedCriteria1 != null
 
-	EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria2)
-	assert EvaluationCriterion.findByName(criteria2) != null
+	EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria_name2)
+	savedCriteria2 = EvaluationCriterion.findByName(criteria_name2)
+	assert savedCriteria2 != null
 
-	EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria3)
-	assert EvaluationCriterion.findByName(criteria3) != null
+	EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria_name3)
+	savedCriteria3 = EvaluationCriterion.findByName(criteria_name3)
+	assert savedCriteria3 != null
 
-	savedCriteria1 = criteria1
-	savedCriteria2 = criteria2
-	savedCriteria3 = criteria3
-
-	Set<EvaluationCriterion> a = new HashSet<EvaluationCriterion>()
-	a.add(criteria1)
-	a.add(criteria2)
-	a.add(criteria3)
+	evals = [savedCriteria1, savedCriteria2, savedCriteria3]
 }
 And(~'^that "([^"]*)" only has a MANA registered as a grade for the "([^"]*)" and "([^"]*)" criteria$') { String name, criteria1, criteria2 ->
-	//TODO: add "MANA" grade to criteria 1 and 2 and assert bot
+	//TODO: add "MANA" grade to criteria 1 and 2 and assert both
 }
 When(~'^I register MANA as the grade for "([^"]*)" for the "([^"]*)" criteria$') { String name, criteria3 ->
 	//TODO: add "MANA" grade to criteira3
-	def newNotification = NotificationsTestDataAndOperations.createNotification(savedStudent, a)
+ 	def newNotification = NotificationsTestDataAndOperations.createNotification(savedStudent, evals)
 	assert newNotification != null
 }
 Then(~'^the system stores a low performance notification$') {  ->
@@ -111,9 +107,10 @@ Given(~'^that I am on the Notifications Page$') { ->
 And(~'^there is no registered notifications$') { ->
 	assert Notification.count == 0
 }
-When(~'^I select "Read Notifications$') { ->
+When(~'^I select "Read Notifications"$') { ->
 	page.selectReadNotifications()
 }
 Then(~'^I can see "There are no new notifications"$') { ->
 	assert page.readFlashMessage() != null
 }
+
