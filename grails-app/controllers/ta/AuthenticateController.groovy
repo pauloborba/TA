@@ -25,30 +25,30 @@ class AuthenticateController {
 
         def signIn = {
 
-            Student member = Student.findByLogin(params.username)
-            if(member == null) {
-                flash.message = message(code: "login.failed")
-                redirect(uri: "/auth/login")
-                return
-            }
-
-            def authToken = new UsernamePasswordToken(params.username, params.password as String)
-
-            // Support for "remember me"
-            if (params.rememberMe) {
-                authToken.rememberMe = true
-            }
-
-            // If a controller redirected to this page, redirect back
-            // to it. Otherwise redirect to the root URI.
-            def targetUri = params.targetUri ?: "/"
-
-            // Handle requests saved by Shiro filters.
-            def savedRequest = WebUtils.getSavedRequest(request)
-            if (savedRequest) {    // print("deu saved request: " + savedRequest.toString())
-                targetUri = savedRequest.requestURI - request.contextPath
-                if (savedRequest.queryString) targetUri = targetUri + '?' + savedRequest.queryString
-            }
+//            Student member = Student.findByLogin(params.username)
+//            if(member == null) {
+//                flash.message = message(code: "login.failed")
+//                redirect(uri: "/auth/login")
+//                return
+//            }
+//
+//            def authToken = new UsernamePasswordToken(params.username, params.password as String)
+//
+//            // Support for "remember me"
+//            if (params.rememberMe) {
+//                authToken.rememberMe = true
+//            }
+//
+//            // If a controller redirected to this page, redirect back
+//            // to it. Otherwise redirect to the root URI.
+//            def targetUri = params.targetUri ?: "/"
+//
+//            // Handle requests saved by Shiro filters.
+//            def savedRequest = WebUtils.getSavedRequest(request)
+//            if (savedRequest) {    // print("deu saved request: " + savedRequest.toString())
+//                targetUri = savedRequest.requestURI - request.contextPath
+//                if (savedRequest.queryString) targetUri = targetUri + '?' + savedRequest.queryString
+//            }
 
             try{
                 // Perform the actual login. An AuthenticationException
@@ -116,28 +116,28 @@ class AuthenticateController {
             render(view:'resetPassword')
         }
         def doResetPassword = {
-            if (params.password1!=params.password2) {
-                flash.message = "Please enter same passwords."
-                flash.status = "error"
-                redirect(action:'resetPassword',id:params.token)
-            } else {
-                def resetRequest = (params.token ? PasswordResetRequest.findByToken(params.token) : null)
-                def connectedUser = SecurityUtils.subject?.principal
-                def user = resetRequest?.student ?: (connectedUser ? Student.findByLogin(connectedUser) : null)
-                if (user) {
-                    user.passwordHash = new Sha256Hash(params.password1).toHex()
-                    user.passwordChangeRequiredOnNextLogon = false
-                    if (user.save()){
-                        resetRequest?.delete()
-                        flash.message = "Password successfully updated"
-                        redirect(uri:'/')
-                    }
-                } else {
-                    flash.status = "error"
-                    flash.message = "Unknown user"
-                    redirect(action:'resetPassword',id:params.token)
-                }
-            }
+//            if (params.password1!=params.password2) {
+//                flash.message = "Please enter same passwords."
+//                flash.status = "error"
+//                redirect(action:'resetPassword',id:params.token)
+//            } else {
+//                def resetRequest = (params.token ? PasswordResetRequest.findByToken(params.token) : null)
+//                def connectedUser = SecurityUtils.subject?.principal
+//                def user = resetRequest?.student ?: (connectedUser ? Student.findByLogin(connectedUser) : null)
+//                if (user) {
+//                    user.passwordHash = new Sha256Hash(params.password1).toHex()
+//                    user.passwordChangeRequiredOnNextLogon = false
+//                    if (user.save()){
+//                        resetRequest?.delete()
+//                        flash.message = "Password successfully updated"
+//                        redirect(uri:'/')
+//                    }
+//                } else {
+//                    flash.status = "error"
+//                    flash.message = "Unknown user"
+//                    redirect(action:'resetPassword',id:params.token)
+//                }
+//            }
         }
         def putErrorAndRedirect(message,status,action) {
             flash.message = message
@@ -145,26 +145,26 @@ class AuthenticateController {
             redirect(action: action)
         }
         def doUpdatePassword = {
-            if (params.password1!=params.password2) {
-                putErrorAndRedirect("Please enter same passwords.","error",'updatePassword')
-            } else {
-                def user = Student.findByLogin(SecurityUtils.subject?.principal)
-                if (user) {
-                    if (user.passwordHash == new Sha256Hash(params.oldpassword).toHex()){
-                        user.passwordHash = new Sha256Hash(params.password1).toHex()
-                        if (user.save()){
-                            flash.message = "Password successfully updated"
-                            redirect(uri:'/')
-                        } else {
-                            putErrorAndRedirect("Password update failed.","error",'updatePassword')
-                        }
-                    } else {
-                        putErrorAndRedirect("Incorrect old password .","error",'updatePassword')
-                    }
-                } else {
-                    putErrorAndRedirect("Unknown user.","error",'updatePassword')
-                }
-            }
+//            if (params.password1!=params.password2) {
+//                putErrorAndRedirect("Please enter same passwords.","error",'updatePassword')
+//            } else {
+//                def user = Student.findByLogin(SecurityUtils.subject?.principal)
+//                if (user) {
+//                    if (user.passwordHash == new Sha256Hash(params.oldpassword).toHex()){
+//                        user.passwordHash = new Sha256Hash(params.password1).toHex()
+//                        if (user.save()){
+//                            flash.message = "Password successfully updated"
+//                            redirect(uri:'/')
+//                        } else {
+//                            putErrorAndRedirect("Password update failed.","error",'updatePassword')
+//                        }
+//                    } else {
+//                        putErrorAndRedirect("Incorrect old password .","error",'updatePassword')
+//                    }
+//                } else {
+//                    putErrorAndRedirect("Unknown user.","error",'updatePassword')
+//                }
+//            }
         }
         def resetPassword = {
             if (params.id){
@@ -198,46 +198,46 @@ class AuthenticateController {
 
 
         def register = {
-            //("ENTROU no register")
-
-            if (params.password1 != params.password2) {
-                flash.message = "Please enter same passwords."
-                flash.status = "error"
-                params.password1 = ""
-                params.password2 = ""
-                return [studentInstance: new Student(params)]
-            }
-
-            def memberInstance = new Student(params)
-
-            if (!grailsApplication.config.grails.mail.login) {
-                throw new RuntimeException(message(code: 'mail.plugin.not.configured', 'default' : 'Mail plugin not configured'))
-            }
-
-            if(params.login == null){
-               return [studentInstance: studentInstance]
-            }
-
-            def enabled = false
-
-            def pwdHash = new Sha256Hash(params.password1).toHex()
-
-            studentInstance = new Student(username:params.login,name:params.name, status:params.status, passwordHash: pwdHash, email:params.email, passwordChangeRequiredOnNextLogon:false, enabled:enabled, university:params.university)
-            def name = studentInstance?.name
-            def emailAddress = studentInstance?.email
-
-            if (!studentIstance.save(flush: true)) {
-                //flash.message = "Error creating user"
-                render(view: "register", model: [memberInstance: studentInstance])
-                studentInstance.errors.each{
-
-                }
-                return
-            }
-
-
-            flash.message = "User successfully created";
-            render(view: "register")
+//            //("ENTROU no register")
+//
+//            if (params.password1 != params.password2) {
+//                flash.message = "Please enter same passwords."
+//                flash.status = "error"
+//                params.password1 = ""
+//                params.password2 = ""
+//                return [studentInstance: new Student(params)]
+//            }
+//
+//            def memberInstance = new Student(params)
+//
+//            if (!grailsApplication.config.grails.mail.login) {
+//                throw new RuntimeException(message(code: 'mail.plugin.not.configured', 'default' : 'Mail plugin not configured'))
+//            }
+//
+//            if(params.login == null){
+//               return [studentInstance: studentInstance]
+//            }
+//
+//            def enabled = false
+//
+//            def pwdHash = new Sha256Hash(params.password1).toHex()
+//
+//            studentInstance = new Student(username:params.login,name:params.name, status:params.status, passwordHash: pwdHash, email:params.email, passwordChangeRequiredOnNextLogon:false, enabled:enabled, university:params.university)
+//            def name = studentInstance?.name
+//            def emailAddress = studentInstance?.email
+//
+//            if (!studentIstance.save(flush: true)) {
+//                //flash.message = "Error creating user"
+//                render(view: "register", model: [memberInstance: studentInstance])
+//                studentInstance.errors.each{
+//
+//                }
+//                return
+//            }
+//
+//
+//            flash.message = "User successfully created";
+//            render(view: "register")
 
         }
 

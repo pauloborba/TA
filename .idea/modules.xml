@@ -2,19 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TA.iml" filepath="$PROJECT_DIR$/TA.iml" />
-      <module fileurl="file://$PROJECT_DIR$/TA-grailsPlugins.iml" filepath="$PROJECT_DIR$/TA-grailsPlugins.iml" />
-<<<<<<< HEAD
-<<<<<<< HEAD
-      <module fileurl="file://$PROJECT_DIR$/TA-grailsPlugins.iml" filepath="$PROJECT_DIR$/TA-grailsPlugins.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/TA3.iml" filepath="$PROJECT_DIR$/.idea/TA3.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/TA3-grailsPlugins.iml" filepath="$PROJECT_DIR$/.idea/TA3-grailsPlugins.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/TA4.iml" filepath="$PROJECT_DIR$/.idea/TA4.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/TA4.iml" filepath="$PROJECT_DIR$/.idea/TA4.iml" />
-=======
->>>>>>> 35391b6974a1be2133b0fef32c93aec7e9e58e16
-=======
->>>>>>> 35391b6974a1be2133b0fef32c93aec7e9e58e16
+      <module fileurl="file://$PROJECT_DIR$/.idea/TA5.iml" filepath="$PROJECT_DIR$/.idea/TA5.iml" />
     </modules>
   </component>
 </project>

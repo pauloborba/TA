@@ -1,24 +1,6 @@
 package ta
 
 import commom.SheetBuilder
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-class ConceptController {
-
-    SheetBuilder builder = new SheetBuilder()
-
-    def index() {}
-
-    def importSheet(sheet){}
-
-    def reset(){}
-
-    def save(){}
-}
-=======
-=======
->>>>>>> 35391b6974a1be2133b0fef32c93aec7e9e58e16
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
@@ -135,13 +117,3 @@ class ConceptController {
         return true;
     }
 }
-
-
-//def save(){
-//    return this.sheet.save();
-<<<<<<< HEAD
-//}
->>>>>>> 35391b6974a1be2133b0fef32c93aec7e9e58e16
-=======
-//}
->>>>>>> 35391b6974a1be2133b0fef32c93aec7e9e58e16
