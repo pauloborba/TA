@@ -1,6 +1,9 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
+>>>>>>> 35391b6974a1be2133b0fef32c93aec7e9e58e16
+=======
 >>>>>>> 35391b6974a1be2133b0fef32c93aec7e9e58e16
 #Requerimento: Autoavaliação (divulgação com prazo)
 #
@@ -43,7 +46,10 @@
 ## (Eduardo Ximenes - diest)
 ## Faltaram cenários de interface gráfica.
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 35391b6974a1be2133b0fef32c93aec7e9e58e16
 =======
 Requerimento: Autoavaliação (divulgação com prazo)
 
@@ -86,4 +92,7 @@ Cenário 4: Data posterior ao período da disciplina.
 # (Eduardo Ximenes - diest)
 # Faltaram cenários de interface gráfica.
 >>>>>>> 40a51b34da0e56c7a645b86e3fd8b165cc38330f
+<<<<<<< HEAD
+>>>>>>> 35391b6974a1be2133b0fef32c93aec7e9e58e16
+=======
 >>>>>>> 35391b6974a1be2133b0fef32c93aec7e9e58e16

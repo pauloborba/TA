@@ -28,7 +28,11 @@ class StudentController {
         Student student = new Student(params)
         student.afterCreateAddCriteria(EvaluationCriterion.findAll())
 <<<<<<< HEAD
+<<<<<<< HEAD
         student.afterCreateAddAutoCriteria(AutoEvaluationCriterion.findAll())
+=======
+        student.afterCreateAddAutoEvaluationCriteria(EvaluationAutoEvaluationCriterion.findAll())
+>>>>>>> 35391b6974a1be2133b0fef32c93aec7e9e58e16
 =======
         student.afterCreateAddAutoEvaluationCriteria(EvaluationAutoEvaluationCriterion.findAll())
 >>>>>>> 35391b6974a1be2133b0fef32c93aec7e9e58e16
