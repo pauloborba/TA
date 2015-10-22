@@ -23,15 +23,6 @@
 			</g:if>
 			<ol class="property-list student">
 			
-				<g:if test="${studentInstance?.login}">
-				<li class="fieldcontain">
-					<span id="login-label" class="property-label"><g:message code="student.login.label" default="Login" /></span>
-					
-						<span class="property-value" aria-labelledby="login-label"><g:fieldValue bean="${studentInstance}" field="login"/></span>
-					
-				</li>
-				</g:if>
-			
 				<g:if test="${studentInstance?.name}">
 				<li class="fieldcontain">
 					<span id="name-label" class="property-label"><g:message code="student.name.label" default="Name" /></span>
@@ -41,11 +32,65 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${studentInstance?.login}">
+				<li class="fieldcontain">
+					<span id="login-label" class="property-label"><g:message code="student.login.label" default="Login" /></span>
+					
+						<span class="property-value" aria-labelledby="login-label"><g:fieldValue bean="${studentInstance}" field="login"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${studentInstance?.email}">
+				<li class="fieldcontain">
+					<span id="email-label" class="property-label"><g:message code="student.email.label" default="Email" /></span>
+					
+						<span class="property-value" aria-labelledby="email-label"><g:fieldValue bean="${studentInstance}" field="email"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${studentInstance?.active}">
+				<li class="fieldcontain">
+					<span id="active-label" class="property-label"><g:message code="student.active.label" default="Active" /></span>
+					
+						<span class="property-value" aria-labelledby="active-label"><g:formatBoolean boolean="${studentInstance?.active}" /></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${studentInstance?.enabled}">
+				<li class="fieldcontain">
+					<span id="enabled-label" class="property-label"><g:message code="student.enabled.label" default="Enabled" /></span>
+					
+						<span class="property-value" aria-labelledby="enabled-label"><g:formatBoolean boolean="${studentInstance?.enabled}" /></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${studentInstance?.autoEvaluations}">
+				<li class="fieldcontain">
+					<span id="autoEvaluations-label" class="property-label"><g:message code="student.autoEvaluations.label" default="Auto Evaluations" /></span>
+					
+						<span class="property-value" aria-labelledby="autoEvaluations-label"><g:fieldValue bean="${studentInstance}" field="autoEvaluations"/></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${studentInstance?.evaluations}">
 				<li class="fieldcontain">
 					<span id="evaluations-label" class="property-label"><g:message code="student.evaluations.label" default="Evaluations" /></span>
 					
 						<span class="property-value" aria-labelledby="evaluations-label"><g:fieldValue bean="${studentInstance}" field="evaluations"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${studentInstance?.passwordHash}">
+				<li class="fieldcontain">
+					<span id="passwordHash-label" class="property-label"><g:message code="student.passwordHash.label" default="Password Hash" /></span>
+					
+						<span class="property-value" aria-labelledby="passwordHash-label"><g:fieldValue bean="${studentInstance}" field="passwordHash"/></span>
 					
 				</li>
 				</g:if>
