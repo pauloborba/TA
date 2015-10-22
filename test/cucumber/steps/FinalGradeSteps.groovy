@@ -1,6 +1,9 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
+>>>>>>> 35391b6974a1be2133b0fef32c93aec7e9e58e16
+=======
 >>>>>>> 35391b6974a1be2133b0fef32c93aec7e9e58e16
 //package steps
 //
@@ -66,7 +69,10 @@
 //    //Não sei o que poderia escrever aqui uma vez que não há uma ação
 //}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 35391b6974a1be2133b0fef32c93aec7e9e58e16
 =======
 package steps
 
@@ -132,4 +138,7 @@ Then(~'^the final grade is not calculated$') { ->
     //Não sei o que poderia escrever aqui uma vez que não há uma ação
 }
 >>>>>>> 40a51b34da0e56c7a645b86e3fd8b165cc38330f
+<<<<<<< HEAD
+>>>>>>> 35391b6974a1be2133b0fef32c93aec7e9e58e16
+=======
 >>>>>>> 35391b6974a1be2133b0fef32c93aec7e9e58e16

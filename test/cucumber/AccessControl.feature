@@ -72,4 +72,7 @@ Feature: Access Control
   # Evite ser específico demais usando coisas como "click" e "button". A ideia é ser mais genérico quanto à
   # interação com a interface, pois facilita a portabilidade para outra plataforma, tipo mobile. É uma boa prática.
   
+<<<<<<< HEAD
+>>>>>>> 35391b6974a1be2133b0fef32c93aec7e9e58e16
+=======
 >>>>>>> 35391b6974a1be2133b0fef32c93aec7e9e58e16

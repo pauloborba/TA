@@ -138,6 +138,7 @@
 						<td><g:link action="show" id="${studentInstance.id}">${fieldValue(bean: studentInstance, field: "name")}</g:link></td>
 					
 						<td>${fieldValue(bean: studentInstance, field: "login")}</td>
+<<<<<<< HEAD
 					
 						<td>${fieldValue(bean: studentInstance, field: "email")}</td>
 					
@@ -145,6 +146,15 @@
 					
 						<td><g:formatBoolean boolean="${studentInstance.enabled}" /></td>
 					
+=======
+					
+						<td>${fieldValue(bean: studentInstance, field: "email")}</td>
+					
+						<td><g:formatBoolean boolean="${studentInstance.active}" /></td>
+					
+						<td><g:formatBoolean boolean="${studentInstance.enabled}" /></td>
+					
+>>>>>>> 35391b6974a1be2133b0fef32c93aec7e9e58e16
 						<td>${fieldValue(bean: studentInstance, field: "autoEvaluations")}</td>
 					
 					</tr>
@@ -157,4 +167,7 @@
 		</div>
 	</body>
 </html>
+<<<<<<< HEAD
+>>>>>>> 35391b6974a1be2133b0fef32c93aec7e9e58e16
+=======
 >>>>>>> 35391b6974a1be2133b0fef32c93aec7e9e58e16
