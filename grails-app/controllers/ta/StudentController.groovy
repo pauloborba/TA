@@ -27,6 +27,7 @@ class StudentController {
     public Student createStudent() {
         Student student = new Student(params)
         student.afterCreateAddCriteria(EvaluationCriterion.findAll())
+        student.afterCreateAddAutoCriteria(AutoEvaluationCriterion.findAll())
         return student
     }
 
@@ -44,6 +45,12 @@ class StudentController {
                 student.addCriterion(evCriterion)
                 student.save flush: true
             }
+
+            for (AutoEvaluationCriterion autoEvCriterion : AutoEvaluationCriterion.findAll()) {
+                student.addAutoCriterion(autoEvCriterion)
+                student.save flush: true
+            }
+
         }
     }
 
