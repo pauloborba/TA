@@ -28,15 +28,13 @@ And(~'^that the system has evaluation criteria named "([^"]*)", "([^"]*)", and "
 	EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria_name3)
 	savedCriteria3 = EvaluationCriterion.findByName(criteria_name3)
 	assert savedCriteria3 != null
-
-	evals = [savedCriteria1, savedCriteria2, savedCriteria3]
 }
 And(~'^that "([^"]*)" only has a MANA registered as a grade for the "([^"]*)" and "([^"]*)" criteria$') { String name, criteria1, criteria2 ->
 	//TODO: add "MANA" grade to criteria 1 and 2 and assert both
 }
 When(~'^I register MANA as the grade for "([^"]*)" for the "([^"]*)" criteria$') { String name, criteria3 ->
 	//TODO: add "MANA" grade to criteira3
- 	def newNotification = NotificationsTestDataAndOperations.createNotification(savedStudent, evals)
+ 	def newNotification = NotificationsTestDataAndOperations.createNotification(savedStudent, savedCriteria1, savedCriteria2, savedCriteria3)
 	assert newNotification != null
 }
 Then(~'^the system stores a low performance notification$') {  ->
