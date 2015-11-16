@@ -7,47 +7,36 @@ this.metaClass.mixin(cucumber.api.groovy.Hooks)
 this.metaClass.mixin(cucumber.api.groovy.EN)
 
 // Scenario: Spreadsheet with at least one student and one criterion
-Given (~'that the spreadsheet contains at least one student and one criterion$') { ->
-    manualInputController = new ManualConceptInputController()
 
-    assert manualInputController.checkCriteria() && manualInputController.checkStudents()
+Given (~'that the spreadsheet contains at least one student and one criterion$') { ->
+
 
 }
 
 When (~'the user input manually a new concept "([^"]*)" with a description "([^"]*)" into a cell"([^"]*)"$'){ String concept, description, cell ->
-    manualInputController.inputConcept(concept, description, cell)
+
 }
 
 Then (~'the final criterion concept is updated in the system$'){ ->
-    assert  manualInputController.save()
+
 }
 
 //Scenario: Spreadsheet without students or criteria
 Given (~'that the spreadsheet does not contain students or criteria$') { ->
-    manualInputController = new ManualConceptInputController()
 
-    assert !manualInputController.checkStudents()
 }
 
 And (~'there is at least one criterion'){->
-    manualInputController = new ManualConceptInputController()
 
-    assert manualInputController.checkCriteria()
 }
 
 When (~'the user try to input manually a new concept "([^"]*)" with a description "([^"]*)" into a cell"([^"]*)"$'){ String concept, description, cell ->
-    manualInputController.inputConcept(concept, description, cell)
+
 }
 
 
 Then (~'the system returns a exception$'){ ->
-    boolean exception = false
-    try {
-        manualInputController.save()
-    } catch ( Exception e ){
-        exception = true;
-    }
-    assert exception
+
 }
 
 //Scenario: Spreadsheet with at least one student and one criterion

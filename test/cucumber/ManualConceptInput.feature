@@ -4,12 +4,14 @@ Feature: Manual Concept Input
   So I can input them from written evaluations
 
 #Controller Scenario
+  @ignore
   Scenario: Spreadsheet with at least one student and one criterion
     Given that the spreadsheet contains at least one student and one criterion
     When the user input manually a new concept "MA" with a description "Questão 1 da Prova 1" into the cell "B2"
     Then the final criterion concept is updated in the system
 
 #Controller Scenario
+  @ignore
   Scenario: Spreadsheet without students and at least one criterion
     Given that the spreadsheet does not contain students
     And there is at least one criterion
@@ -17,6 +19,7 @@ Feature: Manual Concept Input
     Then the system returns a exception
 
 #GUI Scenario
+  @ignore
   Scenario: Spreadsheet with at least one student and one criterion
     Given that I am on the Manual Concept Input page
     And there are at least one student and one criterion on the spreadsheet
@@ -26,6 +29,7 @@ Feature: Manual Concept Input
     Then the final concept in that criterion is updated
 
 #GUI Scenario
+  @ignore
   Scenario: Spreadsheet without students and at least one criterion
     Given that I am on the Manual Concept Input page
     And there are no students
