@@ -1,6 +1,5 @@
 package steps
 
-import ta.ManualConceptInputController;
 import pages.ManualConceptInputPage
 
 this.metaClass.mixin(cucumber.api.groovy.Hooks)
