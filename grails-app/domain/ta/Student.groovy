@@ -6,7 +6,7 @@ class Student {
 
     // tentei um enumerador primeiro mas da erro
     static class Concept {
-        public static final List<String> CONCEPTS = ["MA", "MPA", "MANA", "XX"]
+        public static final List<String> CONCEPTS = ["MA", "MPA", "MANA"]
     }
 
     Map<String, String> evaluations
@@ -20,7 +20,7 @@ class Student {
         evaluations = new HashMap<>()
         for(EvaluationCriterion evaluationCriterion : evaluationCriteria) {
             if(this.evaluations.get(evaluationCriterion.name) == null) {
-                this.evaluations.put(evaluationCriterion.name, Concept.CONCEPTS.get(3))
+                this.evaluations.put(evaluationCriterion.name, "")
             }
         }
     }
@@ -30,7 +30,7 @@ class Student {
             evaluations = new HashMap<>()
         }
         if(this.evaluations.get(evaluationCriterion.name) == null) {
-            this.evaluations.put(evaluationCriterion.name, Concept.CONCEPTS.get(3))
+            this.evaluations.put(evaluationCriterion.name, "")
         }
     }
 }
