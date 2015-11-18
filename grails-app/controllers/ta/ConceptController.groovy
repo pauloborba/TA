@@ -1,6 +1,7 @@
 package ta
 
 import commom.SheetBuilder
+import commom.SheetImporter
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
@@ -109,14 +110,51 @@ class ConceptController {
     }
     def submit() {
         //sheet.validFileFormat();
+        def f = request.getFile('datafile');
+
         sheet = new Sheet()
-        sheet.filename = params.datafile.getOriginalFilename()
+        String filename = params.datafile.getOriginalFilename()
+        sheet.filename = filename
         //System.out.println("PARAMS: " + params.datafile.getOriginalFilename())
 
         if (!sheet.validFileFormat()) {
             flash.message = "Invalid file format!"
+            render view: "upload"
+            return
         }
+
+
+
+        if (f.empty){
+            flash.message = 'file cannot be empty'
+            render(view: 'upload')
+            return
+        }
+
+        File newFile = new File(filename)
+        f.transferTo(newFile)
+        //response.sendError(200,'Done')
+
+        try {
+            SheetImporter sheetImporter = new SheetImporter(filename)
+            flash.message = 'Sheet uploaded!'
+
+            StudentController.addConcepts(sheetImporter.getConcepts());
+
+            println sheetImporter.getConcepts();
+
+        } catch(IllegalArgumentException e) {
+            flash.message = "Invalid file format!"
+        }
+
+
+        newFile.delete();
+
         render view: "upload"
+        return
+
+
+
     }
 
     def importSheet(Sheet sheet){
