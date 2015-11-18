@@ -27,8 +27,8 @@ class StudentController {
     public Student createStudent() {
         Student student = new Student(params)
         student.afterCreateAddCriteria(EvaluationCriterion.findAll())
-        student.afterCreateAddAutoCriteria(AutoEvaluationCriterion.findAll())
-        student.afterCreateAddAutoEvaluationCriteria(EvaluationAutoEvaluationCriterion.findAll())
+//        student.afterCreateAddAutoCriteria(AutoEvaluationCriterion.findAll())
+//        student.afterCreateAddAutoEvaluationCriteria(EvaluationAutoEvaluationCriterion.findAll())
         return student
     }
 
