@@ -8,7 +8,7 @@ Feature: Import concepts from spreadsheet
 #Controller Scenario
   @ignore
   Scenario: Importing valid spreadsheet
-    Given the spreadsheet "sheet.csv" or "sheet.xlsx" is on valid file format
+    Given the spreadsheet "sheet.xlsx" is on valid file format
     When I import its data
     Then update system data accordingly
 
@@ -23,13 +23,13 @@ Feature: Import concepts from spreadsheet
   @ignore
   Scenario: Importing valid spreadsheet
     Given that I am at the Concepts page
-    When I select the option to import spreadsheet "sheet.csv"
+    When I select the option to import spreadsheet "sheet.xlsx"
     And the spreadsheet is on valid format
     Then the Concepts page displays new data accordingly
 
 #GUI Scenario
   @gaabs
-  Scenario: Importing valid spreadsheet
+  Scenario: Importing invalid spreadsheet
     Given that I am at the Concepts page
     When I select the option to import spreadsheet "sheet.csv"
     And the spreadsheet is not on valid format

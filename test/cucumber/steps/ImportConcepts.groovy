@@ -13,7 +13,7 @@ this.metaClass.mixin(cucumber.api.groovy.EN)
 Sheet sheet
 // Given thse spreadsheet "sheet.csv" is on valid file format
 
-Given (~'^the spreadsheet "([^"]*)" or "([^"]*)" is on valid file format$'){ String filename1, filename2 ->
+Given (~'^the spreadsheet "([^"]*)" is on valid file format$'){ String filename1->
 	conceptController = new ConceptController();
 	conceptController.builder.createSheet()
 
@@ -21,10 +21,6 @@ Given (~'^the spreadsheet "([^"]*)" or "([^"]*)" is on valid file format$'){ Str
 	conceptController.builder.setSheetFilename(filename1)
 	sheet = conceptController.builder.getSheet()
 	valid = sheet.validFileFormat();
-
-	conceptController.builder.setSheetFilename(filename2)
-	sheet = conceptController.builder.getSheet()
-	valid &= sheet.validFileFormat();
 
 	assert valid;
 }
