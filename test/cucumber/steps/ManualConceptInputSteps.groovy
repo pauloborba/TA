@@ -1,53 +1,35 @@
 package steps
 
-import ta.ManualConceptInputController;
 import pages.ManualConceptInputPage
+import ta.EvaluationCriterion
+import ta.Student
+import ta.StudentController
 
 this.metaClass.mixin(cucumber.api.groovy.Hooks)
 this.metaClass.mixin(cucumber.api.groovy.EN)
 
 // Scenario: Spreadsheet with at least one student and one criterion
-Given (~'that the spreadsheet contains at least one student and one criterion$') { ->
-    manualInputController = new ManualConceptInputController()
+def studentName
+def criterionName
 
-    assert manualInputController.checkCriteria() && manualInputController.checkStudents()
 
+Given (~'that the student named "([^"]*)" with a login "([^"]*)" is registered in the system$') { String name, login ->
+    studentName = name
+    assert EvaluateStudentTestDataAndOperations.createStudent(login, name)
 }
 
-When (~'the user input manually a new concept "([^"]*)" with a description "([^"]*)" into a cell"([^"]*)"$'){ String concept, description, cell ->
-    manualInputController.inputConcept(concept, description, cell)
+And (~'the evaluation criterion "([^"]*)" is also registered in the system$'){ String name ->
+    criterionName = name
+    assert EvaluateStudentTestDataAndOperations.createEvaluationCriterion(name)
 }
 
-Then (~'the final criterion concept is updated in the system$'){ ->
-    assert  manualInputController.save()
+When (~'the user input manually a new concept "([^"]*)" into the student in that criterion$'){ String concept ->
+    String studentCriterion = studentName+"/"+criterionName
+    new StudentController().updateConcepts(studentCriterion, concept)
 }
 
-//Scenario: Spreadsheet without students or criteria
-Given (~'that the spreadsheet does not contain students or criteria$') { ->
-    manualInputController = new ManualConceptInputController()
+Then (~'the final criterion concept of that student is updated in the system$') { ->
 
-    assert !manualInputController.checkStudents()
-}
-
-And (~'there is at least one criterion'){->
-    manualInputController = new ManualConceptInputController()
-
-    assert manualInputController.checkCriteria()
-}
-
-When (~'the user try to input manually a new concept "([^"]*)" with a description "([^"]*)" into a cell"([^"]*)"$'){ String concept, description, cell ->
-    manualInputController.inputConcept(concept, description, cell)
-}
-
-
-Then (~'the system returns a exception$'){ ->
-    boolean exception = false
-    try {
-        manualInputController.save()
-    } catch ( Exception e ){
-        exception = true;
-    }
-    assert exception
 }
 
 //Scenario: Spreadsheet with at least one student and one criterion
@@ -56,47 +38,22 @@ Given(~'that I am on the Manual Concept Input Page$'){ ->
     at ManualConceptInputPage
 }
 
-And (~'And there are at least one student and one criterion on the spreadsheet$'){->
-    at ManualConceptInputPage
-    assert page.checkStudents() &&  page.checkCriteria()
+And (~'I can see a student with login "([^"]*)"$'){->
+
 }
 
-When (~'I choose a cell "([^"]*)"$'){ String cell ->
-    at ManualConceptInputPage
-    page.choose(cell)
+And (~'a evaluation criterion named "([^"]*)"$'){->
+
 }
 
-And (~'I fill it with a new concept "([^"]*)" with a description "([^"]*)"$'){ String concept, description->
-    at ManualConceptInputPage
-    page.fillConceptDetails(concept, description)
+When (~'I choose a new concept "([^"]*)" to that student in that criterion$'){ String cell ->
+
 }
 
-And (~'I click the button to confirm the operation$'){->
-    at ManualConceptInputPage
-    page.click()
+Then (~'I go back to Student List page$'){->
+
 }
 
-Then (~'the final concept in that criterion is updated$'){->
-    at ManualConceptInputPage
-    assert page.update()
-}
+And (~'I can see that the final concept in that criterion is updated for that student$'){->
 
-And (~'there are no students$'){->
-    at ManualConceptInputPage
-    assert !page.checkStudentes()
-}
-
-And (~'there is at least one criterion$'){->
-    at ManualConceptInputPage
-    assert page.checkCriteria()
-}
-
-When (~'I try to choose the cell "([^"]*)"$'){ String cell ->
-    at ManualConceptInputPage
-    page.choose(cell)
-}
-
-Then (~'The page displays a error message$'){->
-    at ManualConceptInputPage
-    assert page.displayError()
 }

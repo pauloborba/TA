@@ -2,7 +2,8 @@ package pages
 
 import geb.Page
 
-class ManualConceptInputPage extends Page{
+class ManualInputPage extends Page {
+
     static url = "/TA/manual/index"
 
     static at = {
@@ -21,9 +22,9 @@ class ManualConceptInputPage extends Page{
     def update(){ }
 
     def displayError(){ }
-    
+
     def checkCriteria(){}
-    
+
     def checkStudents(){}
-    
+
 }

@@ -6,6 +6,7 @@ Feature: Low student performance notifications
 
 #Controller Scenario (happy path)
   @imvm
+	@ignore
 Scenario: Registering a grade that requests a notification
 	Given that the system has a student named "Peter Parker" with login "pp2" registered
 	And that the system has evaluation criteria named "Project Management", "Change Management", and "Team Management" registered
@@ -14,7 +15,7 @@ Scenario: Registering a grade that requests a notification
   	Then the system stores a low performance notification
 
 #Controller Scenario (sad path)
-
+  @ignore
 Scenario: Registering a grade that does not request a notification
 	Given that the system has a student named "Peter Parker" with login "pp2" registered
 	And that the system has evaluation criteria named "Project Management", "Change Management", and "Team Management" registered
@@ -23,6 +24,7 @@ Scenario: Registering a grade that does not request a notification
   	Then the system does not store a low performance notification
 
 #GUI Scenario (happy path)
+  @ignore
 Scenario: Requesting notifications with at least one stored notification
   	Given that I am on the Notifications Page
 	And there is at least one registered notification
@@ -31,6 +33,7 @@ Scenario: Requesting notifications with at least one stored notification
 
 #GUI Scenario (sad path)
   @imvm
+  @ignore
 Scenario: Requesting notifications with no stored notifications
   	Given that I am on the Notifications Page
 	And there is no registered notifications

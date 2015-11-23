@@ -27,8 +27,8 @@ class StudentController {
     public Student createStudent() {
         Student student = new Student(params)
         student.afterCreateAddCriteria(EvaluationCriterion.findAll())
-        student.afterCreateAddAutoCriteria(AutoEvaluationCriterion.findAll())
-        student.afterCreateAddAutoEvaluationCriteria(EvaluationAutoEvaluationCriterion.findAll())
+//        student.afterCreateAddAutoCriteria(AutoEvaluationCriterion.findAll())
+//        student.afterCreateAddAutoEvaluationCriteria(EvaluationAutoEvaluationCriterion.findAll())
         return student
     }
 
@@ -54,10 +54,10 @@ class StudentController {
                 student.save flush: true
             }
 
-            for (AutoEvaluationCriterion autoEvCriterion : AutoEvaluationCriterion.findAll()) {
-                student.addAutoCriterion(autoEvCriterion)
-                student.save flush: true
-            }
+//            for (AutoEvaluationCriterion autoEvCriterion : AutoEvaluationCriterion.findAll()) {
+//                student.addAutoCriterion(autoEvCriterion)
+//                student.save flush: true
+//            }
 
         }
     }
@@ -123,7 +123,14 @@ class StudentController {
         String[] aux = studentCriterion.split(" / ")
 
         Student student = Student.findByLogin(aux[0])
+
+        String currentConcept = student.evaluations.get(aux[1]);
+
+        concept = currentConcept + concept + " "
         student.evaluations.put(aux[1], concept)
+
+        student.calculateFinalGrade(aux[1])
+
         student.save flush: true
     }
 
