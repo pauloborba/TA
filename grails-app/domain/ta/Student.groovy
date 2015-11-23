@@ -13,6 +13,7 @@ class Student {
         public static final List<String> CONCEPTS = ["MA", "MPA", "MANA", "XX"]
     }
 
+
     Map<String, String> evaluations
     Map<String, String> AutoEvaluations
 
