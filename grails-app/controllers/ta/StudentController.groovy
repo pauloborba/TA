@@ -126,10 +126,10 @@ class StudentController {
 
         String currentConcept = student.evaluations.get(aux[1]);
 
+        student.calculateFinalGrade(aux[1], concept)
+
         concept = currentConcept + concept + " "
         student.evaluations.put(aux[1], concept)
-
-        student.calculateFinalGrade(aux[1])
 
         student.save flush: true
     }

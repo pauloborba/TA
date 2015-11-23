@@ -18,11 +18,13 @@ Feature: Manual Concept Input
     Then the system returns a exception
 
 #GUI Scenario
+  @ignore
   Scenario: Spreadsheet with at least one student and one criterion
-    Given that I am on the Manual Concept Input page
-    And I can see a student with login "lc"
+    Given that I am on the Student page
+    And I can see a student named "Luke Cage" with a login "lc"
     And a evaluation criterion named "Analyze System Requirements"
-    When I choose a new concept "MA" to that student in that criterion
+    When I go to the Manual Input Concept Page
+    And I choose a new concept "MA" to that student in that criterion
     Then I go back to Student List page
     And I can see that the final concept in that criterion is updated for that student
 
