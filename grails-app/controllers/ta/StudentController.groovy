@@ -54,10 +54,10 @@ class StudentController {
                 student.save flush: true
             }
 
-            for (AutoEvaluationCriterion autoEvCriterion : AutoEvaluationCriterion.findAll()) {
-                student.addAutoCriterion(autoEvCriterion)
-                student.save flush: true
-            }
+//            for (AutoEvaluationCriterion autoEvCriterion : AutoEvaluationCriterion.findAll()) {
+//                student.addAutoCriterion(autoEvCriterion)
+//                student.save flush: true
+//            }
 
         }
     }
@@ -128,6 +128,9 @@ class StudentController {
 
         concept = currentConcept + concept + " "
         student.evaluations.put(aux[1], concept)
+
+        student.calculateFinalGrade(aux[1])
+
         student.save flush: true
     }
 
