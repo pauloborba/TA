@@ -34,3 +34,13 @@ Feature: Import concepts from spreadsheet
     When I select the option to import spreadsheet "sheet.csv"
     And the spreadsheet is not on valid format
     Then display error message
+
+  Scenario: Importing spreadsheet with non registered student
+    Given that I import a given spreasheet
+    When the spreadsheet contains a not registered student named "Alan Turing" with login "at"
+    Then the student is registered
+
+  Scenario: Importing spreadsheet with non registered criterion
+    Given that I import a given spreasheet
+    When the spreadsheet contains a not registered criterion named "grails"
+    Then the criterion is registered

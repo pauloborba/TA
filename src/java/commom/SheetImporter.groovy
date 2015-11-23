@@ -27,7 +27,7 @@ class SheetImporter extends AbstractExcelImporter{
     }
 
     public String getCriterion(){
-        String criterion = this.workbook.getSheetAt(0).getRow(0).getCell(1).stringCellValue;
+        String criterion = this.workbook.getSheetAt(0).getRow(0).getCell(2).stringCellValue;
         return criterion;
     }
 
@@ -37,8 +37,9 @@ class SheetImporter extends AbstractExcelImporter{
                 sheet: this.workbook.getSheetAt(0).getSheetName(),
                 startRow: 1,
                 columnMap: [
-                        'A':'login',
-                        'B': criterion
+                        'A':'aluno',
+                        'B':'login',
+                        'C': criterion,
                 ]
         ]
         List conceptList = excelImportService.columns(workbook, CONFIG_COLUMN_MAP)

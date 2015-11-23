@@ -137,11 +137,53 @@ class ConceptController {
 
         try {
             SheetImporter sheetImporter = new SheetImporter(filename)
-            flash.message = 'Sheet uploaded!'
+            def name, login, criterion, concept
+            List<Map> data = sheetImporter.getConcepts()
+            println data
+
+            criterion = sheetImporter.getCriterion()
+
+            boolean criterionExists = EvaluationCriterion.findByName(criterion) != null
+
+            def cont
+            if (!criterionExists) {
+                cont = new EvaluationCriterionController()
+                cont.params << [name: criterion]
+                cont.saveEvaluationCriterion(cont.createEvaluationCriterion())
+                println "criou criterio " + criterion
+            }
+
+            for (Map m : data){
+                println m
+                name = m.get('aluno')
+                login = m.get('login')
+                concept = m.get(criterion)
+
+                boolean studentExists = Student.findByLogin(login) != null
+
+                cont = new StudentController()
+
+                if (!studentExists){
+                    println "criou estudante " + login + " " + name
+
+                    cont.params << [login: login] << [name: name] << [evaluations: new HashMap<String, String>()]
+                    cont.saveStudent(cont.createStudent())
+                }
+
+                cont.updateConcepts(login+" / "+criterion,concept)
+
+
+            }
+
 
             StudentController.addConcepts(sheetImporter.getConcepts());
 
-            println sheetImporter.getConcepts();
+
+            //println sheetImporter.getConcepts();
+
+            flash.message = 'Sheet uploaded!'
+
+
 
         } catch(IllegalArgumentException e) {
             flash.message = "Invalid file format!"
