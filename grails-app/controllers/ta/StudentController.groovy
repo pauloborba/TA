@@ -27,7 +27,16 @@ class StudentController {
     public Student createStudent() {
         Student student = new Student(params)
         student.afterCreateAddCriteria(EvaluationCriterion.findAll())
+//        student.afterCreateAddAutoCriteria(AutoEvaluationCriterion.findAll())
+//        student.afterCreateAddAutoEvaluationCriteria(EvaluationAutoEvaluationCriterion.findAll())
         return student
+    }
+
+    def list(){
+        def students = Student.findAll()
+        def criteria = EvaluationCriterion.findAll()
+
+        render view: "manualInput", model:[students: students, criteria: criteria]
     }
 
     public boolean saveStudent(Student student) {
@@ -44,6 +53,12 @@ class StudentController {
                 student.addCriterion(evCriterion)
                 student.save flush: true
             }
+
+            for (AutoEvaluationCriterion autoEvCriterion : AutoEvaluationCriterion.findAll()) {
+                student.addAutoCriterion(autoEvCriterion)
+                student.save flush: true
+            }
+
         }
     }
 
@@ -59,9 +74,7 @@ class StudentController {
             return
         }
 
-        ////////////////////////////////
         studentInstance.afterCreateAddCriteria(EvaluationCriterion.findAll())
-        ////////////////////////////////
 
         studentInstance.save flush: true
 
