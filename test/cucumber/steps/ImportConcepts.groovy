@@ -1,5 +1,6 @@
 package steps
 
+import commom.SheetImporter
 import pages.ConceptPages.ConceptSheetUploadPage
 import ta.ConceptController
 import pages.ConceptPages.ConceptPage
@@ -11,27 +12,27 @@ this.metaClass.mixin(cucumber.api.groovy.EN)
 // controller Scenario: Importing valid spreadsheet
 
 Sheet sheet
-// Given thse spreadsheet "sheet.csv" is on valid file format
+boolean valid;
 
-Given (~'^the spreadsheet "([^"]*)" is on valid file format$'){ String filename1->
-	conceptController = new ConceptController();
-	conceptController.builder.createSheet()
-
-	boolean valid;
-	conceptController.builder.setSheetFilename(filename1)
-	sheet = conceptController.builder.getSheet()
-	valid = sheet.validFileFormat();
-
+// Given the spreadsheet "validSheet.xlsx" is on valid file format
+Given (~'^the spreadsheet "([^"]*)" is on valid file format$'){ String filename->
+	sheetImporter = new SheetImporter(filename)
 	assert valid;
 }
 
 // When I import it’s data
-When (~'^I import its data$'){ ->
-	conceptController.importSheet(sheet)
+When (~'^I try to import its data$'){ ->
+	conceptController.importSheet(myfilename)
 }
+
+//And the spreadsheet contains valid columns
+And (~'the spreadsheet contains valid columns'){
+	assert sheetImporter.hasValidColumns()
+}
+
 // Then update system data accordingly
 Then (~'^update system data accordingly$'){ ->
-	assert conceptController.save();
+	assert sheetImporter.hasImported
 }
 // controller Scenario: Importing invalid spreadsheet
 

@@ -5,42 +5,67 @@ Feature: Import concepts from spreadsheet
   I want to import concepts from spreadsheets
   So that my grades are easily recorded on the system
 
-#Controller Scenario
+#Controller Scenario (success)
   @ignore
-  Scenario: Importing valid spreadsheet
-    Given the spreadsheet "sheet.xlsx" is on valid file format
-    When I import its data
+  Scenario: Importing valid spreadsheet (file format and columns)
+    Given the spreadsheet "validSheet.xlsx" is on valid file format
+    When I try to import its data
+    And the spreadsheet contains valid columns
     Then update system data accordingly
 
-#Controller Scenario
+#Controller Scenario (failure)
   @gaabs
-  Scenario: Importing invalid spreadsheet
+  Scenario: Importing spreadsheet in invalid file format
     Given the spreadsheet "sheet.pdf" is not on valid file format
     When I try to import its data
     Then do not update system data
 
-#GUI Scenario
+#Controller Scenario (failure)
+  @gaabs
+  Scenario: Importing spreadsheet with invalid column
+    Given the spreadsheet "sheet.xlsx" is on valid file format
+    When I try to import its data
+    And the spreadsheet contains invalid columns
+    Then do not update system data
+
+#GUI Scenario (success)
   @ignore
-  Scenario: Importing valid spreadsheet
+  Scenario: Importing valid spreadsheet (file format and columns)
     Given that I am at the Concepts page
     When I select the option to import spreadsheet "sheet.xlsx"
-    And the spreadsheet is on valid format
-    Then the Concepts page displays new data accordingly
+    And the spreadsheet is on valid format (file format and columns)
+    Then an upload confirmation message is displayed
 
-#GUI Scenario
+#GUI Scenario (failure)
   @gaabs
-  Scenario: Importing invalid spreadsheet
+  Scenario: Importing spreadsheet in invalid file format
     Given that I am at the Concepts page
     When I select the option to import spreadsheet "sheet.csv"
-    And the spreadsheet is not on valid format
+    And the spreadsheet is not on valid file format
     Then display error message
 
+#GUI Scenario (failure)
+  @gaabs
+  Scenario: Importing spreadsheet with invalid column
+    Given that I am at the Concepts page
+    When I select the option to import spreadsheet "sheet.xlsx"
+    And the spreadsheet is on valid file format
+    And the spreadsheet has invalid columns
+    Then display error message
+
+#Controller Scenario
   Scenario: Importing spreadsheet with non registered student
     Given that I import a given spreasheet
     When the spreadsheet contains a not registered student named "Alan Turing" with login "at"
     Then the student is registered
 
+#Controller Scenario
   Scenario: Importing spreadsheet with non registered criterion
     Given that I import a given spreasheet
     When the spreadsheet contains a not registered criterion named "grails"
     Then the criterion is registered
+
+
+#possiveis futuros cenários:
+#  VERIFICAR correspondencia login nome
+#  VERIFICAR nota/conceito válido (MA,MPA,MANA)

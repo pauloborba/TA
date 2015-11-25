@@ -8,15 +8,6 @@ import org.grails.plugins.excelimport.ExcelImportService
  */
 class SheetImporter extends AbstractExcelImporter{
 
-//    static Map CONFIG_COLUMN_MAP = [
-//            sheet: this.sheet.getSheetName(),
-//            startRow: 1,
-//            columnMap: [
-//                    'A':'login',
-//                    'B':'conceito'
-//            ]
-//    ]
-
     def getExcelImportService(){
         ExcelImportService.getService()
     }
@@ -31,7 +22,7 @@ class SheetImporter extends AbstractExcelImporter{
         return criterion;
     }
 
-    List<Map> getConcepts(){
+    public List<Map> getConcepts(){
         String criterion = getCriterion();
         Map CONFIG_COLUMN_MAP = [
                 sheet: this.workbook.getSheetAt(0).getSheetName(),
@@ -43,6 +34,26 @@ class SheetImporter extends AbstractExcelImporter{
                 ]
         ]
         List conceptList = excelImportService.columns(workbook, CONFIG_COLUMN_MAP)
+    }
+
+    public boolean hasValidColumns(){
+        boolean isValid = true;
+        def sheet = this.workbook.getSheetAt(0);
+        def row = sheet.getRow(0);
+        def header;
+
+        header = row.getCell(0).stringCellValue;
+        if (!header.equalsIgnoreCase("aluno")) isValid = false;
+
+        header = row.getCell(1).stringCellValue;
+        if (!header.equalsIgnoreCase("login")) isValid = false;
+
+        header = row.getCell(2).stringCellValue;
+        if (header.length() == 0) isValid = false;
+
+
+
+        return isValid;
     }
 
 

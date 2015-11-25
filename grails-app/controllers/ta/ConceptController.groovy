@@ -8,8 +8,7 @@ import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class ConceptController {
-    SheetBuilder builder = new SheetBuilder()
-    Sheet sheet;
+    boolean hasUploaded;
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -108,25 +107,14 @@ class ConceptController {
     def upload(){
 
     }
+
     def submit() {
-        //sheet.validFileFormat();
         def f = request.getFile('datafile');
 
-        sheet = new Sheet()
         String filename = params.datafile.getOriginalFilename()
-        sheet.filename = filename
-        //System.out.println("PARAMS: " + params.datafile.getOriginalFilename())
-
-        if (!sheet.validFileFormat()) {
-            flash.message = "Invalid file format!"
-            render view: "upload"
-            return
-        }
-
-
 
         if (f.empty){
-            flash.message = 'file cannot be empty'
+            flash.error = 'file cannot be empty'
             render(view: 'upload')
             return
         }
@@ -135,8 +123,18 @@ class ConceptController {
         f.transferTo(newFile)
         //response.sendError(200,'Done')
 
+        SheetImporter sheetImporter
+        hasUploaded = false
         try {
-            SheetImporter sheetImporter = new SheetImporter(filename)
+            sheetImporter = new SheetImporter(filename)
+            def validColumns = sheetImporter.hasValidColumns()
+
+            if (!validColumns){
+                flash.error = "Error! \nFirst column should be named 'aluno', \nsecond column sould be named 'login' \nand the third column should have a header"
+                render view: "upload"
+                return
+            }
+
             def name, login, criterion, concept
             List<Map> data = sheetImporter.getConcepts()
             println data
@@ -172,21 +170,14 @@ class ConceptController {
 
                 cont.updateConcepts(login+" / "+criterion,concept)
 
-
             }
 
-
             StudentController.addConcepts(sheetImporter.getConcepts());
-
-
-            //println sheetImporter.getConcepts();
-
+            hasUploaded = false
             flash.message = 'Sheet uploaded!'
 
-
-
         } catch(IllegalArgumentException e) {
-            flash.message = "Invalid file format!"
+            flash.error = "Invalid file format!"
         }
 
 
@@ -195,26 +186,6 @@ class ConceptController {
         render view: "upload"
         return
 
-
-
     }
 
-    def importSheet(Sheet sheet){
-        this.sheet = sheet;
-    }
-
-    def invalidFileFormatMessage(){
-//        flash.message = "Invalid file format!"
-    }
-
-    def reset(){
-        builder.removeSheet();
-        this.sheet = null;
-        return true;
-    }
 }
-
-
-//def save(){
-//    return this.sheet.save();
-//}
