@@ -1,14 +1,13 @@
 package ta
 
-import commom.SheetBuilder
+import commom.SheetImporter
+import grails.transaction.Transactional
 
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class ConceptController {
-    SheetBuilder builder = new SheetBuilder()
-    Sheet sheet;
+    public boolean hasImported
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -107,34 +106,84 @@ class ConceptController {
     def upload(){
 
     }
+
     def submit() {
-        //sheet.validFileFormat();
-        sheet = new Sheet()
-        sheet.filename = params.datafile.getOriginalFilename()
-        //System.out.println("PARAMS: " + params.datafile.getOriginalFilename())
+        def f = request.getFile('datafile');
 
-        if (!sheet.validFileFormat()) {
-            flash.message = "Invalid file format!"
+        String filename = params.datafile.getOriginalFilename()
+
+        if (f.empty){
+            flash.error = 'file cannot be empty'
+            render(view: 'upload')
+            return
         }
+
+        File newFile = new File(filename)
+        f.transferTo(newFile)
+        uploadSheet(filename)
+        //response.sendError(200,'Done')
+        newFile.delete()
+
+    }
+
+    def uploadSheet(String filename){
+        File newFile = new File(filename)
+
+        SheetImporter sheetImporter
+        hasImported = false
+        try {
+            sheetImporter = new SheetImporter(filename)
+            def validColumns = sheetImporter.hasValidColumns()
+
+            if (!validColumns){
+                flash.error = "Error! \nFirst column should be named 'aluno', \nsecond column sould be named 'login' \nand the third column should have a header"
+            } else {
+
+                def name, login, criterion, concept
+                List<Map> data = sheetImporter.getConcepts()
+
+                criterion = sheetImporter.getCriterion()
+
+                boolean criterionExists = EvaluationCriterion.findByName(criterion) != null
+
+                def cont
+                if (!criterionExists) {
+                    cont = new EvaluationCriterionController()
+                    cont.params << [name: criterion]
+                    cont.saveEvaluationCriterion(cont.createEvaluationCriterion())
+                }
+
+                for (Map m : data) {
+                    name = m.get('aluno')
+                    login = m.get('login')
+                    concept = m.get(criterion)
+
+                    boolean studentExists = Student.findByLogin(login) != null
+
+                    cont = new StudentController()
+
+                    if (!studentExists) {
+                        println "criou estudante " + login + " " + name
+
+                        cont.params << [login: login] << [name: name] << [evaluations: new HashMap<String, String>()]
+                        cont.saveStudent(cont.createStudent())
+                    }
+
+                    cont.updateConcepts(login + " / " + criterion, concept)
+
+                }
+
+                hasImported = true
+                flash.message = 'Sheet uploaded!'
+
+            }
+
+        } catch(IllegalArgumentException e) {
+            flash.error = "Invalid file format!"
+        }
+
         render view: "upload"
+        return
     }
 
-    def importSheet(Sheet sheet){
-        this.sheet = sheet;
-    }
-
-    def invalidFileFormatMessage(){
-//        flash.message = "Invalid file format!"
-    }
-
-    def reset(){
-        builder.removeSheet();
-        this.sheet = null;
-        return true;
-    }
 }
-
-
-//def save(){
-//    return this.sheet.save();
-//}
