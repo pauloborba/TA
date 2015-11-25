@@ -2,8 +2,9 @@ package pages
 
 import geb.Page
 
-class ManualConceptInputPage extends Page{
-    static url = "/TA/manual/index"
+class ManualInputPage extends Page {
+
+    static url = "/TA/student/manualInput"
 
     static at = {
         title ==~ /Manual Concept Input/
@@ -16,14 +17,4 @@ class ManualConceptInputPage extends Page{
         $("form").description = description;
     }
 
-    def click(){}
-
-    def update(){ }
-
-    def displayError(){ }
-    
-    def checkCriteria(){}
-    
-    def checkStudents(){}
-    
 }

@@ -10,7 +10,7 @@
 <head>
     <meta name="layout" content="main">
     <g:set var="entityName" value="${message(code: 'student.label', default: 'Student')}" />
-    <title><g:message code="default.list.label" args="[entityName]" /></title>
+    <title>Manual Concept Input</title>
 </head>
 <body>
 <a href="#list-student" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
@@ -37,17 +37,17 @@
 
             <td><g:link action="show" id="${studentInstance.id}">${fieldValue(bean: studentInstance, field: "login")}</g:link></td>
 
-
             <g:each in="${criteria}" var="evCriterion">
                 <td>
+                    %{--value="${studentInstance.evaluations.get(evCriterion.name)}"--}%
                     <g:select id="${studentInstance.login}+/+${evCriterion.name}" name="selector"
                               from="${ta.Student.Concept.CONCEPTS}"
-                              value="${studentInstance.evaluations.get(evCriterion.name)}"
+
                               onchange="${remoteFunction(
                                       action: 'updateConcepts',
                                       params:'\'studentCriterion=\' + this.id + \'&concept=\' + this.value'
                               )}"
-                    />
+                              noSelection="['':'Concepts']"/>
                 </td>
             </g:each>
         </tr>

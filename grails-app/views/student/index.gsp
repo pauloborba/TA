@@ -41,7 +41,7 @@
 
 				<td>${fieldValue(bean: studentInstance, field: "name")}</td>
 
-				<td>${fieldValue(bean: studentInstance, field: "evaluations")}</td>
+				<td>${fieldValue(bean: studentInstance, field: "finalGrades")}</td>
 
 			</tr>
 		</g:each>
