@@ -10,11 +10,13 @@ class ManualInputPage extends Page {
         title ==~ /Manual Concept Input/
     }
 
-    def choose(cell){}
-
     def fillConceptDetails(concept, description) {
         $("form").concept = concept;
         $("form").description = description;
+    }
+
+    def Input(){
+        $("#capeta").click()
     }
 
 }
