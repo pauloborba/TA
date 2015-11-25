@@ -22,34 +22,44 @@
     </ul>
 </div>
 <table>
-    <thead>
-    <td>
-        Login
-    </td>
-    <g:each in="${criteria}">
-        <td>
-            ${it.name}
-        </td>
-    </g:each>
-    </thead>
+
+    <g:if test="${students.size() == 0 }">
+        <div id="EmptyError">O sistema não possui nenhum estudante ou critérios cadastrados, volte mais tarde!</div>
+    </g:if>
     <g:each in="${students}" status="i" var="studentInstance">
+        <g:if test="${i == 0}">
+            <thead>
+            <th>
+                Login
+            </th>
+            <g:each in="${criteria}">
+                <th>
+                    ${it.name}
+                </th>
+            </g:each>
+            <th>
+                Actions
+            </th>
+            </thead>
+        </g:if>
         <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 
             <td><g:link action="show" id="${studentInstance.id}">${fieldValue(bean: studentInstance, field: "login")}</g:link></td>
 
-            <g:each in="${criteria}" var="evCriterion">
+            <g:form controller="student">
+                <g:hiddenField name="studentId" value="${studentInstance.login}"></g:hiddenField>
+                <g:each in="${criteria}" var="evCriterion">
+                    <g:hiddenField name="criterionName" value="${evCriterion.name}"></g:hiddenField>
                 <td>
-                    %{--value="${studentInstance.evaluations.get(evCriterion.name)}"--}%
-                    <g:select id="${studentInstance.login}+/+${evCriterion.name}" name="selector"
+                    <g:select id="${studentInstance.login}${evCriterion.name}" name="selector"
                               from="${ta.Student.Concept.CONCEPTS}"
-
-                              onchange="${remoteFunction(
-                                      action: 'updateConcepts',
-                                      params:'\'studentCriterion=\' + this.id + \'&concept=\' + this.value'
-                              )}"
                               noSelection="['':'Concepts']"/>
                 </td>
             </g:each>
+            <td>
+            <g:actionSubmit value="Submeter" action="updateCriteria"  id="${studentInstance.id}"></g:actionSubmit>
+            </td>
+            </g:form>
         </tr>
     </g:each>
 </table>

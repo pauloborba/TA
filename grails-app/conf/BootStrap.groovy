@@ -4,7 +4,7 @@ import ta.Student
 class BootStrap {
 
     def init = { servletContext ->
-//
+
 //        Student pp2 = new Student(login:"pp2", name:"Peter Parker").save(failOnError: true)
 //        Student psg2 =  new Student(login:"psg2", name:"Pedro Sereno").save(failOnError: true)
 //        Student gaabs = new Student(login:"gaabs", name:"Giovanni Barros").save(failOnError: true)
