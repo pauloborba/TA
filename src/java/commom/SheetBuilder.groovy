@@ -11,6 +11,10 @@ class SheetBuilder implements ISheetBuilder {
 		_Sheet = new Sheet()
 	}
 
+	public void removeSheet() {
+		_Sheet = null;
+	}
+
 	public void setSheetFilename(String name) {
 		_Sheet.filename = name
 	}
@@ -18,5 +22,11 @@ class SheetBuilder implements ISheetBuilder {
 	public Sheet getSheet(){
 		return this._Sheet;
 	}
+
+	public Sheet setSheet(Sheet sheet){
+		this._Sheet = sheet;
+	}
+
+
 
 }

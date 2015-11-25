@@ -27,8 +27,16 @@ class StudentController {
     public Student createStudent() {
         Student student = new Student(params)
         student.afterCreateAddCriteria(EvaluationCriterion.findAll())
-        student.afterCreateAddAutoEvaluationCriteria(EvaluationAutoEvaluationCriterion.findAll())
+//        student.afterCreateAddAutoCriteria(AutoEvaluationCriterion.findAll())
+//        student.afterCreateAddAutoEvaluationCriteria(EvaluationAutoEvaluationCriterion.findAll())
         return student
+    }
+
+    def list(){
+        def students = Student.findAll()
+        def criteria = EvaluationCriterion.findAll()
+
+        render view: "manualInput", model:[students: students, criteria: criteria]
     }
 
     public boolean saveStudent(Student student) {
@@ -46,10 +54,10 @@ class StudentController {
                 student.save flush: true
             }
 
-            for (AutoEvaluationCriterion autoEvCriterion : AutoEvaluationCriterion.findAll()) {
-                student.addAutoCriterion(autoEvCriterion)
-                student.save flush: true
-            }
+//            for (AutoEvaluationCriterion autoEvCriterion : AutoEvaluationCriterion.findAll()) {
+//                student.addAutoCriterion(autoEvCriterion)
+//                student.save flush: true
+//            }
 
         }
     }
@@ -66,9 +74,7 @@ class StudentController {
             return
         }
 
-        ////////////////////////////////
         studentInstance.afterCreateAddCriteria(EvaluationCriterion.findAll())
-        ////////////////////////////////
 
         studentInstance.save flush: true
 
@@ -117,7 +123,14 @@ class StudentController {
         String[] aux = studentCriterion.split(" / ")
 
         Student student = Student.findByLogin(aux[0])
+
+        String currentConcept = student.evaluations.get(aux[1]);
+
+        student.calculateFinalGrade(aux[1], concept)
+
+        concept = currentConcept + concept + " "
         student.evaluations.put(aux[1], concept)
+
         student.save flush: true
     }
 
