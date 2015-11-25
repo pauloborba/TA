@@ -16,14 +16,14 @@ Feature: Import concepts from spreadsheet
 #Controller Scenario (failure)
   @gaabs
   Scenario: Importing spreadsheet in invalid file format
-    Given the spreadsheet "sheet.pdf" is not on valid file format
+    Given the spreadsheet "sheet.csv" is not on valid file format
     When I try to import its data
     Then do not update system data
 
 #Controller Scenario (failure)
   @gaabs
   Scenario: Importing spreadsheet with invalid column
-    Given the spreadsheet "sheet.xlsx" is on valid file format
+    Given the spreadsheet "invalidColumnSheet.xlsx" is on valid file format
     When I try to import its data
     And the spreadsheet contains invalid columns
     Then do not update system data
@@ -32,7 +32,7 @@ Feature: Import concepts from spreadsheet
   @ignore
   Scenario: Importing valid spreadsheet (file format and columns)
     Given that I am at the Concepts page
-    When I select the option to import spreadsheet "sheet.xlsx"
+    When I select the option to import spreadsheet "validSheet.xlsx"
     And the spreadsheet is on valid format (file format and columns)
     Then an upload confirmation message is displayed
 
@@ -48,21 +48,21 @@ Feature: Import concepts from spreadsheet
   @gaabs
   Scenario: Importing spreadsheet with invalid column
     Given that I am at the Concepts page
-    When I select the option to import spreadsheet "sheet.xlsx"
+    When I select the option to import spreadsheet "invalidColumnSheet.xlsx"
     And the spreadsheet is on valid file format
     And the spreadsheet has invalid columns
     Then display error message
 
 #Controller Scenario
   Scenario: Importing spreadsheet with non registered student
-    Given that I import a given spreasheet
-    When the spreadsheet contains a not registered student named "Alan Turing" with login "at"
+    Given the valid spreadsheet "validSheet.xlsx" contains a not registered student named "Alan Turing" with login "at"
+    When  I import the spreadsheet
     Then the student is registered
 
 #Controller Scenario
   Scenario: Importing spreadsheet with non registered criterion
-    Given that I import a given spreasheet
-    When the spreadsheet contains a not registered criterion named "grails"
+    Given that the valid spreadsheet "validSheet.xlsx" contains a not registered criterion named "grails"
+    When I import the spreadsheet
     Then the criterion is registered
 
 

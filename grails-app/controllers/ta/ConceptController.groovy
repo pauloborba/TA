@@ -8,7 +8,7 @@ import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class ConceptController {
-    boolean hasUploaded;
+    public boolean hasImported
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -121,71 +121,71 @@ class ConceptController {
 
         File newFile = new File(filename)
         f.transferTo(newFile)
+        uploadSheet(filename)
         //response.sendError(200,'Done')
+    }
+
+    def uploadSheet(String filename){
+        File newFile = new File(filename)
 
         SheetImporter sheetImporter
-        hasUploaded = false
+        hasImported = false
         try {
             sheetImporter = new SheetImporter(filename)
             def validColumns = sheetImporter.hasValidColumns()
 
             if (!validColumns){
                 flash.error = "Error! \nFirst column should be named 'aluno', \nsecond column sould be named 'login' \nand the third column should have a header"
-                render view: "upload"
-                return
-            }
+            } else {
 
-            def name, login, criterion, concept
-            List<Map> data = sheetImporter.getConcepts()
-            println data
+                def name, login, criterion, concept
+                List<Map> data = sheetImporter.getConcepts()
 
-            criterion = sheetImporter.getCriterion()
+                criterion = sheetImporter.getCriterion()
 
-            boolean criterionExists = EvaluationCriterion.findByName(criterion) != null
+                boolean criterionExists = EvaluationCriterion.findByName(criterion) != null
 
-            def cont
-            if (!criterionExists) {
-                cont = new EvaluationCriterionController()
-                cont.params << [name: criterion]
-                cont.saveEvaluationCriterion(cont.createEvaluationCriterion())
-                println "criou criterio " + criterion
-            }
-
-            for (Map m : data){
-                println m
-                name = m.get('aluno')
-                login = m.get('login')
-                concept = m.get(criterion)
-
-                boolean studentExists = Student.findByLogin(login) != null
-
-                cont = new StudentController()
-
-                if (!studentExists){
-                    println "criou estudante " + login + " " + name
-
-                    cont.params << [login: login] << [name: name] << [evaluations: new HashMap<String, String>()]
-                    cont.saveStudent(cont.createStudent())
+                def cont
+                if (!criterionExists) {
+                    cont = new EvaluationCriterionController()
+                    cont.params << [name: criterion]
+                    cont.saveEvaluationCriterion(cont.createEvaluationCriterion())
                 }
 
-                cont.updateConcepts(login+" / "+criterion,concept)
+                for (Map m : data) {
+                    name = m.get('aluno')
+                    login = m.get('login')
+                    concept = m.get(criterion)
+
+                    boolean studentExists = Student.findByLogin(login) != null
+
+                    cont = new StudentController()
+
+                    if (!studentExists) {
+                        println "criou estudante " + login + " " + name
+
+                        cont.params << [login: login] << [name: name] << [evaluations: new HashMap<String, String>()]
+                        cont.saveStudent(cont.createStudent())
+                    }
+
+                    cont.updateConcepts(login + " / " + criterion, concept)
+
+                }
+
+                StudentController.addConcepts(sheetImporter.getConcepts());
+                hasImported = true
+                flash.message = 'Sheet uploaded!'
 
             }
-
-            StudentController.addConcepts(sheetImporter.getConcepts());
-            hasUploaded = false
-            flash.message = 'Sheet uploaded!'
 
         } catch(IllegalArgumentException e) {
             flash.error = "Invalid file format!"
         }
 
-
         newFile.delete();
 
         render view: "upload"
         return
-
     }
 
 }

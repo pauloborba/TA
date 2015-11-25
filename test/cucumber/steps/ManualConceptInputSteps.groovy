@@ -1,6 +1,5 @@
 package steps
 
-import pages.ManualConceptInputPage
 import ta.EvaluationCriterion
 import ta.Student
 import ta.StudentController
