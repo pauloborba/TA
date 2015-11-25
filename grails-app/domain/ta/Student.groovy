@@ -10,6 +10,7 @@ class Student {
     }
 
     Map<String, String> evaluations
+    Map<String, String> autoEvaluations
     Map<String, String> finalGrades
 
     static constraints = {
@@ -19,9 +20,11 @@ class Student {
 
     public void afterCreateAddCriteria(List<EvaluationCriterion> evaluationCriteria) {
         evaluations = new HashMap<>()
+        autoEvaluations = new HashMap<>()
         finalGrades = new HashMap<>()
         for(EvaluationCriterion evaluationCriterion : evaluationCriteria) {
             if(this.evaluations.get(evaluationCriterion.name) == null) {
+                this.autoEvaluations.put(evaluationCriterion.name, "")
                 this.evaluations.put(evaluationCriterion.name, "")
                 this.finalGrades.put(evaluationCriterion.name, "")
             }
@@ -30,10 +33,12 @@ class Student {
 
     public void addCriterion(EvaluationCriterion evaluationCriterion) {
         if(evaluations == null) {
+            autoEvaluations = new HashMap<>()
             evaluations = new HashMap<>()
             finalGrades = new HashMap<>()
         }
         if(this.evaluations.get(evaluationCriterion.name) == null) {
+            this.autoEvaluations.put(evaluationCriterion.name, "")
             this.evaluations.put(evaluationCriterion.name, "")
             this.finalGrades.put(evaluationCriterion.name, "")
         }

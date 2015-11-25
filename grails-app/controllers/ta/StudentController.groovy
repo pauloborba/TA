@@ -39,6 +39,13 @@ class StudentController {
         render view: "manualInput", model:[students: students, criteria: criteria]
     }
 
+    def listAutoEvaluation(){
+        def students = Student.findAll()
+        def criteria = EvaluationCriterion.findAll()
+
+        render view: "autoEvaluation", model:[students: students, criteria: criteria]
+    }
+
     public boolean saveStudent(Student student) {
         if(Student.findByLogin(student.login) == null) {
             student.save flush: true
@@ -130,6 +137,19 @@ class StudentController {
 
         concept = currentConcept + concept + " "
         student.evaluations.put(aux[1], concept)
+
+        student.save flush: true
+    }
+
+    def updateAutoEvaluation(String studentCriterion, String concept) {
+        System.out.println(studentCriterion)
+        System.out.println(params.get("concept"))
+
+        String[] aux = studentCriterion.split(" / ")
+
+        Student student = Student.findByLogin(aux[0])
+
+        student.autoEvaluations.put(aux[1], concept)
 
         student.save flush: true
     }
