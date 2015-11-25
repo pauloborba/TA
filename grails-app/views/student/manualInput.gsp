@@ -23,9 +23,10 @@
 </div>
 <table>
 
-    <g:if test="${students.size() == 0 }">
+    <g:if test="${students.size() == 0 || criteria.size() == 0}">
         <div id="EmptyError">O sistema não possui nenhum estudante ou critérios cadastrados, volte mais tarde!</div>
     </g:if>
+    <g:else>
     <g:each in="${students}" status="i" var="studentInstance">
         <g:if test="${i == 0}">
             <thead>
@@ -62,7 +63,7 @@
             </g:form>
         </tr>
     </g:each>
+    </g:else>
 </table>
-</div>
 </body>
 </html>
