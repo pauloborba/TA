@@ -37,11 +37,11 @@
 		<g:each in="${studentInstanceList}" status="i" var="studentInstance">
 			<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 
-				<td><g:link action="show" id="${studentInstance.id}">${fieldValue(bean: studentInstance, field: "login")}</g:link></td>
+				<td id="${studentInstance.login}"><g:link action="show" id="${studentInstance.id}">${fieldValue(bean: studentInstance, field: "login")}</g:link></td>
 
-				<td>${fieldValue(bean: studentInstance, field: "name")}</td>
+				<td id="${studentInstance.name}">${fieldValue(bean: studentInstance, field: "name")}</td>
 
-				<td>${fieldValue(bean: studentInstance, field: "finalGrades")}</td>
+				<td id="${studentInstance.login}Evaluations">${fieldValue(bean: studentInstance, field: "finalGrades")}</td>
 
 			</tr>
 		</g:each>
