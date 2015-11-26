@@ -122,37 +122,30 @@ class StudentController {
         }
     }
 
+
     @Transactional
-    def updateConcepts(String studentCriterion, String concept) {
-        System.out.println(studentCriterion)
-        System.out.println(params.get("concept"))
+    def updateAutoEvaluation(String login, String studentCriterion, String concept) {
+        if (!concept.isEmpty()) {
+            Student student = Student.findByLogin(login)
+            student.autoEvaluations.put(studentCriterion, concept)
 
-        String[] aux = studentCriterion.split(" / ")
-
-        Student student = Student.findByLogin(aux[0])
-
-        String currentConcept = student.evaluations.get(aux[1]);
-
-        student.calculateFinalGrade(aux[1], concept)
-
-        concept = currentConcept + concept + " "
-        student.evaluations.put(aux[1], concept)
-
-        student.save flush: true
+            student.save flush: true
+        }
     }
 
-    def updateAutoEvaluation(String studentCriterion, String concept) {
-        System.out.println(studentCriterion)
-        System.out.println(params.get("concept"))
+    def updateCriteriaAutoEvaluation(){
+        String[] selector = params.selector
+        String login = params.studentId
+        String[] criteria = params.criterionName
 
-        String[] aux = studentCriterion.split(" / ")
+        int size = criteria.length
+        for( int i = 0; i < criteria.length; i++ ){
+            updateAutoEvaluation(login, criteria[i], selector[i])
+        }
 
-        Student student = Student.findByLogin(aux[0])
-
-        student.autoEvaluations.put(aux[1], concept)
-
-        student.save flush: true
+        redirect action: index(100)
     }
+
 
     @Transactional
     def delete(Student studentInstance) {
