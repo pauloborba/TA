@@ -92,7 +92,7 @@ class Student {
 		    for(int i = 0; i < concepts.size(); i++){
     			if(concepts[i] == "MA"){
 	    			ma = ma + 1
-		    	}else if(concepts[i] == "MPA"){
+			    }else if(concepts[i] == "MPA"){
 			    	mpa = mpa + 1
 			    }else{
 				    mana = mana + 1
@@ -105,7 +105,7 @@ class Student {
 
 		    if(percMana == 0 && percMa >= 90){
     			crispGrade = 10
-	    	}else if(percMANA == 0 && percMA >= 70){
+		    }else if(percMANA == 0 && percMA >= 70){
 		    	crispGrade = 9
 		    }else if(percMANA == 0 && percMA >= 50){
 			    crispGrade = 8
