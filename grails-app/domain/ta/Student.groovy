@@ -40,18 +40,38 @@ class Student {
         }
     }
 
-    public boolean calculateFinalGrade(String criterionName){
+    public boolean calculateFinalGrade(String criterionName, String concept){
         boolean ans = false;
         String concepts = evaluations.get(criterionName)
 
-        System.out.println(concepts)
-
         String[] grades = concepts.split(" ")
 
-        int lenght = grades.length
-        System.out.println(lenght)
-        for( int i = 0; i < lenght; i++ ){
-            System.out.println(grades[i])
+        int ma = grades.count("MA")
+        int mpa = grades.count("MPA")
+        int mana = grades.count("MANA")
+
+        if ( concept.equals("MA") ){
+            if ( ( mpa + mana ) <= 1 ){
+                finalGrades.put(criterionName, "MA")
+            } else {
+                finalGrades.put(criterionName, "MPA")
+            }
+        } else if ( concept.equals("MPA") ){
+            if ( ma > 0 && mpa == 0 && mana == 0 ){
+                finalGrades.put(criterionName, "MA")
+            } else if ( mana <= 1 ){
+                finalGrades.put(criterionName, "MPA")
+            } else {
+                finalGrades.put(criterionName, "MANA")
+            }
+        } else {
+            if ( ma > 0 && mpa == 0 && mana == 0 ){
+                finalGrades.put(criterionName, "MA")
+            } else if ( ma >= 0 && mpa >= 1 && mana == 0 ) {
+                finalGrades.put(criterionName, "MPA")
+            }  else {
+                finalGrades.put(criterionName, "MANA")
+            }
         }
 
         return ans;
