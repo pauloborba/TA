@@ -169,7 +169,7 @@ class ConceptController {
                         cont.saveStudent(cont.createStudent())
                     }
 
-                    cont.updateConcepts(login + " / " + criterion, concept)
+                    cont.updateConcepts(login, criterion, concept)
 
                 }
 
