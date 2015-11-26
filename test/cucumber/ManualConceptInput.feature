@@ -40,12 +40,14 @@ Feature: Manual Concept Input
 
 #GUI Scenario
   @ignore
-  Scenario: Spreadsheet with at least one student and one criterion
+  Scenario: Student with no concepts with manual input MA
     Given that I am on the Student page
-    And I can see a student named "Luke Cage" with a login "lc"
-    And a evaluation criterion named "Analyze System Requirements"
+    And I can see a student named "Bruce Wayne" with a login "bw"
+    And a evaluation criterion named "Administration"
+    And I can't see a concept in that criterion
     When I go to the Manual Input Concept Page
     And I choose a new concept "MA" to that student in that criterion
+    And I submit the info
     Then I go back to Student List page
     And I can see that the final concept in that criterion is updated for that student
 

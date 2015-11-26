@@ -32,8 +32,7 @@ class EvaluateStudentTestDataAndOperations{
     }
 
     public static void updateConcept(String login, String criterion, String concept){
-        String studentCriterion = login+" / "+criterion
-        new StudentController().updateConcepts(studentCriterion, concept)
+        new StudentController().updateConcepts(login, criterion, concept)
     }
 
     public static boolean checkConceptUpdate(String login, String criterion, String concept, int oldLenght){

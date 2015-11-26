@@ -139,7 +139,7 @@ class StudentController {
             updateConcepts(login, criteria[i], selector[i])
         }
 
-        redirect action: index(100)
+        redirect action: index(10)
     }
 
     @Transactional

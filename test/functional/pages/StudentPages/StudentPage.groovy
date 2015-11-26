@@ -9,4 +9,9 @@ class StudentPage extends Page {
     static at =  {
         title ==~ /Student List/
     }
+
+    boolean checkStudent(String login, String name){
+        $(login).value() == login
+        $(name).value() == name
+    }
 }

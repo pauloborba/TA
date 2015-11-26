@@ -50,21 +50,31 @@ Given(~'that I am on the Student page$'){ ->
 
 And (~'I can see a student named "([^"]*)" with a login "([^"]*)"$'){ String name, login ->
     studentLogin = login
-    assert EvaluateStudentTestDataAndOperations.createStudent(login, name)
+    EvaluateStudentTestDataAndOperations.createStudent(login, name)
 }
 
 And (~'a evaluation criterion named "([^"]*)"$'){ String name ->
     criterionName = name
-    assert EvaluateStudentTestDataAndOperations.createEvaluationCriterion(name)
+    EvaluateStudentTestDataAndOperations.createEvaluationCriterion(name)
 }
 
-When (~'I go to the Manual Input Concept Page$'){ String cell ->
+And (~'I can\'t see a concept in that criterion$'){ ->
+
+}
+
+When (~'I go to the Manual Input Concept Page$'){ ->
     to ManualInputPage
     at ManualInputPage
 }
 
 And (~'I choose a new concept "([^"]*)" to that student in that criterion$'){ String concept ->
+    at ManualInputPage
+    page.fillConceptDetails(studentLogin, criterionName, concept)
+}
 
+And (~'I submit the info$'){ ->
+    at ManualInputPage
+    page.click(studentLogin)
 }
 
 Then (~'I go back to Student List page$'){->
