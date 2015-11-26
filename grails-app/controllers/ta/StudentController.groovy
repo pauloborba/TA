@@ -1,5 +1,6 @@
 package ta
 
+import org.fusesource.jansi.AnsiConsole
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
@@ -61,6 +62,28 @@ class StudentController {
 
         }
     }
+
+    def compareGrade(){
+        String login = params.studentId
+        def criteria = EvaluationCriterion.findAll()
+        Student student = Student.findByLogin(login)
+        HashMap<String, String> auto = student.getAutoEvaluations()
+        HashMap<String, String> fin = student.getFinalGrades()
+        boolean sent = false;
+         for (EvaluationCriterion evCriterion : EvaluationCriterion.findAll()) {
+             if(!auto.get(evCriterion.name).isEmpty()){
+                sent = true;
+             }
+         }
+
+        if (!sent) {
+            flash.error = "Erro: o aluno escolhido não enviou a auto avaliação"
+            redirect action: index(10)
+        }
+
+        render view: "compare", model:[criteria: criteria, student: student]
+    }
+
 
     @Transactional
     def save(Student studentInstance) {

@@ -21,6 +21,9 @@
 	<g:if test="${flash.message}">
 		<div class="message" role="status">${flash.message}</div>
 	</g:if>
+	<g:if test="${flash.error}">
+		<div class="errors" role="status">${flash.error}</div>
+	</g:if>
 	<table>
 		<thead>
 		<tr>
@@ -36,13 +39,18 @@
 		<tbody>
 		<g:each in="${studentInstanceList}" status="i" var="studentInstance">
 			<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-
+			<g:form controller="student">
 				<td><g:link action="show" id="${studentInstance.id}">${fieldValue(bean: studentInstance, field: "login")}</g:link></td>
+				<g:hiddenField name="studentId" value="${studentInstance.login}"></g:hiddenField>
+
 
 				<td>${fieldValue(bean: studentInstance, field: "name")}</td>
 
 				<td>${fieldValue(bean: studentInstance, field: "finalGrades")}</td>
 
+				<td><g:actionSubmit value="Compare" action = "compareGrade" id="${studentInstance.id}" ></g:actionSubmit></td>
+
+				</g:form>
 			</tr>
 		</g:each>
 		</tbody>
