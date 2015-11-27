@@ -6,7 +6,7 @@ class RegisterEvaluationPage extends Page {
     static url = "/TA/evaluation/create"
 
     static at = {
-        title ==~ /Create Evaluation/
+        title ==~ /Criar Evaluation/
     }
 
     def fillData(text) {

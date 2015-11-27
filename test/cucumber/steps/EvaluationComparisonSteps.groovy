@@ -23,7 +23,7 @@ Given (~'^The student with the login "([^"]*)" appear in the list of student tha
 
 }
 
-When (~'^choose to compare student "([^"]*)" grades$') {
+When (~'^I choose to compare student "([^"]*)"´s grades$') {
     String text->
         at StudentPage
         page.choose()
@@ -48,8 +48,8 @@ Given (~'^The student "([^"]*)" don`t appear in the list of student that sent th
 }
 
 
-Then (~'^I should stay in Evaluation Comparision page$'){->
-    at EvaluationComparisonPage
+Then (~'^I should stay in Student page$'){->
+    at StudentPage
 }
 
 /*
@@ -58,16 +58,16 @@ When the system requires the  Evaluation -> Auto-evaluation comparison
 Then the system returns a detailed table with both student and the professor grades.
 */
 
-Given (~'^The student "([^"]*)"`s Auto-Evaluation is on the database$'){
+Given (~'^The student "([^"]*)"´s Auto-Evaluation is on the database$'){
     String text ->
         assert Student.findByName(text).AutoEvaluations!=null
 
 }
 
-When (~'^the system requires the  Evaluation -> Auto-evaluation comparison$') {
+When (~'^the system requires the Evaluation and Auto-evaluation comparison$') {
     ->
         studentX = new StudentController()
-        //studentX send his auto Evaluation and his Evaluation info to the show comparision page
+        //studentX send his auto Evaluation and his Evaluation info to the show comparison page
 }
 
 Then (~'^the system returns a detailed table with both student and the professor grades$'){->
@@ -87,7 +87,7 @@ Given (~'^The student "([^"]*)"`s Auto-Evaluation isn`t on the database$'){
 
 }
 
-Then (~'^the system returns an exception$'){->
+Then (~'^the system shows an error menssage$'){->
     //check steps
 
 }
