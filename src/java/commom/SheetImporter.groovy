@@ -51,8 +51,6 @@ class SheetImporter extends AbstractExcelImporter{
         header = row.getCell(2).stringCellValue;
         if (header.length() == 0) isValid = false;
 
-
-
         return isValid;
     }
 
