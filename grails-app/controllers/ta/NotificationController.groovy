@@ -18,8 +18,10 @@ class NotificationController {
     }
 
     public boolean save(Notification n) {
-        if(Notification.findByStudent(n.student) == null) {
-            n.save(flush: true)
+        if(n != null) {
+            if(Notification.findByStudent(n.student) == null) {
+                n.save(flush: true)
+            }
         }
         respond new Notification(params)
     }
