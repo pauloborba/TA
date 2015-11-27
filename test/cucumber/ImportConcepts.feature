@@ -62,7 +62,8 @@ Feature: Import concepts from spreadsheet
     Then the student is registered
 
 #Controller Scenario
-  @gaabs
+#  @gaabs
+  @ignore
   Scenario: Importing spreadsheet with non registered criterion
     Given that the valid spreadsheet "validSheet.xlsx" contains a not registered criterion named "grails"
     When I import the spreadsheet

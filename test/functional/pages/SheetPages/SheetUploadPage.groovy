@@ -15,9 +15,6 @@ class SheetUploadPage extends Page {
 
     boolean validFileFormat
 
-    def fillData(text) {
-        $("form").title = text
-    }
 
     def click(){
         //$("input", name:"datafile").click()

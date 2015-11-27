@@ -133,13 +133,13 @@ And (~'the spreadsheet contains invalid columns'){ ->
 //Controller Scenario: Importing spreadsheet with non registered student
 //Given the valid spreadsheet "validSheet.xlsx" contains a not registered student named "Alan Turing" with login "at"
 Given (~'^the valid spreadsheet "([^"]*)" contains a not registered student named "([^"]*)" with login "([^"]*)"$'){ String filename, String name, String login->
-	Student.findAll().each { it.delete(flush:true, failOnError:true) }
 
 	myfilename = filename
 	studentName = name
 	studentLogin = login
 
 	studentByLogin = Student.findByLogin(studentLogin)
+	studentByLogin = studentByLogin.merge()
 	if (studentByLogin != null){
 		studentByLogin.delete(flush:true)
 		studentByLogin = Student.findByLogin(studentLogin)
@@ -163,9 +163,9 @@ Given (~'^the valid spreadsheet "([^"]*)" contains a not registered student name
 
 //  When I import the spreadsheet
 When (~'^I import the spreadsheet$'){ ->
-	Student.findAll().each { it.delete(flush:true, failOnError:true) }
-	EvaluationCriterion.findAll().each { it.delete(flush:true, failOnError:true) }
-	sheetController = new SheetController()
+	//Student.findAll().each { it.delete(flush:true, failOnError:true) }
+	//EvaluationCriterion.findAll().each { it.delete(flush:true, failOnError:true) }
+	if (sheetController == null) sheetController = new SheetController()
 	sheetController.uploadSheet("sampleFiles/" + myfilename)
 	assert sheetController.hasImported
 }
