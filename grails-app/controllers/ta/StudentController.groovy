@@ -32,15 +32,15 @@ class StudentController {
         return student
     }
 
-    def list(){
+    def list() {
         def students = Student.findAll()
         def criteria = EvaluationCriterion.findAll()
 
-        render view: "manualInput", model:[students: students, criteria: criteria]
+        render view: "manualInput", model: [students: students, criteria: criteria]
     }
 
     public boolean saveStudent(Student student) {
-        if(Student.findByLogin(student.login) == null) {
+        if (Student.findByLogin(student.login) == null) {
             student.save flush: true
             return true
         }
@@ -48,7 +48,7 @@ class StudentController {
     }
 
     public void updateStudentEvaluationCriteria() {
-        for(Student student : Student.findAll()) {
+        for (Student student : Student.findAll()) {
             for (EvaluationCriterion evCriterion : EvaluationCriterion.findAll()) {
                 student.addCriterion(evCriterion)
                 student.save flush: true
@@ -129,15 +129,31 @@ class StudentController {
         }
     }
 
-    def updateCriteria(){
+    def updateCriteria() {
         String[] selector = params.selector
         String login = params.studentId
         String[] criteria = params.criterionName
 
-        int size = criteria.length
-        for( int i = 0; i < criteria.length; i++ ){
-            updateConcepts(login, criteria[i], selector[i])
+        if (selector[0].equals("M")) {
+            String select = ""
+            int size = selector.length
+            for (int i = 0; i < size; i++) {
+                select = select + selector[i]
+            }
+            String criterion = ""
+            size = criteria.length
+            for (int i = 0; i < size; i++) {
+                criterion = criterion + criteria[i]
+            }
+
+            updateConcepts(login, criterion, select)
+        } else {
+            int size = criteria.length
+            for (int i = 0; i < criteria.length; i++) {
+                updateConcepts(login, criteria[i], selector[i])
+            }
         }
+
 
         redirect action: index(10)
     }

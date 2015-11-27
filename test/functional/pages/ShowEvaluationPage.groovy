@@ -7,6 +7,6 @@ class ShowEvaluationPage extends Page{
     static url = "/TA/evaluation/show"
 
     static at = {
-        title ==~ /Show Evaluation/
+        title ==~ /Ver Evaluation/
     }
 }

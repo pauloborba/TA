@@ -7,7 +7,7 @@ class StudentPage extends Page {
     static url = "/TA/student/index"
 
     static at =  {
-        title ==~ /Student List/
+        title ==~ /Student Listagem/
     }
 
     boolean checkStudent(String login, String name){

@@ -50,12 +50,12 @@ Given(~'that I am on the Student page$'){ ->
 
 And (~'I can see a student named "([^"]*)" with a login "([^"]*)"$'){ String name, login ->
     studentLogin = login
-    EvaluateStudentTestDataAndOperations.createStudent(login, name)
+    assert EvaluateStudentTestDataAndOperations.createStudent(login, name)
 }
 
 And (~'a evaluation criterion named "([^"]*)"$'){ String name ->
     criterionName = name
-    EvaluateStudentTestDataAndOperations.createEvaluationCriterion(name)
+    assert EvaluateStudentTestDataAndOperations.createEvaluationCriterion(name)
 }
 
 And (~'I can\'t see a concept in that criterion$'){ ->

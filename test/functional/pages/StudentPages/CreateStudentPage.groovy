@@ -7,7 +7,7 @@ class CreateStudentPage extends Page {
     static url = "/TA/student/create"
 
     static at =  {
-        title ==~ /Create Student/
+        title ==~ /Criar Student/
     }
 
     def fillStudentDetails(String login, String name) {

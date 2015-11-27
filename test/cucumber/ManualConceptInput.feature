@@ -4,6 +4,7 @@ Feature: Manual Concept Input
   So I can input them from written evaluations
 
   #Controller Scenario
+  @psg2
   Scenario: Student with no concepts with manual input MA
     Given that the student named "Luke Cage" with a login "lc" is registered in the system
     And the evaluation criterion "Analyze System Requirements" is also registered in the system
@@ -14,6 +15,7 @@ Feature: Manual Concept Input
 
 
  #Controller Scenario
+  @psg2
   Scenario: Student with no concepts with manual input MPA
     Given that the student named "Jessica Jones" with a login "jj" is registered in the system
     And the evaluation criterion "Private Investigation" is also registered in the system
@@ -23,6 +25,7 @@ Feature: Manual Concept Input
     And the final criterion concept of that student is updated to "MPA" in the system
 
     #Controller Scenario
+  @psg2
   Scenario: Student with no concepts with manual input MANA
     Given that the student named "Matt Murlock" with a login "mm" is registered in the system
     And the evaluation criterion "Refactoring" is also registered in the system
@@ -39,7 +42,7 @@ Feature: Manual Concept Input
     Then the system returns a exception
 
 #GUI Scenario
-  @ignore
+  @psg2
   Scenario: Student with no concepts with manual input MA
     Given that I am on the Student page
     And I can see a student named "Bruce Wayne" with a login "bw"
