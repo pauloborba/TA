@@ -30,6 +30,7 @@ class BootStrap {
 //        cjvg.addCriterion(criterion2)
 //        cjvg.addCriterion(criterion3)
 //        pp2.autoEvaluations.put(criterion.name, "MA")
+//        pp2.finalGrades.put(criterion.name, "MA")
 //        pp2.autoEvaluations.put(criterion2.name, "MPA")
 //        pp2.autoEvaluations.put(criterion3.name, "MANA")
 

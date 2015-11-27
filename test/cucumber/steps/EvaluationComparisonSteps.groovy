@@ -1,6 +1,6 @@
 package steps
 
-import pages.EvaluationComparisonPage
+
 import pages.ShowComparisonPage
 import pages.StudentPages.StudentPage
 import ta.Student
@@ -9,7 +9,6 @@ import ta.StudentController
 this.metaClass.mixin(cucumber.api.groovy.Hooks)
 this.metaClass.mixin(cucumber.api.groovy.EN)
 def studentX = new StudentController()
-
 /*
 Given the student "X" appear in the list of student that sent their auto-Evaluation
 When I select the compare grades option
@@ -17,11 +16,12 @@ Then I can see a detailed table with both student and the professor Evaluations 
 */
 
 Given (~'^There is a student with the login "([^"]*)" and name "([^"]*)" and a criteria with name "([^"]*)" and the student appear in the list of student that sent their auto-Evaluation$'){
-    String name, login, Cname  ->
+    String login, name, Cname  ->
         EvaluateStudentTestDataAndOperations.createStudent(login, name)
         EvaluateStudentTestDataAndOperations.createEvaluationCriterion(Cname)
         //studentX.updateAutoEvaluation(login, Cname, "MANA")
         Student.findByLogin(login).autoEvaluations.put(Cname, "MA")
+        Student.findByLogin(login).finalGrades.put(Cname, "MA")
         assert studentX.sentAuto(login)
 }
 
@@ -33,7 +33,9 @@ When (~'^I choose to compare the grades of the student with the login "([^"]*)"$
 }
 
 Then (~'^I can see a detailed table with both student and the professor Evaluations being put, in each criterion, side by side in the screen$'){->
-   at ShowComparisonPage
+   at StudentPage
+    //quando der merge com Caio ai fica o at de baixo
+   // at ShowComparisonPage
 }
 
 /*
@@ -43,9 +45,10 @@ And choose to compare student "X" grades
 Then I can see a error message with a go-back button to go to the main page.
 */
 
-Given (~'^The student with the login "([^"]*)" and name "([^"]*)" do not appear in the list of student that sent their auto-Evaluation$'){
-    String login, name ->
+Given (~'^The student with the login "([^"]*)" and name "([^"]*)" and a criteria with name "([^"]*)" do not appear in the list of student that sent their auto-Evaluation$'){
+    String login, name, Cname ->
         EvaluateStudentTestDataAndOperations.createStudent(login, name)
+        EvaluateStudentTestDataAndOperations.createEvaluationCriterion(Cname)
         assert !studentX.sentAuto(login)
 
 }
@@ -61,9 +64,13 @@ When the system requires the  Evaluation -> Auto-evaluation comparison
 Then the system returns a detailed table with both student and the professor grades.
 */
 
-Given (~'^The Auto-Evaluation of the student with the login "([^"]*)" is on the database$'){
-    String login ->
-       assert studentX.sentAuto(login)
+Given (~'^The Auto-Evaluation of the student with the login "([^"]*)" and name "([^"]*)" in the criteria with name "([^"]*)" is on the database$'){
+    String login, name, Cname ->
+        EvaluateStudentTestDataAndOperations.createStudent(login, name)
+        EvaluateStudentTestDataAndOperations.createEvaluationCriterion(Cname)
+        //studentX.updateAutoEvaluation(login, Cname, "MANA")
+        Student.findByLogin(login).autoEvaluations.put(Cname, "MA")
+        assert studentX.sentAuto(login)
 
 }
 
@@ -84,8 +91,10 @@ When the system requires the  Evaluation -> Auto-evaluation comparison
 Then the system returns an exception.
 */
 
-Given (~'^The Auto-Evaluation of the student with the login "([^"]*)" is not on the database$'){
-    String login ->
+Given (~'^The Auto-Evaluation of the student with the login "([^"]*)" and name "([^"]*)" in the criteria with name "([^"]*)" is not on the database$'){
+    String login, name, Cname ->
+        EvaluateStudentTestDataAndOperations.createStudent(login, name)
+        EvaluateStudentTestDataAndOperations.createEvaluationCriterion(Cname)
         assert !studentX.sentAuto(login)
 
 }
