@@ -29,27 +29,27 @@ Feature: Import concepts from spreadsheet
     Then do not update system data
 
 #GUI Scenario (success)
-  @gaabs
+  @gaabs2
   Scenario: Importing valid spreadsheet (file format and columns)
-    Given that I am at the Concepts page
-    When I select the option to import spreadsheet "validSheet.xlsx"
+    Given that I am at the Sheet Upload page
+    When I import the spreadsheet "validSheet.xlsx"
     And the spreadsheet is on valid file format
     And the spreadsheet contains valid columns
     Then an upload confirmation message is displayed
 
 #GUI Scenario (failure)
-  @gaabs
+  @gaabs2
   Scenario: Importing spreadsheet in invalid file format
-    Given that I am at the Concepts page
-    When I select the option to import spreadsheet "sheet.csv"
+    Given that I am at the Sheet Upload page
+    When I import the spreadsheet "sheet.csv"
     And the spreadsheet is not on valid file format
     Then display error message
 
 #GUI Scenario (failure)
-  @gaabs
+  @gaabs2
   Scenario: Importing spreadsheet with invalid column
-    Given that I am at the Concepts page
-    When I select the option to import spreadsheet "invalidColumnSheet.xlsx"
+    Given that I am at the Sheet Upload page
+    When I import the spreadsheet "invalidColumnSheet.xlsx"
     And the spreadsheet is on valid file format
     And the spreadsheet has invalid columns
     Then display error message
