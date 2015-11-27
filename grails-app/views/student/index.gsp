@@ -48,7 +48,7 @@
 
 				<td>${fieldValue(bean: studentInstance, field: "finalGrades")}</td>
 
-				<td><g:actionSubmit value="Compare" action = "compareGrade" id="${studentInstance.id}" ></g:actionSubmit></td>
+				<td><g:actionSubmit value="Compare" action = "compareGrade" id="${studentInstance.login}Compare" ></g:actionSubmit></td>
 
 				</g:form>
 			</tr>

@@ -4,30 +4,30 @@ I want to compare my evaluation of the student with the evaluation made by him
 so that I can call him if there is any discrepancies.
 
 
-//GUI
+#GUI
 
-//Success
-Scenario: table´s seen with success
-Given the student with the login "X" appear in the list of student that sent their auto-Evaluation
-When I choose to compare student "X"´s grades
+#Success
+Scenario: table is seen with success
+Given There is a student with the login "ehammo" and name "Eduardo Maia" and a criteria with name "C1" and the student appear in the list of student that sent their auto-Evaluation
+When I choose to compare the grades of the student with the login "ehammo"
 Then I can see a detailed table with both student and the professor Evaluations being put, in each criterion, side by side in the screen
  
-//Failure
-Scenario:  table isn't seen with success
-Given the student "X" don´t appear in the list of student that sent their auto-Evaluation
-When I choose to compare student "X" grades
-Then I should stay in Student page
+#Failure
+Scenario:  table is not seen with success
+Given The student with the login "X" and name "Y" do not appear in the list of student that sent their auto-Evaluation
+When I choose to compare the grades of the student with the login "X"
+Then I should stay in the Student page
 
-//Controller
+#Controller
 
-//Success
+#Success
 Scenario: The system return a table with success
-Given Student "X"´s Auto-Evaluation is on the database
-When the system requires the Evaluation and Auto-evaluation comparison
-Then the system returns a detailed table with both student and the professor grades
+Given The Auto-Evaluation of the student with the login "ehammo" is on the database
+When The system requires the Evaluation and Auto-evaluation comparison of student with the login "X"
+Then The system returns a detailed table with both student and the professor grades
 
-//Failure
-Scenario: The system don't return a table with success
-Given Student "X"´s Auto-Evaluation isn´t on the database
-When the system requires the  Evaluation and Auto-evaluation comparison
-Then the system returns an error menssage
+#Failure
+Scenario: The system do not return a table with success
+Given The Auto-Evaluation of the student with the login "X" is not on the database
+When The system requires the Evaluation and Auto-evaluation comparison of student with the login "X"
+Then The system returns an error message

@@ -10,6 +10,9 @@ class StudentPage extends Page {
         title ==~ /Student Listagem/
     }
 
-    def choose(cell){}
+    def choose(String login){
+        String id = "#"+login+"Compare"
+        $(id).click()
+    }
 
 }

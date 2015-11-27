@@ -10,6 +10,7 @@ class StudentController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    def worked = false;
     def conceito = new HashMap<String, String>()
 
     def index(Integer max) {
@@ -71,8 +72,28 @@ class StudentController {
         HashMap<String, String> fin = student.getFinalGrades()
         boolean sent = sentAuto(login)
         if (!sent) {
+            worked=false;
             flash.error = "Erro: o aluno escolhido não enviou a auto avaliação"
             redirect action: index(10)
+        }else{
+            worked=true;
+        }
+
+        render view: "compare", model:[criteria: criteria, student: student]
+    }
+
+    def compareGrades(String login){
+        def criteria = EvaluationCriterion.findAll()
+        Student student = Student.findByLogin(login)
+        HashMap<String, String> auto = student.getAutoEvaluations()
+        HashMap<String, String> fin = student.getFinalGrades()
+        boolean sent = sentAuto(login)
+        if (!sent) {
+            worked=false;
+            flash.error = "Erro: o aluno escolhido não enviou a auto avaliação"
+            redirect action: index(10)
+        }else{
+            worked=true;
         }
 
         render view: "compare", model:[criteria: criteria, student: student]
@@ -80,6 +101,7 @@ class StudentController {
 
     public boolean sentAuto(String login){
         boolean sent = false;
+        Student student = Student.findByLogin(login)
         HashMap<String, String> auto = student.getAutoEvaluations()
         for (EvaluationCriterion evCriterion : EvaluationCriterion.findAll()) {
             if(!auto.get(evCriterion.name).isEmpty()){
