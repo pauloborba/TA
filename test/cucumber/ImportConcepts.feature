@@ -5,30 +5,7 @@ Feature: Import concepts from spreadsheet
   I want to import concepts from spreadsheets
   So that my grades are easily recorded on the system
 
-#Controller Scenario (success)
-  @gaabs
-  Scenario: Importing valid spreadsheet (file format and columns)
-    Given the spreadsheet "validSheet.xlsx" is on valid file format
-    When I try to import its data
-    And the spreadsheet contains valid columns
-    Then update system data accordingly
-
-#Controller Scenario (failure)
-  @gaabs
-  Scenario: Importing spreadsheet in invalid file format
-    Given the spreadsheet "sheet.csv" is not on valid file format
-    When I try to import its data
-    Then do not update system data
-
-#Controller Scenario (failure)
-  @gaabs
-  Scenario: Importing spreadsheet with invalid column
-    Given the spreadsheet "invalidColumnSheet.xlsx" is on valid file format
-    When I try to import its data
-    And the spreadsheet contains invalid columns
-    Then do not update system data
-
-#GUI Scenario (success)
+  #GUI Scenario (success)
   @gaabs
   Scenario: Importing valid spreadsheet (file format and columns)
     Given that I am at the Sheet Upload page
@@ -53,6 +30,29 @@ Feature: Import concepts from spreadsheet
     And the spreadsheet is on valid file format
     And the spreadsheet has invalid columns
     Then display error message
+
+#Controller Scenario (success)
+  @gaabs
+  Scenario: Importing valid spreadsheet (file format and columns)
+    Given the spreadsheet "validSheet.xlsx" is on valid file format
+    When I try to import its data
+    And the spreadsheet contains valid columns
+    Then update system data accordingly
+
+#Controller Scenario (failure)
+  @gaabs
+  Scenario: Importing spreadsheet in invalid file format
+    Given the spreadsheet "sheet.csv" is not on valid file format
+    When I try to import its data
+    Then do not update system data
+
+#Controller Scenario (failure)
+  @gaabs
+  Scenario: Importing spreadsheet with invalid column
+    Given the spreadsheet "invalidColumnSheet.xlsx" is on valid file format
+    When I try to import its data
+    And the spreadsheet contains invalid columns
+    Then do not update system data
 
 #Controller Scenario
   @gaabs

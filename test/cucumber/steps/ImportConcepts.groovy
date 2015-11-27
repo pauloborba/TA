@@ -9,63 +9,6 @@ import ta.Student
 this.metaClass.mixin(cucumber.api.groovy.Hooks)
 this.metaClass.mixin(cucumber.api.groovy.EN)
 
-// Controller Scenario: Importing valid spreadsheet (file format and columns)
-
-// Given the spreadsheet "validSheet.xlsx" is on valid file format
-Given (~'^the spreadsheet "([^"]*)" is on valid file format$'){ String filename->
-	sheetImporter = new SheetImporter("sampleFiles/" + filename)
-	myfilename = filename
-	assert sheetImporter != null
-}
-
-// When I import it’s data
-When (~'^I try to import its data$'){ ->
-	sheetController = new SheetController()
-	sheetController.uploadSheet("sampleFiles/" + myfilename)
-}
-
-//And the spreadsheet contains valid columns
-And (~'the spreadsheet contains valid columns'){ ->
-	assert sheetImporter.hasValidColumns()
-}
-
-// Then update system data accordingly
-Then (~'^update system data accordingly$'){ ->
-	assert sheetController.hasImported
-}
-
-// Controller Scenario: Importing spreadsheet in invalid file format
-// Given the spreadsheet "sheet.csv" is not on valid file format
-Given (~'^the spreadsheet "([^"]*)" is not on valid file format$'){ String filename ->
-	valid = true
-	myfilename = filename
-	try {
-		sheetImporter = new SheetImporter("sampleFiles/" + filename)
-	} catch (IllegalArgumentException e){
-		valid = false
-	}
-	assert !valid
-}
-
-//// When I try to import it’s data
-
-// Then do not update system data
-Then (~'^do not update system data$'){ ->
-	assert !sheetController.hasImported
-}
-
-// Controller Scenario: Importing spreadsheet with invalid column
-//  Given the spreadsheet "invalidColumnSheet.xlsx" is on valid file format
-
-// When I try to import it’s data
-
-//And the spreadsheet contains invalid columns
-And (~'the spreadsheet contains invalid columns'){ ->
-	assert !sheetImporter.hasValidColumns()
-}
-
-// Then do not update system data
-
 // GUI Scenario: Importing valid spreadsheet (file format and columns)
 
 //Given that I am at the Sheet Upload page
@@ -129,6 +72,63 @@ And (~'^the spreadsheet has invalid columns$') { ->
 	assert !sheetImporter.hasValidColumns()
 }
 //Then display error message
+
+// Controller Scenario: Importing valid spreadsheet (file format and columns)
+
+// Given the spreadsheet "validSheet.xlsx" is on valid file format
+Given (~'^the spreadsheet "([^"]*)" is on valid file format$'){ String filename->
+	sheetImporter = new SheetImporter("sampleFiles/" + filename)
+	myfilename = filename
+	assert sheetImporter != null
+}
+
+// When I import it’s data
+When (~'^I try to import its data$'){ ->
+	sheetController = new SheetController()
+	sheetController.uploadSheet("sampleFiles/" + myfilename)
+}
+
+//And the spreadsheet contains valid columns
+And (~'the spreadsheet contains valid columns'){ ->
+	assert sheetImporter.hasValidColumns()
+}
+
+// Then update system data accordingly
+Then (~'^update system data accordingly$'){ ->
+	assert sheetController.hasImported
+}
+
+// Controller Scenario: Importing spreadsheet in invalid file format
+// Given the spreadsheet "sheet.csv" is not on valid file format
+Given (~'^the spreadsheet "([^"]*)" is not on valid file format$'){ String filename ->
+	valid = true
+	myfilename = filename
+	try {
+		sheetImporter = new SheetImporter("sampleFiles/" + filename)
+	} catch (IllegalArgumentException e){
+		valid = false
+	}
+	assert !valid
+}
+
+//// When I try to import it’s data
+
+// Then do not update system data
+Then (~'^do not update system data$'){ ->
+	assert !sheetController.hasImported
+}
+
+// Controller Scenario: Importing spreadsheet with invalid column
+//  Given the spreadsheet "invalidColumnSheet.xlsx" is on valid file format
+
+// When I try to import it’s data
+
+//And the spreadsheet contains invalid columns
+And (~'the spreadsheet contains invalid columns'){ ->
+	assert !sheetImporter.hasValidColumns()
+}
+
+// Then do not update system data
 
 //Controller Scenario: Importing spreadsheet with non registered student
 //Given the valid spreadsheet "validSheet.xlsx" contains a not registered student named "Alan Turing" with login "at"
