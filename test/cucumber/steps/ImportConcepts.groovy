@@ -55,7 +55,7 @@ Then (~'^do not update system data$'){ ->
 }
 
 // Controller Scenario: Importing spreadsheet with invalid column
-// Given the spreadsheet "sheet.csv" is not on valid file format
+//  Given the spreadsheet "invalidColumnSheet.xlsx" is on valid file format
 
 // When I try to import it’s data
 
@@ -81,7 +81,7 @@ When (~'^I import the spreadsheet "([^"]*)"$') {
 		at SheetUploadPage
 		myfilename = filename
 
-		page.submit(filename)
+		page.submit("sampleFiles/" + filename)
 		//sheetController = new SheetController()
 		//sheetController.uploadSheet("sampleFiles/" + myfilename)
 }
@@ -105,7 +105,7 @@ Then (~'^an upload confirmation message is displayed$') { ->
 // GUI Scenario: Importing spreadsheet in invalid file format
 
 //Given that I am at the Concepts page
-//When I select the option to import spreadsheet "sheet.csv"
+//When I import the spreadsheet "sheet.csv"
 
 //And the spreadsheet is not on valid file format
 And (~'^the spreadsheet is not on valid file format$') { ->
@@ -121,7 +121,7 @@ Then (~'^display error message$') { ->
 // GUI Scenario: Importing spreadsheet with invalid column
 
 //Given that I am at the Upload Sheet page
-//When I select the option to import spreadsheet "invalidColumnSheet.xlsx"
+//When I import the spreadsheet "invalidColumnSheet.xlsx"
 //And the spreadsheet is on valid file format
 
 // And the spreadsheet has invalid columns

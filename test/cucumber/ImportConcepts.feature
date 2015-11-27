@@ -29,7 +29,7 @@ Feature: Import concepts from spreadsheet
     Then do not update system data
 
 #GUI Scenario (success)
-  @gaabs2
+  @gaabs
   Scenario: Importing valid spreadsheet (file format and columns)
     Given that I am at the Sheet Upload page
     When I import the spreadsheet "validSheet.xlsx"
@@ -38,7 +38,7 @@ Feature: Import concepts from spreadsheet
     Then an upload confirmation message is displayed
 
 #GUI Scenario (failure)
-  @gaabs2
+  @gaabs
   Scenario: Importing spreadsheet in invalid file format
     Given that I am at the Sheet Upload page
     When I import the spreadsheet "sheet.csv"
@@ -46,7 +46,7 @@ Feature: Import concepts from spreadsheet
     Then display error message
 
 #GUI Scenario (failure)
-  @gaabs2
+  @gaabs
   Scenario: Importing spreadsheet with invalid column
     Given that I am at the Sheet Upload page
     When I import the spreadsheet "invalidColumnSheet.xlsx"
