@@ -4,6 +4,7 @@ import pages.EvaluationCriterionPages.CreateEvaluationCriterionPage
 import pages.ManualInputPage
 import pages.StudentPages.CreateStudentPage
 import pages.StudentPages.StudentPage
+import ta.EvaluationCriterion
 import ta.StudentController
 import ta.Student
 
@@ -118,8 +119,25 @@ And (~'I can see that the final concept in that criterion for that student is no
     assert page.checkConcept(studentLogin, criterionName, concept)
 }
 
+And (~'I already put the concepts "([^"]*)" and "([^"]*)" for that student in that criterion$'){String concept1, concept2 ->
+    to ManualInputPage
+    at ManualInputPage
+    page.fillConceptDetails(studentLogin, criterionName, concept1)
+    page.click(studentLogin)
+
+    to ManualInputPage
+    at ManualInputPage
+    page.fillConceptDetails(studentLogin, criterionName, concept2)
+    page.click(studentLogin)
+
+    at StudentPage
+    assert page.checkConcept(studentLogin, criterionName, "MA")
+}
+
+
 And (~'I can\'t see any evaluation criterion$'){ ->
     at StudentPage
+
     assert page.checkCriteria(studentLogin)
 }
 

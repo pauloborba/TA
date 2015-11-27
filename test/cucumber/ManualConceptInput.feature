@@ -77,7 +77,20 @@ Feature: Manual Concept Input
     Then I go back to Student page
     And I can see that the final concept in that criterion for that student is now "MANA"
 
+    @psg2
+    Scenario: Student already with concepts MA and MPA with manual input MPA
+    Given that I am on the Student page
+    And I can see a student named "Clark Kent" with a login "ck"
+    And a evaluation criterion named "Journalism"
+    And I already put the concepts "MA" and "MPA" for that student in that criterion
+    When I go to the Manual Input Concept Page
+    And I choose a new concept "MPA" to that student in that criterion
+    And I submit the info
+    Then I go back to Student page
+    And I can see that the final concept in that criterion for that student is now "MPA"
+
 #  @psg2
+  @ignore
   Scenario: Error Message
     Given that I am on the Student page
     And I can see a student named "Clark Kent" with a login "ck"
