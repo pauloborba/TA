@@ -8,6 +8,11 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
+    <style>
+    styleM1 {
+        color: red;
+    }
+    </style>
     <meta name="layout" content="main">
     <g:set var="entityName" value="${message(code: 'student.label', default: 'Student')}" />
     <title>Show Comparision</title>
@@ -40,9 +45,24 @@
             Professor
         </td>
         <g:each in="${criteria}" status="i" var="studentInstance">
-         <td>
-            ${student.finalGrades.get(studentInstance.name)}
-         </td>
+            <g:if test="${student.finalGrades.get(studentInstance.name).equals(student.autoEvaluations.get(studentInstance.name))}" >
+                <td>
+                    ${student.finalGrades.get(studentInstance.name)}
+                </td>
+            </g:if>
+            <g:else>
+                <g:if test="${student.autoEvaluations.get(studentInstance.name).equals("")}">
+                    <td>
+                        ${student.finalGrades.get(studentInstance.name)}
+                    </td>
+                </g:if>
+                <g:else>
+                    <td>
+                        <styleM1>${student.finalGrades.get(studentInstance.name)}</styleM1>
+                    </td>
+                </g:else>
+
+            </g:else>
         </g:each>
     </tr>
     <tr>
@@ -51,9 +71,22 @@
         </td>
 
         <g:each in="${criteria}" status="i" var="studentInstance">
-          <td>
-             ${student.autoEvaluations.get(studentInstance.name)}
-          </td>
+            <g:if test="${student.finalGrades.get(studentInstance.name).equals(student.autoEvaluations.get(studentInstance.name))}" >
+                <td>
+                    ${student.autoEvaluations.get(studentInstance.name)}
+                </td>            </g:if>
+            <g:else>
+                <g:if test="${student.autoEvaluations.get(studentInstance.name).equals("")}">
+                    <td>
+                        ${student.autoEvaluations.get(studentInstance.name)}
+                    </td>
+                </g:if>
+                <g:else>
+                    <td>
+                        <styleM1>${student.autoEvaluations.get(studentInstance.name)}</styleM1>
+                    </td>
+                </g:else>
+            </g:else>
         </g:each>
 
     </tr>
