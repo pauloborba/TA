@@ -18,56 +18,54 @@
         <li><g:link class="create" action="list"><g:message code="default.new.label" message="Manual Concept Input" /></g:link></li>
     </ul>
 </div>
+<table>
 <div class="autoEvaluation">
-    <table>
+
 
         <g:if test="${criteria.size() == 0}">
             <div id="EmptyError">O sistema não possui nenhum critério cadastrado, volte mais tarde!</div>
         </g:if>
         <g:else>
-            <g:select name="selector" from="${Student.list()}" optionValue="name"></g:select>
-            <g:each in="${students}" status="i" var="studentInstance">
-                <g:if test="${i == 0}">
-                    <thead>
-                    <th>
-                        Login
-                    </th>
-                    <g:each in="${criteria}">
+
+            <g:form controller = "student">
+                <g:select name="selector" from="${Student.list()}" optionKey="login" optionValue="login" noSelection="${["":'Select One']}"></g:select>
+
+                <g:each in="${0..1}" status = "i" var="evCriterion">
+                    <g:if test="${i==0}">
+                        <thead>
+                        <g:each in="${criteria}">
                         <th>
                             ${it.name}
                         </th>
-                    </g:each>
-                    <th>
-                        Actions
-                    </th>
-                    </thead>
-                </g:if>
-                <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-
-                    <td><g:link action="show" id="${studentInstance.id}">${fieldValue(bean: studentInstance, field: "login")}</g:link></td>
-
-                    <g:form controller="student">
-                        <g:hiddenField name="studentId" value="${studentInstance.login}"></g:hiddenField>
-                        <g:each in="${criteria}" var="evCriterion">
-                            <g:hiddenField name="criterionName" value="${evCriterion.name}"></g:hiddenField>
-                            <td>
-                                <g:select id="${studentInstance.login}${evCriterion.name}" name="selector"
-                                          from="${ta.Student.Concept.CONCEPTS}"
-                                          noSelection="['':'Concepts']"/>
-                            </td>
                         </g:each>
+                        <th>
+                            Actions
+                        </th>
+                        </thead>
+                    </g:if>
+                    <g:else>
+
+                            <g:each in="${criteria}" var="evaluationCriterion">
+                                <g:hiddenField name="criterionName" value="${evaluationCriterion.name}"></g:hiddenField>
+
+                                <td>
+                                <g:select name="concepts"
+                                          from="${ta.Student.Concept.CONCEPTS}"
+                                          noSelection="${["":'Concepts']}"></g:select>
+                                </td>
+                            </g:each>
+
+
                         <td>
-                            <g:actionSubmit value="Submeter" action="updateCriteriaAutoEvaluation"  id="${studentInstance.id}"></g:actionSubmit>
+                            <g:actionSubmit value="Send" action="updateCriteriaAutoEvaluation"></g:actionSubmit>
                         </td>
-                    </g:form>
-                </tr>
-            </g:each>
+                    </g:else>
+                </g:each>
+            </g:form>
         </g:else>
     </table>
 
 </div>
-
-
 
 
 </body>
