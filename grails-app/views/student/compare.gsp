@@ -42,7 +42,7 @@
     </thead>
     <tr>
         <td>
-            Professor
+            Professor:
         </td>
         <g:each in="${criteria}" status="i" var="studentInstance">
             <g:if test="${student.finalGrades.get(studentInstance.name).equals(student.autoEvaluations.get(studentInstance.name))}" >
@@ -67,7 +67,7 @@
     </tr>
     <tr>
         <td>
-            Aluno
+            ${student.getName()}:
         </td>
 
         <g:each in="${criteria}" status="i" var="studentInstance">

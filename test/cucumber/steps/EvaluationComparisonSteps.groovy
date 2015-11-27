@@ -21,8 +21,8 @@ Given (~'^There is a student with the login "([^"]*)" and name "([^"]*)" and a c
         EvaluateStudentTestDataAndOperations.createStudent(login, name)
         EvaluateStudentTestDataAndOperations.createEvaluationCriterion(Cname)
         //studentX.updateAutoEvaluation(login, Cname, "MANA")
-        //assert studentX.sentAuto(login)
-        assert true
+        Student.findByLogin(login).autoEvaluations.put(Cname, "MA")
+        assert studentX.sentAuto(login)
 }
 
 When (~'^I choose to compare the grades of the student with the login "([^"]*)"$') {
@@ -33,7 +33,7 @@ When (~'^I choose to compare the grades of the student with the login "([^"]*)"$
 }
 
 Then (~'^I can see a detailed table with both student and the professor Evaluations being put, in each criterion, side by side in the screen$'){->
-   // at ShowComparisonPage
+   at ShowComparisonPage
 }
 
 /*
@@ -63,8 +63,8 @@ Then the system returns a detailed table with both student and the professor gra
 
 Given (~'^The Auto-Evaluation of the student with the login "([^"]*)" is on the database$'){
     String login ->
-       // assert studentX.sentAuto(login)
-        assert true
+       assert studentX.sentAuto(login)
+
 }
 
 When (~'^The system requires the Evaluation and Auto-evaluation comparison of student with the login "([^"]*)"$') {
@@ -73,8 +73,8 @@ When (~'^The system requires the Evaluation and Auto-evaluation comparison of st
 }
 
 Then (~'^The system returns a detailed table with both student and the professor grades$'){->
-    //assert studentX.worked
-    assert true
+    assert studentX.worked
+
 }
 
 
