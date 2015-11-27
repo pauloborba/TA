@@ -2,6 +2,7 @@ package steps
 
 import pages.EvaluationComparisonPage
 import pages.ShowComparisonPage
+import pages.StudentPages.StudentPage
 import ta.Student
 import ta.StudentController
 
@@ -12,27 +13,20 @@ this.metaClass.mixin(cucumber.api.groovy.EN)
 /*
 Given the student "X" appear in the list of student that sent their auto-Evaluation
 When I select the compare grades option
-And choose to compare student "X" grades
 Then I can see a detailed table with both student and the professor Evaluations being put, in each criterion, side by side in the screen.
 */
 
-Given (~'^The student "([^"]*)" appear in the list of student that sent their auto-Evaluation$'){
-    String text ->
-        assert Student.findByName(text).AutoEvaluations!=null
+Given (~'^The student with the login "([^"]*)" appear in the list of student that sent their auto-Evaluation$'){
+    String login ->
+        student = new StudentController()
+        assert student.sentAuto(login)
 
 }
 
 When (~'^choose to compare student "([^"]*)" grades$') {
     String text->
-        at EvaluationComparisonPage
-        page.select(text)
-
-}
-
-And (~'^I select the compare grades option$'){ ->
-    at EvaluationComparisonPage
-    page.click()
-
+        at StudentPage
+        page.choose()
 }
 
 Then (~'^I can see a detailed table with both student and the professor Evaluations being put, in each criterion, side by side in the screen$'){->
@@ -47,8 +41,9 @@ Then I can see a error message with a go-back button to go to the main page.
 */
 
 Given (~'^The student "([^"]*)" don`t appear in the list of student that sent their auto-Evaluation$'){
-    String text ->
-        assert Student.findByName(text).AutoEvaluations==null
+    String login ->
+        student = new StudentController()
+        assert !student.sentAuto(login)
 
 }
 

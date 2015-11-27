@@ -9,4 +9,7 @@ class StudentPage extends Page {
     static at =  {
         title ==~ /Student List/
     }
+
+    def choose(cell){}
+
 }

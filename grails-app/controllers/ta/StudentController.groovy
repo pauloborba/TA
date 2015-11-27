@@ -69,13 +69,7 @@ class StudentController {
         Student student = Student.findByLogin(login)
         HashMap<String, String> auto = student.getAutoEvaluations()
         HashMap<String, String> fin = student.getFinalGrades()
-        boolean sent = false;
-         for (EvaluationCriterion evCriterion : EvaluationCriterion.findAll()) {
-             if(!auto.get(evCriterion.name).isEmpty()){
-                sent = true;
-             }
-         }
-
+        boolean sent = sentAuto(login)
         if (!sent) {
             flash.error = "Erro: o aluno escolhido não enviou a auto avaliação"
             redirect action: index(10)
@@ -84,6 +78,16 @@ class StudentController {
         render view: "compare", model:[criteria: criteria, student: student]
     }
 
+    public boolean sentAuto(String login){
+        boolean sent = false;
+        HashMap<String, String> auto = student.getAutoEvaluations()
+        for (EvaluationCriterion evCriterion : EvaluationCriterion.findAll()) {
+            if(!auto.get(evCriterion.name).isEmpty()){
+                sent = true;
+            }
+        }
+        return sent
+    }
 
     @Transactional
     def save(Student studentInstance) {

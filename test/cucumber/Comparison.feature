@@ -10,14 +10,12 @@ Success
 
 Given the student "X" appear in the list of student that sent their auto-Evaluation
 When I choose to compare student "X" grades
-And select the compare grades option
 Then I can see a detailed table with both student and the professor Evaluations being put, in each criterion, side by side in the screen.
  
 Failure
 
 Given the student "X" don't appear in the list of student that sent their auto-Evaluation
 When I choose to compare student "X" grades
-And select the compare grades option
 Then I can see a error message with a go-back button to go to the main page.
 
 Controller

@@ -4,14 +4,9 @@ import geb.Page
 
 class ShowComparisonPage extends Page{
 
-    static url = "/TA/EvaluationComparison/show"
+    static url = "/TA/student/compare"
 
     static at = {
         title ==~ /Show Comparison/
-    }
-    
-    def showError(){
-        
-        
     }
 }
