@@ -6,26 +6,26 @@ import grails.transaction.Transactional
 import static org.springframework.http.HttpStatus.*
 
 @Transactional(readOnly = true)
-class ConceptController {
+class SheetController {
     public boolean hasImported
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Concept.list(params), model: [conceptInstanceCount: Concept.count()]
+        respond Sheet.list(params), model: [conceptInstanceCount: Sheet.count()]
     }
 
-    def show(Concept conceptInstance) {
+    def show(Sheet conceptInstance) {
         respond conceptInstance
     }
 
     def create() {
-        respond new Concept(params)
+        respond new Sheet(params)
     }
 
     @Transactional
-    def save(Concept conceptInstance) {
+    def save(Sheet conceptInstance) {
         if (conceptInstance == null) {
             notFound()
             return
@@ -40,19 +40,19 @@ class ConceptController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'concept.label', default: 'Concept'), conceptInstance.id])
+                flash.message = message(code: 'default.created.message', args: [message(code: 'concept.label', default: 'Sheet'), conceptInstance.id])
                 redirect conceptInstance
             }
             '*' { respond conceptInstance, [status: CREATED] }
         }
     }
 
-    def edit(Concept conceptInstance) {
+    def edit(Sheet conceptInstance) {
         respond conceptInstance
     }
 
     @Transactional
-    def update(Concept conceptInstance) {
+    def update(Sheet conceptInstance) {
         if (conceptInstance == null) {
             notFound()
             return
@@ -67,7 +67,7 @@ class ConceptController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Concept.label', default: 'Concept'), conceptInstance.id])
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'Sheet.label', default: 'Sheet'), conceptInstance.id])
                 redirect conceptInstance
             }
             '*' { respond conceptInstance, [status: OK] }
@@ -75,7 +75,7 @@ class ConceptController {
     }
 
     @Transactional
-    def delete(Concept conceptInstance) {
+    def delete(Sheet conceptInstance) {
 
         if (conceptInstance == null) {
             notFound()
@@ -86,7 +86,7 @@ class ConceptController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Concept.label', default: 'Concept'), conceptInstance.id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Sheet.label', default: 'Sheet'), conceptInstance.id])
                 redirect action: "index", method: "GET"
             }
             '*' { render status: NO_CONTENT }
@@ -96,7 +96,7 @@ class ConceptController {
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'concept.label', default: 'Concept'), params.id])
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'concept.label', default: 'Sheet'), params.id])
                 redirect action: "index", method: "GET"
             }
             '*' { render status: NOT_FOUND }
@@ -108,7 +108,9 @@ class ConceptController {
     }
 
     def submit() {
-        def f = request.getFile('datafile');
+        def f = request.getFile('datafile')
+
+        println params
 
         String filename = params.datafile.getOriginalFilename()
 

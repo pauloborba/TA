@@ -1,12 +1,12 @@
-package pages.ConceptPages
+package pages.SheetPages
 
 import geb.Page
 
-class ConceptPage extends Page {
-    static url = "/TA/concept/index"
+class SheetPage extends Page {
+    static url = "/TA/sheet/index"
 
     static at = {
-        title ==~ /Concept List/
+        title ==~ /Sheet List/
     }
 
     boolean validFormat

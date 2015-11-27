@@ -1,10 +1,10 @@
 
-<%@ page import="ta.Concept" %>
+<%@ page import="ta.Sheet" %>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta name="layout" content="main">
-	<g:set var="entityName" value="${message(code: 'concept.label', default: 'Concept')}" />
+	<g:set var="entityName" value="${message(code: 'concept.label', default: 'Sheet')}" />
 	<title><g:message code="default.list.label" args="[entityName]" /></title>
 </head>
 <body>
@@ -25,7 +25,7 @@
 		<thead>
 		<tr>
 
-			<g:sortableColumn property="concept" title="${message(code: 'concept.concept.label', default: 'Concept')}" />
+			<g:sortableColumn property="concept" title="${message(code: 'concept.concept.label', default: 'Sheet')}" />
 
 		</tr>
 		</thead>

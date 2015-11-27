@@ -1,10 +1,10 @@
 
-<%@ page import="ta.Concept" %>
+<%@ page import="ta.Sheet" %>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta name="layout" content="main">
-	<g:set var="entityName" value="${message(code: 'concept.label', default: 'Concept')}" />
+	<g:set var="entityName" value="${message(code: 'concept.label', default: 'Sheet')}" />
 	<title>Upload Sheet</title>
 	<style type="text/css">
 		.error{
@@ -34,11 +34,10 @@
 	</g:if>
 
 	<g:if test="${flash.error}">
-		<div class="error" role="status">${flash.error}</div>
+		<div class="errors" role="status">${flash.error}</div>
 	</g:if>
 
-	<g:uploadForm controller="concept" action = "submit">
-
+	<g:uploadForm controller="sheet" action = "submit">
 		<input type="file" name = "datafile" size = "40"/>
 		<g:submitButton  name="submit" value="submit"/>
 	</g:uploadForm>

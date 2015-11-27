@@ -1,11 +1,9 @@
 package steps
 
 import commom.SheetImporter
-import pages.ConceptPages.ConceptSheetUploadPage
-import ta.ConceptController
-import pages.ConceptPages.ConceptPage
+import pages.SheetPages.SheetUploadPage
 import ta.EvaluationCriterion
-import ta.Sheet
+import ta.SheetController
 import ta.Student
 
 this.metaClass.mixin(cucumber.api.groovy.Hooks)
@@ -22,8 +20,8 @@ Given (~'^the spreadsheet "([^"]*)" is on valid file format$'){ String filename-
 
 // When I import it’s data
 When (~'^I try to import its data$'){ ->
-	conceptController = new ConceptController()
-	conceptController.uploadSheet("sampleFiles/" + myfilename)
+	sheetController = new SheetController()
+	sheetController.uploadSheet("sampleFiles/" + myfilename)
 }
 
 //And the spreadsheet contains valid columns
@@ -33,7 +31,7 @@ And (~'the spreadsheet contains valid columns'){ ->
 
 // Then update system data accordingly
 Then (~'^update system data accordingly$'){ ->
-	assert conceptController.hasImported
+	assert sheetController.hasImported
 }
 
 // Controller Scenario: Importing spreadsheet in invalid file format
@@ -53,7 +51,7 @@ Given (~'^the spreadsheet "([^"]*)" is not on valid file format$'){ String filen
 
 // Then do not update system data
 Then (~'^do not update system data$'){ ->
-	assert !conceptController.hasImported
+	assert !sheetController.hasImported
 }
 
 // Controller Scenario: Importing spreadsheet with invalid column
@@ -70,32 +68,38 @@ And (~'the spreadsheet contains invalid columns'){ ->
 
 // GUI Scenario: Importing valid spreadsheet (file format and columns)
 
-//Given that I am at the Concept page
-Given (~'^that I am at the Concepts page$') {
+//Given that I am at the Sheet Upload page
+Given (~'^that I am at the Sheet Upload page$') {
 	->
-	to ConceptSheetUploadPage
-	at ConceptSheetUploadPage
+	to SheetUploadPage
+	at SheetUploadPage
 
 }
-//When I select the option to import spreadsheet "validSheet.xlsx"
-When (~'^I select the option to import spreadsheet "([^"]*)"$') {
-	String file ->
-		at ConceptSheetUploadPage
-		page.click()
-		//page.import(file)
+//When I import the spreadsheet "validSheet.xlsx"
+When (~'^I import the spreadsheet "([^"]*)"$') {
+	String filename ->
+		at SheetUploadPage
+		myfilename = filename
+
+		page.submit(filename)
+		//sheetController = new SheetController()
+		//sheetController.uploadSheet("sampleFiles/" + myfilename)
 }
 
 //And the spreadsheet is on valid file format
 And (~'^the spreadsheet is on valid file format$') { ->
-	assert page.validFileFormat
+	at SheetUploadPage
+	sheetImporter = new SheetImporter("sampleFiles/" + myfilename)
+
+	assert page.verifyFileFormat("sampleFiles/" + myfilename)
 }
 
 //And the spreadsheet contains valid columns
 
 //Then an upload confirmation message is displayed
 Then (~'^an upload confirmation message is displayed$') { ->
-//	at ConceptPage
-//	page.update()
+	at SheetUploadPage
+	assert page.hasMessage()
 }
 
 // GUI Scenario: Importing spreadsheet in invalid file format
@@ -105,24 +109,24 @@ Then (~'^an upload confirmation message is displayed$') { ->
 
 //And the spreadsheet is not on valid file format
 And (~'^the spreadsheet is not on valid file format$') { ->
+	at SheetUploadPage
 	assert page.validFileFormat == false
 }
-//Then displays error message
+//Then display error message
 Then (~'^display error message$') { ->
-	at ConceptSheetUploadPage
-
-	assert page.hasDisplayedError()
+	at SheetUploadPage
+	assert page.hasErrors()
 }
 
 // GUI Scenario: Importing spreadsheet with invalid column
 
-//Given that I am at the Concepts page
+//Given that I am at the Upload Sheet page
 //When I select the option to import spreadsheet "invalidColumnSheet.xlsx"
 //And the spreadsheet is on valid file format
 
 // And the spreadsheet has invalid columns
 And (~'^the spreadsheet has invalid columns$') { ->
-
+	assert !sheetImporter.hasValidColumns()
 }
 //Then display error message
 
@@ -157,9 +161,9 @@ Given (~'^the valid spreadsheet "([^"]*)" contains a not registered student name
 
 //  When I import the spreadsheet
 When (~'^I import the spreadsheet$'){ ->
-	conceptController = new ConceptController()
-	conceptController.uploadSheet("sampleFiles/" + myfilename)
-	assert conceptController.hasImported
+	sheetController = new SheetController()
+	sheetController.uploadSheet("sampleFiles/" + myfilename)
+	assert sheetController.hasImported
 }
 
 
