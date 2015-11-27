@@ -134,7 +134,7 @@ class StudentController {
         String login = params.studentId
         String[] criteria = params.criterionName
 
-        if (selector[0].equals("M")) {
+        if ( EvaluationCriterion.findByName(criteria[0] ) == null  ) {
             String select = ""
             int size = selector.length
             for (int i = 0; i < size; i++) {

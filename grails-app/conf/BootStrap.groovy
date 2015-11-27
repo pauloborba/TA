@@ -9,6 +9,7 @@ class BootStrap {
 //        Student psg2 = new Student(login: "psg2", name: "Pedro Sereno").save(failOnError: true)
 //        Student gaabs = new Student(login: "gaabs", name: "Giovanni Barros").save(failOnError: true)
 //        Student cjvg = new Student(login: "cjvg", name: "Caio Jose").save(failOnError: true)
+//        Student ehammo = new Student(login: "ehammo", name: "Eduardo Maia").save(failOnError: true)
 //
 //        EvaluationCriterion criterion = new EvaluationCriterion(name: "Requirements").save(failOnError: true)
 //        EvaluationCriterion criterion2 = new EvaluationCriterion(name: "Refactor").save(failOnError: true)
@@ -29,6 +30,10 @@ class BootStrap {
 //        cjvg.addCriterion(criterion)
 //        cjvg.addCriterion(criterion2)
 //        cjvg.addCriterion(criterion3)
+//
+//        ehammo.addCriterion(criterion)
+//        ehammo.addCriterion(criterion2)
+//        ehammo.addCriterion(criterion3)
     }
     def destroy = {
     }
