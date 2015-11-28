@@ -22,7 +22,7 @@ class NotificationController {
     }
 
     public boolean saveNotification(Notification notification) {
-        if(Notification.findByLogin(notification.login) == null) {
+        if (Notification.findByLogin(notification.login) == null) {
             notification.save(flush: true)
             new StudentController().updateStudentEvaluationCriteria()
             return true

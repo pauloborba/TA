@@ -9,8 +9,9 @@ class NotificationsTestDataAndOperations {
 
 	public static boolean createNotification(String login) {
 		def cont = new NotificationController()
-		cont.params << [login: login] << [message: "Student " + login + "needs more attention."]
-		boolean saved = cont.saveNotification(cont.saveNotification())
+		String message = "Student " + login + "needs more attention.";
+		cont.params << [login: login] << [message: message]
+		boolean saved = cont.saveNotification(cont.create())
 		cont.response.reset()
 		return saved;
 	}	
