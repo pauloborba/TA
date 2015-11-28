@@ -8,8 +8,7 @@ import ta.Student
 this.metaClass.mixin(cucumber.api.groovy.Hooks)
 this.metaClass.mixin(cucumber.api.groovy.EN)
 
-//Controller Scenario (happy path)
-//Scenario: Registering a grade that requests a notification
+//Controller Scenarios
 Given(~'^that the system has a student named "([^"]*)" with login "([^"]*)" registered$') { String name, login ->
 	EvaluateStudentTestDataAndOperations.createStudent(login, name)
 	savedStudent = Student.findByLogin(login)
@@ -37,6 +36,7 @@ And(~'^that the system has evaluation criteria named "([^"]*)", "([^"]*)", and "
 And(~'^that "([^"]*)" only has a MANA registered as a grade for the "([^"]*)" and "([^"]*)" criteria$') { String name, criteria1, criteria2 ->
 	//TODO: add "MANA" grade to criteria 1 and 2 and assert bot
 }
+//Scenario: Registering a grade that requests a notification
 When(~'^I register MANA as the grade for "([^"]*)" for the "([^"]*)" criteria$') { String name, criteria3 ->
 	//TODO: add "MANA" grade to criteira3
 	def newNotification = NotificationsTestDataAndOperations.createNotification(savedStudent, a)
@@ -57,12 +57,12 @@ Then(~'^the system does not store a low performance notification$') { ->
 	assert Notification.findByStudent(studentName) == null
 }
 
-//GUI Scenario (happy path)
-//Scenario: Requesting notifications with at least one stored notification
+//GUI Scenarios
 Given(~'^that I am on the Notifications Page$') { ->
 	to ShowNotificationsPage
 	at ShowNotificationsPage
 }
+//Scenario: Requesting notifications with at least one stored notification
 And(~'^there is at least one registered notification$') { ->
 	assert Notification.count > 0
 }
@@ -73,9 +73,6 @@ Then(~'^I can see all notifications$') { ->
 	//TODO: check shown notifications
 }
 
-///////////////////////////////////////////
-
-//GUI Scenario (sad path)
 //Scenario: Requesting notifications with no stored notifications
 And(~'^there is no registered notifications$') { ->
 	assert Notification.count == 0
