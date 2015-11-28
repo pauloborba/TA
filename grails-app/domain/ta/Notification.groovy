@@ -1,7 +1,8 @@
 package ta
 
 class Notification {
-	String notification
+	String message
+	String login
 
 	static constraints = {
 

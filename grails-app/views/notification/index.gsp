@@ -28,7 +28,7 @@
 		<tbody>
 		<g:each in="${notificationInstanceList}" status="i" var="notificationInstance">
 			<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-				<td>${fieldValue(bean: notificationInstance, field: "notification")}</td>
+				<td>${fieldValue(bean: notificationInstance, field: "message")}</td>
 			</tr>
 		</g:each>
 		</tbody>
