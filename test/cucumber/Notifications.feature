@@ -6,6 +6,7 @@ Feature: Low student performance notifications
 
 #Controller Scenario (happy path)
   @imvm
+  @ignore
 Scenario: Registering a grade that requests a notification
 	Given that the system has a student named "Nicolla Henrique" with login "nhps" registered
 	And that the system has evaluation criteria named "Hula-hooping", "Jump Rope", and "Crosswords" registered
