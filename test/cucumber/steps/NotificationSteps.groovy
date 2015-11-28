@@ -38,7 +38,7 @@ When(~'^I register MANA as the grade for "([^"]*)" for the "([^"]*)" criteria$')
 	def newNotification = NotificationsTestDataAndOperations.createNotification(login)
 	assert newNotification != null
 }
-Then(~'^the system stores a low performance notification$') {  ->
+Then(~'^the system stores a low performance notification for "([^"]*)"$') { String login  ->
 	assert Notification.findByLogin(login) != null
 }
 
