@@ -22,4 +22,44 @@ class EvaluateStudentTestDataAndOperations{
         cont.response.reset()
         return saved
     }
+
+    public static int getConceptsLength(String login, String criterion){
+        return Student.findByLogin(login).getEvaluations().get(criterion).length()
+    }
+
+    public static String getFinalGrade(String login, String criterion) {
+        return Student.findByLogin(login).getFinalGrades().get(criterion)
+    }
+
+    public static void updateConcept(String login, String criterion, String concept){
+        new StudentController().updateConcepts(login, criterion, concept)
+    }
+
+    public static boolean checkConcepts(String login, String criterion, String[] concepts){
+        boolean ans = true;
+        Student student = Student.findByLogin(login)
+        String[] currentConcepts = student.evaluations.get(criterion).split(" ")
+
+        int size = concepts.length
+
+        for( int i = 0; i < size; i++ ){
+            if ( concepts[i] != currentConcepts[i] ){
+                ans = false
+            }
+        }
+
+        return ans;
+    }
+
+    public static boolean checkConceptUpdate(String login, String criterion, String concept ){
+        Student student = Student.findByLogin(login)
+        String[] concepts = student.getEvaluations().get(criterion).split(" ")
+        int size = concepts.length;
+
+        boolean ans = false;
+        if ( concept.equals(concepts[size-1]) )
+            ans = true
+
+        return ans
+    }
 }

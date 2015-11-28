@@ -2,28 +2,34 @@ package pages
 
 import geb.Page
 
-class ManualConceptInputPage extends Page{
-    static url = "/TA/manual/index"
+class ManualInputPage extends Page {
+
+    static url = "/TA/student/list"
 
     static at = {
         title ==~ /Manual Concept Input/
     }
 
-    def choose(cell){}
-
-    def fillConceptDetails(concept, description) {
-        $("form").concept = concept;
-        $("form").description = description;
+    def fillConceptDetails(String login, String criterion, String concept) {
+        String id = "#" + login + criterion
+        $(id).value(concept)
     }
 
-    def click(){}
+    def click(String login){
+        String id = "#" + login + "Submit"
+        $(id).click()
+    }
 
-    def update(){ }
+    boolean checkError(){
+        boolean ans = false;
 
-    def displayError(){ }
-    
-    def checkCriteria(){}
-    
-    def checkStudents(){}
-    
+        String test = $("#EmptyError").text()
+
+        if ( !test.isEmpty() ){
+            ans = true
+        }
+
+        return ans;
+    }
+
 }
