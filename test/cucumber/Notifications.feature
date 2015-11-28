@@ -8,20 +8,20 @@ Feature: Low student performance notifications
   @imvm
 Scenario: Registering a grade that requests a notification
 	Given that the system has a student named "Nicolla Henrique" with login "nhps" registered
-	And that the system has evaluation criteria named "Project Supervising", "Risk Assessment", and "Teamwork" registered
-	And that "nhps" only has a MANA registered as a grade for the "Project Supervising" and "Risk Assessment" criteria
-	When I register MANA as the grade for "nhps" for the "Teamwork" criteria
+	And that the system has evaluation criteria named "Hula-hooping", "Jump Rope", and "Crosswords" registered
+	And that "nhps" only has a MANA registered as a grade for the "Hula-hooping" and "Jump Rope" criteria
+	When I register MANA as the grade for "nhps" for the "Crosswords" criteria
   	Then the system stores a low performance notification for "nhps"
 
 #Controller Scenario (sad path)
   @imvm
   @ignore
 Scenario: Registering a grade that does not request a notification
-	Given that the system has a student named "Alberto Robson" with login "nhps" registered
-	And that the system has evaluation criteria named "Project Management", "Change Management", and "Team Management" registered
-	And that "armr" only has a MANA registered as a grade for the "Project Management" and "Change Management" criteria
-	When I register MA as the grade for "armr" for the "Team Management" criteria
-  	Then the system does not store a low performance notification for "nhps"
+	Given that the system has a student named "Alberto Robson" with login "armr" registered
+	And that the system has evaluation criteria named "Dancing", "Jumping", and "Running" registered
+	And that "armr" only has a MANA registered as a grade for the "Dancing" and "Jumping" criteria
+	When I register MA as the grade for "armr" for the "Running" criteria
+  	Then the system does not store a low performance notification for "armr"
 
 #GUI Scenario (happy path)
   @imvm
