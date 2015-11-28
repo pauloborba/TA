@@ -34,11 +34,11 @@ And(~'^that "([^"]*)" only has a MANA registered as a grade for the "([^"]*)" an
 When(~'^I register MANA as the grade for "([^"]*)" for the "([^"]*)" criteria$') { String login, String criteria3 ->
 	EvaluateStudentTestDataAndOperations.updateConcept(login, criteria3, "MANA")
 	assert EvaluateStudentTestDataAndOperations.checkConceptUpdate(login, criteria3, "MANA")
-
-	def newNotification = NotificationsTestDataAndOperations.createNotification(login)
-	assert newNotification != null
+	
+	assert NotificationsTestDataAndOperations.createNotification(login) != null
 }
 Then(~'^the system stores a low performance notification for "([^"]*)"$') { String login  ->
+
 	assert Notification.findByLogin(login) != null
 }
 
