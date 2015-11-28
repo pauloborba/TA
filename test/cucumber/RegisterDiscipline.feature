@@ -7,7 +7,7 @@ Feature: Create new discipline
   So I can manage my classes better
 
   # - system scenarios -
-
+  @ignore
   Scenario: new discipline
 
     Given The system has no discipline named "Engenharia de Software e Sistemas"
@@ -16,7 +16,7 @@ Feature: Create new discipline
 
     Then The discipline "Engenharia de Software e Sistemas" is properly stored in the system
 
-
+  @ignore
   Scenario: duplicate discipline
 
     Given The system already has a discipline named "Engenharia de Software e Sistemas"
@@ -27,7 +27,7 @@ Feature: Create new discipline
 
 
   # - GUI scenarios -
-
+  @ignore
   Scenario: new discipline
 
     Given I am at the homepage
@@ -38,7 +38,7 @@ Feature: Create new discipline
     Then A success message is displayed
     And I am taken to the list of disciplines page where "Engenharia de Software e Sistemas" is listed as a discipline
 
-
+  @ignore
   Scenario: duplicate discipline
 
     Given I am at the homepage

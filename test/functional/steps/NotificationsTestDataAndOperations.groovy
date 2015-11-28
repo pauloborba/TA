@@ -7,6 +7,7 @@ import ta.Student
 
 class NotificationsTestDataAndOperations {
 
+
 	public static void createNotification(Student s, Set<EvaluationCriterion> e) {
 		def cont = new NotificationController()
 		cont.params << [student : s] << [evaluationCriterions : e]

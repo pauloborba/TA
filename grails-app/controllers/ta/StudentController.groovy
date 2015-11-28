@@ -27,11 +27,20 @@ class StudentController {
     public Student createStudent() {
         Student student = new Student(params)
         student.afterCreateAddCriteria(EvaluationCriterion.findAll())
+//        student.afterCreateAddAutoCriteria(AutoEvaluationCriterion.findAll())
+//        student.afterCreateAddAutoEvaluationCriteria(EvaluationAutoEvaluationCriterion.findAll())
         return student
     }
 
+    def list() {
+        def students = Student.findAll()
+        def criteria = EvaluationCriterion.findAll()
+
+        render view: "manualInput", model: [students: students, criteria: criteria]
+    }
+
     public boolean saveStudent(Student student) {
-        if(Student.findByLogin(student.login) == null) {
+        if (Student.findByLogin(student.login) == null) {
             student.save flush: true
             return true
         }
@@ -39,11 +48,17 @@ class StudentController {
     }
 
     public void updateStudentEvaluationCriteria() {
-        for(Student student : Student.findAll()) {
+        for (Student student : Student.findAll()) {
             for (EvaluationCriterion evCriterion : EvaluationCriterion.findAll()) {
                 student.addCriterion(evCriterion)
                 student.save flush: true
             }
+
+//            for (AutoEvaluationCriterion autoEvCriterion : AutoEvaluationCriterion.findAll()) {
+//                student.addAutoCriterion(autoEvCriterion)
+//                student.save flush: true
+//            }
+
         }
     }
 
@@ -59,9 +74,7 @@ class StudentController {
             return
         }
 
-        ////////////////////////////////
         studentInstance.afterCreateAddCriteria(EvaluationCriterion.findAll())
-        ////////////////////////////////
 
         studentInstance.save flush: true
 
@@ -103,15 +116,46 @@ class StudentController {
     }
 
     @Transactional
-    def updateConcepts(String studentCriterion, String concept) {
-        System.out.println(studentCriterion)
-        System.out.println(params.get("concept"))
+    def updateConcepts(String login, String criterion, String concept) {
+        if (!concept.isEmpty()) {
 
-        String[] aux = studentCriterion.split(" / ")
+            Student student = Student.findByLogin(login)
+            String currentConcept = student.evaluations.get(criterion);
+            student.calculateFinalGrade(criterion, concept)
+            concept = currentConcept + concept + " "
+            student.evaluations.put(criterion, concept)
 
-        Student student = Student.findByLogin(aux[0])
-        student.evaluations.put(aux[1], concept)
-        student.save flush: true
+            student.save flush: true
+        }
+    }
+
+    def updateCriteria() {
+        String[] selector = params.selector
+        String login = params.studentId
+        String[] criteria = params.criterionName
+
+        if ( EvaluationCriterion.findByName(criteria[0] ) == null  ) {
+            String select = ""
+            int size = selector.length
+            for (int i = 0; i < size; i++) {
+                select = select + selector[i]
+            }
+            String criterion = ""
+            size = criteria.length
+            for (int i = 0; i < size; i++) {
+                criterion = criterion + criteria[i]
+            }
+
+            updateConcepts(login, criterion, select)
+        } else {
+            int size = criteria.length
+            for (int i = 0; i < criteria.length; i++) {
+                updateConcepts(login, criteria[i], selector[i])
+            }
+        }
+
+
+        redirect action: index(10)
     }
 
     @Transactional
