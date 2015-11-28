@@ -7,6 +7,7 @@ class EvaluationCriterionPage extends Page {
     static url = "/TA/evaluationCriterion/index"
 
     static at =  {
+        //title ==~ /EvaluationCriterion Listagem/
         title ==~ /EvaluationCriterion List/
     }
 }
