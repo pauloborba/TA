@@ -22,17 +22,13 @@
 	<table>
 		<thead>
 		<tr>
-
 			<g:sortableColumn property="notification" title="${message(code: 'notification.notification.label', default: 'Notification')}" />
-
 		</tr>
 		</thead>
 		<tbody>
 		<g:each in="${notificationInstanceList}" status="i" var="notificationInstance">
 			<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-
-				<td><g:link action="show" id="${notificationInstance.id}">${fieldValue(bean: notificationInstance, field: "notification")}</g:link></td>
-
+				<td>${fieldValue(bean: notificationInstance, field: "notification")}</td>
 			</tr>
 		</g:each>
 		</tbody>
