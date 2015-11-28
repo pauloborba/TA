@@ -49,8 +49,7 @@ When(~'^I register MA as the grade for "([^"]*)" for the "([^"]*)" criteria$') {
 	assert EvaluateStudentTestDataAndOperations.checkConceptUpdate(login, criteria3, "MANA")
 }
 Then(~'^the system does not store a low performance notification$') { ->
-	//TODO: assert notification not found
-	assert Notification.findByStudent(studentName) == null
+	assert NotificationsTestDataAndOperations.createNotification(login) == null
 }
 
 //GUI Scenarios
