@@ -44,6 +44,11 @@ class StudentController {
         def criteria = EvaluationCriterion.findAll()
 
         render view: "autoEvaluation", model: [students: students, criteria: criteria]
+
+//        def students = Student.findAll()
+//        def criteria = EvaluationCriterion.findAll()
+//
+//        render view: "manualInput", model: [students: students, criteria: criteria]
     }
 
     public boolean saveStudent(Student student) {
@@ -190,12 +195,31 @@ class StudentController {
         String login = params.studentId
         String[] criteria = params.criterionName
 
-        int size = criteria.length
         for (int i = 0; i < criteria.length; i++) {
             updateConcepts(login, criteria[i], selector[i])
-        }
+            if (EvaluationCriterion.findByName(criteria[0]) == null) {
+                String select = ""
+                int size = selector.length
+                for (int j = 0; j < size; j++) {
+                    select = select + selector[j]
+                }
+                String criterion = ""
+                size = criteria.length
+                for (int j = 0; j < size; j++) {
+                    criterion = criterion + criteria[j]
+                }
 
-        redirect action: index(100)
+                updateConcepts(login, criterion, select)
+            } else {
+                int size = criteria.length
+                for (int j = 0; j < criteria.length; j++) {
+                    updateConcepts(login, criteria[j], selector[j])
+                }
+            }
+
+
+            redirect action: index(10)
+        }
     }
 
 

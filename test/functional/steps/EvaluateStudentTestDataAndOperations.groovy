@@ -32,17 +32,32 @@ class EvaluateStudentTestDataAndOperations{
     }
 
     public static void updateConcept(String login, String criterion, String concept){
-        String studentCriterion = login+" / "+criterion
-        new StudentController().updateConcepts(studentCriterion, concept)
+        new StudentController().updateConcepts(login, criterion, concept)
     }
 
-    public static boolean checkConceptUpdate(String login, String criterion, String concept, int oldLenght){
+    public static boolean checkConcepts(String login, String criterion, String[] concepts){
+        boolean ans = true;
+        Student student = Student.findByLogin(login)
+        String[] currentConcepts = student.evaluations.get(criterion).split(" ")
+
+        int size = concepts.length
+
+        for( int i = 0; i < size; i++ ){
+            if ( concepts[i] != currentConcepts[i] ){
+                ans = false
+            }
+        }
+
+        return ans;
+    }
+
+    public static boolean checkConceptUpdate(String login, String criterion, String concept ){
         Student student = Student.findByLogin(login)
         String[] concepts = student.getEvaluations().get(criterion).split(" ")
         int size = concepts.length;
 
         boolean ans = false;
-        if ( size > oldLenght && concept.equals(concepts[size-1]) )
+        if ( concept.equals(concepts[size-1]) )
             ans = true
 
         return ans
