@@ -9,12 +9,11 @@ this.metaClass.mixin(cucumber.api.groovy.Hooks)
 this.metaClass.mixin(cucumber.api.groovy.EN)
 
 //Controller Scenarios
-Given(~'^that the system has a student named "([^"]*)" with login "([^"]*)" registered$') { String name, login ->
+Given(~'^that the system has a student named "([^"]*)" with login "([^"]*)" registered$') { String name, String login ->
 	EvaluateStudentTestDataAndOperations.createStudent(login, name)
-	savedStudent = Student.findByLogin(login)
-	assert savedStudent != null
+	assert Student.findByLogin(login) != null
 }
-And(~'^that the system has evaluation criteria named "([^"]*)", "([^"]*)", and "([^"]*)" registered$') { String criteria1, criteria2, criteria3 ->
+And(~'^that the system has evaluation criteria named "([^"]*)", "([^"]*)", and "([^"]*)" registered$') { String criteria1, String criteria2, String criteria3 ->
 	EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria1)
 	assert EvaluationCriterion.findByName(criteria1) != null
 
@@ -23,34 +22,31 @@ And(~'^that the system has evaluation criteria named "([^"]*)", "([^"]*)", and "
 
 	EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria3)
 	assert EvaluationCriterion.findByName(criteria3) != null
-
-	savedCriteria1 = criteria1
-	savedCriteria2 = criteria2
-	savedCriteria3 = criteria3
-
-	Set<EvaluationCriterion> a = new HashSet<EvaluationCriterion>()
-	a.add(criteria1)
-	a.add(criteria2)
-	a.add(criteria3)
 }
-And(~'^that "([^"]*)" only has a MANA registered as a grade for the "([^"]*)" and "([^"]*)" criteria$') { String name, criteria1, criteria2 ->
-	//TODO: add "MANA" grade to criteria 1 and 2 and assert bot
+And(~'^that "([^"]*)" only has a MANA registered as a grade for the "([^"]*)" and "([^"]*)" criteria$') { String login, String criteria1, String criteria2 ->
+	EvaluateStudentTestDataAndOperations.updateConcept(login, criteria1, "MANA")
+	assert EvaluateStudentTestDataAndOperations.checkConceptUpdate(login, criteria2, "MANA")
+
+	EvaluateStudentTestDataAndOperations.updateConcept(login, criteria2, "MANA")
+	assert EvaluateStudentTestDataAndOperations.checkConceptUpdate(login, criteria2, "MANA")
 }
 //Scenario: Registering a grade that requests a notification
-When(~'^I register MANA as the grade for "([^"]*)" for the "([^"]*)" criteria$') { String name, criteria3 ->
-	//TODO: add "MANA" grade to criteira3
-	def newNotification = NotificationsTestDataAndOperations.createNotification(savedStudent, a)
+When(~'^I register MANA as the grade for "([^"]*)" for the "([^"]*)" criteria$') { String login, String criteria3 ->
+	EvaluateStudentTestDataAndOperations.updateConcept(login, criteria3, "MANA")
+	assert EvaluateStudentTestDataAndOperations.checkConceptUpdate(login, criteria3, "MANA")
+
+	def newNotification = NotificationsTestDataAndOperations.createNotification(login)
 	assert newNotification != null
 }
 Then(~'^the system stores a low performance notification$') {  ->
-	notification = Notification.findByStudent(savedStudent)
-	assert notification != null
+	assert Notification.findByLogin(login) != null
 }
 
 //Controller Scenario (sad path)
 //Scenario: Registering a grade that does not request a notification
-When(~'^I register MA as the grade for "([^"]*)" for the "([^"]*)" criteria$') { String name, criteria3 ->
-	//TODO: add "MA" grade to criteira3
+When(~'^I register MA as the grade for "([^"]*)" for the "([^"]*)" criteria$') { String login, String criteria3 ->
+	EvaluateStudentTestDataAndOperations.updateConcept(login, criteria3, "MANA")
+	assert EvaluateStudentTestDataAndOperations.checkConceptUpdate(login, criteria3, "MANA")
 }
 Then(~'^the system does not store a low performance notification$') { ->
 	//TODO: assert notification not found
