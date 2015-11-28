@@ -14,19 +14,19 @@ class ConceptController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Concept.list(params), model: [conceptInstanceCount: Student.Concept.count()]
+        respond Concept.list(params), model: [conceptInstanceCount: Concept.count()]
     }
 
-    def show(Student.Concept conceptInstance) {
+    def show(Concept conceptInstance) {
         respond conceptInstance
     }
 
     def create() {
-        respond new Student.Concept(params)
+        respond new Concept(params)
     }
 
     @Transactional
-    def save(Student.Concept conceptInstance) {
+    def save(Concept conceptInstance) {
         if (conceptInstance == null) {
             notFound()
             return
@@ -48,12 +48,12 @@ class ConceptController {
         }
     }
 
-    def edit(Student.Concept conceptInstance) {
+    def edit(Concept conceptInstance) {
         respond conceptInstance
     }
 
     @Transactional
-    def update(Student.Concept conceptInstance) {
+    def update(Concept conceptInstance) {
         if (conceptInstance == null) {
             notFound()
             return
@@ -76,7 +76,7 @@ class ConceptController {
     }
 
     @Transactional
-    def delete(Student.Concept conceptInstance) {
+    def delete(Concept conceptInstance) {
 
         if (conceptInstance == null) {
             notFound()
@@ -107,9 +107,24 @@ class ConceptController {
     def upload(){
 
     }
+    def submit() {
+        //sheet.validFileFormat();
+        sheet = new Sheet()
+        sheet.filename = params.datafile.getOriginalFilename()
+        //System.out.println("PARAMS: " + params.datafile.getOriginalFilename())
+
+        if (!sheet.validFileFormat()) {
+            flash.message = "Invalid file format!"
+        }
+        render view: "upload"
+    }
 
     def importSheet(Sheet sheet){
         this.sheet = sheet;
+    }
+
+    def invalidFileFormatMessage(){
+//        flash.message = "Invalid file format!"
     }
 
     def reset(){

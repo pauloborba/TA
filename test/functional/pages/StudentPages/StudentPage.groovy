@@ -9,4 +9,10 @@ class StudentPage extends Page {
     static at =  {
         title ==~ /Student List/
     }
+
+    def choose(String login){
+        String id = "#"+login+"Compare"
+        $(id).click()
+    }
+
 }

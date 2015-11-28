@@ -1,5 +1,6 @@
 package ta
 
+import org.fusesource.jansi.AnsiConsole
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
@@ -9,6 +10,7 @@ class StudentController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    def worked = false;
     def conceito = new HashMap<String, String>()
 
     def index(Integer max) {
@@ -27,8 +29,16 @@ class StudentController {
     public Student createStudent() {
         Student student = new Student(params)
         student.afterCreateAddCriteria(EvaluationCriterion.findAll())
-        student.afterCreateAddAutoEvaluationCriteria(EvaluationAutoEvaluationCriterion.findAll())
+//        student.afterCreateAddAutoCriteria(AutoEvaluationCriterion.findAll())
+//        student.afterCreateAddAutoEvaluationCriteria(EvaluationAutoEvaluationCriterion.findAll())
         return student
+    }
+
+    def list(){
+        def students = Student.findAll()
+        def criteria = EvaluationCriterion.findAll()
+
+        render view: "manualInput", model:[students: students, criteria: criteria]
     }
 
     public boolean saveStudent(Student student) {
@@ -46,12 +56,59 @@ class StudentController {
                 student.save flush: true
             }
 
-            for (AutoEvaluationCriterion autoEvCriterion : AutoEvaluationCriterion.findAll()) {
-                student.addAutoCriterion(autoEvCriterion)
-                student.save flush: true
-            }
+//            for (AutoEvaluationCriterion autoEvCriterion : AutoEvaluationCriterion.findAll()) {
+//                student.addAutoCriterion(autoEvCriterion)
+//                student.save flush: true
+//            }
 
         }
+    }
+
+    def compareGrade(){
+        String login = params.studentId
+        def criteria = EvaluationCriterion.findAll()
+        Student student = Student.findByLogin(login)
+        HashMap<String, String> auto = student.getAutoEvaluations()
+        HashMap<String, String> fin = student.getFinalGrades()
+        boolean sent = sentAuto(login)
+        if (!sent) {
+            worked=false;
+            flash.error = "Erro: o aluno escolhido não enviou a auto avaliação"
+            redirect action: index(10)
+        }else{
+            worked=true;
+        }
+
+        render view: "compare", model:[criteria: criteria, student: student]
+    }
+
+    def compareGrades(String login){
+        def criteria = EvaluationCriterion.findAll()
+        Student student = Student.findByLogin(login)
+        HashMap<String, String> auto = student.getAutoEvaluations()
+        HashMap<String, String> fin = student.getFinalGrades()
+        boolean sent = sentAuto(login)
+        if (!sent) {
+            worked=false;
+            flash.error = "Erro: o aluno escolhido não enviou a auto avaliação"
+            redirect action: index(10)
+        }else{
+            worked=true;
+        }
+
+        render view: "compare", model:[criteria: criteria, student: student]
+    }
+
+    public boolean sentAuto(String login){
+        boolean sent = false;
+        Student student = Student.findByLogin(login)
+        HashMap<String, String> auto = student.getAutoEvaluations()
+        for (EvaluationCriterion evCriterion : EvaluationCriterion.findAll()) {
+            if(!auto.get(evCriterion.name).isEmpty()){
+                sent = true;
+            }
+        }
+        return sent
     }
 
     @Transactional
@@ -66,9 +123,7 @@ class StudentController {
             return
         }
 
-        ////////////////////////////////
         studentInstance.afterCreateAddCriteria(EvaluationCriterion.findAll())
-        ////////////////////////////////
 
         studentInstance.save flush: true
 
@@ -117,7 +172,14 @@ class StudentController {
         String[] aux = studentCriterion.split(" / ")
 
         Student student = Student.findByLogin(aux[0])
+
+        String currentConcept = student.evaluations.get(aux[1]);
+
+        student.calculateFinalGrade(aux[1], concept)
+
+        concept = currentConcept + concept + " "
         student.evaluations.put(aux[1], concept)
+
         student.save flush: true
     }
 

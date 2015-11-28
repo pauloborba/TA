@@ -5,27 +5,31 @@ Feature: Manual Concept Input
 
 #Controller Scenario
   Scenario: Spreadsheet with at least one student and one criterion
-    Given that the spreadsheet contains at least one student and one criterion
-    When the user input manually a new concept "MA" with a description "Questão 1 da Prova 1" into the cell "B2"
-    Then the final criterion concept is updated in the system
+    Given that the student named "Luke Cage" with a login "lc" is registered in the system
+    And the evaluation criterion "Analyze System Requirements" is also registered in the system
+    When the user input manually a new concept "MA" into the student in that criterion
+    Then the final criterion concept of that student is updated in the system
 
 #Controller Scenario
+  @ignore
   Scenario: Spreadsheet without students and at least one criterion
-    Given that the spreadsheet does not contain students
-    And there is at least one criterion
-    When the user try to input manually a new concept "MA" with a description "Questão 1 da Prova 1" into the cell "B2"
+    Given that the system does not contain students
+    And there is a evaluation criterion named "Analyze System Requirements" registered in the system
     Then the system returns a exception
 
 #GUI Scenario
+  @ignore
   Scenario: Spreadsheet with at least one student and one criterion
-    Given that I am on the Manual Concept Input page
-    And there are at least one student and one criterion on the spreadsheet
-    When I choose the cell "B2"
-    And I fill it with a new concept "MA" with a description "Questão 1 da Prova 1"
-    And I click the button to confirm the operation
-    Then the final concept in that criterion is updated
+    Given that I am on the Student page
+    And I can see a student named "Luke Cage" with a login "lc"
+    And a evaluation criterion named "Analyze System Requirements"
+    When I go to the Manual Input Concept Page
+    And I choose a new concept "MA" to that student in that criterion
+    Then I go back to Student List page
+    And I can see that the final concept in that criterion is updated for that student
 
 #GUI Scenario
+  @ignore
   Scenario: Spreadsheet without students and at least one criterion
     Given that I am on the Manual Concept Input page
     And there are no students
