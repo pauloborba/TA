@@ -1,10 +1,10 @@
 
-<%@ page import="ta.Concept" %>
+<%@ page import="ta.Sheet" %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'concept.label', default: 'Concept')}" />
+		<g:set var="entityName" value="${message(code: 'concept.label', default: 'Sheet')}" />
 		<title><g:message code="default.show.label" args="[entityName]" /></title>
 	</head>
 	<body>
