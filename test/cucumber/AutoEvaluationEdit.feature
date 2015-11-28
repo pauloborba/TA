@@ -1,25 +1,25 @@
-Feature : input auto evaluation
+Feature: Auto Evaluation Edit
   As a student
   I want to edit my auto evaluation
   So that the professor will be able to know how much I thought I knew of a criterion
 
   #Controller Scenarios
-  @ignore
-  Scenario: input auto evaluation
+  @cjvg
+  Scenario: edit auto evaluation
     Given there is the student "Peter Parker" with login "pp"
     And the criterion "Requirements"
-    When the user inputs a new concept "MPA" of the criterion "Requirements"
-    Then the new concept will be saved in the system
+    And the student does not have an auto evaluation for that criterion
+    When the user inputs a new concept "MPA" in that criterion
+    Then the auto evaluation for that criterion on that student will be updated to "MPA"
 
-
-  #GUI Scenarios
   @ignore
-  Scenario: input auto evaluation
-    Given I am at the student page
-    And  I see the student "Peter Parker" with login "pp"
-    And the criterion "Requirements"
-    When I go to the auto evaluation page
-    And I choose a new concept "MPA" for that student in that criterion
-    Then I can see the concept for that criterion updated
-
-
+  Scenario: edit auto evaluation web
+    Given that I am on the Students page
+    And there is a student named "Bruce Wayne" with a login "bw"
+    And one evaluation criterion named "Administration"
+    When I go to the Auto Evaluation Page
+    And I choose the student name
+    And I choose a new concept "MA" to that student for that criterion
+    And I send the info
+    Then I go to that student page
+    And I can see that the auto evaluation in that criterion for that student is now "MA"
