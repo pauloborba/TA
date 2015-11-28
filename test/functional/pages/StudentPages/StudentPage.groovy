@@ -7,7 +7,7 @@ class StudentPage extends Page {
     static url = "/TA/student/index"
 
     static at =  {
-        title ==~ /Student Listagem/
+        title ==~ /Student List/
     }
 
     def choose(String login){
