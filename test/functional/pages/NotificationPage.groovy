@@ -2,7 +2,7 @@ package pages
 
 import geb.Page
 
-class ShowNotificationsPage extends Page{
+class NotificationPage extends Page{
 
     static url = "/TA/notifications/index"
 
