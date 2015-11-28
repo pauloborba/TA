@@ -14,7 +14,7 @@ Given(~'The system has no discipline named "([^"]*)"$') { String discipline ->
 }
 
 When(~'I create the discipline "([^"]*)" with teacher "([^"]*)" and concepts "([^"]*)"$') { String discipline, teacher,
-                                                                                            String[] concepts ->
+                                                                                            String concepts ->
     RegisterNewDiscipline.createDiscipline(discipline, teacher, concepts)
 }
 
@@ -30,7 +30,7 @@ Given(~'The system already has a discipline named "([^"]*)"$') { String discipli
 }
 
 When(~'I create the discipline "([^"]*)" with teacher "([^"]*)" and concepts "([^"]*)"$') { String discipline, teacher,
-                                                                                            String[] concepts ->
+                                                                                            String concepts ->
     saved = RegisterNewDiscipline.createDiscipline(discipline, teacher, concepts)
 }
 
@@ -51,7 +51,7 @@ When(~'I select create new discipline$') { ->
 }
 
 And(~'fill the form with name "([^"]*)" with teacher "([^"]*)" and concepts "([^"]*)"$') { String discipline, teacher,
-    String[] concepts ->
+    String concepts ->
     page.fillDisciplineForm(discipline, teacher, concepts)
     disciplineSaved = discipline
 }
@@ -79,7 +79,7 @@ When(~'I select create new discipline$') { ->
 }
 
 And(~'fill the form with name "([^"]*)" with teacher "([^"]*)" and concepts "([^"]*)"$') { String discipline, teacher,
-                                                                                           String[] concepts ->
+                                                                                           String concepts ->
     page.fillDisciplineForm(discipline, teacher, concepts)
     disciplineSaved = discipline
 }
@@ -96,4 +96,90 @@ And(~'I am taken to the list of disciplines page where "([^"]*)" is already list
     to DisciplinePage
     at DisciplinePage
     assert discipline == disciplineSaved
+}
+
+###########new
+
+#- system
+
+Given(~'the system has no discipline named "([^"]*)"$') { String discipline ->
+    assert Discipline.findByName(discipline) == null
+}
+
+When(~'I create the discipline "([^"]*)" with concepts "([^"]*)"$') { String discipline,
+                                                                                            String concepts ->
+}
+
+And(~'do not fill in the teacher$'){
+
+}
+
+Then(~'the discipline "([^"]*)" is not stored in the system$') { String discipline ->
+    assert Discipline.findByName(discipline) == null && !saved
+}
+
+# - gui
+
+Given(~'I am at the homepage$') { ->
+    to homePage // checar se essa
+    at homePage // página existe mesmo
+}
+
+When(~'I select create new discipline$') { ->
+    to RegisterNewDisciplinePage
+    at RegisterNewDisciplinePage
+}
+
+And(~'fill the form with name "([^"]*)" with concepts "([^"]*)"$') { String discipline,
+    String concepts ->
+}
+
+And(~'do not fill in the teacher$'){
+
+}
+
+Then(~'I'm not able to save the discipline until I fill in the teacher") {
+	at RegisterNewDisciplinePage
+}
+
+# - system
+
+Given(~'the system has no discipline named "([^"]*)"$') { String discipline ->
+    assert Discipline.findByName(discipline) == null
+}
+
+When(~'I create the discipline "([^"]*)" with teacher "([^"]*)"$') { String discipline,
+                                                                                            String teacher ->
+}
+
+And(~'do not fill in the concepts$'){
+
+}
+
+Then(~'the discipline "([^"]*)" is not stored in the system$') { String discipline ->
+    assert Discipline.findByName(discipline) == null && !saved
+}
+
+# - gui
+
+Given(~'I am at the homepage$') { ->
+    to homePage // checar se essa
+    at homePage // página existe mesmo
+}
+
+When(~'I select create new discipline$') { ->
+    to RegisterNewDisciplinePage
+    at RegisterNewDisciplinePage
+}
+
+And(~'fill the form with name "([^"]*)" with teacher "([^"]*)"$') { String discipline,
+    String teacher ->
+}
+
+And(~'do not fill in the concepts$'){
+
+}
+
+Then(~'I'm not able to save the discipline until I fill in the concepts") {
+	at RegisterNewDisciplinePage
 }
