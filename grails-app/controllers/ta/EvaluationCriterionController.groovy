@@ -1,11 +1,9 @@
 package ta
 
-import org.springframework.transaction.annotation.Isolation
-
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
-@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
+@Transactional(readOnly = true)
 class EvaluationCriterionController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -30,8 +28,6 @@ class EvaluationCriterionController {
     public boolean saveEvaluationCriterion(EvaluationCriterion evaluationCriterion) {
         if(EvaluationCriterion.findByName(evaluationCriterion.name) == null) {
             evaluationCriterion.save(flush: true)
-            evaluationCriterion = evaluationCriterion.merge()
-
             new StudentController().updateStudentEvaluationCriteria()
             return true
         }

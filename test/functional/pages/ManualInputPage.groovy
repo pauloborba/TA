@@ -7,7 +7,7 @@ class ManualInputPage extends Page {
     static url = "/TA/student/list"
 
     static at = {
-        title ==~ /Manual Sheet Input/
+        title ==~ /Manual Concept Input/
     }
 
     def fillConceptDetails(String login, String criterion, String concept) {

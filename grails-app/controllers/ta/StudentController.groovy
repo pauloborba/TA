@@ -1,11 +1,10 @@
 package ta
 
-import org.springframework.transaction.annotation.Isolation
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
-@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
+@Transactional(readOnly = true)
 class StudentController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -28,7 +27,6 @@ class StudentController {
     public Student createStudent() {
         Student student = new Student(params)
         student.afterCreateAddCriteria(EvaluationCriterion.findAll())
-        student = student.merge()
 //        student.afterCreateAddAutoCriteria(AutoEvaluationCriterion.findAll())
 //        student.afterCreateAddAutoEvaluationCriteria(EvaluationAutoEvaluationCriterion.findAll())
         return student
@@ -187,10 +185,5 @@ class StudentController {
             }
             '*' { render status: NOT_FOUND }
         }
-    }
-
-    // map login -> conceito
-    static void addConcepts(List<Map> concepts){
-
     }
 }
