@@ -11,7 +11,7 @@ Scenario: Registering a grade that requests a notification
 	And that the system has evaluation criteria named "Project Management", "Change Management", and "Team Management" registered
 	And that "pp2" only has a MANA registered as a grade for the "Project Management" and "Change Management" criteria
 	When I register MANA as the grade for "pp2" for the "Team Management" criteria
-  	Then the system stores a low performance notification
+  	Then the system stores a low performance notification for "pp2"
 
 #Controller Scenario (sad path)
   @imvm
@@ -21,7 +21,7 @@ Scenario: Registering a grade that does not request a notification
 	And that the system has evaluation criteria named "Project Management", "Change Management", and "Team Management" registered
 	And that "pp2" only has a MANA registered as a grade for the "Project Management" and "Change Management" criteria
 	When I register MA as the grade for "pp2" for the "Team Management" criteria
-  	Then the system does not store a low performance notification
+  	Then the system does not store a low performance notification for "pp2"
 
 #GUI Scenario (happy path)
   @imvm
