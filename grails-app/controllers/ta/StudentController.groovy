@@ -1,11 +1,9 @@
 package ta
 
-import org.springframework.transaction.annotation.Isolation
-
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
-@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
+@Transactional(readOnly = true)
 class StudentController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -34,15 +32,22 @@ class StudentController {
         return student
     }
 
-    def list(){
+    def list() {
         def students = Student.findAll()
         def criteria = EvaluationCriterion.findAll()
 
-        render view: "manualInput", model:[students: students, criteria: criteria]
+        render view: "manualInput", model: [students: students, criteria: criteria]
+    }
+
+    def listAutoEvaluation() {
+        def students = Student.findAll()
+        def criteria = EvaluationCriterion.findAll()
+
+        render view: "autoEvaluation", model: [students: students, criteria: criteria]
     }
 
     public boolean saveStudent(Student student) {
-        if(Student.findByLogin(student.login) == null) {
+        if (Student.findByLogin(student.login) == null) {
             student.save flush: true
             return true
         }
@@ -50,7 +55,7 @@ class StudentController {
     }
 
     public void updateStudentEvaluationCriteria() {
-        for(Student student : Student.findAll()) {
+        for (Student student : Student.findAll()) {
             for (EvaluationCriterion evCriterion : EvaluationCriterion.findAll()) {
                 student.addCriterion(evCriterion)
                 student.save flush: true
@@ -117,7 +122,56 @@ class StudentController {
         }
     }
 
+
     @Transactional
+    def updateAutoEvaluation(String login, String studentCriterion, String concept) {
+        if (!concept.isEmpty()) {
+            println login
+            Student student = Student.findByLogin(login)
+            student.autoEvaluations.put(studentCriterion, concept)
+
+            student.save flush: true
+        }
+    }
+
+    def updateCriteriaAutoEvaluation() {
+        String[] selector = params.concepts
+        String login = params.selector
+        String[] criteria = params.criterionName
+
+        int a = 0;
+        for (int i = 0; i < selector.size(); i++) {
+            if (selector[i].equalsIgnoreCase("")) {
+                a = a + 1;
+            }
+        }
+
+
+        if (login.equalsIgnoreCase("")) {
+            flash.error = "Choose a student"
+            render view: "autoEvaluation"
+        } else if (a > 0) {
+            flash.error = "Evaluate yourself for all criteria"
+            render view: "autoEvaluation"
+        } else if (EvaluationCriterion.findByName(criteria[0]) == null) {
+            for (int i = 1; i < criteria.size(); i++) {
+                criteria[0] = criteria[0] + criteria[i]
+            }
+            for (int i = 1; i < selector.size(); i++) {
+                selector[0] = selector[0] + selector[i]
+            }
+
+            updateAutoEvaluation(login, criteria[0], selector[0])
+
+            redirect action: index(100)
+        } else {
+            for (int i = 0; i < criteria.length; i++) {
+                updateAutoEvaluation(login, criteria[i], selector[i])
+            }
+            redirect action: index(100)
+        }
+    }
+
     def updateConcepts(String login, String criterion, String concept) {
         if (!concept.isEmpty()) {
 
@@ -131,18 +185,19 @@ class StudentController {
         }
     }
 
-    def updateCriteria(){
+    def updateCriteria() {
         String[] selector = params.selector
         String login = params.studentId
         String[] criteria = params.criterionName
 
         int size = criteria.length
-        for( int i = 0; i < criteria.length; i++ ){
+        for (int i = 0; i < criteria.length; i++) {
             updateConcepts(login, criteria[i], selector[i])
         }
 
         redirect action: index(100)
     }
+
 
     @Transactional
     def delete(Student studentInstance) {
@@ -173,8 +228,4 @@ class StudentController {
         }
     }
 
-    // map login -> conceito
-    static void addConcepts(List<Map> concepts){
-
-    }
 }
