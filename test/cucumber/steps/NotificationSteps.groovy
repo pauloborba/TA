@@ -62,24 +62,22 @@ Given(~'^that I am on the Notifications Page$') { ->
 	to ShowNotificationsPage
 	at ShowNotificationsPage
 }
+When(~'^I select "Read Notifications$') { ->
+	page.selectReadNotifications()
+}
 //Scenario: Requesting notifications with at least one stored notification
 And(~'^there is at least one registered notification$') { ->
 	assert Notification.count > 0
 }
-When(~'^I select "Read Notifications$') { ->
-	page.selectReadNotifications()
-}
 Then(~'^I can see all notifications$') { ->
 	//TODO: check shown notifications
 }
-
 //Scenario: Requesting notifications with no stored notifications
+
 And(~'^there is no registered notifications$') { ->
 	assert Notification.count == 0
-}
-When(~'^I select "Read Notifications$') { ->
-	page.selectReadNotifications()
 }
 Then(~'^I can see "There are no new notifications"$') { ->
 	assert page.readFlashMessage() != null
 }
+
