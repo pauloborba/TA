@@ -10,9 +10,9 @@ this.metaClass.mixin(cucumber.api.groovy.Hooks)
 this.metaClass.mixin(cucumber.api.groovy.EN)
 def studentX = new StudentController()
 /*
-Given the student "X" appear in the list of student that sent their auto-Evaluation
-When I select the compare grades option
-Then I can see a detailed table with both student and the professor Evaluations being put, in each criterion, side by side in the screen.
+Given There is a student with the login "bw" and name "Bruce Wayne" and a criteria with name "C1" and the student appear in the list of student that sent their auto-Evaluation
+When I choose to compare the grades of the student with the login "bw"
+Then I can see a detailed table with both student and the professor Evaluations being put, in each criterion, side by side in the screen
 */
 
 Given (~'^There is a student with the login "([^"]*)" and name "([^"]*)" and a criteria with name "([^"]*)" and the student appear in the list of student that sent their auto-Evaluation$'){
@@ -39,10 +39,9 @@ Then (~'^I can see a detailed table with both student and the professor Evaluati
 }
 
 /*
-Given the student "X" don't appear in the list of student that sent their auto-Evaluation
-When I select the compare grades option
-And choose to compare student "X" grades
-Then I can see a error message with a go-back button to go to the main page.
+Given The student with the login "sk" and name "Selina Kyle" and a criteria with name "C1" do not appear in the list of student that sent their auto-Evaluation
+When I choose to compare the grades of the student with the login "sk"
+Then I should stay in the Student page
 */
 
 Given (~'^The student with the login "([^"]*)" and name "([^"]*)" and a criteria with name "([^"]*)" do not appear in the list of student that sent their auto-Evaluation$'){
@@ -59,9 +58,9 @@ Then (~'^I should stay in the Student page$'){->
 }
 
 /*
-Given Student "X"�s Auto-Evaluation is on the database
-When the system requires the  Evaluation -> Auto-evaluation comparison
-Then the system returns a detailed table with both student and the professor grades.
+Given The Auto-Evaluation of the student with the login "dp" and name "Diana Prince" in the criteria with name "C1" is on the database
+When The system requires the Evaluation and Auto-evaluation comparison of student with the login "dp"
+Then The system returns a detailed table with both student and the professor grades
 */
 
 Given (~'^The Auto-Evaluation of the student with the login "([^"]*)" and name "([^"]*)" in the criteria with name "([^"]*)" is on the database$'){
@@ -86,9 +85,9 @@ Then (~'^The system returns a detailed table with both student and the professor
 
 
 /*
-Given Student "X"�s Auto-Evaluation isn�t on the database
-When the system requires the  Evaluation -> Auto-evaluation comparison
-Then the system returns an exception.
+Given The Auto-Evaluation of the student with the login "ac" and name "Arthur Curry" in the criteria with name "C1" is not on the database
+When The system requires the Evaluation and Auto-evaluation comparison of student with the login "ac"
+Then The system returns an error message
 */
 
 Given (~'^The Auto-Evaluation of the student with the login "([^"]*)" and name "([^"]*)" in the criteria with name "([^"]*)" is not on the database$'){
