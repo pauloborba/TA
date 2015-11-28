@@ -6,24 +6,25 @@ Feature: Low student performance notifications
 
 #Controller Scenario (happy path)
   @imvm
-	@ignore
 Scenario: Registering a grade that requests a notification
 	Given that the system has a student named "Peter Parker" with login "pp2" registered
 	And that the system has evaluation criteria named "Project Management", "Change Management", and "Team Management" registered
-	And that "Peter Parker" only has a MANA registered as a grade for the "Project Management" and "Change Management" criteria
-	When I register MANA as the grade for "Peter Parker" for the "Team Management" criteria
+	And that "pp2" only has a MANA registered as a grade for the "Project Management" and "Change Management" criteria
+	When I register MANA as the grade for "pp2" for the "Team Management" criteria
   	Then the system stores a low performance notification
 
 #Controller Scenario (sad path)
+  @imvm
   @ignore
 Scenario: Registering a grade that does not request a notification
 	Given that the system has a student named "Peter Parker" with login "pp2" registered
 	And that the system has evaluation criteria named "Project Management", "Change Management", and "Team Management" registered
-	And that "Peter Parker" only has a MANA registered as a grade for the "Project Management" and "Change Management" criteria
-	When I register MA as the grade for "Peter Parker" for the "Team Management" criteria
+	And that "pp2" only has a MANA registered as a grade for the "Project Management" and "Change Management" criteria
+	When I register MA as the grade for "pp2" for the "Team Management" criteria
   	Then the system does not store a low performance notification
 
 #GUI Scenario (happy path)
+  @imvm
   @ignore
 Scenario: Requesting notifications with at least one stored notification
   	Given that I am on the Notifications Page
