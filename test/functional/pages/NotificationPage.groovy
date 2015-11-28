@@ -4,7 +4,7 @@ import geb.Page
 
 class NotificationPage extends Page{
 
-    static url = "/TA/notifications/index"
+    static url = "/TA/notification/index"
 
     static at = {
         title ==~ /Notification/

@@ -1,6 +1,6 @@
 package steps
 
-import pages.ShowNotificationsPage
+import pages.NotificationPage
 import ta.EvaluationCriterion
 import ta.Notification
 import ta.Student
@@ -10,7 +10,6 @@ this.metaClass.mixin(cucumber.api.groovy.EN)
 
 //Controller Scenario (happy path)
 //Scenario: Registering a grade that requests a notification
-
 Given(~'^that the system has a student named "([^"]*)" with login "([^"]*)" registered$') { String name, login ->
 	EvaluateStudentTestDataAndOperations.createStudent(login, name)
 	savedStudent = Student.findByLogin(login)
@@ -48,11 +47,8 @@ Then(~'^the system stores a low performance notification$') {  ->
 	assert notification != null
 }
 
-///////////////////////////////////////////
-/*
 //Controller Scenario (sad path)
 //Scenario: Registering a grade that does not request a notification
-
 Given(~'^that the system has a student named "([^"]*)" with login "([^"]*)" registered$') { String name, login ->
 	EvaluateStudentTestDataAndOperations.createStudent(login, name)
 	assert Student.findByNameAndLogin(name, login) != null
@@ -81,9 +77,7 @@ Then(~'^the system does not store a low performance notification$') { ->
 	//TODO: assert notification not found
 	assert Notification.findByStudent(studentName) == null
 }
-*/
-///////////////////////////////////////////
-/*
+
 //GUI Scenario (happy path)
 //Scenario: Requesting notifications with at least one stored notification
 Given(~'^that I am on the Notifications Page$') { ->
@@ -99,7 +93,7 @@ When(~'^I select "Read Notifications$') { ->
 Then(~'^I can see all notifications$') { ->
 	//TODO: check shown notifications
 }
-*/
+
 ///////////////////////////////////////////
 
 //GUI Scenario (sad path)
