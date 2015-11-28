@@ -10,18 +10,12 @@ this.metaClass.mixin(cucumber.api.groovy.EN)
 
 //Controller Scenarios
 Given(~'^that the system has a student named "([^"]*)" with login "([^"]*)" registered$') { String name, String login ->
-	EvaluateStudentTestDataAndOperations.createStudent(login, name)
-	assert Student.findByLogin(login) != null
+	assert EvaluateStudentTestDataAndOperations.createStudent(login, name)
 }
 And(~'^that the system has evaluation criteria named "([^"]*)", "([^"]*)", and "([^"]*)" registered$') { String criteria1, String criteria2, String criteria3 ->
-	EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria1)
-	assert EvaluationCriterion.findByName(criteria1) != null
-
-	EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria2)
-	assert EvaluationCriterion.findByName(criteria2) != null
-
-	EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria3)
-	assert EvaluationCriterion.findByName(criteria3) != null
+	assert EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria1)
+	assert EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria2)
+	assert EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria3)
 }
 And(~'^that "([^"]*)" only has a MANA registered as a grade for the "([^"]*)" and "([^"]*)" criteria$') { String login, String criteria1, String criteria2 ->
 	EvaluateStudentTestDataAndOperations.updateConcept(login, criteria1, "MANA")
@@ -34,7 +28,7 @@ And(~'^that "([^"]*)" only has a MANA registered as a grade for the "([^"]*)" an
 When(~'^I register MANA as the grade for "([^"]*)" for the "([^"]*)" criteria$') { String login, String criteria3 ->
 	EvaluateStudentTestDataAndOperations.updateConcept(login, criteria3, "MANA")
 	assert EvaluateStudentTestDataAndOperations.checkConceptUpdate(login, criteria3, "MANA")
-	
+
 	assert NotificationsTestDataAndOperations.createNotification(login) != null
 }
 Then(~'^the system stores a low performance notification for "([^"]*)"$') { String login  ->
@@ -42,7 +36,6 @@ Then(~'^the system stores a low performance notification for "([^"]*)"$') { Stri
 	assert Notification.findByLogin(login) != null
 }
 
-//Controller Scenario (sad path)
 //Scenario: Registering a grade that does not request a notification
 When(~'^I register MA as the grade for "([^"]*)" for the "([^"]*)" criteria$') { String login, String criteria3 ->
 	EvaluateStudentTestDataAndOperations.updateConcept(login, criteria3, "MANA")
