@@ -14,9 +14,9 @@ class LoginPage extends Page {
         btnLogin { $("input.save") }
     }
 
-    def fillLoginDetails(String login) {
+    def fillLoginDetails(String login, String password) {
         $("form").login = login
-        $("form").password = login
+        $("form").password = password
     }
 
     def selectCreateStudent() {

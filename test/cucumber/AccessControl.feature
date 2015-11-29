@@ -24,9 +24,9 @@ So that I can see the options that belongs to my user type
   #GUI scenario
   Scenario: Signing in web
     Given That I am at login page
-    Given That "joao" has a account with password "123"
-    And I write "joao" and "123" on the login form
-    When I click Sign in button
+    And "rav2" has a account with password "123"
+    When I write "rav2" and "123" on the login form
+    And I click Sign in button
     Then Welcome message is displayed
 #
 #  #GUI scenario

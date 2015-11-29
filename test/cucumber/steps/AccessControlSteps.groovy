@@ -61,14 +61,19 @@ Given(~'That I am at login page$') { ->
     at LoginPage // p�gina existe mesmo
 }
 
-And(~'I write "([^"]*)" and "([^"]*)" on the login form$') { String login, String password ->
-    page.fillLoginDetails(login)
-}
-When(~'I click Sign in button$') { ->
-    page.login()
+And(~'"([^"]*)" has a account with password "([^"]*)"') { String login, password ->
+   createStudent
 }
 
-When(~'Welcome message is displayed') { ->
+When(~'I write "([^"]*)" and "([^"]*)" on the login form$') { String login, String password ->
+    page.fillLoginDetails(login, password)
+}
+And(~'I click Sign in button$') { ->
+    at LoginPage
+	page.login()
+}
+
+Then(~'Welcome message is displayed') { ->
 
 }
 
