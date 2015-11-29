@@ -17,7 +17,7 @@ class EvaluateStudentTestDataAndOperations{
 
     public static boolean createStudent(String login, String name){
         def cont = new StudentController()
-        cont.params << [login: login] << [name: name] << [evaluations: new HashMap<String, String>()]
+        cont.params << [login: login] << [name: name] << [password: login] << [evaluations: new HashMap<String, String>()]
         boolean saved = cont.saveStudent(cont.createStudent())
         cont.response.reset()
         return saved
