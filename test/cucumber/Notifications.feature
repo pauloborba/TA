@@ -15,7 +15,7 @@ Scenario: Registering a grade that requests a notification
   	Then the system stores a low performance notification for "nhps"
 
 #Controller Scenario (sad path)
-  @ignore
+  @imvm
 Scenario: Registering a grade that does not request a notification
 	Given that the system has a student named "Alberto Robson" with login "armr" registered
 	And that the system has evaluation criteria named "Dancing", "Jumping", and "Running" registered
