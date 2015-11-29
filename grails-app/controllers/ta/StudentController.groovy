@@ -26,6 +26,10 @@ class StudentController {
         respond new Student(params)
     }
 
+    def deleteAfterTest(login){
+        Student.findByLogin(login).delete()
+    }
+
     public Student createStudent() {
         Student student = new Student(params)
         student.afterCreateAddCriteria(EvaluationCriterion.findAll())
@@ -172,7 +176,7 @@ class StudentController {
             student.calculateFinalGrade(criterion, concept)
             concept = currentConcept + concept + " "
             student.evaluations.put(criterion, concept)
-            student.calculateCrispGrade(student.finalGrades)
+//            student.calculateCrispGrade(student.finalGrades)
 
             student.save flush: true
         }
