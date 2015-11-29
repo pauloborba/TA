@@ -3,6 +3,7 @@ package ta
 class Student {
     String login
     String name
+    String password
 
     // tentei um enumerador primeiro mas da erro
     static class Concept {
@@ -15,6 +16,7 @@ class Student {
     static constraints = {
         login unique: true
         name blank: false
+        password nullable:true, blank:true
     }
 
     public void afterCreateAddCriteria(List<EvaluationCriterion> evaluationCriteria) {

@@ -7,14 +7,63 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class StudentController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", authenticate: "POST"]
 
     def conceito = new HashMap<String, String>()
 
     def index(Integer max) {
+//        redirect(action: "login", params: params)
         params.max = Math.min(max ?: 10, 100)
         respond Student.list(params), model: [studentInstanceCount: Student.count()]
     }
+
+    def login() {}
+
+    def authenticate(Student student) {
+        if (request.method == 'POST') {
+//            println(params)
+            String[] login = params.login
+            String password = params.password
+
+            def user = Student.findByLoginAndPassword(login[0], password)
+
+            if (user) {
+                session.student = user
+                flash.message = "Hello ${user.name}!"
+                redirect(action: "login")
+
+            } else {
+                flash.message = "Sorry, ${params.login[0]}. Please try again."
+                redirect(action: "login")
+            }
+        }
+    }
+
+    def logar(Student student){
+        String login = student.login
+        String password = student.password
+
+        def user = Student.findByLoginAndPassword(login, password)
+
+        if (user) {
+            session.student = user
+            flash.message = "Hello ${user.name}!"
+            redirect(action: "login")
+
+        } else {
+            flash.message = "Sorry, ${params.login[0]}. Please try again."
+            redirect(action: "login")
+        }
+
+    }
+
+    def logout() {
+        flash.message = "Goodbye ${session.student.name}"
+        session.student = null
+        redirect(action:"login")
+    }
+
+
 
     def show(Student studentInstance) {
         respond studentInstance
@@ -25,7 +74,12 @@ class StudentController {
     }
 
     public Student createStudent() {
+        if (student.password == null){
+            params.password = params.login
+        }
+
         Student student = new Student(params)
+
         student.afterCreateAddCriteria(EvaluationCriterion.findAll())
 //        student.afterCreateAddAutoCriteria(AutoEvaluationCriterion.findAll())
 //        student.afterCreateAddAutoEvaluationCriteria(EvaluationAutoEvaluationCriterion.findAll())
@@ -40,7 +94,12 @@ class StudentController {
     }
 
     public boolean saveStudent(Student student) {
-        if (Student.findByLogin(student.login) == null) {
+        if (Student.findByLogin(student.login) == null && student.password == null) {
+            student.password = student.login
+            student.save flush: true
+
+            return true
+        } else if(Student.findByLogin(student.login) == null){
             student.save flush: true
             return true
         }
@@ -75,6 +134,13 @@ class StudentController {
         }
 
         studentInstance.afterCreateAddCriteria(EvaluationCriterion.findAll())
+
+
+
+        def isPasswordEmpty = studentInstance.password == null
+        if(isPasswordEmpty){
+            studentInstance.password = studentInstance.login
+        }
 
         studentInstance.save flush: true
 
