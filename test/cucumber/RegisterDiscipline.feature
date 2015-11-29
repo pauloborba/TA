@@ -49,3 +49,47 @@ Feature: Create new discipline
 
     Then An error message is displayed
     And I am taken to the list of disciplines page where "Engenharia de Software e Sistemas" is already listed as a discipline
+
+###########################new scenarios for register discipline
+
+# - system scenario
+
+Scenario: Discipline with no teacher
+
+	Given the system has no discipline named "ESS"
+	When I create the discipline "ESS" with concepts "MA, MPA, MANA"
+	And do not fill in the teacher
+	Then the discipline "ESS" is not stored in the system
+
+# - gui scenario
+
+Scenario: Discipline with no teacher
+
+	Given I am at the homepage
+
+	When I select create new discipline
+	And fill the form with name "ESS" with concepts "MA, MPA, MANA"
+	And do not fill in the teacher
+
+	Then I'm not able to save the discipline until I fill in the teacher
+
+#################################################################################
+
+# - system scenario
+
+Scenario: Discipline with no concepts
+
+	Given the system has no discipline named "ESS"
+	When I create the discipline "ESS" with teacher "Paulo Borba"
+	And do not fill in the concepts
+	Then the discipline "ESS" is not stored in the system
+
+# - gui scenario
+	
+	Given I am at the homepage
+
+	When I select create new discipline
+	And fill the form with name "ESS" with teacher "Paulo Borba"
+	And do not fill in the concepts
+
+	Then I'm not able to save the discipline until I fill in the concepts
