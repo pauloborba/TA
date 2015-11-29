@@ -13,6 +13,8 @@ Feature: Manual Concept Input
     Then the new concept of that criterion is stored in the student
     And the final criterion concept of that student is updated to "MA" in the system
 
+
+ #Controller Scenario
   @psg2
   Scenario: Student with no concepts with manual input MPA
     Given that the student named "Jessica Jones" with a login "jj" is registered in the system
@@ -22,6 +24,8 @@ Feature: Manual Concept Input
     Then the new concept of that criterion is stored in the student
     And the final criterion concept of that student is updated to "MPA" in the system
 
+
+#Controller Scenario
   @psg2
   Scenario: Student with no concepts with manual input MANA
     Given that the student named "Matt Murlock" with a login "mm" is registered in the system
@@ -41,7 +45,7 @@ Feature: Manual Concept Input
     And the final criterion concept of that student is updated to "MPA" in the system
 
 #GUI Scenario
-  @psg2
+  @ignore
   Scenario: Student with no concepts with manual input MA
     Given that I am on the Student page
     And I can see a student named "Bruce Wayne" with a login "bw"
@@ -53,7 +57,7 @@ Feature: Manual Concept Input
     Then I go back to Student page
     And I can see that the final concept in that criterion for that student is now "MA"
 
-  @psg2
+  @ignore
   Scenario: Student with no concepts with manual input MPA
     Given that I am on the Student page
     And I can see a student named "Barry Allen" with a login "ba"
@@ -65,7 +69,7 @@ Feature: Manual Concept Input
     Then I go back to Student page
     And I can see that the final concept in that criterion for that student is now "MPA"
 
-  @psg2
+  @ignore
   Scenario: Student with no concepts with manual input MANA
     Given that I am on the Student page
     And I can see a student named "Oliver Queen" with a login "oq"
@@ -77,7 +81,7 @@ Feature: Manual Concept Input
     Then I go back to Student page
     And I can see that the final concept in that criterion for that student is now "MANA"
 
-    @psg2
+    @ignore
     Scenario: Student already with concepts MA and MPA with manual input MPA
     Given that I am on the Student page
     And I can see a student named "Clark Kent" with a login "ck"

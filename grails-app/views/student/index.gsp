@@ -18,7 +18,9 @@
                                                               args="[entityName]"/></g:link></li>
         <li><g:link class="create" action="list"><g:message code="default.new.label"
                                                             message="Manual Concept Input"/></g:link></li>
-    </ul>
+		<li><g:link class="create" action="listAutoEvaluation"><g:message code="default.new.label" message="Add Auto Evaluation" /></g:link></li>
+	</ul>
+
 </div>
 
 <div id="list-student" class="content scaffold-list" role="main">

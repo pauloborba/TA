@@ -1,28 +1,32 @@
 package ta
 
-/**
- * Created by imvm on 05/10/15.
- */
+import static org.springframework.http.HttpStatus.*
+import grails.transaction.Transactional
+
+@Transactional(readOnly = true)
 class NotificationController {
+
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+
+    def index(Integer max) {
+        params.max = Math.min(max ?: 10, 100)
+        respond Notification.list(params), model:[notificationInstanceCount: Notification.count()]
+    }
+
+    def show(Notification notificationInstance) {
+        respond notificationInstance
+    }
 
     def create() {
         respond new Notification(params)
     }
 
-    def show() {
-        def list = Notification.getAll()
-        if (list.empty) {
-            flash.message = "There are no new notifications."
+    public boolean saveNotification(Notification notification) {
+        if (Notification.findByLogin(notification.login) == null) {
+            notification.save(flush: true)
+            new StudentController().updateStudentEvaluationCriteria()
+            return true
         }
-        return list;
+        return false
     }
-
-    public boolean save(Notification n) {
-        if(Notification.findByStudent(n.student) == null) {
-            n.save(flush: true)
-        }
-        respond new Notification(params)
-    }
-
-
 }
