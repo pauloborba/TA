@@ -26,7 +26,7 @@ class StudentController {
         respond new Student(params)
     }
 
-    def deleteAfterTest(login){
+    def deleteAfterTest(login) {
         Student student = Student.findByLogin(login)
         delete(student)
     }
@@ -72,6 +72,7 @@ class StudentController {
             for (EvaluationCriterion evCriterion : EvaluationCriterion.findAll()) {
                 student.addCriterion(evCriterion)
                 student.save flush: true
+
             }
 
 //            for (AutoEvaluationCriterion autoEvCriterion : AutoEvaluationCriterion.findAll()) {
@@ -82,7 +83,7 @@ class StudentController {
         }
     }
 
-    def compareGrade(){
+    def compareGrade() {
         String login = params.studentId
         def criteria = EvaluationCriterion.findAll()
         Student student = Student.findByLogin(login)
@@ -90,39 +91,39 @@ class StudentController {
         HashMap<String, String> fin = student.getFinalGrades()
         boolean sent = sentAuto(login)
         if (!sent) {
-            worked=false;
+            worked = false;
             flash.error = "Erro: o aluno escolhido não enviou a auto avaliação"
             redirect action: index(10)
-        }else{
-            worked=true;
+        } else {
+            worked = true;
         }
 
-        render view: "compare", model:[criteria: criteria, student: student]
+        render view: "compare", model: [criteria: criteria, student: student]
     }
 
-    def compareGrades(String login){
+    def compareGrades(String login) {
         def criteria = EvaluationCriterion.findAll()
         Student student = Student.findByLogin(login)
         HashMap<String, String> auto = student.getAutoEvaluations()
         HashMap<String, String> fin = student.getFinalGrades()
         boolean sent = sentAuto(login)
         if (!sent) {
-            worked=false;
+            worked = false;
             flash.error = "Erro: o aluno escolhido não enviou a auto avaliação"
             redirect action: index(10)
-        }else{
-            worked=true;
+        } else {
+            worked = true;
         }
 
-        render view: "compare", model:[criteria: criteria, student: student]
+        render view: "compare", model: [criteria: criteria, student: student]
     }
 
-    public boolean sentAuto(String login){
+    public boolean sentAuto(String login) {
         boolean sent = false;
         Student student = Student.findByLogin(login)
         HashMap<String, String> auto = student.getAutoEvaluations()
         for (EvaluationCriterion evCriterion : EvaluationCriterion.findAll()) {
-            if(!auto.get(evCriterion.name).isEmpty()){
+            if (!auto.get(evCriterion.name).isEmpty()) {
                 sent = true;
             }
         }
@@ -250,30 +251,28 @@ class StudentController {
         String login = params.studentId
         String[] criteria = params.criterionName
 
-        for (int i = 0; i < criteria.length; i++) {
-            updateConcepts(login, criteria[i], selector[i])
-            if (EvaluationCriterion.findByName(criteria[0]) == null) {
-                String select = ""
-                int size = selector.length
-                for (int j = 0; j < size; j++) {
-                    select = select + selector[j]
-                }
-                String criterion = ""
-                size = criteria.length
-                for (int j = 0; j < size; j++) {
-                    criterion = criterion + criteria[j]
-                }
-
-                updateConcepts(login, criterion, select)
-            } else {
-                int size = criteria.length
-                for (int j = 0; j < criteria.length; j++) {
-                    updateConcepts(login, criteria[j], selector[j])
-                }
+        if (EvaluationCriterion.findByName(criteria[0]) == null) {
+            String select = ""
+            int size = selector.length
+            for (int j = 0; j < size; j++) {
+                select = select + selector[j]
+            }
+            String criterion = ""
+            size = criteria.length
+            for (int j = 0; j < size; j++) {
+                criterion = criterion + criteria[j]
             }
 
-            redirect action: index(10)
+            updateConcepts(login, criterion, select)
+        } else {
+            int size = criteria.length
+            for (int j = 0; j < criteria.length; j++) {
+                updateConcepts(login, criteria[j], selector[j])
+            }
         }
+
+        redirect action: index(10)
+
     }
 
 

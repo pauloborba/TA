@@ -111,7 +111,6 @@ And (~'I submit the info$'){ ->
 }
 
 Then (~'I go back to Student page$'){->
-    to StudentPage
     at StudentPage
 }
 
