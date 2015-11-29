@@ -6,7 +6,7 @@ Feature: Import concepts from spreadsheet
   So that my grades are easily recorded on the system
 
   #GUI Scenario (success)
-  @ignore 
+  @ignore
   Scenario: Importing valid spreadsheet (file format and columns)
     Given that I am at the Sheet Upload page
     When I import the spreadsheet "validSheet.xlsx"
@@ -15,7 +15,7 @@ Feature: Import concepts from spreadsheet
     Then an upload confirmation message is displayed
 
 #GUI Scenario (failure)
-  @ignore 
+  @ignore
   Scenario: Importing spreadsheet in invalid file format
     Given that I am at the Sheet Upload page
     When I import the spreadsheet "sheet.csv"
@@ -23,7 +23,7 @@ Feature: Import concepts from spreadsheet
     Then display error message
 
 #GUI Scenario (failure)
-  @ignore 
+  @ignore
   Scenario: Importing spreadsheet with invalid column
     Given that I am at the Sheet Upload page
     When I import the spreadsheet "invalidColumnSheet.xlsx"
@@ -32,7 +32,7 @@ Feature: Import concepts from spreadsheet
     Then display error message
 
 #Controller Scenario (success)
-  @ignore 
+  @ignore
   Scenario: Importing valid spreadsheet (file format and columns)
     Given the spreadsheet "validSheet.xlsx" is on valid file format
     When I try to import its data
@@ -47,7 +47,7 @@ Feature: Import concepts from spreadsheet
     Then do not update system data
 
 #Controller Scenario (failure)
-  @ignore 
+  @ignore
   Scenario: Importing spreadsheet with invalid column
     Given the spreadsheet "invalidColumnSheet.xlsx" is on valid file format
     When I try to import its data
@@ -55,7 +55,7 @@ Feature: Import concepts from spreadsheet
     Then do not update system data
 
 #Controller Scenario
-  @ignore 
+  @ignore
   Scenario: Importing spreadsheet with non registered student
     Given the valid spreadsheet "validSheet.xlsx" contains a not registered student named "Alan Turing" with login "at"
     When  I import the spreadsheet

@@ -30,7 +30,7 @@ class EvaluationCriterionController {
     public boolean saveEvaluationCriterion(EvaluationCriterion evaluationCriterion) {
         if(EvaluationCriterion.findByName(evaluationCriterion.name) == null) {
             evaluationCriterion.save(flush: true)
-            evaluationCriterion = evaluationCriterion.merge()
+            //evaluationCriterion = evaluationCriterion.merge()
 
             new StudentController().updateStudentEvaluationCriteria()
             return true
