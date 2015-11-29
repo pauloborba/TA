@@ -42,7 +42,7 @@ Then(~'The discipline "([^"]*)" is not stored more than one time in the system$'
 
 Given(~'I am at the homepage$') { ->
     to homePage // checar se essa
-    at homePage // página existe mesmo
+    at homePage // pï¿½gina existe mesmo
 }
 
 When(~'I select create new discipline$') { ->
@@ -70,7 +70,7 @@ And(~'I am taken to the list of disciplines page where "([^"]*)" is listed as a 
 
 Given(~'I am at the homepage$') { ->
     to homePage // checar se essa
-    at homePage // página existe mesmo
+    at homePage // pï¿½gina existe mesmo
 }
 
 When(~'I select create new discipline$') { ->
@@ -98,9 +98,9 @@ And(~'I am taken to the list of disciplines page where "([^"]*)" is already list
     assert discipline == disciplineSaved
 }
 
-###########new
+//////////////////////new
 
-#- system
+//- system
 
 Given(~'the system has no discipline named "([^"]*)"$') { String discipline ->
     assert Discipline.findByName(discipline) == null
@@ -118,11 +118,11 @@ Then(~'the discipline "([^"]*)" is not stored in the system$') { String discipli
     assert Discipline.findByName(discipline) == null && !saved
 }
 
-# - gui
+// - gui
 
 Given(~'I am at the homepage$') { ->
     to homePage // checar se essa
-    at homePage // página existe mesmo
+    at homePage // pï¿½gina existe mesmo
 }
 
 When(~'I select create new discipline$') { ->
@@ -138,11 +138,11 @@ And(~'do not fill in the teacher$'){
 
 }
 
-Then(~'I'm not able to save the discipline until I fill in the teacher") {
+Then(~'I\'m not able to save the discipline until I fill in the teacher') {
 	at RegisterNewDisciplinePage
 }
 
-# - system
+// - system
 
 Given(~'the system has no discipline named "([^"]*)"$') { String discipline ->
     assert Discipline.findByName(discipline) == null
@@ -160,11 +160,11 @@ Then(~'the discipline "([^"]*)" is not stored in the system$') { String discipli
     assert Discipline.findByName(discipline) == null && !saved
 }
 
-# - gui
+// - gui
 
 Given(~'I am at the homepage$') { ->
     to homePage // checar se essa
-    at homePage // página existe mesmo
+    at homePage // pï¿½gina existe mesmo
 }
 
 When(~'I select create new discipline$') { ->
@@ -174,12 +174,13 @@ When(~'I select create new discipline$') { ->
 
 And(~'fill the form with name "([^"]*)" with teacher "([^"]*)"$') { String discipline,
     String teacher ->
+    assert true
 }
 
 And(~'do not fill in the concepts$'){
 
 }
 
-Then(~'I'm not able to save the discipline until I fill in the concepts") {
+Then(~'I\'m not able to save the discipline until I fill in the concepts') {
 	at RegisterNewDisciplinePage
 }
