@@ -51,6 +51,15 @@
 			</li>
 		</g:if>
 
+		<g:if test="${studentInstance?.autoEvaluations}">
+			<li class="fieldcontain">
+				<span id="autoEvaluations-label" class="property-label"><g:message code="student.autoEvaluations.label" default="autoEvaluations" /></span>
+
+				<span class="property-value" aria-labelledby="autoEvaluations-label"><g:fieldValue bean="${studentInstance}" field="autoEvaluations"/></span>
+
+			</li>
+		</g:if>
+
 	</ol>
 	<g:form url="[resource:studentInstance, action:'delete']" method="DELETE">
 		<fieldset class="buttons">
