@@ -1,4 +1,4 @@
-@igormatos
+﻿@igormatos
 Feature: Access Control
 As a user
 I want to have access to the system
@@ -21,13 +21,13 @@ So that I can see the options that belongs to my user type
 # Evite ser específico demais usando coisas como "click" e "button". A ideia é ser mais genérico quanto à
 # interação com a interface, pois facilita a portabilidade para outra plataforma, tipo mobile. É uma boa prática.
 #
-  #GUI scenario
-  Scenario: Signing in web
-    Given That I am at login page
-    And "rav2" has a account with password "123"
-    When I write "rav2" and "123" on the login form
-    And I click Sign in button
-    Then Welcome message is displayed
+# #GUI scenario
+#  Scenario: Signing in web
+#    Given That I am at login page
+ #   And "rav2" has a account with password "123"
+  #  When I write "rav2" and "123" on the login form
+   # And I click Sign in button
+    #Then Welcome message is displayed
 #
 #  #GUI scenario
 #   Scenario: Failed signing in web
