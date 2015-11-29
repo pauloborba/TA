@@ -34,6 +34,7 @@ class StudentController {
     public Student createStudent() {
         Student student = new Student(params)
         student.afterCreateAddCriteria(EvaluationCriterion.findAll())
+        //student = student.merge()
 //        student.afterCreateAddAutoCriteria(AutoEvaluationCriterion.findAll())
 //        student.afterCreateAddAutoEvaluationCriteria(EvaluationAutoEvaluationCriterion.findAll())
         return student
@@ -44,6 +45,18 @@ class StudentController {
         def criteria = EvaluationCriterion.findAll()
 
         render view: "manualInput", model: [students: students, criteria: criteria]
+    }
+
+    def listAutoEvaluation() {
+        def students = Student.findAll()
+        def criteria = EvaluationCriterion.findAll()
+
+        render view: "autoEvaluation", model: [students: students, criteria: criteria]
+
+//        def students = Student.findAll()
+//        def criteria = EvaluationCriterion.findAll()
+//
+//        render view: "manualInput", model: [students: students, criteria: criteria]
     }
 
     public boolean saveStudent(Student student) {
@@ -169,7 +182,56 @@ class StudentController {
         }
     }
 
+
     @Transactional
+    def updateAutoEvaluation(String login, String studentCriterion, String concept) {
+        if (!concept.isEmpty()) {
+            println login
+            Student student = Student.findByLogin(login)
+            student.autoEvaluations.put(studentCriterion, concept)
+
+            student.save flush: true
+        }
+    }
+
+    def updateCriteriaAutoEvaluation() {
+        String[] selector = params.concepts
+        String login = params.selector
+        String[] criteria = params.criterionName
+
+        int a = 0;
+        for (int i = 0; i < selector.size(); i++) {
+            if (selector[i].equalsIgnoreCase("")) {
+                a = a + 1;
+            }
+        }
+
+
+        if (login.equalsIgnoreCase("")) {
+            flash.error = "Choose a student"
+            render view: "autoEvaluation"
+        } else if (a > 0) {
+            flash.error = "Evaluate yourself for all criteria"
+            render view: "autoEvaluation"
+        } else if (EvaluationCriterion.findByName(criteria[0]) == null) {
+            for (int i = 1; i < criteria.size(); i++) {
+                criteria[0] = criteria[0] + criteria[i]
+            }
+            for (int i = 1; i < selector.size(); i++) {
+                selector[0] = selector[0] + selector[i]
+            }
+
+            updateAutoEvaluation(login, criteria[0], selector[0])
+
+            redirect action: index(100)
+        } else {
+            for (int i = 0; i < criteria.length; i++) {
+                updateAutoEvaluation(login, criteria[i], selector[i])
+            }
+            redirect action: index(100)
+        }
+    }
+
     def updateConcepts(String login, String criterion, String concept) {
         if (!concept.isEmpty()) {
             Student student = Student.findByLogin(login)
@@ -188,28 +250,32 @@ class StudentController {
         String login = params.studentId
         String[] criteria = params.criterionName
 
-        if ( EvaluationCriterion.findByName(criteria[0] ) == null  ) {
-            String select = ""
-            int size = selector.length
-            for (int i = 0; i < size; i++) {
-                select = select + selector[i]
-            }
-            String criterion = ""
-            size = criteria.length
-            for (int i = 0; i < size; i++) {
-                criterion = criterion + criteria[i]
+        for (int i = 0; i < criteria.length; i++) {
+            updateConcepts(login, criteria[i], selector[i])
+            if (EvaluationCriterion.findByName(criteria[0]) == null) {
+                String select = ""
+                int size = selector.length
+                for (int j = 0; j < size; j++) {
+                    select = select + selector[j]
+                }
+                String criterion = ""
+                size = criteria.length
+                for (int j = 0; j < size; j++) {
+                    criterion = criterion + criteria[j]
+                }
+
+                updateConcepts(login, criterion, select)
+            } else {
+                int size = criteria.length
+                for (int j = 0; j < criteria.length; j++) {
+                    updateConcepts(login, criteria[j], selector[j])
+                }
             }
 
-            updateConcepts(login, criterion, select)
-        } else {
-            int size = criteria.length
-            for (int i = 0; i < criteria.length; i++) {
-                updateConcepts(login, criteria[i], selector[i])
-            }
+            redirect action: index(10)
         }
-
-        redirect action: index(10)
     }
+
 
     @Transactional
     def delete(Student studentInstance) {
@@ -239,4 +305,5 @@ class StudentController {
             '*' { render status: NOT_FOUND }
         }
     }
+
 }

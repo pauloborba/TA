@@ -9,6 +9,7 @@ class Student {
         public static final List<String> CONCEPTS = ["MA", "MPA", "MANA"]
     }
 
+
     Map<String, String> evaluations
     Map<String, String> autoEvaluations
     Map<String, String> finalGrades
@@ -84,9 +85,9 @@ class Student {
         return ans;
     }
     
-    /*Este m�todo calcula a nota final com um valor de 0 a 10, retornando -1
-    se não for possível calcular. Tal valor ser� validado posteriormente para
-    que se saiba o que ser� impresso na média geral*/
+    /*Este m�todo calcula a nota final com um valor de 0 a 10, retornando -1
+    se não for possível calcular. Tal valor ser� validado posteriormente para
+    que se saiba o que ser� impresso na média geral*/
     public void calculateCrispGrade(HashMap fuzzyGrades){
 	    if(!fuzzyGrades.containsValue("")){
 		    String[] concepts = fuzzyGrades.values().toArray()
