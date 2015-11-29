@@ -27,7 +27,8 @@ class StudentController {
     }
 
     def deleteAfterTest(login){
-        Student.findByLogin(login).delete()
+        Student student = Student.findByLogin(login)
+        delete(student)
     }
 
     public Student createStudent() {
