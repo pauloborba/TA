@@ -10,7 +10,9 @@ class Student {
     }
 
     Map<String, String> evaluations
+    Map<String, String> autoEvaluations
     Map<String, String> finalGrades
+    int crispGrade //Esta vai ser a nota de 0 a 10 do aluno
 
     static constraints = {
         login unique: true
@@ -19,9 +21,12 @@ class Student {
 
     public void afterCreateAddCriteria(List<EvaluationCriterion> evaluationCriteria) {
         evaluations = new HashMap<>()
+        autoEvaluations = new HashMap<>()
         finalGrades = new HashMap<>()
+        crispGrade = -1
         for(EvaluationCriterion evaluationCriterion : evaluationCriteria) {
             if(this.evaluations.get(evaluationCriterion.name) == null) {
+                this.autoEvaluations.put(evaluationCriterion.name, "")
                 this.evaluations.put(evaluationCriterion.name, "")
                 this.finalGrades.put(evaluationCriterion.name, "")
             }
@@ -30,10 +35,13 @@ class Student {
 
     public void addCriterion(EvaluationCriterion evaluationCriterion) {
         if(evaluations == null) {
+            autoEvaluations = new HashMap<>()
             evaluations = new HashMap<>()
             finalGrades = new HashMap<>()
+            crispGrade = -1
         }
         if(this.evaluations.get(evaluationCriterion.name) == null) {
+            this.autoEvaluations.put(evaluationCriterion.name, "")
             this.evaluations.put(evaluationCriterion.name, "")
             this.finalGrades.put(evaluationCriterion.name, "")
         }
@@ -74,5 +82,57 @@ class Student {
         }
 
         return ans;
+    }
+    
+    /*Este mÈtodo calcula a nota final com um valor de 0 a 10, retornando -1
+    se n√£o for poss√≠vel calcular. Tal valor ser· validado posteriormente para
+    que se saiba o que ser· impresso na m√©dia geral*/
+    public void calculateCrispGrade(HashMap fuzzyGrades){
+	    if(!fuzzyGrades.containsValue("")){
+		    String[] concepts = fuzzyGrades.values().toArray()
+		    int ma = 0
+		    int mpa = 0
+		    int mana = 0
+
+		    for(int i = 0; i < concepts.size(); i++){
+    			if(concepts[i] == "MA"){
+	    			ma = ma + 1
+			    }else if(concepts[i] == "MPA"){
+			    	mpa = mpa + 1
+			    }else{
+				    mana = mana + 1
+			    }
+		    }
+
+		    float percMA = ((100 * ma)/fuzzyGrades.size())
+		    float percMPA = ((100 * mpa)/fuzzyGrades.size())
+		    float percMANA = ((100 * mana)/fuzzyGrades.size())
+
+		    if(percMana == 0 && percMa >= 90){
+    			crispGrade = 10
+		    }else if(percMANA == 0 && percMA >= 70){
+		    	crispGrade = 9
+		    }else if(percMANA == 0 && percMA >= 50){
+			    crispGrade = 8
+		    }else if(percMANA == 0){
+			    crispGrade = 7
+		    }else if(percMANA <= 10){
+			    crispGrade = 6
+		    }else if(percMANA <= 30){
+			    crispGrade = 5
+		    }else if(percMANA <= 50){
+			    crispGrade = 4
+		    }else if(percMANA <= 70){
+			    crispGrade = 3
+		    }else if(percMANA <= 80){
+			    crispGrade = 2
+		    }else if(percMANA <= 90){
+			    crispGrade = 1
+		    }else{
+			    crispGrade = 0
+		    }
+        }else{
+            crispGrade = -1
+        }
     }
 }

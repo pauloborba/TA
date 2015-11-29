@@ -85,5 +85,10 @@ class StudentPage extends Page {
         return ans;
     }
 
+    def choose(String login){
+        String id = "#"+login+"Compare"
+        $(id).click()
+    }
+
 
 }
