@@ -4,8 +4,8 @@ import ta.Student
 class BootStrap {
 
     def init = { servletContext ->
-//
-//        Student pp2 = new Student(login:"pp2", name:"Peter Parker").save(failOnError: true)
+
+//       Student pp2 = new Student(login:"pp2", name:"Peter Parker").save(failOnError: true)
 //        Student psg2 =  new Student(login:"psg2", name:"Pedro Sereno").save(failOnError: true)
 //        Student gaabs = new Student(login:"gaabs", name:"Giovanni Barros").save(failOnError: true)
 //        Student cjvg = new Student(login:"cjvg", name:"Caio Jose").save(failOnError: true)
@@ -29,6 +29,7 @@ class BootStrap {
 //        cjvg.addCriterion(criterion)
 //        cjvg.addCriterion(criterion2)
 //        cjvg.addCriterion(criterion3)
+
 //        pp2.autoEvaluations.put(criterion.name, "MA")
 //        pp2.finalGrades.put(criterion.name, "MA")
 //        pp2.autoEvaluations.put(criterion2.name, "MPA")

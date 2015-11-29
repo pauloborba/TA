@@ -15,4 +15,8 @@ class StudentPage extends Page {
         $(id).click()
     }
 
+    boolean checkStudent(String login, String name){
+        $(login).value() == login
+        $(name).value() == name
+    }
 }
