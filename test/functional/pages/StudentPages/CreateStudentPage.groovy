@@ -7,6 +7,7 @@ class CreateStudentPage extends Page {
     static url = "/TA/student/create"
 
     static at =  {
+//        title ==~ /Criar Student/
         title ==~ /Create Student/
     }
 

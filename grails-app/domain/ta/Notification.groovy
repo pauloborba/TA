@@ -1,6 +1,10 @@
 package ta
 
 class Notification {
-	static belongsTo = [student : Student]
-	static hasMany = [evaluationCriterions : EvaluationCriterion]
+	String message
+	String login
+
+	static constraints = {
+
+	}
 }

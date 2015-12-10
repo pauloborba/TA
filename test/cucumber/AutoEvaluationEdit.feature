@@ -1,32 +1,25 @@
-Feature : edit auto evaluation
+Feature: Auto Evaluation Edit
   As a student
   I want to edit my auto evaluation
   So that the professor will be able to know how much I thought I knew of a criterion
 
   #Controller Scenarios
+  @ignore
+  Scenario: edit auto evaluation
+    Given there is the student "Peter Parker" with login "pp"
+    And the criterion "Requirements"
+    And the student does not have an auto evaluation for that criterion
+    When the user inputs a new concept "MPA" in that criterion
+    Then the auto evaluation for that criterion on that student will be updated to "MPA"
 
-  Scenario: edit auto evaluation before the time limit has ended
-    Given that the time limit for the auto evaluation of the criterion "Requirements" hasn’t passed yet
-    When the student "Clark Wayne" edits the concept of "Requirements"
-    Then the new concept of "Requirements" will be saved for "Clark Wayne" in the system
-
-
-  Scenario: edit auto evaluation after the time limit has ended
-    Given that the time limit for the auto evaluation of the criterion "Requirements" has already passed
-    When the student "Clark Wayne" edits the concept of "Requirements"
-    Then the new concept of "Requirements" will not be saved in the system
-
-  #GUI Scenarios
-
-  Scenario: edit auto evaluation before the time limit has ended
-    Given that the time limit for the auto evaluation of the criterion "Requirements" hasn’t passed yet
-    When  the student "Clark Wayne" chooses the option to edit the concept of "Requirements"
-    And chooses the new concept
-    Then the new concept of "Requirements" will be saved
-    And showed under the name "Requirements"
-
-
-  Scenario: edit auto evaluation after the time limit has ended
-    Given that the time limit for the auto evaluation of the criterion "Requirements" has already passed
-    When the student "Clark Wayne" chooses the option to edit the concept of "Requirements"
-    Then a warning will appear saying that this can’t be done
+  @ignore
+  Scenario: edit auto evaluation web
+    Given that I am on the Students page
+    And there is a student named "Bruce Wayne" with a login "bw"
+    And one evaluation criterion named "Administration"
+    When I go to the Auto Evaluation Page
+    And I choose the student name
+    And I choose a new concept "MA" to that student for that criterion
+    And I send the info
+    Then I go to that student page
+    And I can see that the auto evaluation in that criterion for that student is now "MA"

@@ -7,11 +7,13 @@ import ta.Student
 
 class NotificationsTestDataAndOperations {
 
-	public static void createNotification(Student s, Set<EvaluationCriterion> e) {
+	public static boolean createNotification(String login) {
 		def cont = new NotificationController()
-		cont.params << [student : s] << [evaluationCriterions : e]
-		cont.save(cont.create())
+		String message = "Student " + login + "needs more attention.";
+		cont.params << [login: login] << [message: message]
+		boolean saved = cont.saveNotification(cont.create())
 		cont.response.reset()
+		return saved;
 	}	
 
 }
