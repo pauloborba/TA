@@ -5,18 +5,26 @@ Feature: Final grade
   
   #Controller scenario
   @ignore
-  Scenario: Calculating final grade
-    Given that every criteria has a grade for student "Eduardo"
-    When I request the system to register grades from "Eduardo"
-    Then the final grade for "Eduardo" is calculated based on the grades from each criteria
-    And the result is stored by the system
+  Scenario: Calculating final grade after every criterion gets at least one grade
+    Given that student "Eduardo" has no grades for criterion "C4"
+    And "MPA" for remaining criteria
+    When I add "MA" to criterion "C4"
+    Then the final grade is calculated
+
+#Controller scenario
+  @ignore
+  Scenario: Updating final grade after criterion gets new grade
+    Given that student "Eduardo" has "MA" for criterion "C1"
+    And "MPA" for remaining criteria
+    When I add "MPA" to criterion "C1"
+    Then the final grade is updated
 
   #Controller scenario
   @ignore
   Scenario: Inability to calculate grade
-    Given that at least one criteria has no grades for student "Eduardo"
-    When I request the system to register grades from "Eduardo"
-    Then the final grade is not calculated
+    Given that student "Eduardo" does not have a grade for criterion "C0"
+    When I add "MPA" to criterion "C1" for "Eduardo"
+    Then the system returns an error flag
 
   #GUI scenario
   @ignore
