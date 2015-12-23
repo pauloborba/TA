@@ -9,7 +9,6 @@ class Student {
         public static final List<String> CONCEPTS = ["MA", "MPA", "MANA"]
     }
 
-
     Map<String, String> evaluations
     Map<String, String> autoEvaluations
     Map<String, String> finalGrades
@@ -20,38 +19,48 @@ class Student {
         name blank: false
     }
 
-    public void afterCreateAddCriteria(List<EvaluationCriterion> evaluationCriteria) {
-        evaluations = new HashMap<>()
-        autoEvaluations = new HashMap<>()
-        finalGrades = new HashMap<>()
-        crispGrade = -1
-        for(EvaluationCriterion evaluationCriterion : evaluationCriteria) {
-            if(this.evaluations.get(evaluationCriterion.name) == null) {
-                this.autoEvaluations.put(evaluationCriterion.name, "")
-                this.evaluations.put(evaluationCriterion.name, "")
-                this.finalGrades.put(evaluationCriterion.name, "")
-            }
-        }
-    }
-
-    public void addCriterion(EvaluationCriterion evaluationCriterion) {
-        if(evaluations == null) {
-            autoEvaluations = new HashMap<>()
+    def initialize(){
+        if ( evaluations == null ){
             evaluations = new HashMap<>()
+            autoEvaluations = new HashMap<>()
             finalGrades = new HashMap<>()
             crispGrade = -1
         }
-        if(this.evaluations.get(evaluationCriterion.name) == null) {
-            this.autoEvaluations.put(evaluationCriterion.name, "")
-            this.evaluations.put(evaluationCriterion.name, "")
-            this.finalGrades.put(evaluationCriterion.name, "")
+    }
+
+    public void afterCreateAddCriteria(List<EvaluationCriterion> evaluationCriteria) {
+        initialize()
+        for(EvaluationCriterion evaluationCriterion : evaluationCriteria) {
+            addCriterion(evaluationCriterion.name)
         }
     }
 
+    public void addCriterion(String name) {
+        initialize()
+        if(this.evaluations.get(name) == null) {
+            this.autoEvaluations.put(name, "")
+            this.evaluations.put(name, "")
+            this.finalGrades.put(name, "")
+        }
+    }
+
+    def removeCriterion(String criterionName){
+        if(this.evaluations.get(criterionName) != null) {
+            evaluations.remove(criterionName)
+            autoEvaluations.remove(criterionName)
+            finalGrades.remove(criterionName)
+        }
+    }
+
+    /*
+    - a “média” é MA se o conceito adicionado é MA e se tiver no máximo um MANA/MPA nos conceitos anteriores
+    - a “média” é MPA se o conceito adicionado é MA e se tiver mais de um MANA/MPA nos conceitos anteriores
+    - a “média” é MPA se o conceito adicionado é MPA e se tiver no máximo um MANA nos conceitos anteriores
+    - a “média” é MANA caso contrário
+     */
     public boolean calculateFinalGrade(String criterionName, String concept){
         boolean ans = false;
         String concepts = evaluations.get(criterionName)
-
         String[] grades = concepts.split(" ")
 
         int ma = grades.count("MA")

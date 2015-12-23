@@ -80,7 +80,7 @@ Feature: Manual Concept Input
   @psg2
     Scenario: Student already with concepts MA and MPA with manual input MPA
     Given that I am on the Student page
-    And I can see a student named "Clark Kent" with a login "ck"
+    And I can see a student named "Oliver Queen" with a login "oq"
     And a evaluation criterion named "Journalism"
     And I already put the concepts "MA" and "MPA" for that student in that criterion
     When I go to the Manual Input Concept Page

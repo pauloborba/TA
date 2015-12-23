@@ -18,6 +18,7 @@ def inputConcept
 
 Given (~'that the student named "([^"]*)" with a login "([^"]*)" is registered in the system$') { String name, login ->
     studentLogin = login
+
     assert EvaluateStudentTestDataAndOperations.createStudent(login, name)
 }
 
@@ -41,7 +42,6 @@ Then (~'the new concept of that criterion is stored in the student$') { ->
 
 And (~'the final criterion concept of that student is updated to "([^"]*)" in the system$'){ String concept ->
     assert EvaluateStudentTestDataAndOperations.getFinalGrade(studentLogin, criterionName).equals(concept)
-    EvaluateStudentTestDataAndOperations.deleteAfterTest(studentLogin, criterionName)
 }
 
 And (~'the student already have the concepts "([^"]*)" and "([^"]*)" in that criterion$'){ String concept1, concept2 ->
@@ -87,12 +87,12 @@ And (~'a evaluation criterion named "([^"]*)"$'){ String name ->
     at StudentPage
     criterionName = name
 
-    assert page.checkCriterion(studentLogin, name)
+    assert page.checkCriterionConcept(studentLogin, name)
 }
 
 And (~'I can\'t see a concept in that criterion$'){ ->
     at StudentPage
-    assert page.checkConcept(studentLogin, criterionName)
+    assert page.checkCriterionConcept(studentLogin, criterionName)
 }
 
 When (~'I go to the Manual Input Concept Page$'){ ->
@@ -116,8 +116,7 @@ Then (~'I go back to Student page$'){->
 
 And (~'I can see that the final concept in that criterion for that student is now "([^"]*)"$'){String concept ->
     at StudentPage
-    assert page.checkConcept(studentLogin, criterionName, concept)
-    EvaluateStudentTestDataAndOperations.deleteAfterTest(studentLogin, criterionName)
+    assert page.checkCriterionConcept(studentLogin, criterionName, concept)
 }
 
 And (~'I already put the concepts "([^"]*)" and "([^"]*)" for that student in that criterion$'){String concept1, concept2 ->
@@ -132,7 +131,7 @@ And (~'I already put the concepts "([^"]*)" and "([^"]*)" for that student in th
     page.click(studentLogin)
 
     at StudentPage
-    assert page.checkConcept(studentLogin, criterionName, "MA")
+    assert page.checkCriterionConcept(studentLogin, criterionName, "MA")
 }
 
 
