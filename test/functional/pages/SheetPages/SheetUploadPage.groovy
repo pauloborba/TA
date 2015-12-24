@@ -13,9 +13,6 @@ class SheetUploadPage extends Page {
         title ==~ /Upload Sheet/
     }
 
-    boolean validFileFormat
-
-
     def click(){
         //$("input", name:"datafile").click()
         //$("input", name:"open").click()
