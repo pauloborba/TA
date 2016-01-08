@@ -6,6 +6,7 @@ so that I can call him if there is any discrepancies.
 
 #GUI
 
+
 #Success
   @ehammo
 Scenario: table is seen with success

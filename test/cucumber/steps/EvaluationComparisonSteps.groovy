@@ -12,7 +12,7 @@ this.metaClass.mixin(cucumber.api.groovy.Hooks)
 this.metaClass.mixin(cucumber.api.groovy.EN)
 def studentX = new StudentController()
 /*
-Given There is a student with the login "bw" and name "Bruce Wayne"
+Given There  is a student with the login "bw" and name "Bruce Wayne"
 And a criteria with name "C1"
 And the student with the login "bw" has the grade "MA" in his evaluation in the criteria "C1"
 And the student appear in the list of student that sent their auto-Evaluation, with "MA" in the criteria "C1"

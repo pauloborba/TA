@@ -68,9 +68,7 @@ class StudentController {
         String login = params.studentId
         def criteria = EvaluationCriterion.findAll()
         Student student = Student.findByLogin(login)
-        HashMap<String, String> auto = student.getAutoEvaluations()
-        HashMap<String, String> fin = student.getFinalGrades()
-        boolean sent = sentAuto(login)
+       boolean sent = sentAuto(login)
         if (!sent) {
             worked=false;
             flash.error = "Erro: o aluno escolhido não enviou a auto avaliação"
@@ -85,8 +83,6 @@ class StudentController {
     def compareGrades(String login){
         def criteria = EvaluationCriterion.findAll()
         Student student = Student.findByLogin(login)
-        HashMap<String, String> auto = student.getAutoEvaluations()
-        HashMap<String, String> fin = student.getFinalGrades()
         boolean sent = sentAuto(login)
         if (!sent) {
             worked=false;
@@ -176,6 +172,7 @@ class StudentController {
             student.calculateCrispGrade(student.finalGrades)
 
             student.save flush: true
+
         }
     }
 
