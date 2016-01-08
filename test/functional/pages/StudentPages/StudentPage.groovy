@@ -19,4 +19,10 @@ class StudentPage extends Page {
         $(login).value() == login
         $(name).value() == name
     }
+
+    def hasErrors(){
+        boolean has = $("div", class:"errors").text() != null
+        return has
+    }
+
 }

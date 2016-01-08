@@ -3,6 +3,8 @@ package steps
 
 import pages.ShowComparisonPage
 import pages.StudentPages.StudentPage
+import ta.EvaluationCriterion
+import ta.EvaluationCriterionController
 import ta.Student
 import ta.StudentController
 
@@ -10,18 +12,42 @@ this.metaClass.mixin(cucumber.api.groovy.Hooks)
 this.metaClass.mixin(cucumber.api.groovy.EN)
 def studentX = new StudentController()
 /*
-Given There is a student with the login "bw" and name "Bruce Wayne" and a criteria with name "C1" and the student appear in the list of student that sent their auto-Evaluation
+Given There is a student with the login "bw" and name "Bruce Wayne"
+And a criteria with name "C1"
+And the student with the login "bw" has the grade "MA" in his evaluation in the criteria "C1"
+And the student appear in the list of student that sent their auto-Evaluation, with "MA" in the criteria "C1"
 When I choose to compare the grades of the student with the login "bw"
-Then I can see a detailed table with both student and the professor Evaluations being put, in each criterion, side by side in the screen
+Then I can see a table with both student and the professor Evaluations being put, in each criterion, side by side in the screen
 */
 
-Given (~'^There is a student with the login "([^"]*)" and name "([^"]*)" and a criteria with name "([^"]*)" and the student appear in the list of student that sent their auto-Evaluation$'){
-    String login, name, Cname  ->
+Given (~'^I am at the StudentPage$'){ ->
+    to StudentPage
+    at StudentPage
+}
+
+And (~'^There is a student with the login "([^"]*)" and name "([^"]*)"$'){
+    String login, name->
         EvaluateStudentTestDataAndOperations.createStudent(login, name)
-        EvaluateStudentTestDataAndOperations.createEvaluationCriterion(Cname)
         //studentX.updateAutoEvaluation(login, Cname, "MANA")
-        Student.findByLogin(login).autoEvaluations.put(Cname, "MA")
-        Student.findByLogin(login).finalGrades.put(Cname, "MA")
+        temp=login
+        assert Student.findByLogin(login)!=null
+}
+
+And (~'^a criterion with name "([^"]*)"$'){
+    String Cname ->
+        EvaluateStudentTestDataAndOperations.createEvaluationCriterion(Cname)
+        assert EvaluationCriterion.findByName(Cname)!=null
+}
+
+And(~'^the student with login "([^"]*)" has the grade "([^"]*)" in his evaluation in the criteria "([^"]*)"$'){
+    String login, concept, Cname ->
+        Student.findByLogin(login).finalGrades.put(Cname, concept)
+        assert Student.findByLogin(login).finalGrades.get(Cname)==concept
+}
+
+And(~'^the student with login "([^"]*)" appear in the list of student that sent their auto-Evaluation, with "([^"]*)" in the criteria "([^"]*)"$'){
+    String login, concept, Cname->
+        Student.findByLogin(login).autoEvaluations.put(Cname, concept)
         assert studentX.sentAuto(login)
 }
 
@@ -32,7 +58,7 @@ When (~'^I choose to compare the grades of the student with the login "([^"]*)"$
         page.choose(login)
 }
 
-Then (~'^I can see a detailed table with both student and the professor Evaluations being put, in each criterion, side by side in the screen$'){->
+Then (~'^I can see a table with both student and the professor Evaluations being put, in each criterion, side by side in the screen$'){->
    at StudentPage
     //quando der merge com Caio ai fica o at de baixo
    // at ShowComparisonPage
@@ -44,17 +70,38 @@ When I choose to compare the grades of the student with the login "sk"
 Then I should stay in the Student page
 */
 
-Given (~'^The student with the login "([^"]*)" and name "([^"]*)" and a criteria with name "([^"]*)" do not appear in the list of student that sent their auto-Evaluation$'){
-    String login, name, Cname ->
+And (~'^There is a student with the login "([^"]*)" and name "([^"]*)"$'){
+    String login, name->
         EvaluateStudentTestDataAndOperations.createStudent(login, name)
-        EvaluateStudentTestDataAndOperations.createEvaluationCriterion(Cname)
-        assert !studentX.sentAuto(login)
-
+        //studentX.updateAutoEvaluation(login, Cname, "MANA")
+        temp=login
+        assert Student.findByLogin(login)!=null
 }
 
+And (~'^a criterion with name "([^"]*)"$'){
+    String Cname ->
+        EvaluateStudentTestDataAndOperations.createEvaluationCriterion(Cname)
+        assert EvaluationCriterion.findByName(Cname)!=null
+}
+
+And(~'^the student with login "([^"]*)" has the grade "([^"]*)" in his evaluation in the criteria "([^"]*)"$'){
+    String login, concept, Cname ->
+        Student.findByLogin(login).finalGrades.put(Cname, concept)
+        assert Student.findByLogin(login).finalGrades.get(Cname)==concept
+}
+
+And(~'^the student with login "([^"]*)" do not appear in the list of student that sent their auto-Evaluation$'){
+    String login->
+        assert studentX.sentAuto(login)
+}
 
 Then (~'^I should stay in the Student page$'){->
     at StudentPage
+}
+
+And(~'^an Error message should appear$'){->
+    at StudentPage
+    assert page.hasErros()
 }
 
 /*
@@ -63,7 +110,7 @@ When The system requires the Evaluation and Auto-evaluation comparison of studen
 Then The system returns a detailed table with both student and the professor grades
 */
 
-Given (~'^The Auto-Evaluation of the student with the login "([^"]*)" and name "([^"]*)" in the criteria with name "([^"]*)" is on the database$'){
+And (~'^The Auto-Evaluation of the student with the login "([^"]*)" and name "([^"]*)" in the criteria with name "([^"]*)" is on the database$'){
     String login, name, Cname ->
         EvaluateStudentTestDataAndOperations.createStudent(login, name)
         EvaluateStudentTestDataAndOperations.createEvaluationCriterion(Cname)
@@ -73,13 +120,12 @@ Given (~'^The Auto-Evaluation of the student with the login "([^"]*)" and name "
 
 }
 
-When (~'^The system requires the Evaluation and Auto-evaluation comparison of student with the login "([^"]*)"$') {
+When (~'^There is a request of the Evaluation and Auto-evaluation comparison of student with the login "([^"]*)"$') {
     String login->
         studentX.compareGrades(login)
 }
 
-Then (~'^The system returns a detailed table with both student and the professor grades$'){->
-    assert studentX.worked
+Then (~'^The system is not altered$'){->
 
 }
 
@@ -98,6 +144,11 @@ Given (~'^The Auto-Evaluation of the student with the login "([^"]*)" and name "
 
 }
 
-Then (~'^The system returns an error message$'){->
+Then (~'^The system is not altered$'){->
+
+}
+
+
+And (~'^The system returns an error message$'){->
     assert !studentX.worked
 }
