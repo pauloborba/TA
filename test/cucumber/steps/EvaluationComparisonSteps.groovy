@@ -70,26 +70,6 @@ When I choose to compare the grades of the student with the login "sk"
 Then I should stay in the Student page
 */
 
-And (~'^There is a student with the login "([^"]*)" and name "([^"]*)"$'){
-    String login, name->
-        EvaluateStudentTestDataAndOperations.createStudent(login, name)
-        //studentX.updateAutoEvaluation(login, Cname, "MANA")
-        temp=login
-        assert Student.findByLogin(login)!=null
-}
-
-And (~'^a criterion with name "([^"]*)"$'){
-    String Cname ->
-        EvaluateStudentTestDataAndOperations.createEvaluationCriterion(Cname)
-        assert EvaluationCriterion.findByName(Cname)!=null
-}
-
-And(~'^the student with login "([^"]*)" has the grade "([^"]*)" in his evaluation in the criteria "([^"]*)"$'){
-    String login, concept, Cname ->
-        Student.findByLogin(login).finalGrades.put(Cname, concept)
-        assert Student.findByLogin(login).finalGrades.get(Cname)==concept
-}
-
 And(~'^the student with login "([^"]*)" do not appear in the list of student that sent their auto-Evaluation$'){
     String login->
         assert studentX.sentAuto(login)
@@ -125,8 +105,10 @@ When (~'^There is a request of the Evaluation and Auto-evaluation comparison of 
         studentX.compareGrades(login)
 }
 
-Then (~'^The system is not altered$'){->
 
+//o sistema nunca vai ser alterado já que esta operação apenas lê dados nunca insere, edita, atualiza ou remove nenhum dado
+Then (~'^The system is not altered$'){->
+    assert true
 }
 
 
@@ -143,11 +125,6 @@ Given (~'^The Auto-Evaluation of the student with the login "([^"]*)" and name "
         assert !studentX.sentAuto(login)
 
 }
-
-Then (~'^The system is not altered$'){->
-
-}
-
 
 And (~'^The system returns an error message$'){->
     assert !studentX.worked

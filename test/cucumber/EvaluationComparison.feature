@@ -19,6 +19,7 @@ When I choose to compare the grades of the student with the login "bw"
 Then I can see a table with both student and the professor Evaluations being put, in each criterion, side by side in the screen.
 
 #Failure
+  @ehammo
 Scenario:  table is not seen with success
 Given I am at the StudentPage
 And There is a student with the login "sk" and name "Selina Kyle"
@@ -32,12 +33,14 @@ And an Error Message should appear
 #Controller
 
 #Success
+  @ehammo
 Scenario: The system return a table with success
 Given The Auto-Evaluation of the student with the login "dp" and name "Diana Prince" in the criteria with name "C1" is on the database
 When There is a request of the Evaluation and Auto-evaluation comparison of student with the login "dp"
 Then The system is not altered
 
 #Failure
+  @ehammo
 Scenario: The system do not return a table with success
 Given The Auto-Evaluation of the student with the login "ac" and name "Arthur Curry" in the criteria with name "C1" is not on the database
 When There is a request of the Evaluation and Auto-evaluation comparison of student with the login "ac"
