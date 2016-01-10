@@ -12,11 +12,14 @@ class RegisterTeacherPage extends Page {
 
     }
 
-    def fillCpf(String cpf){
+    def fillCpf(String name, String cpf){
 
-        $("form").name = "John"
+        $("form").name = name
         $("form").cpf = cpf
 
     }
+
+    def showError(){}
+    def showConfirmation(){}
 
 }

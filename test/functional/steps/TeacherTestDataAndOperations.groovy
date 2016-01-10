@@ -12,4 +12,9 @@ class TeacherTestDataAndOperations {
         controller.response.reset()
         return saved
     }
+
+    public static boolean editCpf(String oldCpf, String newCpf){
+        return true //!
+    }
+
 }
