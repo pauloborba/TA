@@ -19,7 +19,7 @@ When I choose to compare the grades of the student with the login "bw"
 Then I can see a table with both student and the professor Evaluations being put, in each criterion, side by side in the screen.
 
 #Failure
-  @ehammo
+@ehammo
 Scenario:  table is not seen with success
 Given I am at the StudentPage
 And There is a student with the login "sk" and name "Selina Kyle"

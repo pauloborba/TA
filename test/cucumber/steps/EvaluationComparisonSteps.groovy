@@ -20,6 +20,7 @@ Then I can see a table with both student and the professor Evaluations being put
 */
 
 Given (~'^I am at the StudentPage$'){ ->
+
     to StudentPage
     at StudentPage
 }
@@ -61,6 +62,7 @@ When (~'^I choose to compare the grades of the student with the login "([^"]*)"$
 Then (~'^I can see a table with both student and the professor Evaluations being put, in each criterion, side by side in the screen.$'){
     ->
     at ShowComparisonPage
+    page.goBack()
 }
 
 /*
