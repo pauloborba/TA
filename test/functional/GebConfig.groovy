@@ -1,8 +1,8 @@
 //import org.openqa.selenium.chrome.ChromeDriver
 //
 //driver = {
-////    File file = new File("C:/Users/Gio/IdeaProjects/TA2/chromedrivers/chromedriver.exe");
-//    File file = new File("/home/ess/TA6/chromedrivers/chromedriverlinux64");
+//  File file = new File("C:/Users/Pedro/IdeaProjects/TA2/chromedrivers/chromedriver.exe");
+////    File file = new File("/home/ess/TA2/chromedrivers/chromedriverlinux64");
 //    System.setProperty("webdriver.chrome.driver", file.getAbsolutePath()  );
 //    new ChromeDriver();
 //}
@@ -22,13 +22,13 @@ driver = {
 }
 
 environments {
-    // run as “grails -Dgeb.env=chrome test-app”
+    // run as �grails -Dgeb.env=chrome test-app�
     // See: http://code.google.com/p/selenium/wiki/ChromeDriver
     chrome {
         driver = { new ChromeDriver() }
     }
 
-    // run as “grails -Dgeb.env=firefox test-app”
+    // run as �grails -Dgeb.env=firefox test-app�
     // See: http://code.google.com/p/selenium/wiki/FirefoxDriver
     firefox {
         driver = { new FirefoxDriver() }

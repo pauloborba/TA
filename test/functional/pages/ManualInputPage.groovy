@@ -20,16 +20,15 @@ class ManualInputPage extends Page {
         $(id).click()
     }
 
-    boolean checkError(){
+    boolean checkError() {
         boolean ans = false;
 
         String test = $("#EmptyError").text()
 
-        if ( !test.isEmpty() ){
+        if (!test.isEmpty()) {
             ans = true
         }
 
         return ans;
     }
-
 }

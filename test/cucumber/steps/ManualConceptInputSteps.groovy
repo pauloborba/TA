@@ -41,6 +41,7 @@ Then (~'the new concept of that criterion is stored in the student$') { ->
 
 And (~'the final criterion concept of that student is updated to "([^"]*)" in the system$'){ String concept ->
     assert EvaluateStudentTestDataAndOperations.getFinalGrade(studentLogin, criterionName).equals(concept)
+    EvaluateStudentTestDataAndOperations.deleteAfterTest(studentLogin, criterionName)
 }
 
 And (~'the student already have the concepts "([^"]*)" and "([^"]*)" in that criterion$'){ String concept1, concept2 ->
@@ -110,13 +111,13 @@ And (~'I submit the info$'){ ->
 }
 
 Then (~'I go back to Student page$'){->
-    to StudentPage
     at StudentPage
 }
 
 And (~'I can see that the final concept in that criterion for that student is now "([^"]*)"$'){String concept ->
     at StudentPage
     assert page.checkConcept(studentLogin, criterionName, concept)
+    EvaluateStudentTestDataAndOperations.deleteAfterTest(studentLogin, criterionName)
 }
 
 And (~'I already put the concepts "([^"]*)" and "([^"]*)" for that student in that criterion$'){String concept1, concept2 ->
