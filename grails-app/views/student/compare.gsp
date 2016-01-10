@@ -15,7 +15,7 @@
     </style>
     <meta name="layout" content="main">
     <g:set var="entityName" value="${message(code: 'student.label', default: 'Student')}" />
-    <title>Show Comparision</title>
+    <title>Show Comparison</title>
 </head>
 <body>
 <a href="#list-student" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>

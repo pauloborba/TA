@@ -7,7 +7,7 @@ class StudentPage extends Page {
     static url = "/TA/student/index"
 
     static at =  {
-        title ==~ /Student List/
+        title ==~ /Student Listagem/
     }
 
     def choose(String login){
@@ -16,12 +16,12 @@ class StudentPage extends Page {
     }
 
     boolean checkStudent(String login, String name){
-        $(login).value() == login
+        $(login).value() == login &&
         $(name).value() == name
     }
 
     def hasErrors(){
-        boolean has = $("div", class:"errors").text() != null
+        boolean has = $(".errors").text() != null && $(".errors").text() != ""
         return has
     }
 

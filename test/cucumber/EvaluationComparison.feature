@@ -8,7 +8,7 @@ so that I can call him if there is any discrepancies.
 
 
 #Success
-  @ehammo
+@ehammo
 Scenario: table is seen with success
 Given I am at the StudentPage
 And There is a student with the login "bw" and name "Bruce Wayne"
@@ -23,12 +23,12 @@ Then I can see a table with both student and the professor Evaluations being put
 Scenario:  table is not seen with success
 Given I am at the StudentPage
 And There is a student with the login "sk" and name "Selina Kyle"
-And a criteria with name "C1"
+And a criterion with name "C1"
 And the student with login "sk" has the grade "MA" in his evaluation in the criteria "C1"
 And the student with login "sk" do not appear in the list of student that sent their auto-Evaluation
 When I choose to compare the grades of the student with the login "sk"
 Then I should stay in the Student page
-And an Error Message should appear
+And an Error message should appear
 
 #Controller
 

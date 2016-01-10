@@ -4,7 +4,6 @@ package steps
 import pages.ShowComparisonPage
 import pages.StudentPages.StudentPage
 import ta.EvaluationCriterion
-import ta.EvaluationCriterionController
 import ta.Student
 import ta.StudentController
 
@@ -48,6 +47,7 @@ And(~'^the student with login "([^"]*)" has the grade "([^"]*)" in his evaluatio
 And(~'^the student with login "([^"]*)" appear in the list of student that sent their auto-Evaluation, with "([^"]*)" in the criteria "([^"]*)"$'){
     String login, concept, Cname->
         Student.findByLogin(login).autoEvaluations.put(Cname, concept)
+        Student.findByLogin(login).save(flush: true)
         assert studentX.sentAuto(login)
 }
 
@@ -58,10 +58,9 @@ When (~'^I choose to compare the grades of the student with the login "([^"]*)"$
         page.choose(login)
 }
 
-Then (~'^I can see a table with both student and the professor Evaluations being put, in each criterion, side by side in the screen$'){->
-   at StudentPage
-    //quando der merge com Caio ai fica o at de baixo
-   // at ShowComparisonPage
+Then (~'^I can see a table with both student and the professor Evaluations being put, in each criterion, side by side in the screen.$'){
+    ->
+    at ShowComparisonPage
 }
 
 /*
@@ -72,7 +71,7 @@ Then I should stay in the Student page
 
 And(~'^the student with login "([^"]*)" do not appear in the list of student that sent their auto-Evaluation$'){
     String login->
-        assert studentX.sentAuto(login)
+        assert !studentX.sentAuto(login)
 }
 
 Then (~'^I should stay in the Student page$'){->
@@ -81,7 +80,7 @@ Then (~'^I should stay in the Student page$'){->
 
 And(~'^an Error message should appear$'){->
     at StudentPage
-    assert page.hasErros()
+    assert page.hasErrors()
 }
 
 /*
