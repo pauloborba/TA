@@ -82,7 +82,7 @@ class StudentController {
     }
 
     public Student createStudent() {
-        if (student.password == null){
+        if (params.password == null){
             params.password = params.login
         }
 
