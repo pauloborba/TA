@@ -30,7 +30,7 @@ When(~'^I register "([^"]*)" as the grade for "([^"]*)" for the "([^"]*)" criter
 	assert EvaluateStudentTestDataAndOperations.checkConceptUpdate(login, criteria, concept)
 }
 Then(~'^the system stores a low performance notification for "([^"]*)"$') { String login  ->
-	assert NotificationsTestDataAndOperations.createNotification(login)
+	assert EvaluateStudentTestDataAndOperations.createNotification(login)
 }
 
 //Scenario: Registering a grade that does not request a notification

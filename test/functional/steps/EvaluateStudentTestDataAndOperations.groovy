@@ -4,6 +4,8 @@ import ta.EvaluationCriterion
 import ta.EvaluationCriterionController
 import ta.Student
 import ta.StudentController
+import ta.Notification
+import ta.NotificationController
 
 class EvaluateStudentTestDataAndOperations{
 
@@ -22,6 +24,15 @@ class EvaluateStudentTestDataAndOperations{
         cont.response.reset()
         return saved
     }
+
+	public static boolean createNotification(String login) {
+		def cont = new NotificationController()
+		String message = "Student " + login + "needs more attention.";
+		cont.params << [login: login] << [message: message]
+		boolean saved = cont.saveNotification(cont.create())
+		cont.response.reset()
+		return saved;
+	}	
 
     public static int getConceptsLength(String login, String criterion){
         return Student.findByLogin(login).getEvaluations().get(criterion).length()
