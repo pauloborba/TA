@@ -11,7 +11,7 @@ Feature: Final grade
     When I add "MA" to criterion "C4"
     Then the final grade is calculated
 
-#Controller scenario
+  #Controller scenario
   @ignore
   Scenario: Updating final grade after criterion gets new grade
     Given that student "Eduardo" has "MA" for criterion "C1"
@@ -24,6 +24,15 @@ Feature: Final grade
   Scenario: Inability to calculate grade
     Given that student "Eduardo" does not have a grade for criterion "C0"
     When I add "MPA" to criterion "C1" for "Eduardo"
+    Then the system returns an error flag
+
+  #Controller scenario
+  @ignore
+  Scenario: Adding criterion after 
+    Given that student "Eduardo" has "MPA" for all criteria
+    And the Final Grade has already been calculated
+    When I add to criterion "C2016" to the list of criterions
+    And "Eduardo" has no grades on "C2016"
     Then the system returns an error flag
 
   #GUI scenario
