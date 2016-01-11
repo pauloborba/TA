@@ -7,7 +7,7 @@ class NotificationPage extends Page{
     static url = "/TA/notification/index"
 
     static at = {
-        title ==~ /Notification Listagem/
+        title ==~ /Notification/
     }
 
     def selectShowNotifications(){
@@ -17,10 +17,10 @@ class NotificationPage extends Page{
 	def update() {
 	
 	}
-
-    static content = {
-        flashmessage = {
-            $("div", class: "message")
-        }
-    }
+//
+//    static content = {
+//        flashmessage = {
+//            $("div", class: "message")
+//        }
+//    }
 }
