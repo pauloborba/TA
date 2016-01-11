@@ -35,7 +35,7 @@ Feature: Final grade
     And "Eduardo" has no grades on "C2016"
     Then the system returns an error flag
 
-//Ambos os cenários abaixo estão imperfeitos. Requerem acesso a funcionalidades de controlador
+  #Ambos os cenários abaixo estão imperfeitos. Requerem acesso a funcionalidades de controlador
   #GUI scenario
   @ignore
   Scenario: Calculating final grade
