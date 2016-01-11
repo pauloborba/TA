@@ -27,11 +27,7 @@ class EvaluateStudentTestDataAndOperations{
 
 	public static boolean createNotification(String login) {
 		def cont = new StudentController()
-		String message = "Student " + login + "needs more attention.";
-		cont.params << [login: login] << [message: message]
-		boolean saved = cont.saveNotification(cont.createNotification())
-		cont.response.reset()
-		return saved;
+		cont.notify(login)
 	}	
 
     public static int getConceptsLength(String login, String criterion){

@@ -26,22 +26,15 @@ class StudentController {
 
     public Student createStudent() {
         Student student = new Student(params)
+		student.notification = false;
         student.afterCreateAddCriteria(EvaluationCriterion.findAll())
 //        student.afterCreateAddAutoCriteria(AutoEvaluationCriterion.findAll())
 //        student.afterCreateAddAutoEvaluationCriteria(EvaluationAutoEvaluationCriterion.findAll())
         return student
     }
 
-	def createNotification() {
-        respond new Notification(params)
-    }
-
-	public boolean saveNotification(Notification notification) {
-        if (Notification.findByLogin(notification.login) == null) {
-            notification.save(flush: true)
-            return true
-        }
-        return false
+	def notify(String login) {
+        Student.findByLogin(login).notification = true;
     }
 
     def list() {
@@ -62,7 +55,7 @@ class StudentController {
     public void updateStudentEvaluationCriteria() {
         for (Student student : Student.findAll()) {
             for (EvaluationCriterion evCriterion : EvaluationCriterion.findAll()) {
-                student.addCriterion(evCriterion)
+                student.addCriterion(evCriterion.name)
                 student.save flush: true
             }
 
