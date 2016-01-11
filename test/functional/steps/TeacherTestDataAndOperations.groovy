@@ -13,6 +13,23 @@ class TeacherTestDataAndOperations {
         return saved
     }
 
-    public static boolean editCpf(String oldCpf, String newCpf){}
+    public static boolean editCpf(String name, String oldCpf, String newCpf){
+        def controller = new TeachersController()
+        controller.deleteTeacher(oldCpf)
+        return createTeacher(name, newCpf)
+    }
+
+    public static boolean editName(String cpf, String newName){
+        def controller = new TeachersController()
+        controller.deleteTeacher(cpf)
+        return createTeacher(newName, cpf)
+    }
+
+    public static boolean deleteTeacher(String cpf){
+        boolean res = true
+        def controller = new TeachersController()
+        controller.deleteTeacher(cpf)
+        return res
+    }
 
 }

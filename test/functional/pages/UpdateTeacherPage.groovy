@@ -4,21 +4,15 @@ import geb.Page
 
 class UpdateTeacherPage extends Page {
 
-    static url = "/TA/teacher/edit"
+    static url = "/TA/teachers/edit"
 
     static at = {
 
-        title ==~ /Update Teacher/
+        title ==~ /Edit Teachers/
 
     }
 
-    def fillEditCpf(String oldCpf, String newCpf){
-
-        $("form").oldCpf = oldCpf
-        $("form").newCpf = newCpf
-
-    }
-
+    def fillEditCpf(String oldCpf, String newCpf){}
     def showError(){}
     def showConfirmation(){}
 

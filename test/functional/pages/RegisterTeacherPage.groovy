@@ -4,11 +4,11 @@ import geb.Page
 
 class RegisterTeacherPage extends Page {
 
-    static url = "/TA/teacher/create"
+    static url = "/TA/teachers/create"
 
     static at = {
 
-        title ==~ /Register Teacher/
+        title ==~ /Create Teachers/
 
     }
 

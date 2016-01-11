@@ -18,6 +18,7 @@ this.metaClass.mixin(cucumber.api.groovy.EN)
 
 Given (~'^the system doesn\'t have the teacher with cpf "([^"]*)"$'){
     String cpf ->
+        TeacherTestDataAndOperations.deleteTeacher(cpf)
         assert Teachers.findByCpf(cpf) == null
 }
 
@@ -82,13 +83,17 @@ Then (~'^I can see a confirmation message$'){
 * Given I am at the registration menu
 * And the teacher with cpf "111.111.111-11" is stored in the system
 * When fill the form with name "John" and cpf "111.111.111-11"
-* Then I can see an error message
+* Then I can see an error message on the screen
 */
 
-//Todos já foram definidos
+Then (~'^I can see an error message on the screen'){
+    ->
+    at RegisterTeacherPage
+    page.showError()
+}
 
 /*
-* Given o professor "John" com o cpf "111.111.111-11" está cadastrado no sistema
+* Given o professor "John" com o cpf "333.333.333-33" está cadastrado no sistema
 * And nenhum professor com o cpf "222.222.222-22" está cadastrado no sistema
 * When eu atualizar o cpf de "John" de "111.111.111-11" para "222.222.222-22"
 * Then o cpf de "John" é atualizado com sucesso
@@ -97,7 +102,6 @@ Then (~'^I can see a confirmation message$'){
 Given (~'^o professor "([^"]*)" com o cpf "([^"]*)" está cadastrado no sistema$'){
     String name, cpf ->
         TeacherTestDataAndOperations.createTeacher(name, cpf)
-        assert Teachers.findByCpf(cpf) != null
 }
 
 And (~'^nenhum professor com o cpf "([^"]*)" está cadastrado no sistema$'){
@@ -107,7 +111,7 @@ And (~'^nenhum professor com o cpf "([^"]*)" está cadastrado no sistema$'){
 
 When (~'^eu atualizar o cpf de "([^"]*)" de "([^"]*)" para "([^"]*)"$'){
     String name, oldCpf, newCpf ->
-        TeacherTestDataAndOperations.editCpf(oldCpf, newCpf)
+        TeacherTestDataAndOperations.editCpf(name, oldCpf, newCpf)
 }
 
 Then (~'^o cpf de "([^"]*)" é atualizado com sucesso$'){
@@ -124,7 +128,7 @@ Then (~'^o cpf de "([^"]*)" é atualizado com sucesso$'){
 
 When (~'^eu tentar atualizar o cpf de "([^"]*)" de "([^"]*)" para "([^"]*)"$'){
     String name, oldCpf, newCpf ->
-        TeacherTestDataAndOperations.editCpf(oldCpf, newCpf)
+        TeacherTestDataAndOperations.editCpf(name, oldCpf, newCpf)
 }
 
 Then (~'^o cpf de "([^"]*)" não é atualizado$'){
@@ -170,4 +174,38 @@ Then (~'^eu posso ver uma mensagem de erro$'){
     ->
     at UpdateTeacherPage
     page.showError()
+}
+
+/*
+* Given o professor "John" com o cpf "111.111.111-11" está cadastrado no sistema
+* And nenhum professor com o nome "Joe" está cadastrado no sistema
+* When eu atualizar o nome do professor com cpf "111.111.111-11" para "Joe"
+* Then o nome do professor é atualizado para "Joe" com sucesso
+*/
+
+And (~'^nenhum professor com o nome "([^"]*)" está cadastrado no sistema$'){
+    String name ->
+        assert Teachers.findByName(name) == null
+}
+
+When (~'^eu atualizar o nome do professor com cpf "([^"]*)" para "([^"]*)"$'){
+    String cpf, newName ->
+        TeacherTestDataAndOperations.editName(cpf, newName)
+}
+
+Then (~'^o nome do professor é atualizado para "([^"]*)" com sucesso$'){
+    String newName->
+    assert Teachers.findByName(newName) != null //!
+}
+
+/*
+* Given o professor "John" com o cpf "111.111.111-11" está cadastrado no sistema
+* And o professor "Joe" com o cpf "222.222.222-22" está cadastrado no sistema
+* When eu atualizar o nome do professor com cpf "111.111.111-11" para "Joe"
+* Then o nome do professor não é atualizado para "Joe" com sucesso
+*/
+
+Then (~'^o nome do professor não é atualizado para "([^"]*)" com sucesso'){
+    String newName ->
+        assert Teachers.findByName(newName) != null //!
 }
