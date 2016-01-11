@@ -1,25 +1,20 @@
 package pages
 
-import org.springframework.context.i18n.LocaleContextHolder
-import org.springframework.context.i18n.LocaleContextHolder as LCH
-import org.springframework.context.support.ResourceBundleMessageSource
+import org.springframework.context.MessageSource
+import org.springframework.context.support.ReloadableResourceBundleMessageSource
 
 class GetPageTitle {
 
-    String msg(String msgKey, args = null, locale = LocaleContextHolder.getLocale()) {
-        println LocaleContextHolder.getLocale()
+    final static MessageSource msgSource = new ReloadableResourceBundleMessageSource()
+    final static String DIR = "grails-app/i18n/messages"
+
+    static String getMessage(String code, Object[] args = null, Locale locale = Locale.getDefault()){
         if (args != null) {
             args = args as Object[]
         }
 
-        println "args: " + args
-        println Locale.getDefault()
-
-        String baseDir = "grails-app/i18n/messages"
-        def messageSource = new ResourceBundleMessageSource()
-        messageSource.basename = baseDir
-
-        return messageSource.getMessage(msgKey, args, locale)
+        msgSource.basename = DIR;
+        return msgSource.getMessage(code, args, locale)
     }
 
 }
