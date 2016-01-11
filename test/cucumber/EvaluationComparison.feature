@@ -8,7 +8,7 @@ so that I can call him if there is any discrepancies.
 
 
 #Success
-
+  @ehammo
 Scenario: table is seen with success
 Given I am at the StudentPage
 And There is a student with the login "bw" and name "Bruce Wayne"
@@ -16,7 +16,8 @@ And a criterion with name "C1"
 And the student with login "bw" has the grade "MA" in his evaluation in the criteria "C1"
 And the student with login "bw" appear in the list of student that sent their auto-Evaluation, with "MA" in the criteria "C1"
 When I choose to compare the grades of the student with the login "bw"
-Then I can see a table with both student and the professor Evaluations being put, in each criterion, side by side in the screen.
+Then I can see a table with both student with login "bw" and the professor Evaluations being put, in each criterion, side by side in the screen.
+And in the criterion "C1" the Auto Evaluation grade is "MA" and the Final grade is "MA"
 
 #Failure
 @ehammo
@@ -64,5 +65,7 @@ And The system returns an error message
     And the student with login "ba" has the grade "MANA" in his evaluation in the criteria "C1"
     And the student with login "ba" appear in the list of student that sent their auto-Evaluation, with "MA" in the criteria "C1"
     When I choose to compare the grades of the student with the login "ba"
-    Then I can see a detailed table with both student and the professor Evaluations being put, in each criterion, side by side in the screen.
+    Then I can see a table with both student with login "ba" and the professor Evaluations being put, in each criterion, side by side in the screen.
+    And in the criterion "C1" the Auto Evaluation grade is "MA" and the Final grade is "MANA"
     And Since the grades are different in the criterion "C1" then the color of them will be both red
+

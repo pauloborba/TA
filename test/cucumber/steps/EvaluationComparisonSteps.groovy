@@ -68,11 +68,28 @@ When (~'^I choose to compare the grades of the student with the login "([^"]*)"$
         at StudentPage
         page.choose(login)
 }
+/*Then I can see a table with both student with login "bw" and the professor Evaluations being put, in each criterion, side by side in the screen.
+And in the criterion "C1" the Auto Evaluation grade is "MA" and the Final grade is "MA"*/
 
-Then (~'^I can see a table with both student and the professor Evaluations being put, in each criterion, side by side in the screen.$'){
-    ->
-    at ShowComparisonPage
-    page.goBack()
+Then (~'^I can see a table with both student with login "([^"]*)" and the professor Evaluations being put, in each criterion, side by side in the screen.$'){
+    String login->
+    at StudentPage
+    assert page.checkStudentTable(login).contains(Student.findByLogin(login).getName())
+}
+
+And(~'^in the criterion "([^"]*)" the Auto Evaluation grade is "([^"]*)" and the Final grade is "([^"]*)"$'){
+    String criteria, concept, concept2->
+    at StudentPage
+    String t1="";
+    String t2="";
+    if(concept.equals(concept2)){
+        t1="Auto"
+        t2="Final"
+    }else{
+        t1="AutoRED"
+        t2="FinalRED"
+    }
+    assert page.checkElementTable(criteria, t1, concept) && page.checkElementTable(criteria, t2, concept2)
 }
 
 /*
@@ -146,12 +163,7 @@ And (~'^The system returns an error message$'){->
 *Color changed with sucess
 */
 
-Then (~'^I can see a detailed table with both student and the professor Evaluations being put, in each criterion, side by side in the screen.$'){
-    ->
-    at ShowComparisonPage
-}
-
 And (~'Since the grades are different in the criterion "([^"]*)" then the color of them will be both red$'){String c->
-    at ShowComparisonPage
+    at StudentPage
     assert page.checkColor(c)
 }

@@ -5,30 +5,6 @@
   Time: 12:08
 --%>
 
-<%@ page contentType="text/html;charset=UTF-8" %>
-<html xmlns:id="http://www.w3.org/1999/xhtml">
-<head>
-    <style>
-    styleM1 {
-        color: red;
-    }
-    </style>
-    <meta name="layout" content="main">
-    <g:set var="entityName" value="${message(code: 'student.label', default: 'Student')}" />
-    <title>Show Comparison</title>
-</head>
-<body>
-<a href="#list-student" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-<div class="nav" role="navigation">
-    <ul>
-        <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-        <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-        <li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-    </ul>
-</div>
-
-
-
 <table>
     <thead>
     <th>
@@ -66,7 +42,7 @@
         </g:each>
     </tr>
     <tr>
-        <td>
+        <td id="${student.getLogin()}Head">
             ${student.getName()}:
         </td>
 
@@ -92,6 +68,3 @@
     </tr>
 
 </table>
-</div>
-</body>
-</html>

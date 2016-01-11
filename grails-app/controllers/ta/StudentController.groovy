@@ -79,16 +79,21 @@ class StudentController {
             worked=true;
         }
 
-        render view: "_compare", model:[criteria: criteria, student: student]
+        println worked
+        render view: "index", model:[criteria: criteria, student: student, booleanWorked: worked, studentInstanceList : Student.list()]
     }
 
     public boolean sentAuto(String login){
         boolean sent = false;
         Student student = Student.findByLogin(login)
-        HashMap<String, String> auto = student.getAutoEvaluations()
-        for (EvaluationCriterion evCriterion : EvaluationCriterion.findAll()) {
-            if(!auto.get(evCriterion.name).isEmpty()){
-                sent = true;
+        if(student!=null) {
+            HashMap<String, String> auto = student.getAutoEvaluations()
+            if(auto!=null) {
+                for (EvaluationCriterion evCriterion : EvaluationCriterion.findAll()) {
+                    if (!auto.get(evCriterion.name).isEmpty()) {
+                        sent = true;
+                    }
+                }
             }
         }
        return sent

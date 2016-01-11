@@ -56,4 +56,19 @@ class StudentPage extends Page {
         return has
     }
 
+    def checkElementTable(String criteria,String type,String Concept){
+        String id = "#"+criteria+type
+        return $(id).text().equals(Concept)
+    }
+
+    def checkStudentTable(String login){
+        String id = "#"+login+"Head"
+        return $(id).text()
+    }
+
+    def checkColor(String c){
+        String id = "#"+c+"FinalRED"
+        return !$(id).text().equals("");
+    }
+
 }

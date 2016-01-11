@@ -3,6 +3,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<style>
+	styleM1 {
+		color: red;
+	}
+	</style>
 	<meta name="layout" content="main">
 	<g:set var="entityName" value="${message(code: 'student.label', default: 'Student')}" />
 	<title><g:message code="default.list.label" args="[entityName]" /></title>
@@ -56,6 +61,11 @@
 		</g:each>
 		</tbody>
 	</table>
+
+<g:if test="${booleanWorked}">
+	<g:render template="compare"/>
+</g:if>
+
 	<div class="pagination">
 		<g:paginate total="${studentInstanceCount ?: 0}" />
 	</div>
