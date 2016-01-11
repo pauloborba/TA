@@ -17,26 +17,26 @@ And(~'^that the system has evaluation criteria named "([^"]*)", "([^"]*)", and "
 	assert EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria2)
 	assert EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria3)
 }
-And(~'^that "([^"]*)" only has a MANA registered as a grade for the "([^"]*)" and "([^"]*)" criteria$') { String login, criteria1, criteria2 ->
-	EvaluateStudentTestDataAndOperations.updateConcept(login, criteria1, "MANA")
-	assert EvaluateStudentTestDataAndOperations.checkConceptUpdate(login, criteria1, "MANA")
+And(~'^that "([^"]*)" only has a "([^"]*)" registered as a grade for the "([^"]*)" and "([^"]*)" criteria$') { String login, concept, criteria1, criteria2 ->
+	EvaluateStudentTestDataAndOperations.updateConcept(login, criteria1, concept)
+	assert EvaluateStudentTestDataAndOperations.checkConceptUpdate(login, criteria1, concept)
 
-	EvaluateStudentTestDataAndOperations.updateConcept(login, criteria2, "MANA")
-	assert EvaluateStudentTestDataAndOperations.checkConceptUpdate(login, criteria2, "MANA")
+	EvaluateStudentTestDataAndOperations.updateConcept(login, criteria2, concept)
+	assert EvaluateStudentTestDataAndOperations.checkConceptUpdate(login, criteria2, concept)
 }
 //Scenario: Registering a grade that requests a notification
-When(~'^I register MANA as the grade for "([^"]*)" for the "([^"]*)" criteria$') { String login, criteria3 ->
-	EvaluateStudentTestDataAndOperations.updateConcept(login, criteria3, "MANA")
-	assert EvaluateStudentTestDataAndOperations.checkConceptUpdate(login, criteria3, "MANA")
+When(~'^I register "([^"]*)" as the grade for "([^"]*)" for the "([^"]*)" criteria$') { String login, concept, criteria ->
+	EvaluateStudentTestDataAndOperations.updateConcept(login, criteria, concept)
+	assert EvaluateStudentTestDataAndOperations.checkConceptUpdate(login, criteria, concept)
 }
 Then(~'^the system stores a low performance notification for "([^"]*)"$') { String login  ->
 	assert NotificationsTestDataAndOperations.createNotification(login)
 }
 
 //Scenario: Registering a grade that does not request a notification
-When(~'^I register MA as the grade for "([^"]*)" for the "([^"]*)" criteria$') { String login, criteria3 ->
-	EvaluateStudentTestDataAndOperations.updateConcept(login, criteria3, "MANA")
-	assert EvaluateStudentTestDataAndOperations.checkConceptUpdate(login, criteria3, "MANA")
+When(~'^I register "([^"]*)" as the grade for "([^"]*)" for the "([^"]*)" criteria$') { String login, concept, criteria ->
+	EvaluateStudentTestDataAndOperations.updateConcept(login, criteria, concept)
+	assert EvaluateStudentTestDataAndOperations.checkConceptUpdate(login, criteria, concept)
 }
 Then(~'^the system does not store a low performance notification for "([^"]*)"$') { String login ->
 	assert Notification.findByLogin(login) == null
