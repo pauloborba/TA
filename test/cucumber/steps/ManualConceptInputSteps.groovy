@@ -70,7 +70,7 @@ And (~'I can see a student named "([^"]*)" with a login "([^"]*)"$'){ String nam
     assert page.checkStudent(login, name)
 }
 
-And (~'a evaluation criterion named "([^"]*)"$'){ String name ->
+And (~'I can see a evaluation criterion named "([^"]*)"$'){ String name ->
     to CreateEvaluationCriterionPage
     at CreateEvaluationCriterionPage
 
@@ -103,7 +103,7 @@ And (~'I submit the info$'){ ->
     page.click(studentLogin)
 }
 
-Then (~'I can see that the final concept of the criterion "([^"]*)" for the student "([^"]*)" is now "([^"]*)"$'){String criterion, login, concept ->
+Then (~'I can see that the final concept of the criterion "([^"]*)" for the student "([^"]*)" is "([^"]*)"$'){String criterion, login, concept ->
     at StudentPage
     assert page.checkCriterionConcept(login, criterion, concept)
 }
@@ -135,52 +135,4 @@ And (~'I can\'t see any evaluation criterion$'){ ->
 Then (~'I can see an error message$'){->
     at ManualInputPage
     assert page.checkError()
-}
-
-And (~'criteria evaluation named "([^"]*)"$'){ String criteria ->
-    String[] crit = criteria.split(", ")
-
-    for( String i : crit ){
-        to CreateEvaluationCriterionPage
-        at CreateEvaluationCriterionPage
-
-        page.fillEvaluationCriterionDetails(i)
-        page.selectCreateEvaluationCriterion()
-
-        to StudentPage
-        at StudentPage
-
-        assert page.checkCriterionConcept(studentLogin, i)
-    }
-
-}
-
-And (~'I already put the concepts "([^"]*)" for the student "([^"]*)" in both criteria evaluations "([^"]*)"$'){String concepts, login, criteria ->
-
-    String[] conc = concepts.split(", ")
-    String[] crit = criteria.split(", ")
-
-    for( String i : crit ){
-        for(String j : conc ) {
-            to ManualInputPage
-            at ManualInputPage
-            page.fillConceptDetails(login, i, j)
-                page.click(login)
-        }
-    }
-
-}
-
-And (~'I can see that the concept for the student "([^"]*)" in both criteria evaluations "([^"]*)" is "([^"]*)"$') { String login, criteria, concept ->
-    at StudentPage
-
-    String[] crit = criteria.split(", ")
-    for( String i : crit ){
-        assert page.checkCriterionConcept(login, i, concept)
-    }
-}
-
-And (~'I can see that the final concept of the criterion "([^"]*)" for the student "([^"]*)" still is "([^"]*)"$'){String criterion, login, concept ->
-    at StudentPage
-    assert page.checkCriterionConcept(login, criterion, concept)
 }
