@@ -32,6 +32,18 @@ class StudentController {
         return student
     }
 
+	def createNotification() {
+        respond new Notification(params)
+    }
+
+	public boolean saveNotification(Notification notification) {
+        if (Notification.findByLogin(notification.login) == null) {
+            notification.save(flush: true)
+            return true
+        }
+        return false
+    }
+
     def list() {
         def students = Student.findAll()
         def criteria = EvaluationCriterion.findAll()
