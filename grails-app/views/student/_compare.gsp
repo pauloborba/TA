@@ -8,7 +8,9 @@
 <table>
     <thead>
     <th>
-
+    <g:form controller="student">
+        <g:submitButton name="X" action = "index" id="Close" ></g:submitButton>
+        </g:form>
     </th>
     <g:each in="${criteria}">
         <th>

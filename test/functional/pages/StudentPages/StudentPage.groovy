@@ -15,6 +15,11 @@ class StudentPage extends Page {
         $(id).click()
     }
 
+    def close(){
+        String id = "#"+"Close"
+        $(id).click()
+    }
+
     boolean checkStudent(String login, String name){
         boolean ans = false;
         String idLogin = "#" + login
@@ -68,7 +73,14 @@ class StudentPage extends Page {
 
     def checkColor(String c){
         String id = "#"+c+"FinalRED"
-        return !$(id).text().equals("");
+        String resp=""
+        String debug = $(id).text()
+        if($(id).text().equals("")||$(id).text()==null){
+            resp="black"
+        }else{
+            resp="red"
+        }
+        return resp
     }
 
 }

@@ -58,7 +58,7 @@ And The system returns an error message
 
   #Sucess
 @ehammo
-  Scenario: Color changed with sucess
+  Scenario: Color changed with success
     Given I am at the StudentPage
     And There is a student with the login "ba" and name "Barry Allen"
     And a criterion with name "C1"
@@ -69,3 +69,27 @@ And The system returns an error message
     And in the criterion "C1" the Auto Evaluation grade is "MA" and the Final grade is "MANA"
     And Since the grades are different in the criterion "C1" then the color of them will be both red
 
+  @ehammo
+  Scenario: Color did not changed with success
+    Given I am at the StudentPage
+    And There is a student with the login "jj" and name "John Jones"
+    And a criterion with name "C1"
+    And the student with login "jj" has the grade "MANA" in his evaluation in the criteria "C1"
+    And the student with login "jj" appear in the list of student that sent their auto-Evaluation, with "MANA" in the criteria "C1"
+    When I choose to compare the grades of the student with the login "jj"
+    Then I can see a table with both student with login "jj" and the professor Evaluations being put, in each criterion, side by side in the screen.
+    And in the criterion "C1" the Auto Evaluation grade is "MANA" and the Final grade is "MANA"
+    And Since the grades are equal in the criterion "C1" then the color of them will be both black
+
+  @ehammo
+  Scenario: Close table with success
+    Given I am at the StudentPage
+    And There is a student with the login "oq" and name "Oliver Queen"
+    And a criterion with name "C1"
+    And the student with login "oq" has the grade "MANA" in his evaluation in the criteria "C1"
+    And the student with login "oq" appear in the list of student that sent their auto-Evaluation, with "MANA" in the criteria "C1"
+    And I chose to compare the grades of the student with the login "oq"
+    And I saw a table with both student with login "oq" and the professor Evaluations being put, in each criterion, side by side in the screen.
+    And in the criterion "C1" the Auto Evaluation grade is "MANA" and the Final grade is "MANA"
+    When I click in the "X" button
+    Then The table with both student with login "oq" and the professor Evaluations is closed

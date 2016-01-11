@@ -68,8 +68,6 @@ When (~'^I choose to compare the grades of the student with the login "([^"]*)"$
         at StudentPage
         page.choose(login)
 }
-/*Then I can see a table with both student with login "bw" and the professor Evaluations being put, in each criterion, side by side in the screen.
-And in the criterion "C1" the Auto Evaluation grade is "MA" and the Final grade is "MA"*/
 
 Then (~'^I can see a table with both student with login "([^"]*)" and the professor Evaluations being put, in each criterion, side by side in the screen.$'){
     String login->
@@ -165,5 +163,43 @@ And (~'^The system returns an error message$'){->
 
 And (~'Since the grades are different in the criterion "([^"]*)" then the color of them will be both red$'){String c->
     at StudentPage
-    assert page.checkColor(c)
+    assert page.checkColor(c).equals("red")
+}
+
+/*
+*Color did not changed with success
+*/
+
+And (~'Since the grades are equal in the criterion "([^"]*)" then the color of them will be both black$'){String c->
+    at StudentPage
+    assert page.checkColor(c).equals("black")
+}
+
+/*
+* close table with success
+*/
+
+And (~'^I chose to compare the grades of the student with the login "([^"]*)"$') {
+    String login->
+        to StudentPage
+        at StudentPage
+        page.choose(login)
+}
+
+And (~'^I saw a table with both student with login "([^"]*)" and the professor Evaluations being put, in each criterion, side by side in the screen.$'){
+    String login->
+        at StudentPage
+        assert page.checkStudentTable(login).contains(Student.findByLogin(login).getName())
+}
+
+When (~'^I click in the "([^"]*)" button$'){
+    String name->
+        at StudentPage
+        page.close();
+}
+
+Then(~'^The table with both student with login "([^"]*)" and the professor Evaluations is closed$'){
+    String login->
+        at StudentPage
+        assert page.checkStudentTable(login)==null
 }
