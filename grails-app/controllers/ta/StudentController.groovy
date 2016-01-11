@@ -1,7 +1,5 @@
 package ta
 
-import org.fusesource.jansi.AnsiConsole
-
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
@@ -81,7 +79,7 @@ class StudentController {
             worked=true;
         }
 
-        render view: "compare", model:[criteria: criteria, student: student]
+        render view: "_compare", model:[criteria: criteria, student: student]
     }
 
     public boolean sentAuto(String login){

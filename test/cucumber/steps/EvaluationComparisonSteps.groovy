@@ -123,7 +123,6 @@ When (~'^There is a request of the Evaluation and Auto-evaluation comparison of 
         studentX.compareGrades(login)
 }
 
-
 //o sistema nunca vai ser alterado já que esta operação apenas lê dados nunca insere, edita, atualiza ou remove nenhum dado
 Then (~'^The system is not altered$'){->
     assert true
@@ -140,4 +139,19 @@ And (~'^The Auto-Evaluation of the student with login "([^"]*)" is not registere
 
 And (~'^The system returns an error message$'){->
     assert !studentX.worked
+}
+
+
+/*
+*Color changed with sucess
+*/
+
+Then (~'^I can see a detailed table with both student and the professor Evaluations being put, in each criterion, side by side in the screen.$'){
+    ->
+    at ShowComparisonPage
+}
+
+And (~'Since the grades are different in the criterion "([^"]*)" then the color of them will be both red$'){String c->
+    at ShowComparisonPage
+    assert page.checkColor(c)
 }

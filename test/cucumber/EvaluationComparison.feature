@@ -8,7 +8,7 @@ so that I can call him if there is any discrepancies.
 
 
 #Success
-@ehammo
+
 Scenario: table is seen with success
 Given I am at the StudentPage
 And There is a student with the login "bw" and name "Bruce Wayne"
@@ -50,3 +50,19 @@ And The Auto-Evaluation of the student with login "ac" is not registered in the 
 When There is a request of the Evaluation and Auto-evaluation comparison of student with the login "ac"
 Then The system is not altered
 And The system returns an error message
+
+#interation 2
+
+  #gui
+
+  #Sucess
+@ehammo
+  Scenario: Color changed with sucess
+    Given I am at the StudentPage
+    And There is a student with the login "ba" and name "Barry Allen"
+    And a criterion with name "C1"
+    And the student with login "ba" has the grade "MANA" in his evaluation in the criteria "C1"
+    And the student with login "ba" appear in the list of student that sent their auto-Evaluation, with "MA" in the criteria "C1"
+    When I choose to compare the grades of the student with the login "ba"
+    Then I can see a detailed table with both student and the professor Evaluations being put, in each criterion, side by side in the screen.
+    And Since the grades are different in the criterion "C1" then the color of them will be both red
