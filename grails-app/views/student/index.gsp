@@ -18,8 +18,8 @@
                                                               args="[entityName]"/></g:link></li>
         <li><g:link class="create" action="list"><g:message code="default.new.label"
                                                             message="Manual Concept Input"/></g:link></li>
-		<li><g:link class="create" action="listAutoEvaluation"><g:message code="default.new.label" message="Add Auto Evaluation" /></g:link></li>
-	</ul>
+        <li><g:link class="create" action="listAutoEvaluation"><g:message code="default.new.label" message="Add Auto Evaluation" /></g:link></li>
+    </ul>
 
 </div>
 
@@ -35,12 +35,12 @@
         <thead>
         <tr>
 
-                <g:sortableColumn property="login" title="${message(code: 'student.login.label', default: 'Login')}"/>
+            <g:sortableColumn property="login" title="${message(code: 'student.login.label', default: 'Login')}"/>
 
-                <g:sortableColumn property="name" title="${message(code: 'student.name.label', default: 'Name')}"/>
-                <g:sortableColumn property="evaluations" title="${message(code: 'student.evaluations.label', default: 'Evaluations')}"/>
+            <g:sortableColumn property="name" title="${message(code: 'student.name.label', default: 'Name')}"/>
+            <g:sortableColumn property="evaluations" title="${message(code: 'student.evaluations.label', default: 'Evaluations')}"/>
 
-                <th>Action</th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>

@@ -9,6 +9,7 @@ class StudentController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def worked = false;
+    def conceito = new HashMap<String, String>()
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -20,9 +21,7 @@ class StudentController {
     }
 
     def create() {
-        Student student = new Student(params)
-        student.afterCreateAddCriteria(EvaluationCriterion.findAll())
-        respond student
+        respond new Student(params)
     }
 
     public Student createStudent() {
@@ -241,7 +240,9 @@ class StudentController {
         String login = params.studentId
         String[] criteria = params.criterionName
 
-        if (EvaluationCriterion.findByName(criteria[0]) == null) {
+        println "criteria: ${criteria}"
+
+        if (selector[0].equals("M")) {
             String select = ""
             int size = selector.length
             for (int j = 0; j < size; j++) {
