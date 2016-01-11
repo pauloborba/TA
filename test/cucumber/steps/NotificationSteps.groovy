@@ -12,10 +12,13 @@ this.metaClass.mixin(cucumber.api.groovy.EN)
 Given(~'^that the system has a student named "([^"]*)" with login "([^"]*)" registered$') { String name, login ->
 	assert EvaluateStudentTestDataAndOperations.createStudent(login, name)
 }
-And(~'^that the system has evaluation criteria named "([^"]*)", "([^"]*)", and "([^"]*)" registered$') { String criteria1, criteria2, criteria3 ->
+And(~'^that the student with login "([^"]*)" has evaluation criteria named "([^"]*)", "([^"]*)", and "([^"]*)" registered$') { String login, criteria1, criteria2, criteria3 ->
 	assert EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria1)
+	Student.findByLogin(login).addCriterion(EvaluationCriterion.findByName(criteria1))
 	assert EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria2)
+	Student.findByLogin(login).addCriterion(EvaluationCriterion.findByName(criteria2))
 	assert EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria3)
+	Student.findByLogin(login).addCriterion(EvaluationCriterion.findByName(criteria3))
 }
 And(~'^that "([^"]*)" only has a "([^"]*)" registered as a grade for the "([^"]*)" and "([^"]*)" criteria$') { String login, concept, criteria1, criteria2 ->
 	EvaluateStudentTestDataAndOperations.updateConcept(login, criteria1, concept)
@@ -40,8 +43,8 @@ Then(~'^the system does not store a low performance notification for "([^"]*)"$'
 
 //GUI Scenarios
 Given(~'^that I am on the Notifications Page$') { ->
-	to ShowNotificationsPage
-	at ShowNotificationsPage
+	to NotificationPage
+	at NotificationPage
 }
 When(~'^I select "Read Notifications$') { ->
 	page.selectReadNotifications()
@@ -51,7 +54,7 @@ And(~'^there is at least one registered notification$') { ->
 	assert Notification.count > 0
 }
 Then(~'^I can see all notifications$') { ->
-	at ShowNotificationsPage
+	at NotificationPage
 	page.update()
 }
 //Scenario: Requesting notifications with no stored notifications
