@@ -13,10 +13,6 @@ class SheetUploadPage extends Page {
         title ==~ /Upload Sheet/
     }
 
-    def click(){
-        $("input", name:"submit").click()
-    }
-
     def submit(String filepath){
         File file = new File(filepath)
 
