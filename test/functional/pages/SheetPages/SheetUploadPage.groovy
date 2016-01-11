@@ -14,12 +14,7 @@ class SheetUploadPage extends Page {
     }
 
     def click(){
-        //$("input", name:"datafile").click()
-        //$("input", name:"open").click()
         $("input", name:"submit").click()
-        System.out.println($("submitButton", value:"submit"))
-
-//        $("form", id: "p")
     }
 
     def submit(String filepath){
@@ -36,10 +31,6 @@ class SheetUploadPage extends Page {
         } catch (IllegalArgumentException e){
             valid = false
         }
-        //Sheet sheet = new Sheet()
-        //sheet.filename = $("input", name:"datafile").value()
-        //validFileFormat = sheet.validFileFormat()
-        //System.out.println(validFileFormat)
         return valid;
     }
 
@@ -52,13 +43,22 @@ class SheetUploadPage extends Page {
     }
 
     def hasMessage(){
-        boolean has = $("div", class:"message").text() != null
-        return has
+        return isNullOrEmpty(getClassText("message"))
     }
 
     def hasErrors(){
-        boolean has = $("div", class:"errors").text() != null
+        return isNullOrEmpty(getClassText("errors"))
+    }
+
+    private boolean isNullOrEmpty(String text) {
+        boolean has = text != null && text != ""
         return has
+    }
+
+    private String getClassText(String className) {
+        className = '.' + className
+        String text = $(className).text()
+        return text
     }
 
 }
