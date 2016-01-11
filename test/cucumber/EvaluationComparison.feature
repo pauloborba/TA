@@ -35,14 +35,18 @@ And an Error message should appear
 #Success
   @ehammo
 Scenario: The system return a table with success
-Given The Auto-Evaluation of the student with the login "dp" and name "Diana Prince" in the criteria with name "C1" is on the database
+Given There is a student with the login "dp" and name "Diana Prince" is registered in the system
+And a criterion with name "C1" is registered in the system
+And The Auto-Evaluation of the student with login "dp" in the criterion with name "C1" is registered in the system
 When There is a request of the Evaluation and Auto-evaluation comparison of student with the login "dp"
 Then The system is not altered
 
 #Failure
   @ehammo
 Scenario: The system do not return a table with success
-Given The Auto-Evaluation of the student with the login "ac" and name "Arthur Curry" in the criteria with name "C1" is not on the database
+Given There is a student with the login "ac" and name "Arthur Curry" is registered in the system
+And a criterion with name "C1" is registered in the system
+And The Auto-Evaluation of the student with login "ac" is not registered in the system in no criterion
 When There is a request of the Evaluation and Auto-evaluation comparison of student with the login "ac"
 Then The system is not altered
 And The system returns an error message

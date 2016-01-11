@@ -2,6 +2,8 @@ package steps
 
 
 import pages.ShowComparisonPage
+import pages.StudentPages.CreateStudentPage
+import pages.EvaluationCriterionPages.CreateEvaluationCriterionPage
 import pages.StudentPages.StudentPage
 import ta.EvaluationCriterion
 import ta.Student
@@ -11,32 +13,40 @@ this.metaClass.mixin(cucumber.api.groovy.Hooks)
 this.metaClass.mixin(cucumber.api.groovy.EN)
 def studentX = new StudentController()
 /*
-Given There  is a student with the login "bw" and name "Bruce Wayne"
-And a criteria with name "C1"
-And the student with the login "bw" has the grade "MA" in his evaluation in the criteria "C1"
-And the student appear in the list of student that sent their auto-Evaluation, with "MA" in the criteria "C1"
-When I choose to compare the grades of the student with the login "bw"
-Then I can see a table with both student and the professor Evaluations being put, in each criterion, side by side in the screen
+Scenario:  table is seen with success
 */
 
 Given (~'^I am at the StudentPage$'){ ->
-
     to StudentPage
     at StudentPage
 }
 
-And (~'^There is a student with the login "([^"]*)" and name "([^"]*)"$'){
-    String login, name->
-        EvaluateStudentTestDataAndOperations.createStudent(login, name)
-        //studentX.updateAutoEvaluation(login, Cname, "MANA")
-        temp=login
-        assert Student.findByLogin(login)!=null
+And (~'There is a student with the login "([^"]*)" and name "([^"]*)"$'){ String login, name ->
+    to CreateStudentPage
+    at CreateStudentPage
+
+    page.fillStudentDetails(login, name)
+    page.selectCreateStudent()
+
+    to StudentPage
+    at StudentPage
+
+    studentLogin = login
+
+    assert page.checkStudent(login, name)
 }
 
-And (~'^a criterion with name "([^"]*)"$'){
-    String Cname ->
-        EvaluateStudentTestDataAndOperations.createEvaluationCriterion(Cname)
-        assert EvaluationCriterion.findByName(Cname)!=null
+And (~'a criterion with name "([^"]*)"$'){ String name ->
+    to CreateEvaluationCriterionPage
+    at CreateEvaluationCriterionPage
+
+    page.fillEvaluationCriterionDetails(name)
+    page.selectCreateEvaluationCriterion()
+
+    to StudentPage
+    at StudentPage
+
+    assert page.checkCriterionConcept(studentLogin, name)
 }
 
 And(~'^the student with login "([^"]*)" has the grade "([^"]*)" in his evaluation in the criteria "([^"]*)"$'){
@@ -66,9 +76,7 @@ Then (~'^I can see a table with both student and the professor Evaluations being
 }
 
 /*
-Given The student with the login "sk" and name "Selina Kyle" and a criteria with name "C1" do not appear in the list of student that sent their auto-Evaluation
-When I choose to compare the grades of the student with the login "sk"
-Then I should stay in the Student page
+Scenario:  table is not seen with success
 */
 
 And(~'^the student with login "([^"]*)" do not appear in the list of student that sent their auto-Evaluation$'){
@@ -86,19 +94,28 @@ And(~'^an Error message should appear$'){->
 }
 
 /*
-Given The Auto-Evaluation of the student with the login "dp" and name "Diana Prince" in the criteria with name "C1" is on the database
-When The system requires the Evaluation and Auto-evaluation comparison of student with the login "dp"
-Then The system returns a detailed table with both student and the professor grades
+Scenario: The system return a table with success
 */
 
-And (~'^The Auto-Evaluation of the student with the login "([^"]*)" and name "([^"]*)" in the criteria with name "([^"]*)" is on the database$'){
-    String login, name, Cname ->
+Given (~'^There is a student with the login "([^"]*)" and name "([^"]*)" is registered in the system$'){
+    String login, name->
         EvaluateStudentTestDataAndOperations.createStudent(login, name)
+        //studentX.updateAutoEvaluation(login, Cname, "MANA")
+        temp=login
+        assert Student.findByLogin(login)!=null
+}
+
+And (~'^a criterion with name "([^"]*)" is registered in the system$'){
+    String Cname ->
         EvaluateStudentTestDataAndOperations.createEvaluationCriterion(Cname)
+        assert EvaluationCriterion.findByName(Cname)!=null
+}
+
+And (~'^The Auto-Evaluation of the student with login "([^"]*)" in the criterion with name "([^"]*)" is registered in the system$'){
+    String login, Cname ->
         //studentX.updateAutoEvaluation(login, Cname, "MANA")
         Student.findByLogin(login).autoEvaluations.put(Cname, "MA")
         assert studentX.sentAuto(login)
-
 }
 
 When (~'^There is a request of the Evaluation and Auto-evaluation comparison of student with the login "([^"]*)"$') {
@@ -112,19 +129,13 @@ Then (~'^The system is not altered$'){->
     assert true
 }
 
-
 /*
-Given The Auto-Evaluation of the student with the login "ac" and name "Arthur Curry" in the criteria with name "C1" is not on the database
-When The system requires the Evaluation and Auto-evaluation comparison of student with the login "ac"
-Then The system returns an error message
+Scenario: The system dont return a table with success
 */
 
-Given (~'^The Auto-Evaluation of the student with the login "([^"]*)" and name "([^"]*)" in the criteria with name "([^"]*)" is not on the database$'){
-    String login, name, Cname ->
-        EvaluateStudentTestDataAndOperations.createStudent(login, name)
-        EvaluateStudentTestDataAndOperations.createEvaluationCriterion(Cname)
+And (~'^The Auto-Evaluation of the student with login "([^"]*)" is not registered in the system in no criterion$'){
+    String login ->
         assert !studentX.sentAuto(login)
-
 }
 
 And (~'^The system returns an error message$'){->

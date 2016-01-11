@@ -45,9 +45,9 @@
 
 				<td id="${studentInstance.login}"><g:link action="show" id="${studentInstance.id}">${fieldValue(bean: studentInstance, field: "login")}</g:link></td>
 
-				<td id="${studentInstance.name}">${fieldValue(bean: studentInstance, field: "name")}</td>
+				<td id="${studentInstance.login}Name">${fieldValue(bean: studentInstance, field: "name")}</td>
 
-				<td id="${studentInstance.login}Evaluations">${fieldValue(bean: studentInstance, field: "finalGrades")}</td>
+				<td id="${studentInstance.login}Criteria">${fieldValue(bean: studentInstance, field: "finalGrades")}</td>
 
 				<td><g:actionSubmit value="Compare" action = "compareGrade" id="${studentInstance.login}Compare" ></g:actionSubmit></td>
 
