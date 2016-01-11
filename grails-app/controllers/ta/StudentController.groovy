@@ -1,7 +1,5 @@
 package ta
 
-import org.fusesource.jansi.AnsiConsole
-
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
@@ -11,6 +9,7 @@ class StudentController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def worked = false;
+    def conceito = new HashMap<String, String>()
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -22,22 +21,12 @@ class StudentController {
     }
 
     def create() {
-        Student student = new Student(params)
-        student.afterCreateAddCriteria(EvaluationCriterion.findAll())
-        respond student
-    }
-
-    def deleteAfterTest(login) {
-        Student student = Student.findByLogin(login)
-        delete(student)
+        respond new Student(params)
     }
 
     public Student createStudent() {
         Student student = new Student(params)
         student.afterCreateAddCriteria(EvaluationCriterion.findAll())
-        //student = student.merge()
-//        student.afterCreateAddAutoCriteria(AutoEvaluationCriterion.findAll())
-//        student.afterCreateAddAutoEvaluationCriteria(EvaluationAutoEvaluationCriterion.findAll())
         return student
     }
 
@@ -71,7 +60,7 @@ class StudentController {
     public void updateStudentEvaluationCriteria() {
         for (Student student : Student.findAll()) {
             for (EvaluationCriterion evCriterion : EvaluationCriterion.findAll()) {
-                student.addCriterion(evCriterion)
+                student.addCriterion(evCriterion.name)
                 student.save flush: true
 
             }
@@ -241,7 +230,6 @@ class StudentController {
             student.calculateFinalGrade(criterion, concept)
             concept = currentConcept + concept + " "
             student.evaluations.put(criterion, concept)
-//            student.calculateCrispGrade(student.finalGrades)
 
             student.save flush: true
         }
@@ -252,7 +240,9 @@ class StudentController {
         String login = params.studentId
         String[] criteria = params.criterionName
 
-        if (EvaluationCriterion.findByName(criteria[0]) == null) {
+        println "criteria: ${criteria}"
+
+        if (selector[0].equals("M")) {
             String select = ""
             int size = selector.length
             for (int j = 0; j < size; j++) {
@@ -273,7 +263,14 @@ class StudentController {
         }
 
         redirect action: index(10)
+    }
 
+    def updateStudentsCriteriaAfterDelete(String criterionName){
+        def studentList = Student.findAll()
+
+        for ( Student student : studentList ){
+            student.removeCriterion(criterionName)
+        }
     }
 
 

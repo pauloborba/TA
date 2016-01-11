@@ -1,4 +1,3 @@
-
 <%@ page import="ta.Student" %>
 <!DOCTYPE html>
 <html>

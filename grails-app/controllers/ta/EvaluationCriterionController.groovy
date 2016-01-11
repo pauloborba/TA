@@ -23,10 +23,6 @@ class EvaluationCriterionController {
         respond new EvaluationCriterion(params)
     }
 
-    def deleteAfterTest(name){
-        EvaluationCriterion.findByName(name).delete()
-    }
-
     public EvaluationCriterion createEvaluationCriterion() {
         return new EvaluationCriterion(params)
     }
@@ -103,6 +99,8 @@ class EvaluationCriterionController {
             notFound()
             return
         }
+        def sc = new StudentController()
+        sc.updateStudentsCriteriaAfterDelete(evaluationCriterionInstance.name)
 
         evaluationCriterionInstance.delete flush:true
 

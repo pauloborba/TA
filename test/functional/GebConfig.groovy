@@ -21,6 +21,7 @@ environments {
             System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
             new ChromeDriver(); }
    }
+
     // run as �grails -Dgeb.env=firefox test-app�
     // See: http://code.google.com/p/selenium/wiki/FirefoxDriver
     firefox {

@@ -10,10 +10,14 @@ class ManualInputPage extends Page {
         title ==~ /Manual Concept Input/
     }
 
-    def fillConceptDetails(String login, String criterion, String concept) {
+    void adjustCriterion(String criterion){
         if(criterion.indexOf(" ") != -1 ){
             criterion = criterion.replaceAll(" ", "\\\\\\\\ ");
         }
+    }
+
+    def fillConceptDetails(String login, String criterion, String concept) {
+        adjustCriterion(criterion)
         String id = "#" + login + criterion
         $(id).value(concept)
 
@@ -24,12 +28,25 @@ class ManualInputPage extends Page {
         $(id).click()
     }
 
+    boolean checkCriterion(String name){
+        adjustCriterion(name)
+        boolean ans = false;
+        String id = "#" + name;
+        String text = $(id).text()
+
+        if ( text.contains(name) ){
+            ans = true
+        }
+
+        return ans
+    }
+
     boolean checkError() {
         boolean ans = false;
 
-        String test = $("#EmptyError").text()
+        String text = $("#EmptyError").text()
 
-        if (!test.isEmpty()) {
+        if (!text.isEmpty()) {
             ans = true
         }
 
