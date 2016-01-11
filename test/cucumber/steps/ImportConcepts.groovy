@@ -94,13 +94,40 @@ And (~'^the spreadsheet "([^"]*)" contains invalid columns$') { String filename-
 
 // When I import the spreadsheet "validSheet.xlsx"
 When (~'^I import the spreadsheet "([^"]*)"$'){ String filename ->
+	cnt = getCount()
+
 	sheetController = new SheetController()
 	sheetController.uploadSheet("sampleFiles/" + filename)
 }
 
-// Then update system data accordingly
-Then (~'^update system data accordingly$'){ ->
-	assert sheetController.hasImported
+// Then update the system with the data from the spreadsheet "validSheet.xlsx"
+Then (~'^update the system with the data from the spreadsheet "([^"]*)"$'){ String filename ->
+	assert hasUpdated(filename)
+}
+
+private boolean hasUpdated(String filename) {
+	int newCount = getCount()
+
+	sheetImporter = new SheetImporter("sampleFiles/" + filename)
+	boolean hasUpdated = newCount == cnt + sheetImporter.getConcepts().size()
+	return hasUpdated
+}
+
+private boolean hasChanged() {
+	int newCount = getCount()
+
+	boolean hasChanged = newCount != cnt
+	return hasChanged
+}
+
+private int getCount() {
+	int sum = 0
+	Student.list().each {
+		it.evaluations.each { key, value ->
+			sum += value.split(" ").size()
+		}
+	}
+	return sum
 }
 
 // Controller Scenario: Importing spreadsheet in invalid file format 5
@@ -110,7 +137,7 @@ Then (~'^update system data accordingly$'){ ->
 
 // Then do not update system data
 Then (~'^do not update system data$'){ ->
-	assert !sheetController.hasImported
+	assert hasChanged() == false
 }
 
 // Controller Scenario: Importing spreadsheet with invalid column 6

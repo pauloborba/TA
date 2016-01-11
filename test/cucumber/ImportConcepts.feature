@@ -34,7 +34,7 @@ Feature: Import concepts from spreadsheet
     Given the spreadsheet "validSheet.xlsx" is on valid file format
     And the spreadsheet "validSheet.xlsx" contains valid columns
     When I import the spreadsheet "validSheet.xlsx"
-    Then update system data accordingly
+    Then update the system with the data from the spreadsheet "validSheet.xlsx"
 
 #Controller Scenario (failure) 5
   Scenario: Importing spreadsheet in invalid file format

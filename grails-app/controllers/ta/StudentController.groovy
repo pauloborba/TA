@@ -11,7 +11,6 @@ class StudentController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def worked = false;
-    def conceito = new HashMap<String, String>()
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -23,7 +22,9 @@ class StudentController {
     }
 
     def create() {
-        respond new Student(params)
+        Student student = new Student(params)
+        student.afterCreateAddCriteria(EvaluationCriterion.findAll())
+        respond student
     }
 
     def deleteAfterTest(login) {

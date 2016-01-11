@@ -9,7 +9,6 @@ class Student {
         public static final List<String> CONCEPTS = ["MA", "MPA", "MANA"]
     }
 
-
     Map<String, String> evaluations
     Map<String, String> autoEvaluations
     Map<String, String> finalGrades
