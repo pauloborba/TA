@@ -28,7 +28,7 @@ Feature: Final grade
 
   #Controller scenario
   @ignore
-  Scenario: Adding criterion after 
+  Scenario: Adding criterion after final grade has already been successfully calculated
     Given that student "Eduardo" whose login is "ehxmm" has "MPA" for all criteria
     And the Final Grade has already been calculated
     When I add to criterion "C2016" to the list of criterions
