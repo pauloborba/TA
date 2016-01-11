@@ -32,7 +32,19 @@ class StudentController {
         return student
     }
 
-    def list(){
+	def createNotification() {
+        respond new Notification(params)
+    }
+
+	public boolean saveNotification(Notification notification) {
+        if (Notification.findByLogin(notification.login) == null) {
+            notification.save(flush: true)
+            return true
+        }
+        return false
+    }
+
+    def list() {
         def students = Student.findAll()
         def criteria = EvaluationCriterion.findAll()
 
@@ -161,7 +173,7 @@ class StudentController {
             student.calculateFinalGrade(criterion, concept)
             concept = currentConcept + concept + " "
             student.evaluations.put(criterion, concept)
-            student.calculateCrispGrade(student.finalGrades)
+//            student.calculateCrispGrade(student.finalGrades)
 
             student.save flush: true
 

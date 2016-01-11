@@ -4,6 +4,8 @@ import ta.EvaluationCriterion
 import ta.EvaluationCriterionController
 import ta.Student
 import ta.StudentController
+import ta.Notification
+import ta.NotificationController
 
 class EvaluateStudentTestDataAndOperations{
 
@@ -23,6 +25,45 @@ class EvaluateStudentTestDataAndOperations{
         return saved
     }
 
+	public static boolean createNotification(String login) {
+		def cont = new StudentController()
+		String message = "Student " + login + "needs more attention.";
+		cont.params << [login: login] << [message: message]
+		boolean saved = cont.saveNotification(cont.createNotification())
+		cont.response.reset()
+		return saved;
+	}	
+
+
+
+    public static boolean checkConcepts(String login, String criterion, String[] concepts){
+        boolean ans = true;
+        Student student = Student.findByLogin(login)
+        String[] currentConcepts = student.evaluations.get(criterion).split(" ")
+
+        int size = concepts.length
+
+        for( int i = 0; i < size; i++ ){
+            if ( concepts[i] != currentConcepts[i] ){
+                ans = false
+            }
+        }
+
+        return ans;
+    }
+
+    public static boolean checkConceptUpdate(String login, String criterion, String concept ){
+        Student student = Student.findByLogin(login)
+        String[] concepts = student.getEvaluations().get(criterion).split(" ")
+        int size = concepts.length;
+
+        boolean ans = false;
+        if ( concept.equals(concepts[size-1]) )
+            ans = true
+
+        return ans
+    }
+
     public static int getConceptsLength(String login, String criterion){
         return Student.findByLogin(login).getEvaluations().get(criterion).length()
     }
@@ -34,6 +75,9 @@ class EvaluateStudentTestDataAndOperations{
     public static void updateConcept(String login, String criterion, String concept){
         new StudentController().updateConcepts(login, criterion, concept)
     }
+
+
+
 
     public static boolean checkConceptUpdate(String login, String criterion, String concept, int oldLenght){
         Student student = Student.findByLogin(login)
