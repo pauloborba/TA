@@ -33,7 +33,7 @@ class StudentController {
         return student
     }
 
-	def notify(String login) {
+	void notify(String login) {
         Student.findByLogin(login).notification = true;
     }
 
