@@ -7,7 +7,7 @@ class NotificationPage extends Page{
     static url = "/TA/notification/index"
 
     static at = {
-        title ==~ /Notification/
+        title ==~ /Notification Listagem/
     }
 
     def selectShowNotifications(){

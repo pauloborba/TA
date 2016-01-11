@@ -3,6 +3,7 @@ package ta
 class Student {
     String login
     String name
+	boolean notification
 
     // tentei um enumerador primeiro mas da erro
     static class Concept {

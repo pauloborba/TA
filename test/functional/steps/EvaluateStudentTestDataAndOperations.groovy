@@ -9,15 +9,6 @@ import ta.NotificationController
 
 class EvaluateStudentTestDataAndOperations{
 
-    public static boolean createNotification(String login) {
-        def cont = new StudentController()
-        String message = "Student " + login + "needs more attention.";
-        cont.params << [login: login] << [message: message]
-        boolean saved = cont.saveNotification(cont.createNotification())
-        cont.response.reset()
-        return saved;
-    }
-
     public static boolean createEvaluationCriterion(String name){
         def cont = new EvaluationCriterionController()
         cont.params << [name: name]
@@ -33,6 +24,11 @@ class EvaluateStudentTestDataAndOperations{
         cont.response.reset()
         return saved
     }
+
+	public static void createNotification(String login) {
+		def cont = new StudentController()
+		cont.notify(login)
+	}	
 
     public static int getConceptsLength(String login, String criterion){
         return Student.findByLogin(login).getEvaluations().get(criterion).length()

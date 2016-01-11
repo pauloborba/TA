@@ -26,22 +26,15 @@ class StudentController {
 
     public Student createStudent() {
         Student student = new Student(params)
+		student.notification = false;
         student.afterCreateAddCriteria(EvaluationCriterion.findAll())
 //        student.afterCreateAddAutoCriteria(AutoEvaluationCriterion.findAll())
 //        student.afterCreateAddAutoEvaluationCriteria(EvaluationAutoEvaluationCriterion.findAll())
         return student
     }
 
-	def createNotification() {
-        respond new Notification(params)
-    }
-
-	public boolean saveNotification(Notification notification) {
-        if (Notification.findByLogin(notification.login) == null) {
-            notification.save(flush: true)
-            return true
-        }
-        return false
+	void notify(String login) {
+        Student.findByLogin(login).notification = true;
     }
 
     def list() {
