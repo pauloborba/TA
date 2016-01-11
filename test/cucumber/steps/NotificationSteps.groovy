@@ -14,11 +14,8 @@ Given(~'^that the system has a student named "([^"]*)" with login "([^"]*)" regi
 }
 And(~'^that the student with login "([^"]*)" has evaluation criteria named "([^"]*)", "([^"]*)", and "([^"]*)" registered$') { String login, criteria1, criteria2, criteria3 ->
 	assert EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria1)
-	Student.findByLogin(login).addCriterion(EvaluationCriterion.findByName(criteria1))
 	assert EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria2)
-	Student.findByLogin(login).addCriterion(EvaluationCriterion.findByName(criteria2))
 	assert EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria3)
-	Student.findByLogin(login).addCriterion(EvaluationCriterion.findByName(criteria3))
 }
 And(~'^that "([^"]*)" only has a "([^"]*)" registered as a grade for the "([^"]*)" and "([^"]*)" criteria$') { String login, concept, criteria1, criteria2 ->
 	EvaluateStudentTestDataAndOperations.updateConcept(login, criteria1, concept)
@@ -28,7 +25,7 @@ And(~'^that "([^"]*)" only has a "([^"]*)" registered as a grade for the "([^"]*
 	assert EvaluateStudentTestDataAndOperations.checkConceptUpdate(login, criteria2, concept)
 }
 //Scenario: Registering a grade that requests a notification
-When(~'^I register "([^"]*)" as the grade for "([^"]*)" for the "([^"]*)" criteria$') { String login, concept, criteria ->
+When(~'^I register "([^"]*)" as the grade for "([^"]*)" for the "([^"]*)" criteria$') { String concept,login, criteria ->
 	EvaluateStudentTestDataAndOperations.updateConcept(login, criteria, concept)
 	assert EvaluateStudentTestDataAndOperations.checkConceptUpdate(login, criteria, concept)
 }

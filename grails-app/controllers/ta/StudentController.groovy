@@ -62,7 +62,7 @@ class StudentController {
     public void updateStudentEvaluationCriteria() {
         for(Student student : Student.findAll()) {
             for (EvaluationCriterion evCriterion : EvaluationCriterion.findAll()) {
-                student.addCriterion(evCriterion)
+                student.addCriterion(evCriterion.name)
                 student.save flush: true
             }
 
@@ -164,34 +164,56 @@ class StudentController {
         }
     }
 
-    @Transactional
     def updateConcepts(String login, String criterion, String concept) {
         if (!concept.isEmpty()) {
-
             Student student = Student.findByLogin(login)
+            println student.name
+            println student.login
             String currentConcept = student.evaluations.get(criterion);
             student.calculateFinalGrade(criterion, concept)
             concept = currentConcept + concept + " "
             student.evaluations.put(criterion, concept)
-//            student.calculateCrispGrade(student.finalGrades)
 
             student.save flush: true
-
         }
     }
 
-    def updateCriteria(){
+    def updateCriteria() {
         String[] selector = params.selector
         String login = params.studentId
         String[] criteria = params.criterionName
 
-        int size = criteria.length
-        for( int i = 0; i < criteria.length; i++ ){
-            updateConcepts(login, criteria[i], selector[i])
+        if (EvaluationCriterion.findByName(criteria[0]) == null) {
+            String select = ""
+            int size = selector.length
+            for (int j = 0; j < size; j++) {
+                select = select + selector[j]
+            }
+            String criterion = ""
+            size = criteria.length
+            for (int j = 0; j < size; j++) {
+                criterion = criterion + criteria[j]
+            }
+
+            updateConcepts(login, criterion, select)
+        } else {
+            int size = criteria.length
+            for (int j = 0; j < criteria.length; j++) {
+                updateConcepts(login, criteria[j], selector[j])
+            }
         }
 
         redirect action: index(10)
     }
+
+    def updateStudentsCriteriaAfterDelete(String criterionName){
+        def studentList = Student.findAll()
+
+        for ( Student student : studentList ){
+            student.removeCriterion(criterionName)
+        }
+    }
+
 
     @Transactional
     def delete(Student studentInstance) {

@@ -9,6 +9,15 @@ import ta.NotificationController
 
 class EvaluateStudentTestDataAndOperations{
 
+    public static boolean createNotification(String login) {
+        def cont = new StudentController()
+        String message = "Student " + login + "needs more attention.";
+        cont.params << [login: login] << [message: message]
+        boolean saved = cont.saveNotification(cont.createNotification())
+        cont.response.reset()
+        return saved;
+    }
+
     public static boolean createEvaluationCriterion(String name){
         def cont = new EvaluationCriterionController()
         cont.params << [name: name]
@@ -19,22 +28,23 @@ class EvaluateStudentTestDataAndOperations{
 
     public static boolean createStudent(String login, String name){
         def cont = new StudentController()
-        cont.params << [login: login] << [name: name] << [evaluations: new HashMap<String, String>()]
+        cont.params << [login: login] << [name: name] << [evaluations: new HashMap<String, String>()] << [autoEvaluations: new HashMap<String, String>()] << [finalGrades: new HashMap<String, String>()]
         boolean saved = cont.saveStudent(cont.createStudent())
         cont.response.reset()
         return saved
     }
 
-	public static boolean createNotification(String login) {
-		def cont = new StudentController()
-		String message = "Student " + login + "needs more attention.";
-		cont.params << [login: login] << [message: message]
-		boolean saved = cont.saveNotification(cont.createNotification())
-		cont.response.reset()
-		return saved;
-	}	
+    public static int getConceptsLength(String login, String criterion){
+        return Student.findByLogin(login).getEvaluations().get(criterion).length()
+    }
 
+    public static String getFinalGrade(String login, String criterion) {
+        return Student.findByLogin(login).getFinalGrades().get(criterion)
+    }
 
+    public static void updateConcept(String login, String criterion, String concept){
+        new StudentController().updateConcepts(login, criterion, concept)
+    }
 
     public static boolean checkConcepts(String login, String criterion, String[] concepts){
         boolean ans = true;
@@ -44,9 +54,9 @@ class EvaluateStudentTestDataAndOperations{
         int size = concepts.length
 
         for( int i = 0; i < size; i++ ){
-            if ( concepts[i] != currentConcepts[i] ){
+            if ( concepts[i] != currentConcepts[i] )
                 ans = false
-            }
+
         }
 
         return ans;
@@ -64,30 +74,4 @@ class EvaluateStudentTestDataAndOperations{
         return ans
     }
 
-    public static int getConceptsLength(String login, String criterion){
-        return Student.findByLogin(login).getEvaluations().get(criterion).length()
-    }
-
-    public static String getFinalGrade(String login, String criterion) {
-        return Student.findByLogin(login).getFinalGrades().get(criterion)
-    }
-
-    public static void updateConcept(String login, String criterion, String concept){
-        new StudentController().updateConcepts(login, criterion, concept)
-    }
-
-
-
-
-    public static boolean checkConceptUpdate(String login, String criterion, String concept, int oldLenght){
-        Student student = Student.findByLogin(login)
-        String[] concepts = student.getEvaluations().get(criterion).split(" ")
-        int size = concepts.length;
-
-        boolean ans = false;
-        if ( size > oldLenght && concept.equals(concepts[size-1]) )
-            ans = true
-
-        return ans
-    }
 }

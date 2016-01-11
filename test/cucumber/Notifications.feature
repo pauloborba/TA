@@ -5,7 +5,7 @@ Feature: Low student performance notifications
 	So that I can better assess my class' performance and to know which students need more attention.
 
 #Controller Scenario (happy path)
-  @imvm
+  @imvm1
 Scenario: Registering a grade that requests a notification
 	Given that the system has a student named "Nicolla Henrique" with login "nhps" registered
 	And that the student with login "nhps" has evaluation criteria named "Hula-hooping", "Jump Rope", and "Crosswords" registered
