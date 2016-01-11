@@ -13,8 +13,6 @@ class TeacherTestDataAndOperations {
         return saved
     }
 
-    public static boolean editCpf(String oldCpf, String newCpf){
-        return true //!
-    }
+    public static boolean editCpf(String oldCpf, String newCpf){}
 
 }

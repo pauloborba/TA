@@ -1,4 +1,4 @@
-package pages.TeacherPages
+package pages
 
 import geb.Page
 
@@ -12,9 +12,8 @@ class UpdateTeacherPage extends Page {
 
     }
 
-    def fillEditCpf(String name, String oldCpf, String newCpf){
+    def fillEditCpf(String oldCpf, String newCpf){
 
-        $("form").name = name
         $("form").oldCpf = oldCpf
         $("form").newCpf = newCpf
 

@@ -1,4 +1,4 @@
-package pages.TeacherPages
+package pages
 
 import geb.Page
 
