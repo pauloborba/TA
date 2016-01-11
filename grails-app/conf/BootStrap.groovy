@@ -15,25 +15,25 @@ class BootStrap {
 //        EvaluationCriterion criterion2 = new EvaluationCriterion(name: "Refactor").save(failOnError: true)
 //        EvaluationCriterion criterion3 = new EvaluationCriterion(name: "Tests").save(failOnError: true)
 //
-//        pp2.addCriterion(criterion)
-//        pp2.addCriterion(criterion2)
-//        pp2.addCriterion(criterion3)
+//        pp2.addCriterion(criterion.name)
+//        pp2.addCriterion(criterion2.name)
+//        pp2.addCriterion(criterion3.name)
 //
-//        psg2.addCriterion(criterion)
-//        psg2.addCriterion(criterion2)
-//        psg2.addCriterion(criterion3)
+//        psg2.addCriterion(criterion.name)
+//        psg2.addCriterion(criterion2.name)
+//        psg2.addCriterion(criterion3.name)
 //
-//        gaabs.addCriterion(criterion)
-//        gaabs.addCriterion(criterion2)
-//        gaabs.addCriterion(criterion3)
+//        gaabs.addCriterion(criterion.name)
+//        gaabs.addCriterion(criterion2.name)
+//        gaabs.addCriterion(criterion3.name)
 //
-//        cjvg.addCriterion(criterion)
-//        cjvg.addCriterion(criterion2)
-//        cjvg.addCriterion(criterion3)
+//        cjvg.addCriterion(criterion.name)
+//        cjvg.addCriterion(criterion2.name)
+//        cjvg.addCriterion(criterion3.name)
 //
-//        ehammo.addCriterion(criterion)
-//        ehammo.addCriterion(criterion2)
-//        ehammo.addCriterion(criterion3)
+//        ehammo.addCriterion(criterion.name)
+//        ehammo.addCriterion(criterion2.name)
+//        ehammo.addCriterion(criterion3.name)
     }
     def destroy = {
     }
