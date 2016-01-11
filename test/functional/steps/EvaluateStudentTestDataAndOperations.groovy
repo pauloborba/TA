@@ -7,6 +7,14 @@ import ta.StudentController
 
 class EvaluateStudentTestDataAndOperations{
 
+    static void deleteAfterTest(login, name){
+        def conte = new EvaluationCriterionController()
+        def conts = new StudentController()
+
+        conte.deleteAfterTest(name)
+        conts.deleteAfterTest(login)
+    }
+
     public static boolean createEvaluationCriterion(String name){
         def cont = new EvaluationCriterionController()
         cont.params << [name: name]

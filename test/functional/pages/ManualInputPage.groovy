@@ -11,8 +11,12 @@ class ManualInputPage extends Page {
     }
 
     def fillConceptDetails(String login, String criterion, String concept) {
+        if(criterion.indexOf(" ") != -1 ){
+            criterion = criterion.replaceAll(" ", "\\\\\\\\ ");
+        }
         String id = "#" + login + criterion
         $(id).value(concept)
+
     }
 
     def click(String login){
@@ -20,16 +24,15 @@ class ManualInputPage extends Page {
         $(id).click()
     }
 
-    boolean checkError(){
+    boolean checkError() {
         boolean ans = false;
 
         String test = $("#EmptyError").text()
 
-        if ( !test.isEmpty() ){
+        if (!test.isEmpty()) {
             ans = true
         }
 
         return ans;
     }
-
 }

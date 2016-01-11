@@ -6,9 +6,9 @@ Feature: Evaluate the students
   So I want to tell him what I think about him on these criteria
 
 #Stakeholder: Paulo Borba
-#[16:26:54] Paulo Borba: eu quero avaliar um aluno com relação a vários criterios
-#[16:27:06] Paulo Borba: não quero dar uma simples nota a ele
-#[16:27:26] Paulo Borba: quero dizer a ele o que eu achei dele com relação a vários critérios
+#[16:26:54] Paulo Borba: eu quero avaliar um aluno com relaï¿½ï¿½o a vï¿½rios criterios
+#[16:27:06] Paulo Borba: nï¿½o quero dar uma simples nota a ele
+#[16:27:26] Paulo Borba: quero dizer a ele o que eu achei dele com relaï¿½ï¿½o a vï¿½rios critï¿½rios
 
 #Controller Scenario
   Scenario: Registering an evaluation criterion that does not exist
@@ -18,7 +18,7 @@ Feature: Evaluate the students
 
 #Controller Scenario
   Scenario: Registering an evaluation criterion that already exists
-    Given the system already has an evaluation criterion named "requirements"
+    Given the system already has an evaluation criterion named "Requirements"
     When I create an evaluation criterion with name "Requirements"2
     Then the evaluation criterion with name "Requirements" was not stored in the system
 

@@ -1,9 +1,11 @@
 package ta
 
+import org.springframework.transaction.annotation.Isolation
+
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
-@Transactional(readOnly = true)
+@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
 class EvaluationCriterionController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -21,6 +23,10 @@ class EvaluationCriterionController {
         respond new EvaluationCriterion(params)
     }
 
+    def deleteAfterTest(name){
+        EvaluationCriterion.findByName(name).delete()
+    }
+
     public EvaluationCriterion createEvaluationCriterion() {
         return new EvaluationCriterion(params)
     }
@@ -28,6 +34,8 @@ class EvaluationCriterionController {
     public boolean saveEvaluationCriterion(EvaluationCriterion evaluationCriterion) {
         if(EvaluationCriterion.findByName(evaluationCriterion.name) == null) {
             evaluationCriterion.save(flush: true)
+            //evaluationCriterion = evaluationCriterion.merge()
+
             new StudentController().updateStudentEvaluationCriteria()
             return true
         }
