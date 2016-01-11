@@ -1,7 +1,5 @@
 package ta
 
-import org.fusesource.jansi.AnsiConsole
-
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
@@ -27,17 +25,9 @@ class StudentController {
         respond student
     }
 
-    def deleteAfterTest(login) {
-        Student student = Student.findByLogin(login)
-        delete(student)
-    }
-
     public Student createStudent() {
         Student student = new Student(params)
         student.afterCreateAddCriteria(EvaluationCriterion.findAll())
-        //student = student.merge()
-//        student.afterCreateAddAutoCriteria(AutoEvaluationCriterion.findAll())
-//        student.afterCreateAddAutoEvaluationCriteria(EvaluationAutoEvaluationCriterion.findAll())
         return student
     }
 
@@ -71,7 +61,7 @@ class StudentController {
     public void updateStudentEvaluationCriteria() {
         for (Student student : Student.findAll()) {
             for (EvaluationCriterion evCriterion : EvaluationCriterion.findAll()) {
-                student.addCriterion(evCriterion)
+                student.addCriterion(evCriterion.name)
                 student.save flush: true
 
             }
@@ -241,7 +231,6 @@ class StudentController {
             student.calculateFinalGrade(criterion, concept)
             concept = currentConcept + concept + " "
             student.evaluations.put(criterion, concept)
-//            student.calculateCrispGrade(student.finalGrades)
 
             student.save flush: true
         }
@@ -273,7 +262,14 @@ class StudentController {
         }
 
         redirect action: index(10)
+    }
 
+    def updateStudentsCriteriaAfterDelete(String criterionName){
+        def studentList = Student.findAll()
+
+        for ( Student student : studentList ){
+            student.removeCriterion(criterionName)
+        }
     }
 
 
