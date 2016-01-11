@@ -34,10 +34,6 @@ Then(~'^the system stores a low performance notification for "([^"]*)"$') { Stri
 }
 
 //Scenario: Registering a grade that does not request a notification
-When(~'^I register "([^"]*)" as the grade for "([^"]*)" for the "([^"]*)" criteria$') { String login, concept, criteria ->
-	EvaluateStudentTestDataAndOperations.updateConcept(login, criteria, concept)
-	assert EvaluateStudentTestDataAndOperations.checkConceptUpdate(login, criteria, concept)
-}
 Then(~'^the system does not store a low performance notification for "([^"]*)"$') { String login ->
 	assert Notification.findByLogin(login) == null
 }
