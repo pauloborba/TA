@@ -51,7 +51,8 @@ And(~'^there is at least one registered notification$') { ->
 	assert Notification.count > 0
 }
 Then(~'^I can see all notifications$') { ->
-	//TODO: check shown notifications
+	at ShowNotificationsPage
+	page.update()
 }
 //Scenario: Requesting notifications with no stored notifications
 
