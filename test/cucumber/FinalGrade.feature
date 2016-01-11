@@ -23,7 +23,7 @@ Feature: Final grade
   @ignore
   Scenario: Inability to calculate grade
     Given that student "Eduardo" whose login is "ehxmm" does not have a grade for criterion "C0"
-    When I add "MPA" to criterion "C1" for "Eduardo"
+    When I add "MPA" to criterion "C1"
     Then the system returns an error flag
 
   #Controller scenario
