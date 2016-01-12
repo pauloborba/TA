@@ -21,14 +21,14 @@ So that I can see the options that belongs to my user type
 # Evite ser específico demais usando coisas como "click" e "button". A ideia é ser mais genérico quanto à
 # interação com a interface, pois facilita a portabilidade para outra plataforma, tipo mobile. É uma boa prática.
 #
-# #GUI scenario
-#  Scenario: Signing in web
-#    Given That I am at login page
- #   And "rav2" has a account with password "123"
-  #  When I write "rav2" and "123" on the login form
-   # And I click Sign in button
-    #Then Welcome message is displayed
-#
+ #GUI scenario
+  Scenario: Signing in web
+    Given That I am at login page
+    And "igor" has a account with login "imspc" and password "123"
+    When I write "imspc" and "123" on the login form
+    And I click Sign in button
+    Then Welcome to "igor" is displayed
+
 #  #GUI scenario
 #   Scenario: Failed signing in web
 #    Given that I am on login page

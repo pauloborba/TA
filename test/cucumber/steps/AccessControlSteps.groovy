@@ -3,8 +3,10 @@
  */
 package steps
 
+import sun.rmi.runtime.Log
 import ta.Student
 import pages.LoginPage
+import pages.StudentPages.CreateStudentPage
 import ta.StudentController
 import geb.Browser
 import geb.binding.BindingUpdater
@@ -61,19 +63,26 @@ Given(~'That I am at login page$') { ->
     at LoginPage // p�gina existe mesmo
 }
 
-And(~'"([^"]*)" has a account with password "([^"]*)"') { String login, password ->
-   createStudent
+And(~'"([^"]*)" has a account with login "([^"]*)" and password "([^"]*)"') { String name, login, password ->
+    to CreateStudentPage
+    at CreateStudentPage
+
+    page.fillStudentDetails(login, name, password)
+    page.selectCreateStudent()
+
 }
 
 When(~'I write "([^"]*)" and "([^"]*)" on the login form$') { String login, String password ->
+    to LoginPage
+    at LoginPage
+
     page.fillLoginDetails(login, password)
 }
 And(~'I click Sign in button$') { ->
-    at LoginPage
-	page.login()
+	page.selectLogin()
 }
 
-Then(~'Welcome message is displayed') { ->
+Then(~'Welcome to "([^"]*)" is displayed') { String name ->
 
 }
 

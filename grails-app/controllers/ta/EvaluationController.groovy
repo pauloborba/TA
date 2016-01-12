@@ -1,9 +1,9 @@
 package ta
 
 import commom.EvaluationBuilder
-import grails.transaction.Transactional
 
 import static org.springframework.http.HttpStatus.*
+import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class EvaluationController {
@@ -13,11 +13,11 @@ class EvaluationController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def beforeInterceptor = [action:this.&auth]
+    //def beforeInterceptor = [action:this.&auth]
 
     def scaffold=true
 
-    def auth() {
+        def auth() {
         if(!session.student) {
             redirect(controller:"Student", action:"login")
             return false
@@ -25,12 +25,12 @@ class EvaluationController {
     }
 
 
+
     def index(Integer max) {
 //        redirect(action: "list")
         params.max = Math.min(max ?: 10, 100)
         respond Evaluation.list(params), model: [evaluationInstanceCount: Evaluation.count()]
     }
-
 
     def show(Evaluation evaluationInstance) {
         respond evaluationInstance
@@ -134,10 +134,10 @@ class EvaluationController {
                 Evaluation evaluation = builder.getEvaluation()
                 saveEvaluation(evaluation)
 
-                pageMessage = "Avaliaï¿½ï¿½o registrada."
+                pageMessage = "Avaliação registrada."
 
             } else {
-                pageMessage = "Campo de tï¿½tulo ï¿½ obrigatï¿½rio. Nenhuma avaliaï¿½ï¿½o foi registrada."
+                pageMessage = "Campo de título é obrigatório. Nenhuma avaliação foi registrada."
             }
 
         } catch (Exception e) {

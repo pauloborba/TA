@@ -40,15 +40,17 @@
                         Login
                     </th>
                     <g:each in="${criteria}">
-                        <th>
+                        <th id="${it.name}">
                             ${it.name}
                         </th>
+
                     </g:each>
                     <th>
                         Actions
                     </th>
                     </thead>
                 </g:if>
+
                 <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 
                     <td data-title="Login"><g:link action="show"
