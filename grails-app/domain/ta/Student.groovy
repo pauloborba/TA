@@ -94,7 +94,7 @@ class Student {
         return ans;
     }
 
-    /*Este m�todo calcula a nota final com um valor de 0 a 10, retornando -1
+    /*Este metodo calcula a nota final com um valor de 0 a 10, retornando -1
     se não for possível calcular. Tal valor ser� validado posteriormente para
     que se saiba o que ser� impresso na média geral*/
     public void calculateCrispGrade(HashMap fuzzyGrades){
