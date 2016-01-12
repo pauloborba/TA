@@ -32,10 +32,15 @@ class Student {
 
     public void afterCreateAddCriteria(List<EvaluationCriterion> evaluationCriteria) {
         initialize()
+        evaluations = new HashMap<>()
+        finalGrades = new HashMap<>()
+        crispGrade = -1
+
         for(EvaluationCriterion evaluationCriterion : evaluationCriteria) {
             addCriterion(evaluationCriterion.name)
         }
     }
+
 
     public void addCriterion(String name) {
         initialize()
@@ -43,8 +48,17 @@ class Student {
             this.autoEvaluations.put(name, "")
             this.evaluations.put(name, "")
             this.finalGrades.put(name, "")
+            crispGrade = -1
         }
+
     }
+        public void addCriterion(EvaluationCriterion evaluationCriterion) {
+            if (evaluations == null) {
+                evaluations = new HashMap<>()
+                finalGrades = new HashMap<>()
+
+           }
+        }
 
     def removeCriterion(String criterionName){
         if(this.evaluations.get(criterionName) != null) {
@@ -96,9 +110,15 @@ class Student {
         return ans;
     }
     
-    /*Este m�todo calcula a nota final com um valor de 0 a 10, retornando -1
+
+    /*Este método calcula a nota final com um valor de 0 a 10, retornando -1
     se não for possível calcular. Tal valor ser� validado posteriormente para
     que se saiba o que ser� impresso na média geral*/
+
+    /*Este método calcula a nota final com um valor de 0 a 10, retornando -1
+    se não for possível calcular. Tal valor será validado posteriormente para
+    que se saiba o que será impresso na média geral*/
+
     public void calculateCrispGrade(HashMap fuzzyGrades){
 	    if(!fuzzyGrades.containsValue("")){
 		    String[] concepts = fuzzyGrades.values().toArray()

@@ -1,63 +1,83 @@
-//package steps
-//
-//import ta.Student
-//import ta.EvaluationCriterion
-//import ta.FinalGradeController
-//
-//def cont = new FinalGradeController()
-//
-///*  Scenario: Calculating final grade
-//    Given that every criteria has a grade for student "Eduardo"
-//    When I request the system to register grades from "Eduardo"
-//    Then the final grade for "Eduardo" is calculated based on the grades from each criteria
-//    And the result is stored by the system*/
-//@ignore
-//Given(~'^that every criteria has a grade for student "([^"]*)"$') { String studentName ->
-//    student = Student.findByName(studentName)
-//    assert !student.evaluations.containsValue("XX")
-//    //Preciso confirmar que ele não contém nenhum critério vazio.
-//}
-//@ignore
-//When(~'^I request the system to register grades from "([^"]*)"$') { String studentName ->
-//    student = Student.findByName(studentName)
-//    cont.params << student.evaluations
-//    cont.create()
-//    cont.save()
-//    cont.response.reset()
-//}
-//@ignore
-//Then(~'the final grade for "([^"]*)" is calculated based on the grades from each criteria$') { String studentName ->
-//    student = Student.findByName(studentName)
-//    cont.calculateFinalGrade(cont.params)
-//    cont.save()
-//    cont.response.reset()
-//}
-//@ignore
-//Then(~'And the result is stored by the system$') { ->
-//    cont.response.reset()
-//}
-//
-///*  Scenario: Inability to calculate grade
-//    Given that at least one criteria has no grades for student "Eduardo"
-//    When I request the system to register grades from "Eduardo"
-//    Then the final grade is not calculated*/
-//@ignore
-//Given(~'^that at least one criteria has no grades for student "([^"]*)"$') { String studentName ->
-//    student = Student.findByName(studentName)
-//    assert student.evaluations.containsValue("XX")
-//    //Preciso confirmar que ele contém ao menos um critério vazio.
-//}
-//@ignore
-//When(~'^I request the system to register grades from "([^"]*)"$') { String studentName ->
-//    cont = new FinalGradeController()
-//    student = Student.findByName(studentName)
-//    cont.params << student.evaluations
-//    cont.create()
-//    cont.save()
-//    cont.response.reset()
-//}
-//@ignore
-//Then(~'^the final grade is not calculated$') { ->
-//    cont.response.reset()
-//    //Não sei o que poderia escrever aqui uma vez que não há uma ação
-//}
+/*package steps
+
+import ta.StudentController
+import ta.Student
+
+def stLogin
+def critName
+
+  @ignore
+  Given(~'^that student "([^"]*)" whose login is "([^"]*)" has no grades for criterion "([^"]*)"$') { String name, login, criterion ->
+    stLogin = login
+    critName = criterion
+    assert EvaluateStudentTestDataAndOperations.createStudent(login, name)
+    assert EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criterion)
+    assert EvaluateStudentTestDataAndOperations.getConceptsLength(login, criterion) == 0
+  @ignore
+  And(~'^"([^"]*)" for remaining criteria$') { String concept ->
+    A ideia deste passo é iterar pelo HashMap de notas e colocar ao menos um conceito em cada uma, mas
+    não soube escrever isto em código
+    O nome do critério pego na iteração seria salvo com String criterionName = entry.getKey()
+    Em seguida, o conceito seria atualizado com EvaluateStudentTestDataAndOperations.updateConcept(stLogin, critName, concept)
+  @ignore
+  When(~'^I add "([^"]*)" to criterion "([^"]*)"$') { String concept, criterion ->
+    EvaluateStudentTestDataAndOperations.updateConcept(stLogin, criterion, concept)
+  @ignore
+  Then(~'^the final grade is calculated$') { ->
+    A ideia deste passo é confirmar se a nota final, calculada pelo método de Student "calculateCrispGrade" e salva
+    no atributo crispGrade, também de Student, é diferente de -1 (flag de erro)
+
+  @ignore
+  Given(~'^that student "([^"]*)" whose login is "([^"]*)" has "([^"]*)" for criterion "([^"]*)"$') { String name, login, concept, criterion ->
+    stLogin = login
+    critName = criterion
+    assert EvaluateStudentTestDataAndOperations.createStudent(login, name)
+    assert EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criterion)
+    assert EvaluateStudentTestDataAndOperations.updateConcept(stLogin, criterion, concept)
+  @ignore
+  And(~'^"([^"]*)" for remaining criteria$') { String concept ->
+    A ideia deste passo é iterar pelo HashMap de notas e colocar ao menos um conceito em cada uma, mas
+    não soube escrever isto em código
+    O nome do critério pego na iteração seria salvo com String criterionName = entry.getKey()
+    Em seguida, o conceito seria atualizado com EvaluateStudentTestDataAndOperations.updateConcept(stLogin, critName, concept)
+  @ignore
+  When(~'^I add "([^"]*)" to criterion "([^"]*)"$') { String concept, criterion ->
+    EvaluateStudentTestDataAndOperations.updateConcept(stLogin, criterion, concept)
+  Then(~the final grade is updated) { ->
+    A ideia deste passo é confirmar se a nota final, calculada pelo método de Student "calculateCrispGrade" e salva
+    no atributo crispGrade, também de Student, é diferente de -1 (flag de erro)
+  
+  @ignore
+  Given(~'^that student "([^"]*)" whose login is "([^"]*)" does not have a grade for criterion "([^"]*)"$') { String name, login, criterion ->
+    stLogin = login
+    critName = criterion
+    assert EvaluateStudentTestDataAndOperations.createStudent(login, name)
+    assert EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criterion)
+    assert EvaluateStudentTestDataAndOperations.getConceptsLength(login, criterion) == 0
+  @ignore
+  When(~'^I add "([^"]*)" to criterion "([^"]*)"$') { String concept, criterion ->
+    assert !criterion.equals(critName)
+    EvaluateStudentTestDataAndOperations.updateConcept(stLogin, criterion, concept)
+  @ignore
+  Then(~'^the system returns an error flag$') { ->
+    A ideia deste passo é confirmar se a nota final, calculada pelo método de Student "calculateCrispGrade" e salva
+    no atributo crispGrade, também de Student, é igual a -1 (flag de erro)
+  
+  @ignore
+  Given(~'^that student "([^"]*)" whose login is "([^"]*)" has "([^"]*)" for all criteria$') { String name, login, concept ->
+    stLogin = login
+    critName = criterion
+    assert EvaluateStudentTestDataAndOperations.createStudent(login, name)
+    
+    Esta parte seguinte consiste em iterar pelo HashMap de critérios colocando um conceito em cada um
+  @ignore
+  And(~'^the Final Grade has already been calculated$') { ->
+    A ideia deste passo é confirmar se a nota final, calculada pelo método de Student "calculateCrispGrade" e salva
+    no atributo crispGrade, também de Student, é diferente de -1 (flag de erro)
+  @ignore
+  When(~'^I add to criterion "([^"]*)" to the list of criterions$') { String criterionName ->
+    EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criterionName)
+  Then(~'^the system returns an error flag$') { ->
+    A ideia deste passo é confirmar se a nota final, calculada pelo método de Student "calculateCrispGrade" e salva
+    no atributo crispGrade, também de Student, é igual a -1 (flag de erro)
+  */
