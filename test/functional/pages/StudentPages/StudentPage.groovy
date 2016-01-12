@@ -13,7 +13,13 @@ class StudentPage extends Page {
         title ==~ msg
     }
 
-    boolean checkStudent(String login, String name){
+
+    def close(){
+        String id = "#"+"Close"
+        $(id).click()
+    }
+
+	boolean checkStudent(String login, String name){
         boolean ans = false;
         String idLogin = "#" + login
         String idName = "#" + login + "Name"
@@ -49,9 +55,37 @@ class StudentPage extends Page {
         return ans;
     }
 
-    def choose(String login){
+    def hasErrors(){
+        boolean has = $(".errors").text() != null && $(".errors").text() != ""
+        return has
+    }
+
+    def checkElementTable(String criteria,String type,String Concept){
+        String id = "#"+criteria+type
+        return $(id).text().equals(Concept)
+    }
+
+    def checkStudentTable(String login){
+        String id = "#"+login+"Head"
+        return $(id).text()
+    }
+
+    def checkColor(String c){
+        String id = "#"+c+"FinalRED"
+        String resp=""
+        String debug = $(id).text()
+        if($(id).text().equals("")||$(id).text()==null){
+            resp="black"
+        }else{
+            resp="red"
+        }
+        return resp
+    }
+    
+	def choose(String login){
         String id = "#"+login+"Compare"
         $(id).click()
     }
+
 
 }

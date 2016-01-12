@@ -12,7 +12,7 @@ Feature: Manual Concept Input
     When the user input manually a new concept "MA" into the student "lc" in the criterion "Analyze System Requirements"
     Then the new concept "MA" of the criterion "Analyze System Requirements" is stored in the student "lc"
     And the final concept of the criterion "Analyze System Requirements" of the student "lc" is updated to "MA" in the system
-
+    
   @psg2
   Scenario: Student already with concept MANA, MA with manual input MPA
     Given that the student named "Jessica Jones" with a login "jj" is registered in the system
@@ -77,7 +77,7 @@ Feature: Manual Concept Input
     Then I can see that the final concept of the criterion "Refactoring" for the student "oq" is "MPA"
 
   @psg2
-  Scenario: Student already with concepts MA, MANA, MPA with manual input MANA
+    Scenario: Student already with concepts MA, MANA, MPA with manual input MANA
     Given that I am on the Student page
     And I can see a student named "Clint Barton" with a login "cb"
     And I can see a evaluation criterion named "Analyze"

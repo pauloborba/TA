@@ -3,6 +3,8 @@ package ta
 class Student {
     String login
     String name
+	boolean notification
+    String password
 
     // tentei um enumerador primeiro mas da erro
     static class Concept {
@@ -17,6 +19,7 @@ class Student {
     static constraints = {
         login unique: true
         name blank: false
+        password nullable:true, blank:true
     }
 
     def initialize(){
@@ -30,19 +33,31 @@ class Student {
 
     public void afterCreateAddCriteria(List<EvaluationCriterion> evaluationCriteria) {
         initialize()
+        evaluations = new HashMap<>()
+        finalGrades = new HashMap<>()
+        crispGrade = -1
+
         for(EvaluationCriterion evaluationCriterion : evaluationCriteria) {
-            addCriterion(evaluationCriterion.name)
+            if(this.evaluations.get(evaluationCriterion.name) == null) {
+                this.autoEvaluations.put(evaluationCriterion.name, "")
+                this.evaluations.put(evaluationCriterion.name, "")
+                this.finalGrades.put(evaluationCriterion.name, "")
+            }
         }
     }
 
-    public void addCriterion(String name) {
-        initialize()
-        if(this.evaluations.get(name) == null) {
-            this.autoEvaluations.put(name, "")
-            this.evaluations.put(name, "")
-            this.finalGrades.put(name, "")
+    public void addCriterion(EvaluationCriterion evaluationCriterion)git {
+        if(evaluations == null) {
+            autoEvaluations = new HashMap<>()
+            evaluations = new HashMap<>()
+            finalGrades = new HashMap<>()
+            crispGrade = -1
         }
-    }
+        if(this.evaluations.get(evaluationCriterion.name) == null) {
+            this.autoEvaluations.put(evaluationCriterion.name, "")
+            this.evaluations.put(evaluationCriterion.name, "")
+            this.finalGrades.put(evaluationCriterion.name, "")
+        }
 
     def removeCriterion(String criterionName){
         if(this.evaluations.get(criterionName) != null) {
@@ -53,10 +68,10 @@ class Student {
     }
 
     /*
-    - a “média” é MA se o conceito adicionado é MA e se tiver no máximo um MANA/MPA nos conceitos anteriores
-    - a “média” é MPA se o conceito adicionado é MA e se tiver mais de um MANA/MPA nos conceitos anteriores
-    - a “média” é MPA se o conceito adicionado é MPA e se tiver no máximo um MANA nos conceitos anteriores
-    - a “média” é MANA caso contrário
+    - a �m�dia� � MA se o conceito adicionado � MA e se tiver no m�ximo um MANA/MPA nos conceitos anteriores
+    - a �m�dia� � MPA se o conceito adicionado � MA e se tiver mais de um MANA/MPA nos conceitos anteriores
+    - a �m�dia� � MPA se o conceito adicionado � MPA e se tiver no m�ximo um MANA nos conceitos anteriores
+    - a �m�dia� � MANA caso contr�rio
      */
     public boolean calculateFinalGrade(String criterionName, String concept){
         boolean ans = false;

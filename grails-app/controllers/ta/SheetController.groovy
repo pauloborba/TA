@@ -147,7 +147,6 @@ class SheetController {
                     concept = m.get(criterion)
 
                     createStudent(name,login, criterion)
-                    println "tentando adicioanr o conceito '${concept}' ao critério '${criterion}' do aluno '${login}'"
                     cont.updateConcepts(login, criterion, concept)
                 }
 
@@ -180,7 +179,7 @@ class SheetController {
             println "criou estudante " + login + " " + name
 
             def cont = new StudentController()
-            cont.params << [login: login] << [name: name]
+            cont.params << [login: login] << [name: name] << [evaluations: new HashMap<String, String>()]
             cont.saveStudent(cont.createStudent())
         }
     }

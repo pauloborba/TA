@@ -1,9 +1,13 @@
 package steps
 
+import grails.test.GrailsUnitTestCase
+import grails.test.mixin.TestFor
 import ta.EvaluationCriterion
 import ta.EvaluationCriterionController
 import ta.Student
 import ta.StudentController
+import ta.Notification
+import ta.NotificationController
 
 class EvaluateStudentTestDataAndOperations{
 
@@ -22,6 +26,11 @@ class EvaluateStudentTestDataAndOperations{
         cont.response.reset()
         return saved
     }
+
+	public static void createNotification(String login) {
+		def cont = new StudentController()
+		cont.notify(login)
+	}	
 
     public static int getConceptsLength(String login, String criterion){
         return Student.findByLogin(login).getEvaluations().get(criterion).length()
@@ -62,4 +71,22 @@ class EvaluateStudentTestDataAndOperations{
 
         return ans
     }
+
+
+    public static boolean loginStudent(String login, String password){
+        StudentController controller = new StudentController()
+
+        Student student = new Student(login: login, password: password, name: login)
+
+        return controller.tryLogin(student)
+
+    }
+
+
+    public static boolean checkAccount(String login){
+        return Student.findByLoginAndPassword(login,login)
+    }
+
+
+
 }
