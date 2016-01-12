@@ -25,13 +25,13 @@ And(~'^that "([^"]*)" only has a "([^"]*)" registered as a grade for the "([^"]*
 	assert EvaluateStudentTestDataAndOperations.checkConceptUpdate(login, criteria2, concept)
 }
 //Scenario: Registering a grade that requests a notification
-When(~'^I register "([^"]*)" as the grade for "([^"]*)" for the "([^"]*)" criteria$') { String login, concept, criteria ->
+When(~'^I register "([^"]*)" as the grade for "([^"]*)" for the "([^"]*)" criteria$') { String concept,login, criteria ->
 	EvaluateStudentTestDataAndOperations.updateConcept(login, criteria, concept)
 	assert EvaluateStudentTestDataAndOperations.checkConceptUpdate(login, criteria, concept)
 }
 Then(~'^the system stores a low performance notification for "([^"]*)"$') { String login  ->
 	EvaluateStudentTestDataAndOperations.createNotification(login)
-	assert Student.findStudentByLogin(login).notification == true
+	assert Student.findByLogin(login).notification==true
 }
 
 //Scenario: Registering a grade that does not request a notification
@@ -45,6 +45,7 @@ Given(~'^that I am on the Notifications Page$') { ->
 	at NotificationPage
 }
 When(~'^I select "Read Notifications$') { ->
+	at NotificationPage
 	page.selectReadNotifications()
 }
 //Scenario: Requesting notifications with at least one stored notification

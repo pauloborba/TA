@@ -19,13 +19,13 @@ class EvaluateStudentTestDataAndOperations{
 
     public static boolean createStudent(String login, String name){
         def cont = new StudentController()
-        cont.params << [login: login] << [name: name] << [evaluations: new HashMap<String, String>()]
+        cont.params << [login: login] << [name: name] << [evaluations: new HashMap<String, String>()] << [autoEvaluations: new HashMap<String, String>()] << [finalGrades: new HashMap<String, String>()]
         boolean saved = cont.saveStudent(cont.createStudent())
         cont.response.reset()
         return saved
     }
 
-	public static boolean createNotification(String login) {
+	public static void createNotification(String login) {
 		def cont = new StudentController()
 		cont.notify(login)
 	}	
@@ -50,9 +50,9 @@ class EvaluateStudentTestDataAndOperations{
         int size = concepts.length
 
         for( int i = 0; i < size; i++ ){
-            if ( concepts[i] != currentConcepts[i] ){
+            if ( concepts[i] != currentConcepts[i] )
                 ans = false
-            }
+
         }
 
         return ans;
@@ -69,4 +69,5 @@ class EvaluateStudentTestDataAndOperations{
 
         return ans
     }
+
 }

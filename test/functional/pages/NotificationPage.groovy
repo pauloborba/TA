@@ -17,10 +17,10 @@ class NotificationPage extends Page{
 	def update() {
 	
 	}
-
-    static content = {
-        flashmessage = {
-            $("div", class: "message")
-        }
-    }
+//
+//    static content = {
+//        flashmessage = {
+//            $("div", class: "message")
+//        }
+//    }
 }

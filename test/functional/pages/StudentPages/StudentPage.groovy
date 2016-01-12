@@ -1,35 +1,31 @@
 package pages.StudentPages
 
 import geb.Page
-import ta.EvaluationCriterion
 
 class StudentPage extends Page {
 
     static url = "/TA/student/index"
 
     static at =  {
-        //title ==~ /Student Listagem/
-        title ==~ /Student List/
+        title ==~ /Student Listagem/
+    }
+
+    def choose(String login){
+        String id = "#"+login+"Compare"
+        $(id).click()
+    }
+
+    def close(){
+        String id = "#"+"Close"
+        $(id).click()
     }
 
     boolean checkStudent(String login, String name){
         boolean ans = false;
         String idLogin = "#" + login
         String idName = "#" + login + "Name"
-//        String idCriteria = "#" + login + "Criteria"
 
         if ( $(idLogin).text().equals(login) && $(idName).text().equals(name) ){
-            ans = true;
-        }
-        return ans;
-    }
-
-    boolean checkCriterion(String login, String name){
-        boolean ans = false;
-        String idLogin = "#" + login
-        String idCriteria = "#" + login + "Criteria"
-
-        if ( $(idCriteria).text().contains(name) ){
             ans = true;
         }
         return ans;
@@ -47,18 +43,12 @@ class StudentPage extends Page {
         return ans;
     }
 
-    boolean checkConcept(String login, String name){
+    boolean checkCriterionConcept(String login, String name, String concept = ""){
         boolean ans = false;
         String idLogin = "#" + login
         String idCriteria = "#" + login + "Criteria"
-
         String test = $(idCriteria).text()
-
-        if ( !test.contains(",") ){
-            name = name + "="
-        } else {
-            name = name + "=,"
-        }
+        name = name + "="+concept
 
         if ( test.contains(name) ){
             ans = true;
@@ -66,24 +56,31 @@ class StudentPage extends Page {
         return ans;
     }
 
-    boolean checkConcept(String login, String name, String concept){
-        boolean ans = false;
-        String idLogin = "#" + login
-        String idCriteria = "#" + login + "Criteria"
-
-        String test = $(idCriteria).text()
-
-        if ( !test.contains(",") ){
-            name = name+ "="+concept
-        } else {
-            name = name+ "="+concept+","
-        }
-
-        if ( test.contains(name) ){
-            ans = true;
-        }
-        return ans;
+    def hasErrors(){
+        boolean has = $(".errors").text() != null && $(".errors").text() != ""
+        return has
     }
 
+    def checkElementTable(String criteria,String type,String Concept){
+        String id = "#"+criteria+type
+        return $(id).text().equals(Concept)
+    }
+
+    def checkStudentTable(String login){
+        String id = "#"+login+"Head"
+        return $(id).text()
+    }
+
+    def checkColor(String c){
+        String id = "#"+c+"FinalRED"
+        String resp=""
+        String debug = $(id).text()
+        if($(id).text().equals("")||$(id).text()==null){
+            resp="black"
+        }else{
+            resp="red"
+        }
+        return resp
+    }
 
 }

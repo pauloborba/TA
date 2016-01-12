@@ -1,6 +1,5 @@
 package ta
 
-
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
@@ -9,6 +8,7 @@ class StudentController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    def worked = false;
     def conceito = new HashMap<String, String>()
 
     def index(Integer max) {
@@ -41,11 +41,11 @@ class StudentController {
         def students = Student.findAll()
         def criteria = EvaluationCriterion.findAll()
 
-        render view: "manualInput", model: [students: students, criteria: criteria]
+        render view: "manualInput", model:[students: students, criteria: criteria]
     }
 
     public boolean saveStudent(Student student) {
-        if (Student.findByLogin(student.login) == null) {
+        if(Student.findByLogin(student.login) == null) {
             student.save flush: true
             return true
         }
@@ -53,7 +53,7 @@ class StudentController {
     }
 
     public void updateStudentEvaluationCriteria() {
-        for (Student student : Student.findAll()) {
+        for(Student student : Student.findAll()) {
             for (EvaluationCriterion evCriterion : EvaluationCriterion.findAll()) {
                 student.addCriterion(evCriterion.name)
                 student.save flush: true
@@ -65,6 +65,43 @@ class StudentController {
 //            }
 
         }
+    }
+
+    def compareGrade(){
+      String login = params.studentId
+      compareGrades(login)
+    }
+
+    def compareGrades(String login){
+        def criteria = EvaluationCriterion.findAll()
+        Student student = Student.findByLogin(login)
+        boolean sent = sentAuto(login)
+        if (!sent) {
+            worked=false;
+            flash.error = "Erro: o aluno escolhido não enviou a auto avaliação"
+            redirect action: index(10)
+        }else{
+            worked=true;
+        }
+
+        println worked
+        render view: "index", model:[criteria: criteria, student: student, booleanWorked: worked, studentInstanceList : Student.list()]
+    }
+
+    public boolean sentAuto(String login){
+        boolean sent = false;
+        Student student = Student.findByLogin(login)
+        if(student!=null) {
+            HashMap<String, String> auto = student.getAutoEvaluations()
+            if(auto!=null) {
+                for (EvaluationCriterion evCriterion : EvaluationCriterion.findAll()) {
+                    if (!auto.get(evCriterion.name).isEmpty()) {
+                        sent = true;
+                    }
+                }
+            }
+        }
+       return sent
     }
 
     @Transactional
@@ -120,11 +157,11 @@ class StudentController {
         }
     }
 
-    @Transactional
     def updateConcepts(String login, String criterion, String concept) {
         if (!concept.isEmpty()) {
-
             Student student = Student.findByLogin(login)
+            println student.name
+            println student.login
             String currentConcept = student.evaluations.get(criterion);
             student.calculateFinalGrade(criterion, concept)
             concept = currentConcept + concept + " "
@@ -139,29 +176,37 @@ class StudentController {
         String login = params.studentId
         String[] criteria = params.criterionName
 
-        if ( EvaluationCriterion.findByName(criteria[0] ) == null  ) {
+        if (EvaluationCriterion.findByName(criteria[0]) == null) {
             String select = ""
             int size = selector.length
-            for (int i = 0; i < size; i++) {
-                select = select + selector[i]
+            for (int j = 0; j < size; j++) {
+                select = select + selector[j]
             }
             String criterion = ""
             size = criteria.length
-            for (int i = 0; i < size; i++) {
-                criterion = criterion + criteria[i]
+            for (int j = 0; j < size; j++) {
+                criterion = criterion + criteria[j]
             }
 
             updateConcepts(login, criterion, select)
         } else {
             int size = criteria.length
-            for (int i = 0; i < criteria.length; i++) {
-                updateConcepts(login, criteria[i], selector[i])
+            for (int j = 0; j < criteria.length; j++) {
+                updateConcepts(login, criteria[j], selector[j])
             }
         }
 
-
         redirect action: index(10)
     }
+
+    def updateStudentsCriteriaAfterDelete(String criterionName){
+        def studentList = Student.findAll()
+
+        for ( Student student : studentList ){
+            student.removeCriterion(criterionName)
+        }
+    }
+
 
     @Transactional
     def delete(Student studentInstance) {
