@@ -48,6 +48,7 @@ class Student {
             this.autoEvaluations.put(name, "")
             this.evaluations.put(name, "")
             this.finalGrades.put(name, "")
+            crispGrade = -1
         }
 
     }
@@ -55,10 +56,10 @@ class Student {
             if (evaluations == null) {
                 evaluations = new HashMap<>()
                 finalGrades = new HashMap<>()
-                crispGrade = -1
 
-            }
+           }
         }
+
     def removeCriterion(String criterionName){
         if(this.evaluations.get(criterionName) != null) {
             evaluations.remove(criterionName)
@@ -110,7 +111,7 @@ class Student {
     }
     
 
-    /*Este m�todo calcula a nota final com um valor de 0 a 10, retornando -1
+    /*Este método calcula a nota final com um valor de 0 a 10, retornando -1
     se não for possível calcular. Tal valor ser� validado posteriormente para
     que se saiba o que ser� impresso na média geral*/
 
