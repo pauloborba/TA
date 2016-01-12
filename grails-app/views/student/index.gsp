@@ -37,21 +37,29 @@
 					</tr>
 				</thead>
 				<tbody>
-				<g:each in="${studentInstanceList}" status="i" var="studentInstance">
-					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-					
-						<td><g:link action="show" id="${studentInstance.id}">${fieldValue(bean: studentInstance, field: "login")}</g:link></td>
-					
-						<td>${fieldValue(bean: studentInstance, field: "name")}</td>
-					
-						<td>${fieldValue(bean: studentInstance, field: "password")}</td>
-					
-						<td>${fieldValue(bean: studentInstance, field: "evaluations")}</td>
-					
-						<td>${fieldValue(bean: studentInstance, field: "finalGrades")}</td>
-					
-					</tr>
-				</g:each>
+
+					<g:each in="${studentInstanceList}" status="i" var="studentInstance">
+						<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+							<g:form controller="student">
+								<g:hiddenField name="studentId" value="${studentInstance.login}"></g:hiddenField>
+
+								<td id="${studentInstance.login}"><g:link action="show"
+																		  id="${studentInstance.id}">${fieldValue(bean: studentInstance, field: "login")}</g:link></td>
+
+								<td>${fieldValue(bean: studentInstance, field: "password")}</td>
+
+								<td id="${studentInstance.login}Name">${fieldValue(bean: studentInstance, field: "name")}</td>
+
+								<td id="${studentInstance.login}Criteria">${fieldValue(bean: studentInstance, field: "finalGrades")}</td>
+
+								<td><g:actionSubmit value="Compare" action="compareGrade" id="${studentInstance.login}Compare"></g:actionSubmit></td>
+							</g:form>
+						</tr>
+					</g:each>
+
+
+
+
 				</tbody>
 			</table>
 			<div class="pagination">

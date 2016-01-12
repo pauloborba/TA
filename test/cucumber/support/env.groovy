@@ -13,15 +13,16 @@ Before () {
     bindingUpdater.initialize()
     scenarioInterceptor = new GrailsTestRequestEnvironmentInterceptor (appCtx)
     scenarioInterceptor.init ()
-
-    Student.list().each {
-        it.delete(flush:true)
+    def students = Student.findAll();
+    for( Student i : students ){
+        i.delete(flush: true)
     }
-
-    EvaluationCriterion.list().each {
-        it.delete(flush:true)
+    def criteria = EvaluationCriterion.findAll();
+    for( EvaluationCriterion i : criteria ){
+        i.delete(flush: true)
     }
-
+//    Student.deleteAll(Student.findAll())
+//    EvaluationCriterion.deleteAll(EvaluationCriterion.findAll())
 }
 
 After () {

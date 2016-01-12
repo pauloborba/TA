@@ -12,7 +12,7 @@ Feature: Manual Concept Input
     When the user input manually a new concept "MA" into the student "lc" in the criterion "Analyze System Requirements"
     Then the new concept "MA" of the criterion "Analyze System Requirements" is stored in the student "lc"
     And the final concept of the criterion "Analyze System Requirements" of the student "lc" is updated to "MA" in the system
-
+    
   @psg2
   Scenario: Student already with concept MANA, MA with manual input MPA
     Given that the student named "Jessica Jones" with a login "jj" is registered in the system
@@ -45,62 +45,65 @@ Feature: Manual Concept Input
   Scenario: Student with no concepts with manual input MA
     Given that I am on the Student page
     And I can see a student named "Luke Cage" with a login "lc"
-    And a evaluation criterion named "Requirements"
+    And I can see a evaluation criterion named "Requirements"
     And I can't see a concept for the student "lc" in the criterion "Requirements"
     When I go to the Manual Input Concept Page
     And I choose a new concept "MA" for the student "lc" in the criterion "Requirements"
     And I submit the info
-    Then I can see that the final concept of the criterion "Requirements" for the student "lc" is now "MA"
+    Then I can see that the final concept of the criterion "Requirements" for the student "lc" is "MA"
 
   @psg2
   Scenario: Student already with concept MANA, MA with manual input MPA
     Given that I am on the Student page
     And I can see a student named "Barry Allen" with a login "ba"
-    And a evaluation criterion named "Management"
+    And I can see a evaluation criterion named "Management"
     And I already put the concepts "MA, MPA" for the student "ba" in the criterion "Management"
     And I can see that the concept for the student "ba" in the criterion "Management" is "MA"
     When I go to the Manual Input Concept Page
     And I choose a new concept "MPA" for the student "ba" in the criterion "Management"
     And I submit the info
-    Then I can see that the final concept of the criterion "Management" for the student "ba" is now "MPA"
+    Then I can see that the final concept of the criterion "Management" for the student "ba" is "MPA"
 
   @psg2
   Scenario: Student already with concepts MA, MPA, MPA, MANA and MANA with manual input MA
     Given that I am on the Student page
     And I can see a student named "Oliver Queen" with a login "oq"
-    And a evaluation criterion named "Refactoring"
+    And I can see a evaluation criterion named "Refactoring"
     And I already put the concepts "MA, MPA, MPA, MANA, MANA" for the student "oq" in the criterion "Refactoring"
     And I can see that the concept for the student "oq" in the criterion "Refactoring" is "MANA"
     When I go to the Manual Input Concept Page
     And I choose a new concept "MA" for the student "oq" in the criterion "Refactoring"
     And I submit the info
-    Then I can see that the final concept of the criterion "Refactoring" for the student "oq" is now "MPA"
+    Then I can see that the final concept of the criterion "Refactoring" for the student "oq" is "MPA"
 
   @psg2
-  Scenario: Student already with concepts MA, MANA, MPA with manual input MANA
+    Scenario: Student already with concepts MA, MANA, MPA with manual input MANA
     Given that I am on the Student page
     And I can see a student named "Clint Barton" with a login "cb"
-    And a evaluation criterion named "Analyze"
+    And I can see a evaluation criterion named "Analyze"
     And I already put the concepts "MA, MANA, MPA" for the student "cb" in the criterion "Analyze"
     And I can see that the concept for the student "cb" in the criterion "Analyze" is "MPA"
     When I go to the Manual Input Concept Page
     And I choose a new concept "MANA" for the student "cb" in the criterion "Analyze"
     And I submit the info
-    Then I can see that the final concept of the criterion "Analyze" for the student "cb" is now "MANA"
+    Then I can see that the final concept of the criterion "Analyze" for the student "cb" is "MANA"
 
   @psg2
   Scenario: Insertion in two different criterions from the same student
     Given that I am on the Student page
     And I can see a student named "Clint Barton" with a login "cb"
-    And criteria evaluation named "Analyze, Refactoring"
-    And I already put the concepts "MA, MPA, MANA, MANA" for the student "cb" in both criteria evaluations "Analyze, Refactoring"
-    And I can see that the concept for the student "cb" in both criteria evaluations "Analyze, Refactoring" is "MANA"
+    And I can see a evaluation criterion named "Analyze"
+    And I can see a evaluation criterion named "Refactoring"
+    And I already put the concepts "MA, MPA, MANA, MANA" for the student "cb" in the criterion "Analyze"
+    And I already put the concepts "MA, MPA, MANA, MANA" for the student "cb" in the criterion "Refactoring"
+    And I can see that the concept for the student "cb" in the criterion "Analyze" is "MANA"
+    And I can see that the concept for the student "cb" in the criterion "Refactoring" is "MANA"
     When I go to the Manual Input Concept Page
     And I choose a new concept "MA" for the student "cb" in the criterion "Analyze"
     And I choose a new concept "MPA" for the student "cb" in the criterion "Refactoring"
     And I submit the info
-    Then I can see that the final concept of the criterion "Analyze" for the student "cb" is now "MPA"
-    And I can see that the final concept of the criterion "Refactoring" for the student "cb" still is "MANA"
+    Then I can see that the final concept of the criterion "Analyze" for the student "cb" is "MPA"
+    And I can see that the final concept of the criterion "Refactoring" for the student "cb" is "MANA"
 
   @psg2
   Scenario: System without criteria

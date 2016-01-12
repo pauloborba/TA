@@ -24,14 +24,13 @@ class StudentPage extends Page {
         return ans;
     }
 
-    // Para teste de falta de critérios
+    // Para teste de falta de critÃ©rios
     boolean checkCriteria(String login){
         boolean ans = false;
         String idCriteria = "#" + login + "Criteria"
+        String text = $(idCriteria).text()
 
-        String test = $(idCriteria).text()
-
-        if ( test.equals("{}") ){
+        if ( text.equals("{}") ){
             ans = true;
         }
         return ans;
@@ -41,10 +40,10 @@ class StudentPage extends Page {
         boolean ans = false;
         String idLogin = "#" + login
         String idCriteria = "#" + login + "Criteria"
-        String test = $(idCriteria).text()
+        String text = $(idCriteria).text()
         name = name + "="+concept
 
-        if ( test.contains(name) ){
+        if ( text.contains(name) ){
             ans = true;
         }
         return ans;

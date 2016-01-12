@@ -7,7 +7,7 @@ class LoginPage extends Page {
     static url = "/TA/student/login"
 
     static at =  {
-        title ==~ /Teaching Assistant Login/
+        title ==~ /Teaching Assistant Log In/
     }
 
     static content = {
@@ -19,8 +19,8 @@ class LoginPage extends Page {
         $("form").password = password
     }
 
-    def selectCreateStudent() {
-        $("input", name: "create").click()
+    def selectLogin() {
+        $("input", name: "login").click()
     }
     def login(){
         btnLogin.click()

@@ -11,6 +11,7 @@ class StudentController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", authenticate: "POST"]
 
     def worked = false;
+    def conceito = new HashMap<String, String>()
 
     def index(Integer max) {
 //        redirect(action: "login", params: params)
@@ -130,7 +131,7 @@ class StudentController {
     public void updateStudentEvaluationCriteria() {
         for (Student student : Student.findAll()) {
             for (EvaluationCriterion evCriterion : EvaluationCriterion.findAll()) {
-                student.addCriterion(evCriterion)
+                student.addCriterion(evCriterion.name)
                 student.save flush: true
 
             }
@@ -307,7 +308,7 @@ class StudentController {
             student.calculateFinalGrade(criterion, concept)
             concept = currentConcept + concept + " "
             student.evaluations.put(criterion, concept)
-//            student.calculateCrispGrade(student.finalGrades)
+
 
             student.save flush: true
         }
@@ -339,6 +340,15 @@ class StudentController {
         }
 
         redirect action: index(10)
+    }
+
+        def updateStudentsCriteriaAfterDelete(String criterionName){
+            def studentList = Student.findAll()
+
+            for ( Student student : studentList ){
+                student.removeCriterion(criterionName)
+            }
+
 
     }
 

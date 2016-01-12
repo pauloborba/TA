@@ -7,7 +7,7 @@ class BootStrap {
 
     def init = { servletContext ->
 
-    Student imspc = new Student(login: "imspc", name: "Igor Matos", password: "123").save(failOnError: true)
+// Student imspc = new Student(login: "imspc", name: "Igor Matos", password: "123").save(failOnError: true)
 
 //        Student pp2 = new Student(login: "pp2", name: "Peter Parker").save(failOnError: true)
 //        Student psg2 = new Student(login: "psg2", name: "Pedro Sereno").save(failOnError: true)
