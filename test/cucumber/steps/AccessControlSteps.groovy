@@ -19,16 +19,15 @@ this.metaClass.mixin(cucumber.api.groovy.EN)
 
 /////////////////////////controller tests////////////////////////////////////////
 
-StudentController context;
+
 
 Then(~'"([^"]*)" request to sign in with password "([^"]*)"') { String login, String password ->
-    context = EvaluateStudentTestDataAndOperations.loginStudent(login,password)
-    assert (context!= null)
+    assert EvaluateStudentTestDataAndOperations.loginStudent(login,password)
 
 }
 
 Then(~'"([^"]*)" have access to the system$') { String login ->
-    assert EvaluateStudentTestDataAndOperations.checkSession(login, context)
+    assert EvaluateStudentTestDataAndOperations.checkAccount(login)
 }
 
 Then(~'the session is created') {  ->

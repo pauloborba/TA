@@ -66,24 +66,21 @@ class EvaluateStudentTestDataAndOperations{
     }
 
 
-    public static StudentController loginStudent(String login, String password){
+    public static boolean loginStudent(String login, String password){
         StudentController controller = new StudentController()
 
         Student student = new Student(login: login, password: password, name: login)
-        controller.tryLogin(student)
 
-        return controller
+        return controller.tryLogin(student)
 
     }
 
 
-    public static boolean checkSession(String login, StudentController context){
-        return context.session.student.login == login
+    public static boolean checkAccount(String login){
+        return Student.findByLoginAndPassword(login,login)
     }
 
-    public static boolean isSession(){
-        return StudentController().session.student != null
-    }
+
 
 
 }

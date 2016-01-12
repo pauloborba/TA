@@ -6,10 +6,10 @@ So that I can see the options that belongs to my user type
 
 #  #Controller scenario
 
-  #Scenario: Signing in
-   #Given that the student named "Anakin Skywalker" with a login "ak" is registered in the system
-   #When "ak" request to sign in with password "ak"
-   #Then "ak" have access to the system
+  Scenario: Signing in
+   Given that the student named "Anakin Skywalker" with a login "ak" is registered in the system
+   When "ak" request to sign in with password "ak"
+   Then "ak" have access to the system
 
 #
 #  #Controller scenario
@@ -35,7 +35,7 @@ So that I can see the options that belongs to my user type
 #  #GUI scenario
    Scenario: Failed signing in web
     Given That I am at login page
-     And "rey" has a account with login "reysw" and password "123"
-     And I write "reysw" and "321" on the login form
-    When I click Sign in button
+    And "rey" has a account with login "reysw" and password "123"
+    When I write "reysw" and "321" on the login form
+    And I click Sign in button
     Then I see a error message for "reysw"
