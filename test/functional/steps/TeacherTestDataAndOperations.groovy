@@ -1,6 +1,5 @@
 package steps
 
-import ta.Teachers
 import ta.TeachersController
 
 class TeacherTestDataAndOperations {
