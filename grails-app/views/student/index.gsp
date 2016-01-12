@@ -45,10 +45,11 @@
 
 								<td id="${studentInstance.login}"><g:link action="show"
 																		  id="${studentInstance.id}">${fieldValue(bean: studentInstance, field: "login")}</g:link></td>
+								<td id="${studentInstance.login}Name">${fieldValue(bean: studentInstance, field: "name")}</td>
 
 								<td>${fieldValue(bean: studentInstance, field: "password")}</td>
 
-								<td id="${studentInstance.login}Name">${fieldValue(bean: studentInstance, field: "name")}</td>
+
 
 								<td id="${studentInstance.login}Criteria">${fieldValue(bean: studentInstance, field: "finalGrades")}</td>
 

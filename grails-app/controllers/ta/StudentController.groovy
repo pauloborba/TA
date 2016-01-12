@@ -23,11 +23,10 @@ class StudentController {
 
     def authenticate(Student student) {
         if (request.method == 'POST') {
-//            println(params)
-            String[] login = params.login
+            String login = params.login
             String password = params.password
 
-            def user = Student.findByLoginAndPassword(login[0], password)
+            def user = Student.findByLoginAndPassword(login, password)
 
             if (user) {
                 session.student = user
@@ -35,7 +34,7 @@ class StudentController {
                 redirect(action: "login")
 
             } else {
-                flash.message = "Sorry, ${params.login[0]}. Please try again."
+                flash.message = "Sorry, ${params.login}. Please try again."
                 redirect(action: "login")
             }
         }
@@ -57,6 +56,21 @@ class StudentController {
             redirect(action: "login")
         }
 
+    }
+
+    def boolean tryLogin(Student student){
+        String login = student.login
+        String password = student.password
+
+        def user = Student.findByLoginAndPassword(login, password)
+        boolean ans = false
+
+        if( user == true ){
+        ans = true
+        logar(student)
+        }
+
+        return user
     }
 
     def logout() {

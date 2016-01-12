@@ -18,32 +18,27 @@ this.metaClass.mixin(cucumber.api.groovy.EN)
 
 
 /////////////////////////controller tests////////////////////////////////////////
-Given(~'That "([^"]*)" has a account with password "([^"]*)"') { String login, password ->
-    Student student = new Student(login: login, password: password, name: login)
-    student.save(failOnError: true)
-//    Student.findOrSaveByLoginAndPassword(discipline, teacher, concepts)
-}
+
+StudentController context;
 
 Then(~'"([^"]*)" request to sign in with password "([^"]*)"') { String login, String password ->
-    StudentController controller = new StudentController()
-    Student student = new Student(login: login, password: password, name: login)
-    controller.logar(student)
+    context = EvaluateStudentTestDataAndOperations.loginStudent(login,password)
+    assert (context!= null)
 
-    assert controller.session != null
 }
 
 Then(~'"([^"]*)" have access to the system$') { String login ->
-    assert session.student.login == login
+    assert EvaluateStudentTestDataAndOperations.checkSession(login, context)
 }
 
-Then(~'And the session is saved on his browser cookies$') {  ->
-    assert session.student != null
+Then(~'the session is created') {  ->
+   assert EvaluateStudentTestDataAndOperations.isSession()
 }
 
 
-Then(~'"([^"]*)" have no access to the system$') { String login ->
-    assert session.student == null
-}
+//Then(~'"([^"]*)" have no access to the system$') { String login ->
+   // assert session.student == null
+//}
 
 /////////////////////////////////////
 //
@@ -77,15 +72,20 @@ When(~'I write "([^"]*)" and "([^"]*)" on the login form$') { String login, Stri
     at LoginPage
 
     page.fillLoginDetails(login, password)
+
 }
 And(~'I click Sign in button$') { ->
 	page.selectLogin()
 }
 
 Then(~'Welcome to "([^"]*)" is displayed') { String name ->
-
+    assert page.checkMessage(name)
 }
 
+
+Then(~'I see a error message for "([^"]*)"') { String login ->
+    assert page.checkErrorMessage(login)
+}
 //
 //And(~'fill the form with name "([^"]*)" with teacher "([^"]*)" and concepts "([^"]*)"$') { String discipline, teacher,
 //                                                                                           String[] concepts ->

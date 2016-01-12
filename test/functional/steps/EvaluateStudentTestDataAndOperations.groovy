@@ -1,5 +1,7 @@
 package steps
 
+import grails.test.GrailsUnitTestCase
+import grails.test.mixin.TestFor
 import ta.EvaluationCriterion
 import ta.EvaluationCriterionController
 import ta.Student
@@ -62,4 +64,26 @@ class EvaluateStudentTestDataAndOperations{
 
         return ans
     }
+
+
+    public static StudentController loginStudent(String login, String password){
+        StudentController controller = new StudentController()
+
+        Student student = new Student(login: login, password: password, name: login)
+        controller.tryLogin(student)
+
+        return controller
+
+    }
+
+
+    public static boolean checkSession(String login, StudentController context){
+        return context.session.student.login == login
+    }
+
+    public static boolean isSession(){
+        return StudentController().session.student != null
+    }
+
+
 }

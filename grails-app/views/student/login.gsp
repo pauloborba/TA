@@ -45,7 +45,7 @@
             </div>
         </fieldset>
         <fieldset class="buttons">
-            <g:submitButton name="login" class="save" value="Login" />
+            <g:submitButton name="submit" class="save" value="Login" />
         </fieldset>
     </g:form>
 </div>
