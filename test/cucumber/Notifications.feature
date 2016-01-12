@@ -14,7 +14,7 @@ Scenario: Registering a grade that requests a notification
   	Then the system stores a low performance notification for "nhps"
 
 #Controller Scenario (sad path)
-  @imvm
+	@ignore
 Scenario: Registering a grade that does not request a notification
 	Given that the system has a student named "Alberto Robson" with login "armr" registered
 	And that the student with login "nhps" has evaluation criteria named "Dancing", "Jumping", and "Running" registered
@@ -23,7 +23,7 @@ Scenario: Registering a grade that does not request a notification
   	Then the system does not store a low performance notification for "armr"
 
 #GUI Scenario (happy path)
-  @imvm
+#  @imvm
   @ignore
 Scenario: Requesting notifications with at least one stored notification
   	Given that I am on the Notifications Page
@@ -32,7 +32,7 @@ Scenario: Requesting notifications with at least one stored notification
   	Then I can see all notifications
 
 #GUI Scenario (sad path)
-  @imvm
+#  @imvm
   @ignore
 Scenario: Requesting notifications with no stored notifications
   	Given that I am on the Notifications Page

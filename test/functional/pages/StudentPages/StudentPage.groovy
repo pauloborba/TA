@@ -1,26 +1,25 @@
 package pages.StudentPages
 
 import geb.Page
+import pages.GetPageTitle
 
 class StudentPage extends Page {
 
     static url = "/TA/student/index"
 
     static at =  {
-        title ==~ /Student Listagem/
+        String model = "Student"
+        String msg = GetPageTitle.getMessage("default.list.label", "Student")
+        title ==~ msg
     }
 
-    def choose(String login){
-        String id = "#"+login+"Compare"
-        $(id).click()
-    }
 
     def close(){
         String id = "#"+"Close"
         $(id).click()
     }
 
-    boolean checkStudent(String login, String name){
+	boolean checkStudent(String login, String name){
         boolean ans = false;
         String idLogin = "#" + login
         String idName = "#" + login + "Name"
@@ -31,13 +30,13 @@ class StudentPage extends Page {
         return ans;
     }
 
+    // Para teste de falta de critérios
     boolean checkCriteria(String login){
         boolean ans = false;
         String idCriteria = "#" + login + "Criteria"
+        String text = $(idCriteria).text()
 
-        String test = $(idCriteria).text()
-
-        if ( test.equals("{}") ){
+        if ( text.equals("{}") ){
             ans = true;
         }
         return ans;
@@ -81,6 +80,11 @@ class StudentPage extends Page {
             resp="red"
         }
         return resp
+    }
+    
+	def choose(String login){
+        String id = "#"+login+"Compare"
+        $(id).click()
     }
 
 }

@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <meta name="layout" content="main">
+    %{--<meta name="layout" content="main">--}%
     <g:set var="entityName" value="${message(code: 'student.label', default: 'Student')}"/>
     <title>Manual Concept Input</title>
 </head>
@@ -70,6 +70,5 @@
             </tr>
         </g:each>
     </g:else>
-</table>
-</body>
+</table></body>
 </html>

@@ -6,8 +6,9 @@ class RegisterEvaluationPage extends Page {
     static url = "/TA/evaluation/create"
 
     static at = {
-        //title ==~ /Criar Evaluation/
-        title ==~ /Criar Evaluation/
+        String model = "Evaluation"
+        String msg = GetPageTitle.getMessage("default.create.label", "Evaluation")
+        title ==~ msg
     }
 
     def fillData(text) {

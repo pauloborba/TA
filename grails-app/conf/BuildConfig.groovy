@@ -45,6 +45,10 @@ grails.project.dependency.resolution = {
         test "org.grails:grails-datastore-test-support:1.0-grails-2.4"
 
         // Dependencias adicionadas
+        def poiVersion='3.9'
+        compile 'org.apache.poi:poi:'+poiVersion
+        compile 'org.apache.poi:poi-ooxml:'+poiVersion
+        compile 'org.apache.poi:poi-ooxml-schemas:'+poiVersion
         compile "org.spockframework:spock-grails-support:0.7-groovy-1.8"
         test "org.gebish:geb-junit4:0.9.2"
         test "org.seleniumhq.selenium:selenium-support:2.39.0"

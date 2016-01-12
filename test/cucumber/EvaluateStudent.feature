@@ -18,7 +18,7 @@ Feature: Evaluate the students
 
 #Controller Scenario
   Scenario: Registering an evaluation criterion that already exists
-    Given the system already has an evaluation criterion named "requirements"
+    Given the system already has an evaluation criterion named "Requirements"
     When I create an evaluation criterion with name "Requirements"2
     Then the evaluation criterion with name "Requirements" was not stored in the system
 

@@ -4,6 +4,7 @@ class Student {
     String login
     String name
 	boolean notification
+    String password
 
     // tentei um enumerador primeiro mas da erro
     static class Concept {
@@ -18,6 +19,16 @@ class Student {
     static constraints = {
         login unique: true
         name blank: false
+        password nullable:true, blank:true
+    }
+
+    def initialize(){
+        if ( evaluations == null ){
+            evaluations = new HashMap<>()
+            autoEvaluations = new HashMap<>()
+            finalGrades = new HashMap<>()
+            crispGrade = -1
+        }
     }
 
     def initialize(){
@@ -31,6 +42,10 @@ class Student {
 
     public void afterCreateAddCriteria(List<EvaluationCriterion> evaluationCriteria) {
         initialize()
+        evaluations = new HashMap<>()
+        finalGrades = new HashMap<>()
+        crispGrade = -1
+
         for(EvaluationCriterion evaluationCriterion : evaluationCriteria) {
             addCriterion(evaluationCriterion.name)
         }
@@ -42,8 +57,17 @@ class Student {
             this.autoEvaluations.put(name, "")
             this.evaluations.put(name, "")
             this.finalGrades.put(name, "")
+            crispGrade = -1
         }
+
     }
+        public void addCriterion(EvaluationCriterion evaluationCriterion) {
+            if (evaluations == null) {
+                evaluations = new HashMap<>()
+                finalGrades = new HashMap<>()
+
+           }
+        }
 
     def removeCriterion(String criterionName){
         if(this.evaluations.get(criterionName) != null) {

@@ -10,7 +10,10 @@ this.metaClass.mixin(cucumber.api.groovy.EN)
 
 //Controller Scenarios
 Given(~'^that the system has a student named "([^"]*)" with login "([^"]*)" registered$') { String name, login ->
-	assert EvaluateStudentTestDataAndOperations.createStudent(login, name)
+	created = EvaluateStudentTestDataAndOperations.createStudent(login, name)
+	exists = Student.findByLogin(login)
+
+	assert created || exists
 }
 And(~'^that the student with login "([^"]*)" has evaluation criteria named "([^"]*)", "([^"]*)", and "([^"]*)" registered$') { String login, criteria1, criteria2, criteria3 ->
 	assert EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criteria1)

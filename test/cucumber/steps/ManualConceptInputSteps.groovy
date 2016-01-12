@@ -15,31 +15,37 @@ def conceptsLenght
 def inputConcept
 
 Given (~'that the student named "([^"]*)" with a login "([^"]*)" is registered in the system$') { String name, login ->
-    studentLogin = login
     assert EvaluateStudentTestDataAndOperations.createStudent(login, name)
 }
 
 And (~'the evaluation criterion "([^"]*)" is also registered in the system$'){ String name ->
-    criterionName = name
     assert EvaluateStudentTestDataAndOperations.createEvaluationCriterion(name)
 }
 
-And (~'the student doesn\'t have a concept in that criterion$'){ ->
-    assert EvaluateStudentTestDataAndOperations.getConceptsLength(studentLogin, criterionName) == 0
+And (~'the student "([^"]*)" doesn\'t have a concept in the criterion "([^"]*)"$'){ String login, criterion->
+    assert EvaluateStudentTestDataAndOperations.getConceptsLength(login, criterion) == 0
 }
 
-When (~'the user input manually a new concept "([^"]*)" into the student in that criterion$'){ String concept ->
-    inputConcept = concept
-    conceptsLenght = EvaluateStudentTestDataAndOperations.getConceptsLength(studentLogin, criterionName)
-    EvaluateStudentTestDataAndOperations.updateConcept(studentLogin, criterionName, concept)
+When (~'the user input manually a new concept "([^"]*)" into the student "([^"]*)" in the criterion "([^"]*)"$') { String concept, login, criterion ->
+    EvaluateStudentTestDataAndOperations.updateConcept(login, criterion, concept)
 }
 
-Then (~'the new concept of that criterion is stored in the student$') { ->
-    assert EvaluateStudentTestDataAndOperations.checkConceptUpdate(studentLogin, criterionName, inputConcept, conceptsLenght)
+Then (~'the new concept "([^"]*)" of the criterion "([^"]*)" is stored in the student "([^"]*)"$') { String concept, criterion, login ->
+    assert EvaluateStudentTestDataAndOperations.checkConceptUpdate(login, criterion, concept)
 }
 
-And (~'the final criterion concept of that student is updated to "([^"]*)" in the system$'){ String concept ->
-    assert EvaluateStudentTestDataAndOperations.getFinalGrade(studentLogin, criterionName).equals(concept)
+And (~'the final concept of the criterion "([^"]*)" of the student "([^"]*)" is updated to "([^"]*)" in the system$') { String criterion, login, concept ->
+    assert EvaluateStudentTestDataAndOperations.getFinalGrade(login, criterion).equals(concept)
+}
+
+And (~'the student "([^"]*)" already have the concepts "([^"]*)" in the criterion "([^"]*)"$') {  String login, criteria, criterion ->
+    String[] crit = criteria.split(", ")
+
+    for( String i : crit ){
+        EvaluateStudentTestDataAndOperations.updateConcept(login, criterion, i)
+    }
+
+    assert EvaluateStudentTestDataAndOperations.checkConcepts(login, criterion, crit);
 }
 
 //Scenario: Spreadsheet with at least one student and one criterion
@@ -50,16 +56,25 @@ Given(~'that I am on the Student page$'){ ->
 
 And (~'I can see a student named "([^"]*)" with a login "([^"]*)"$'){ String name, login ->
     studentLogin = login
-    EvaluateStudentTestDataAndOperations.createStudent(login, name)
+    assert page.checkStudent(login, name)
 }
 
-And (~'a evaluation criterion named "([^"]*)"$'){ String name ->
-    criterionName = name
-    EvaluateStudentTestDataAndOperations.createEvaluationCriterion(name)
+And (~'I can see a evaluation criterion named "([^"]*)"$'){ String name ->
+    to CreateEvaluationCriterionPage
+    at CreateEvaluationCriterionPage
+
+    page.fillEvaluationCriterionDetails(name)
+    page.selectCreateEvaluationCriterion()
+
+    to StudentPage
+    at StudentPage
+
+    assert page.checkCriterionConcept(studentLogin, name)
 }
 
-And (~'I can\'t see a concept in that criterion$'){ ->
-
+And (~'I can\'t see a concept for the student "([^"]*)" in the criterion "([^"]*)"$'){ String login, criterion->
+    at StudentPage
+    assert page.checkCriterionConcept(login, criterion)
 }
 
 When (~'I go to the Manual Input Concept Page$'){ ->
@@ -67,9 +82,9 @@ When (~'I go to the Manual Input Concept Page$'){ ->
     at ManualInputPage
 }
 
-And (~'I choose a new concept "([^"]*)" to that student in that criterion$'){ String concept ->
+And (~'I choose a new concept "([^"]*)" for the student "([^"]*)" in the criterion "([^"]*)"$'){ String concept, login, criterion ->
     at ManualInputPage
-    page.fillConceptDetails(studentLogin, criterionName, concept)
+    page.fillConceptDetails(login, criterion, concept)
 }
 
 And (~'I submit the info$'){ ->
@@ -77,11 +92,36 @@ And (~'I submit the info$'){ ->
     page.click(studentLogin)
 }
 
-Then (~'I go back to Student List page$'){->
-    to StudentPage
+Then (~'I can see that the final concept of the criterion "([^"]*)" for the student "([^"]*)" is "([^"]*)"$'){String criterion, login, concept ->
     at StudentPage
+    assert page.checkCriterionConcept(login, criterion, concept)
 }
 
-And (~'I can see that the final concept in that criterion is updated for that student$'){->
+And (~'I already put the concepts "([^"]*)" for the student "([^"]*)" in the criterion "([^"]*)"$'){String criteria, login, criterion ->
 
+    String[] crit = criteria.split(", ")
+
+    for( String i : crit ){
+        to ManualInputPage
+        at ManualInputPage
+        page.fillConceptDetails(login, criterion, i)
+        page.click(login)
+    }
+
+}
+
+And (~'I can see that the concept for the student "([^"]*)" in the criterion "([^"]*)" is "([^"]*)"$') { String login, criterion, concept ->
+    at StudentPage
+    assert page.checkCriterionConcept(login, criterion, concept)
+}
+
+And (~'I can\'t see any evaluation criterion$'){ ->
+    at StudentPage
+
+    assert page.checkCriteria(studentLogin)
+}
+
+Then (~'I can see an error message$'){->
+    at ManualInputPage
+    assert page.checkError()
 }

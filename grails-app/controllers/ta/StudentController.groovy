@@ -1,33 +1,108 @@
 package ta
 
+import org.fusesource.jansi.AnsiConsole
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class StudentController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", authenticate: "POST"]
 
     def worked = false;
     def conceito = new HashMap<String, String>()
 
     def index(Integer max) {
+//        redirect(action: "login", params: params)
         params.max = Math.min(max ?: 10, 100)
         respond Student.list(params), model: [studentInstanceCount: Student.count()]
     }
+
+    def login() {}
+
+    def authenticate(Student student) {
+        if (request.method == 'POST') {
+            String login = params.login
+            String password = params.password
+
+            def user = Student.findByLoginAndPassword(login, password)
+
+            if (user) {
+                session.student = user
+                flash.message = "Hello ${user.name}!"
+                redirect(action: "login")
+
+            } else {
+                flash.message = "Sorry, ${params.login}. Please try again."
+                redirect(action: "login")
+            }
+        }
+    }
+
+    def logar(Student student){
+        String login = student.login
+        String password = student.password
+
+        def user = Student.findByLoginAndPassword(login, password)
+
+        if (user) {
+            session.student = user
+            flash.message = "Hello ${user.name}!"
+            redirect(action: "login")
+
+        } else {
+            flash.message = "Sorry, ${params.login[0]}. Please try again."
+            redirect(action: "login")
+        }
+
+    }
+
+    def boolean tryLogin(Student student){
+        String login = student.login
+        String password = student.password
+
+        def user = Student.findByLoginAndPassword(login, password)
+        boolean ans = false
+
+        if( user == true ){
+        ans = true
+        logar(student)
+        }
+
+        return user
+    }
+
+    def logout() {
+        flash.message = "Goodbye ${session.student.name}"
+        session.student = null
+        redirect(action:"login")
+    }
+
+
 
     def show(Student studentInstance) {
         respond studentInstance
     }
 
     def create() {
-        respond new Student(params)
+        Student student = new Student(params)
+        student.afterCreateAddCriteria(EvaluationCriterion.findAll())
+        respond student
+    }
+
+    def deleteAfterTest(login) {
+        Student student = Student.findByLogin(login)
+        delete(student)
     }
 
     public Student createStudent() {
+        if (params.password == null){
+            params.password = params.login
+        }
+
         Student student = new Student(params)
 		student.notification = false;
-        student.afterCreateAddCriteria(EvaluationCriterion.findAll())
+        //student = student.merge()
 //        student.afterCreateAddAutoCriteria(AutoEvaluationCriterion.findAll())
 //        student.afterCreateAddAutoEvaluationCriteria(EvaluationAutoEvaluationCriterion.findAll())
         return student
@@ -44,8 +119,25 @@ class StudentController {
         render view: "manualInput", model:[students: students, criteria: criteria]
     }
 
+    def listAutoEvaluation() {
+        def students = Student.findAll()
+        def criteria = EvaluationCriterion.findAll()
+
+        render view: "autoEvaluation", model: [students: students, criteria: criteria]
+
+//        def students = Student.findAll()
+//        def criteria = EvaluationCriterion.findAll()
+//
+//        render view: "manualInput", model: [students: students, criteria: criteria]
+    }
+
     public boolean saveStudent(Student student) {
-        if(Student.findByLogin(student.login) == null) {
+        if (Student.findByLogin(student.login) == null && student.password == null) {
+            student.password = student.login
+            student.save flush: true
+
+            return true
+        } else if(Student.findByLogin(student.login) == null){
             student.save flush: true
             return true
         }
@@ -57,6 +149,7 @@ class StudentController {
             for (EvaluationCriterion evCriterion : EvaluationCriterion.findAll()) {
                 student.addCriterion(evCriterion.name)
                 student.save flush: true
+
             }
 
 //            for (AutoEvaluationCriterion autoEvCriterion : AutoEvaluationCriterion.findAll()) {
@@ -67,28 +160,44 @@ class StudentController {
         }
     }
 
-    def compareGrade(){
-      String login = params.studentId
-      compareGrades(login)
+
+    def compareGrade() {
+        String login = params.studentId
+		compareGrades(login)
+        def criteria = EvaluationCriterion.findAll()
+        Student student = Student.findByLogin(login)
+        HashMap<String, String> auto = student.getAutoEvaluations()
+        HashMap<String, String> fin = student.getFinalGrades()
+        boolean sent = sentAuto(login)
+        if (!sent) {
+            worked = false;
+            flash.error = "Erro: o aluno escolhido não enviou a auto avaliação"
+            redirect action: index(10)
+        } else {
+            worked = true;
+        }
+
+        render view: "compare", model: [criteria: criteria, student: student]
     }
 
-    def compareGrades(String login){
+    def compareGrades(String login) {
         def criteria = EvaluationCriterion.findAll()
         Student student = Student.findByLogin(login)
         boolean sent = sentAuto(login)
         if (!sent) {
-            worked=false;
+            worked = false;
             flash.error = "Erro: o aluno escolhido não enviou a auto avaliação"
             redirect action: index(10)
-        }else{
-            worked=true;
+        } else {
+            worked = true;
         }
 
         println worked
         render view: "index", model:[criteria: criteria, student: student, booleanWorked: worked, studentInstanceList : Student.list()]
+        render view: "compare", model: [criteria: criteria, student: student]
     }
 
-    public boolean sentAuto(String login){
+    public boolean sentAuto(String login) {
         boolean sent = false;
         Student student = Student.findByLogin(login)
         if(student!=null) {
@@ -117,6 +226,13 @@ class StudentController {
         }
 
         studentInstance.afterCreateAddCriteria(EvaluationCriterion.findAll())
+
+
+
+        def isPasswordEmpty = studentInstance.password == null
+        if(isPasswordEmpty){
+            studentInstance.password = studentInstance.login
+        }
 
         studentInstance.save flush: true
 
@@ -167,6 +283,84 @@ class StudentController {
             concept = currentConcept + concept + " "
             student.evaluations.put(criterion, concept)
 
+    @Transactional
+    def updateAutoEvaluation(String login, String studentCriterion, String concept) {
+        if (!concept.isEmpty()) {
+            println login
+            Student student = Student.findByLogin(login)
+            student.autoEvaluations.put(studentCriterion, concept)
+            student.save flush: true
+        }
+    }
+
+    def updateCriteriaAutoEvaluation() {
+        String[] selector = params.concepts
+        String login = params.selector
+        String[] criteria = params.criterionName
+
+        if (EvaluationCriterion.findByName(criteria[0]) == null) {
+            String select = ""
+            int size = selector.length
+            for (int j = 0; j < size; j++) {
+                select = select + selector[j]
+            }
+            String criterion = ""
+            size = criteria.length
+            for (int j = 0; j < size; j++) {
+                criterion = criterion + criteria[j]
+
+        int a = 0;
+        for (int i = 0; i < selector.size(); i++) {
+            if (selector[i].equalsIgnoreCase("")) {
+                a = a + 1;
+            }
+        }
+
+
+        if (login.equalsIgnoreCase("")) {
+            flash.error = "Choose a student"
+            render view: "autoEvaluation"
+        } else if (a > 0) {
+            flash.error = "Evaluate yourself for all criteria"
+            render view: "autoEvaluation"
+        } else if (EvaluationCriterion.findByName(criteria[0]) == null) {
+            for (int i = 1; i < criteria.size(); i++) {
+                criteria[0] = criteria[0] + criteria[i]
+                selector[0] = selector[0] + selector[i]
+            }
+
+            updateAutoEvaluation(login, criteria[0], selector[0])
+
+            redirect action: index(100)
+        } else {
+            int size = criteria.length
+            for (int i = 0; i < criteria.length; i++) {    
+				updateConcepts(login, criteria[j], selector[j])
+                updateAutoEvaluation(login, criteria[i], selector[i])
+            }
+            redirect action: index(100)
+        }
+        redirect action: index(10)
+    }
+
+    def updateStudentsCriteriaAfterDelete(String criterionName){
+        def studentList = Student.findAll()
+
+        for ( Student student : studentList ){
+            student.removeCriterion(criterionName)
+        }
+    }
+
+    def updateConcepts(String login, String criterion, String concept) {
+        if (!concept.isEmpty()) {
+            Student student = Student.findByLogin(login)
+            String currentConcept = student.evaluations.get(criterion);
+            student.calculateFinalGrade(criterion, concept)
+            concept = currentConcept + concept + " "
+            student.evaluations.put(criterion, concept)
+            //student.calculateCrispGrade(student.finalGrades)
+
+
             student.save flush: true
         }
     }
@@ -199,14 +393,15 @@ class StudentController {
         redirect action: index(10)
     }
 
-    def updateStudentsCriteriaAfterDelete(String criterionName){
-        def studentList = Student.findAll()
+        def updateStudentsCriteriaAfterDelete(String criterionName){
+            def studentList = Student.findAll()
 
-        for ( Student student : studentList ){
-            student.removeCriterion(criterionName)
-        }
+            for ( Student student : studentList ){
+                student.removeCriterion(criterionName)
+            }
+
+
     }
-
 
     @Transactional
     def delete(Student studentInstance) {

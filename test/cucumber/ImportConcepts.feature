@@ -5,21 +5,63 @@ Feature: Import concepts from spreadsheet
   I want to import concepts from spreadsheets
   So that my grades are easily recorded on the system
 
-#Controller Scenario
+  #GUI Scenario (success)
   @ignore
-  Scenario: Importing valid spreadsheet
-    Given the spreadsheet "sheet.csv" or "sheet.xlsx" is on valid file format
-    When I import its data
+  Scenario: Importing valid spreadsheet (file format and columns)
+    Given that I am at the Sheet Upload page
+    When I import the spreadsheet "validSheet.xlsx"
+    And the spreadsheet is on valid file format
+    And the spreadsheet contains valid columns
+    Then an upload confirmation message is displayed
+
+#GUI Scenario (failure)
+  @ignore
+  Scenario: Importing spreadsheet in invalid file format
+    Given that I am at the Sheet Upload page
+    When I import the spreadsheet "sheet.csv"
+    And the spreadsheet is not on valid file format
+    Then display error message
+
+#GUI Scenario (failure)
+  @ignore
+  Scenario: Importing spreadsheet with invalid column
+    Given that I am at the Sheet Upload page
+    When I import the spreadsheet "invalidColumnSheet.xlsx"
+    And the spreadsheet is on valid file format
+    And the spreadsheet has invalid columns
+    Then display error message
+
+#Controller Scenario (success)
+  @ignore
+  Scenario: Importing valid spreadsheet (file format and columns)
+    Given the spreadsheet "validSheet.xlsx" is on valid file format
+    When I try to import its data
+    And the spreadsheet contains valid columns
     Then update system data accordingly
 
-#Controller Scenario
-  @gaabs
-  Scenario: Importing invalid spreadsheet
-    Given the spreadsheet "sheet.pdf" is not on valid file format
+#Controller Scenario (failure)
+  @ignore
+  Scenario: Importing spreadsheet in invalid file format
+    Given the spreadsheet "sheet.csv" is not on valid file format
     When I try to import its data
     Then do not update system data
 
-#GUI Scenario
+#Controller Scenario (failure)
+  @ignore
+  Scenario: Importing spreadsheet with invalid column
+    Given the spreadsheet "invalidColumnSheet.xlsx" is on valid file format
+    When I try to import its data
+    Then do not update system data
+
+#Controller Scenario
+  @ignore
+  Scenario: Importing spreadsheet with non registered student
+    Given the valid spreadsheet "validSheet.xlsx" contains a not registered student named "Alan Turing" with login "at"
+    When  I import the spreadsheet
+    Then the student is registered
+
+#Controller Scenario
+#  @gaabs
   @ignore
   Scenario: Importing valid spreadsheet
     Given that I am at the Concepts page
