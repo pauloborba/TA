@@ -54,5 +54,4 @@ class StudentPage extends Page {
         $(id).click()
     }
 
-
 }

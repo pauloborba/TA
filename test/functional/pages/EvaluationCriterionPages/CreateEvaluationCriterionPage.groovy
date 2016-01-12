@@ -11,8 +11,6 @@ class CreateEvaluationCriterionPage extends Page {
         String model = "EvaluationCriterion"
         String msg = GetPageTitle.getMessage("default.create.label", "EvaluationCriterion")
         title ==~ msg
-//        title ==~ /Criar EvaluationCriterion/
-//        title ==~ /Create EvaluationCriterion/
     }
 
     def fillEvaluationCriterionDetails(String name) {

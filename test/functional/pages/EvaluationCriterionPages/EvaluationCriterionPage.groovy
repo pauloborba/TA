@@ -11,7 +11,5 @@ class EvaluationCriterionPage extends Page {
         String model = "EvaluationCriterion"
         String msg = GetPageTitle.getMessage("default.list.label", "EvaluationCriterion")
         title ==~ msg
-        //title ==~ /EvaluationCriterion Listagem/
-//        title ==~ /EvaluationCriterion List/
     }
 }

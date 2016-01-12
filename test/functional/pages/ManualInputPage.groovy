@@ -10,7 +10,6 @@ class ManualInputPage extends Page {
         title ==~ /Manual Concept Input/
     }
 
-
     void adjustCriterion(String criterion){
         if(criterion.indexOf(" ") != -1 ){
             criterion = criterion.replaceAll(" ", "\\\\\\\\ ");

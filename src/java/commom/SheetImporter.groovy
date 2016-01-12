@@ -34,50 +34,49 @@ class SheetImporter extends AbstractExcelImporter{
                 ]
         ]
         List conceptList = excelImportService.columns(workbook, CONFIG_COLUMN_MAP)
+        return conceptList
     }
 
     public boolean hasValidColumns(){
         boolean isValid = true;
         def sheet = this.workbook.getSheetAt(0);
         def row = sheet.getRow(0);
-        def header;
 
-        header = row.getCell(0).stringCellValue;
-        if (!header.equalsIgnoreCase("aluno")) isValid = false;
+        isValid &= hasHeader(row,0,"aluno")
+        isValid &= hasHeader(row,1,"login")
 
-        header = row.getCell(1).stringCellValue;
-        if (!header.equalsIgnoreCase("login")) isValid = false;
-
-        header = row.getCell(2).stringCellValue;
-        if (header.length() == 0) isValid = false;
+        def criterion = row.getCell(2).stringCellValue;
+        if (criterion.length() == 0) isValid = false;
 
         return isValid;
     }
 
-    public int getNameRow(String name){
-        int row = -1
-        def sheet = this.workbook.getSheetAt(0)
+    private boolean hasHeader(row, cell, name) {
+        def header = row.getCell(cell).stringCellValue;
 
-        for (i in 0..sheet.getLastRowNum()){
-            if (sheet.getRow(i).getCell(0).stringCellValue.equalsIgnoreCase(name)){
-                row = i
-                break
-            }
-        }
-        return row
+        return header.equalsIgnoreCase(name)
+    }
+
+    public int getNameRow(String name){
+        return getRowNum(0,name)
     }
 
     public int getLoginRow(String login){
+        return getRowNum(1,login)
+    }
+
+    private int getRowNum(int cell, String login) {
         int row = -1
         def sheet = this.workbook.getSheetAt(0)
 
-        for (i in 0..sheet.getLastRowNum()){
-            if (sheet.getRow(i).getCell(1).stringCellValue.equalsIgnoreCase(login)){
+        for (i in 0..sheet.getLastRowNum()) {
+            if (sheet.getRow(i).getCell(cell).stringCellValue.equalsIgnoreCase(login)) {
                 row = i
                 break
             }
         }
         return row
     }
+
 
 }

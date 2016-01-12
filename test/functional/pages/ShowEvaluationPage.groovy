@@ -10,7 +10,5 @@ class ShowEvaluationPage extends Page{
         String model = "Evaluation"
         String msg = GetPageTitle.getMessage("default.show.label", "Evaluation")
         title ==~ msg
-//        title ==~ /Ver Evaluation/
-//        title ==~ /Show Evaluation/
     }
 }

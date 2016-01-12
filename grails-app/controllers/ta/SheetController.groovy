@@ -7,8 +7,6 @@ import static org.springframework.http.HttpStatus.*
 
 @Transactional(readOnly = true)
 class SheetController {
-    public boolean hasImported
-
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
@@ -110,8 +108,6 @@ class SheetController {
     def submit() {
         def f = request.getFile('datafile')
 
-        println params
-
         String filename = params.datafile.getOriginalFilename()
 
         if (f.empty){
@@ -123,59 +119,38 @@ class SheetController {
         File newFile = new File(filename)
         f.transferTo(newFile)
         uploadSheet(filename)
-        //response.sendError(200,'Done')
         newFile.delete()
-
     }
 
     def uploadSheet(String filename){
-        File newFile = new File(filename)
 
         SheetImporter sheetImporter
-        hasImported = false
         try {
             sheetImporter = new SheetImporter(filename)
             def validColumns = sheetImporter.hasValidColumns()
 
             if (!validColumns){
-                flash.error = "Error! \nFirst column should be named 'aluno', \nsecond column sould be named 'login' \nand the third column should have a header"
+                flash.error = "Error! \nFirst column should be named 'aluno', \nsecond column should be named 'login' \nand the third column should have a header"
             } else {
-
                 def name, login, criterion, concept
                 List<Map> data = sheetImporter.getConcepts()
 
                 criterion = sheetImporter.getCriterion()
 
-                boolean criterionExists = EvaluationCriterion.findByName(criterion) != null
+                createCriterion(criterion)
 
-                def cont
-                if (!criterionExists) {
-                    cont = new EvaluationCriterionController()
-                    cont.params << [name: criterion]
-                    cont.saveEvaluationCriterion(cont.createEvaluationCriterion())
-                }
+                def cont = new StudentController()
 
                 for (Map m : data) {
                     name = m.get('aluno')
                     login = m.get('login')
                     concept = m.get(criterion)
 
-                    boolean studentExists = Student.findByLogin(login) != null
-
-                    cont = new StudentController()
-
-                    if (!studentExists) {
-                        println "criou estudante " + login + " " + name
-
-                        cont.params << [login: login] << [name: name] << [evaluations: new HashMap<String, String>()]
-                        cont.saveStudent(cont.createStudent())
-                    }
-
+                    createStudent(name,login, criterion)
+                    println "tentando adicioanr o conceito '${concept}' ao critério '${criterion}' do aluno '${login}'"
                     cont.updateConcepts(login, criterion, concept)
-
                 }
 
-                hasImported = true
                 flash.message = 'Sheet uploaded!'
 
             }
@@ -185,7 +160,29 @@ class SheetController {
         }
 
         render view: "upload"
-        return
+    }
+
+    private void createCriterion(String criterion) {
+        boolean criterionExists = EvaluationCriterion.findByName(criterion) != null
+
+        def cont
+        if (!criterionExists) {
+            cont = new EvaluationCriterionController()
+            cont.params << [name: criterion]
+            cont.saveEvaluationCriterion(cont.createEvaluationCriterion())
+        }
+    }
+
+    private void createStudent(String name, String login, String criterion) {
+        boolean studentExists = Student.findByLogin(login) != null
+
+        if (!studentExists) {
+            println "criou estudante " + login + " " + name
+
+            def cont = new StudentController()
+            cont.params << [login: login] << [name: name]
+            cont.saveStudent(cont.createStudent())
+        }
     }
 
 }

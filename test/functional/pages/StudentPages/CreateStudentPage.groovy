@@ -11,8 +11,6 @@ class CreateStudentPage extends Page {
         String model = "Student"
         String msg = GetPageTitle.getMessage("default.create.label", "Student")
         title ==~ msg
-//        title ==~ /Criar Student/
-//        title ==~ /Create Student/
     }
 
     def fillStudentDetails(String login, String name) {
