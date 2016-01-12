@@ -322,6 +322,7 @@ class StudentController {
             student.calculateFinalGrade(criterion, concept)
             concept = currentConcept + concept + " "
             student.evaluations.put(criterion, concept)
+            student.calculateCrispGrade(student.finalGrades)
 
 
             student.save flush: true
