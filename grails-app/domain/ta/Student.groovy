@@ -46,7 +46,7 @@ class Student {
         }
     }
 
-    public void addCriterion(EvaluationCriterion evaluationCriterion) {
+    public void addCriterion(EvaluationCriterion evaluationCriterion)git {
         if(evaluations == null) {
             autoEvaluations = new HashMap<>()
             evaluations = new HashMap<>()
