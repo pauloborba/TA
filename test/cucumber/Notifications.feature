@@ -24,6 +24,7 @@ Scenario: Registering a grade that does not request a notification
 
 #GUI Scenario (happy path)
   @imvm
+  @ignore
 Scenario: Requesting notifications with at least one stored notification
   	Given that I am on the Notifications Page
 	And there is at least one registered notification
@@ -32,6 +33,7 @@ Scenario: Requesting notifications with at least one stored notification
 
 #GUI Scenario (sad path)
   @imvm
+  @ignore
 Scenario: Requesting notifications with no stored notifications
   	Given that I am on the Notifications Page
 	And there is no registered notifications

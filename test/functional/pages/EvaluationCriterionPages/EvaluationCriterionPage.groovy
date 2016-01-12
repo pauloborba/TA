@@ -8,6 +8,6 @@ class EvaluationCriterionPage extends Page {
 
     static at =  {
         //title ==~ /EvaluationCriterion Listagem/
-        title ==~ /EvaluationCriterion List/
+        title ==~ /EvaluationCriterion Listagem/
     }
 }

@@ -7,7 +7,7 @@ class RegisterEvaluationPage extends Page {
 
     static at = {
         //title ==~ /Criar Evaluation/
-        title ==~ /Create Evaluation/
+        title ==~ /Criar Evaluation/
     }
 
     def fillData(text) {
