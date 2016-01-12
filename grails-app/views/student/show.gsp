@@ -1,4 +1,3 @@
-
 <%@ page import="ta.Student" %>
 <!DOCTYPE html>
 <html>
@@ -14,6 +13,7 @@
 		<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
 		<li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
 		<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+		<li><g:link class="create" action="list"><g:message code="default.new.label" message="Manual Concept Input" /></g:link></li>
 	</ul>
 </div>
 <div id="show-student" class="content scaffold-show" role="main">
@@ -46,6 +46,15 @@
 				<span id="evaluations-label" class="property-label"><g:message code="student.evaluations.label" default="Evaluations" /></span>
 
 				<span class="property-value" aria-labelledby="evaluations-label"><g:fieldValue bean="${studentInstance}" field="evaluations"/></span>
+
+			</li>
+		</g:if>
+
+		<g:if test="${studentInstance?.autoEvaluations}">
+			<li class="fieldcontain">
+				<span id="autoEvaluations-label" class="property-label"><g:message code="student.autoEvaluations.label" default="autoEvaluations" /></span>
+
+				<span class="property-value" aria-labelledby="autoEvaluations-label"><g:fieldValue bean="${studentInstance}" field="autoEvaluations"/></span>
 
 			</li>
 		</g:if>

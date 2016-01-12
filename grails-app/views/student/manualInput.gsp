@@ -28,7 +28,7 @@
 <table>
 
     <g:if test="${students.size() == 0 || criteria.size() == 0}">
-        <div id="EmptyError">O sistema não possui nenhum estudante ou critérios cadastrados, volte mais tarde!</div>
+        <div class ="errors" id="EmptyError">O sistema não possui nenhum estudante ou critérios cadastrados, volte mais tarde!</div>
     </g:if>
     <g:else>
         <g:each in="${students}" status="i" var="studentInstance">
@@ -38,7 +38,7 @@
                     Login
                 </th>
                 <g:each in="${criteria}">
-                    <th>
+                    <th id="${it.name}">
                         ${it.name}
                     </th>
                 </g:each>

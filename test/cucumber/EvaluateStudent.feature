@@ -6,9 +6,9 @@ Feature: Evaluate the students
   So I want to tell him what I think about him on these criteria
 
 #Stakeholder: Paulo Borba
-#[16:26:54] Paulo Borba: eu quero avaliar um aluno com relação a vários criterios
-#[16:27:06] Paulo Borba: não quero dar uma simples nota a ele
-#[16:27:26] Paulo Borba: quero dizer a ele o que eu achei dele com relação a vários critérios
+#[16:26:54] Paulo Borba: eu quero avaliar um aluno com relaï¿½ï¿½o a vï¿½rios criterios
+#[16:27:06] Paulo Borba: nï¿½o quero dar uma simples nota a ele
+#[16:27:26] Paulo Borba: quero dizer a ele o que eu achei dele com relaï¿½ï¿½o a vï¿½rios critï¿½rios
 
 #Controller Scenario
   Scenario: Registering an evaluation criterion that does not exist
@@ -18,32 +18,31 @@ Feature: Evaluate the students
 
 #Controller Scenario
   Scenario: Registering an evaluation criterion that already exists
-    Given the system already has an evaluation criterion named "requirements"
-    When I create an evaluation criterion with name "Requirements"2
+    Given the system already has an evaluation criterion named "Requirements"
+    When I create an evaluation criterion with name "Requirements"
     Then the evaluation criterion with name "Requirements" was not stored in the system
 
 #Controller Scenario
   Scenario: Updating the list of criteria for registered students
-    Given the system does not have an evaluation criterion with name "Project management"2
+    Given the system does not have an evaluation criterion with name "Project management"
     And the student "Peter Parker" with login "pp2" is registered in the system
-    When I create an evaluation criterion with name "Project management"3
+    When I create an evaluation criterion with name "Project management"
     Then the system evaluates "Peter Parker" also using the criterion "Project management"
 
-#GUI Scenario
-  Scenario: Evaluate a registered student
-    Given I am on the Students Page
-    And the student "Peter Parker" with login "pp2" is registered in the system2
-    And there is a criterion called "Requirements" registered in the system
-    When I go to the Students Page
-    Then I am should see a table with "pp2" in a row and "Requirements" in a column
 
-#GUI Scenario
-  Scenario: Add a new evaluation criterion
-    Given I am on the Evaluation Criterion Page
-    And I follow new evaluation criterion
-    When I fill "Requirements" in the Name field
-    And I click Save
-    Then I am should see the Students page with a new column named "Requirements"
+ #GUI Scenarios
+  Scenario: Add a new evaluation criterion column to the manual concept input table
+    Given that I am on the Student page
+    And I can see a student named "Luke Cage" with a login "lc"
+    When I create a new evaluation criterion named "Refactoring"
+    And I go to the Manual Concept Input Page
+    Then I can see a column for the evaluation criterion "Refactoring"
 
+  Scenario: Add a new evaluation criterion to the students list
+    Given that I am on the Student page
+    And I can see a student named "Luke Cage" with a login "lc"
+    When I create a new evaluation criterion named "Requirements"
+    And I go to the Student Page
+    Then I can see the criterion "Requirements" in the column evaluations for the student "lc"
 
 #Other scenarios gui to do: remove the evaluation criterion
