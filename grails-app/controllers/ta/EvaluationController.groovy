@@ -13,7 +13,21 @@ class EvaluationController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    //def beforeInterceptor = [action:this.&auth]
+
+    def scaffold=true
+
+        def auth() {
+        if(!session.student) {
+            redirect(controller:"Student", action:"login")
+            return false
+        }
+    }
+
+
+
     def index(Integer max) {
+//        redirect(action: "list")
         params.max = Math.min(max ?: 10, 100)
         respond Evaluation.list(params), model: [evaluationInstanceCount: Evaluation.count()]
     }

@@ -14,10 +14,13 @@ class NotificationPage extends Page{
         $("input", name:"show").click()
     }
 
-
-    static content = {
-        flashmessage = {
-            $("div", class: "message")
-        }
-    }
+	def update() {
+	
+	}
+//
+//    static content = {
+//        flashmessage = {
+//            $("div", class: "message")
+//        }
+//    }
 }

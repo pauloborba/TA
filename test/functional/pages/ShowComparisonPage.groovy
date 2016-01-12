@@ -9,4 +9,11 @@ class ShowComparisonPage extends Page{
     static at = {
         title ==~ /Show Comparison/
     }
+
+    def goBack(){
+        String id = "a.list"
+        $(id).click()
+    }
+
+
 }
