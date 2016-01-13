@@ -157,23 +157,6 @@ class StudentController {
       compareGrades(login)
     }
 
-    def compareGrades(String login) {
-        def criteria = EvaluationCriterion.findAll()
-        Student student = Student.findByLogin(login)
-        boolean sent = sentAuto(login)
-        if (!sent) {
-            worked = false;
-            flash.error = "Erro: o aluno escolhido não enviou a auto avaliação"
-            redirect action: index(10)
-        } else {
-            worked = true;
-        }
-
-        println worked
-        render view: "index", model: [criteria: criteria, student: student, booleanWorked: worked, studentInstanceList: Student.list()]
-        render view: "compare", model: [criteria: criteria, student: student]
-    }
-
     def compareGrades(String login){
         def criteria = EvaluationCriterion.findAll()
         Student student = Student.findByLogin(login)
