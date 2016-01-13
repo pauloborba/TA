@@ -1,0 +1,31 @@
+Commented whole class AlternativeControllerSpec. It had incompatible commands to our grails version.
+
+pedro duplicate steps
+
+renato duplicate steps 
+	32 em relacao a 16
+	"66" em relacao a 38
+	"67" em relacao a "43"
+	"66" em "48"
+
+caio duplicate steps
+	64 e 37
+	64 e 42 when I choose the criterion
+
+maia
+	evaluation comparison: 
+		given givens
+		duplicate steps 55 e 25
+		duplicate steps 55 e 32 and i select compare grades
+		duplicate steps 95 e 72 when the system requires
+		AutoEvaluationEdit.feature and steps, different names
+ian
+	autoavaliacao prazo
+	@ignore no notifications feature
+
+full comment
+	accesscontrol
+	autoavaliacaoprazo
+
+WTF
+	cadastrodecriterios feature - deletei (quebrou tudo)
