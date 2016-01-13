@@ -17,6 +17,7 @@ Scenario:  table is seen with success
 */
 
 Given (~'^I am at the StudentPage$'){ ->
+    to CreateStudentPage
     to StudentPage
     at StudentPage
 }
@@ -138,7 +139,7 @@ When (~'^There is a request of the Evaluation and Auto-evaluation comparison of 
         studentX.compareGrades(login)
 }
 
-//o sistema nunca vai ser alterado já que esta operação apenas lê dados nunca insere, edita, atualiza ou remove nenhum dado
+//o sistema nunca vai ser alterado jÃ¡ que esta operaÃ§Ã£o apenas lÃª dados nunca insere, edita, atualiza ou remove nenhum dado
 Then (~'^The system is not altered$'){->
     assert true
 }
