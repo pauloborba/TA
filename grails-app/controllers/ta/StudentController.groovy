@@ -152,23 +152,9 @@ class StudentController {
     }
 
 
-    def compareGrade() {
-        String login = params.studentId
-        compareGrades(login)
-        def criteria = EvaluationCriterion.findAll()
-        Student student = Student.findByLogin(login)
-        HashMap<String, String> auto = student.getAutoEvaluations()
-        HashMap<String, String> fin = student.getFinalGrades()
-        boolean sent = sentAuto(login)
-        if (!sent) {
-            worked = false;
-            flash.error = "Erro: o aluno escolhido não enviou a auto avaliação"
-            redirect action: index(10)
-        } else {
-            worked = true;
-        }
-
-        render view: "compare", model: [criteria: criteria, student: student]
+    def compareGrade(){
+      String login = params.studentId
+      compareGrades(login)
     }
 
     def compareGrades(String login) {
@@ -188,12 +174,28 @@ class StudentController {
         render view: "compare", model: [criteria: criteria, student: student]
     }
 
-    public boolean sentAuto(String login) {
+    def compareGrades(String login){
+        def criteria = EvaluationCriterion.findAll()
+        Student student = Student.findByLogin(login)
+        boolean sent = sentAuto(login)
+        if (!sent) {
+            worked=false;
+            flash.error = "Erro: o aluno escolhido não enviou a auto avaliação"
+            redirect action: index(10)
+        }else{
+            worked=true;
+        }
+
+        println worked
+        render view: "index", model:[criteria: criteria, student: student, booleanWorked: worked, studentInstanceList : Student.list()]
+    }
+    
+    public boolean sentAuto(String login){
         boolean sent = false;
         Student student = Student.findByLogin(login)
-        if (student != null) {
+        if(student!=null) {
             HashMap<String, String> auto = student.getAutoEvaluations()
-            if (auto != null) {
+            if(auto!=null) {
                 for (EvaluationCriterion evCriterion : EvaluationCriterion.findAll()) {
                     if (!auto.get(evCriterion.name).isEmpty()) {
                         sent = true;
@@ -201,7 +203,7 @@ class StudentController {
                 }
             }
         }
-        return sent
+       return sent
     }
 
     @Transactional
