@@ -267,12 +267,12 @@ class StudentController {
     def updateConcepts(String login, String criterion, String concept) {
         if (!concept.isEmpty()) {
             Student student = Student.findByLogin(login)
-            println student.name
-            println student.login
             String currentConcept = student.evaluations.get(criterion);
-//            student.calculateFinalGrade(criterion, concept)
+            student.calculateFinalGrade(criterion, concept)
             concept = currentConcept + concept + " "
             student.evaluations.put(criterion, concept)
+
+            student.save flush: true
         }
     }
 
