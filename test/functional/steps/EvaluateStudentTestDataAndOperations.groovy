@@ -7,7 +7,6 @@ import ta.EvaluationCriterionController
 import ta.Student
 import ta.StudentController
 import ta.Notification
-import ta.NotificationController
 
 class EvaluateStudentTestDataAndOperations{
 
