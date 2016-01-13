@@ -49,7 +49,6 @@
 					
 					</tr>
 				</thead>
-				<tbody>
 
                 <g:sortableColumn property="login" title="${message(code: 'student.login.label', default: 'Login')}"/>
 
@@ -83,6 +82,8 @@
 
 				</tbody>
 			</table>
+			<g:if test="${booleanWorked}">	
+			<g:render template="compare"/></g:if>
 			<div class="pagination">
 				<g:paginate total="${studentInstanceCount ?: 0}" />
 			</div>
