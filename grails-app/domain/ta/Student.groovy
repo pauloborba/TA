@@ -42,11 +42,12 @@ class Student {
         }
     }
 
-    public void addCriterion(EvaluationCriterion evaluationCriterion) {
-        if (this.evaluations.get(evaluationCriterion.name) == null) {
-            this.autoEvaluations.put(evaluationCriterion.name, "")
-            this.evaluations.put(evaluationCriterion.name, "")
-            this.finalGrades.put(evaluationCriterion.name, "")
+    public void addCriterion(String name) {
+        initialize()
+        if(this.evaluations.get(name) == null) {
+            this.autoEvaluations.put(name, "")
+            this.evaluations.put(name, "")
+            this.finalGrades.put(name, "")
         }
     }
 
