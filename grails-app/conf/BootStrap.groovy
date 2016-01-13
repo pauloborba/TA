@@ -34,18 +34,15 @@ class BootStrap {
 //        cjvg.addCriterion(criterion)
 //        cjvg.addCriterion(criterion2)
 //        cjvg.addCriterion(criterion3)
-<<<<<<< HEAD
 
 //        pp2.autoEvaluations.put(criterion.name, "MA")
 //        pp2.finalGrades.put(criterion.name, "MANA")
 //        pp2.autoEvaluations.put(criterion2.name, "MPA")
 //        pp2.autoEvaluations.put(criterion3.name, "MANA")
-=======
 //
 //        ehammo.addCriterion(criterion)
 //        ehammo.addCriterion(criterion2)
 //        ehammo.addCriterion(criterion3)
->>>>>>> b7a3c697914e6cf92d4ba2254cb459b0852cf158
 
     }
     def destroy = {
