@@ -3,7 +3,7 @@ package ta
 class Student {
     String login
     String name
-	boolean notification
+    boolean notification
     String password
 
     // tentei um enumerador primeiro mas da erro
@@ -19,11 +19,11 @@ class Student {
     static constraints = {
         login unique: true
         name blank: false
-        password nullable:true, blank:true
+        password nullable: true, blank: true
     }
 
-    def initialize(){
-        if ( evaluations == null ){
+    def initialize() {
+        if (evaluations == null) {
             evaluations = new HashMap<>()
             autoEvaluations = new HashMap<>()
             finalGrades = new HashMap<>()
@@ -33,12 +33,8 @@ class Student {
 
     public void afterCreateAddCriteria(List<EvaluationCriterion> evaluationCriteria) {
         initialize()
-        evaluations = new HashMap<>()
-        finalGrades = new HashMap<>()
-        crispGrade = -1
-
-        for(EvaluationCriterion evaluationCriterion : evaluationCriteria) {
-            if(this.evaluations.get(evaluationCriterion.name) == null) {
+        for (EvaluationCriterion evaluationCriterion : evaluationCriteria) {
+            if (this.evaluations.get(evaluationCriterion.name) == null) {
                 this.autoEvaluations.put(evaluationCriterion.name, "")
                 this.evaluations.put(evaluationCriterion.name, "")
                 this.finalGrades.put(evaluationCriterion.name, "")
@@ -46,21 +42,16 @@ class Student {
         }
     }
 
-    public void addCriterion(EvaluationCriterion evaluationCriterion)git {
-        if(evaluations == null) {
-            autoEvaluations = new HashMap<>()
-            evaluations = new HashMap<>()
-            finalGrades = new HashMap<>()
-            crispGrade = -1
-        }
-        if(this.evaluations.get(evaluationCriterion.name) == null) {
+    public void addCriterion(EvaluationCriterion evaluationCriterion) {
+        if (this.evaluations.get(evaluationCriterion.name) == null) {
             this.autoEvaluations.put(evaluationCriterion.name, "")
             this.evaluations.put(evaluationCriterion.name, "")
             this.finalGrades.put(evaluationCriterion.name, "")
         }
+    }
 
-    def removeCriterion(String criterionName){
-        if(this.evaluations.get(criterionName) != null) {
+    def removeCriterion(String criterionName) {
+        if (this.evaluations.get(criterionName) != null) {
             evaluations.remove(criterionName)
             autoEvaluations.remove(criterionName)
             finalGrades.remove(criterionName)
@@ -73,7 +64,8 @@ class Student {
     - a �m�dia� � MPA se o conceito adicionado � MPA e se tiver no m�ximo um MANA nos conceitos anteriores
     - a �m�dia� � MANA caso contr�rio
      */
-    public boolean calculateFinalGrade(String criterionName, String concept){
+
+    public boolean calculateFinalGrade(String criterionName, String concept) {
         boolean ans = false;
         String concepts = evaluations.get(criterionName)
         String[] grades = concepts.split(" ")
@@ -82,26 +74,26 @@ class Student {
         int mpa = grades.count("MPA")
         int mana = grades.count("MANA")
 
-        if ( concept.equals("MA") ){
-            if ( ( mpa + mana ) <= 1 ){
+        if (concept.equals("MA")) {
+            if ((mpa + mana) <= 1) {
                 finalGrades.put(criterionName, "MA")
             } else {
                 finalGrades.put(criterionName, "MPA")
             }
-        } else if ( concept.equals("MPA") ){
-            if ( ma > 0 && mpa == 0 && mana == 0 ){
+        } else if (concept.equals("MPA")) {
+            if (ma > 0 && mpa == 0 && mana == 0) {
                 finalGrades.put(criterionName, "MA")
-            } else if ( mana <= 1 ){
+            } else if (mana <= 1) {
                 finalGrades.put(criterionName, "MPA")
             } else {
                 finalGrades.put(criterionName, "MANA")
             }
         } else {
-            if ( ma > 0 && mpa == 0 && mana == 0 ){
+            if (ma > 0 && mpa == 0 && mana == 0) {
                 finalGrades.put(criterionName, "MA")
-            } else if ( ma >= 0 && mpa >= 1 && mana == 0 ) {
+            } else if (ma >= 0 && mpa >= 1 && mana == 0) {
                 finalGrades.put(criterionName, "MPA")
-            }  else {
+            } else {
                 finalGrades.put(criterionName, "MANA")
             }
         }
@@ -112,51 +104,52 @@ class Student {
     /*Este metodo calcula a nota final com um valor de 0 a 10, retornando -1
     se não for possível calcular. Tal valor ser� validado posteriormente para
     que se saiba o que ser� impresso na média geral*/
-    public void calculateCrispGrade(HashMap fuzzyGrades){
-        if(!fuzzyGrades.containsValue("")){
+
+    public void calculateCrispGrade(HashMap fuzzyGrades) {
+        if (!fuzzyGrades.containsValue("")) {
             String[] concepts = fuzzyGrades.values().toArray()
             int ma = 0
             int mpa = 0
             int mana = 0
 
-            for(int i = 0; i < concepts.size(); i++){
-                if(concepts[i] == "MA"){
+            for (int i = 0; i < concepts.size(); i++) {
+                if (concepts[i] == "MA") {
                     ma = ma + 1
-                }else if(concepts[i] == "MPA"){
+                } else if (concepts[i] == "MPA") {
                     mpa = mpa + 1
-                }else{
+                } else {
                     mana = mana + 1
                 }
             }
 
-            float percMA = ((100 * ma)/fuzzyGrades.size())
-            float percMPA = ((100 * mpa)/fuzzyGrades.size())
-            float percMANA = ((100 * mana)/fuzzyGrades.size())
+            float percMA = ((100 * ma) / fuzzyGrades.size())
+            float percMPA = ((100 * mpa) / fuzzyGrades.size())
+            float percMANA = ((100 * mana) / fuzzyGrades.size())
 
-            if(percMana == 0 && percMa >= 90){
+            if (percMana == 0 && percMa >= 90) {
                 crispGrade = 10
-            }else if(percMANA == 0 && percMA >= 70){
+            } else if (percMANA == 0 && percMA >= 70) {
                 crispGrade = 9
-            }else if(percMANA == 0 && percMA >= 50){
+            } else if (percMANA == 0 && percMA >= 50) {
                 crispGrade = 8
-            }else if(percMANA == 0){
+            } else if (percMANA == 0) {
                 crispGrade = 7
-            }else if(percMANA <= 10){
+            } else if (percMANA <= 10) {
                 crispGrade = 6
-            }else if(percMANA <= 30){
+            } else if (percMANA <= 30) {
                 crispGrade = 5
-            }else if(percMANA <= 50){
+            } else if (percMANA <= 50) {
                 crispGrade = 4
-            }else if(percMANA <= 70){
+            } else if (percMANA <= 70) {
                 crispGrade = 3
-            }else if(percMANA <= 80){
+            } else if (percMANA <= 80) {
                 crispGrade = 2
-            }else if(percMANA <= 90){
+            } else if (percMANA <= 90) {
                 crispGrade = 1
-            }else{
+            } else {
                 crispGrade = 0
             }
-        }else{
+        } else {
             crispGrade = -1
         }
     }
