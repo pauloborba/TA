@@ -1,7 +1,10 @@
 package steps
 
+import pages.EvaluationCriterionPages.CreateEvaluationCriterionPage
 import pages.ManualInputPage
+import pages.StudentPages.CreateStudentPage
 import pages.StudentPages.StudentPage
+import ta.EvaluationCriterion
 import ta.StudentController
 import ta.Student
 
@@ -10,9 +13,6 @@ this.metaClass.mixin(cucumber.api.groovy.EN)
 
 // Scenario: Spreadsheet with at least one student and one criterion
 def studentLogin
-def criterionName
-def conceptsLenght
-def inputConcept
 
 Given (~'that the student named "([^"]*)" with a login "([^"]*)" is registered in the system$') { String name, login ->
     assert EvaluateStudentTestDataAndOperations.createStudent(login, name)
@@ -48,6 +48,7 @@ And (~'the student "([^"]*)" already have the concepts "([^"]*)" in the criterio
     assert EvaluateStudentTestDataAndOperations.checkConcepts(login, criterion, crit);
 }
 
+
 //Scenario: Spreadsheet with at least one student and one criterion
 Given(~'that I am on the Student page$'){ ->
     to StudentPage
@@ -55,7 +56,17 @@ Given(~'that I am on the Student page$'){ ->
 }
 
 And (~'I can see a student named "([^"]*)" with a login "([^"]*)"$'){ String name, login ->
+    to CreateStudentPage
+    at CreateStudentPage
+
+    page.fillStudentDetails(login, name)
+    page.selectCreateStudent()
+
+    to StudentPage
+    at StudentPage
+
     studentLogin = login
+
     assert page.checkStudent(login, name)
 }
 
