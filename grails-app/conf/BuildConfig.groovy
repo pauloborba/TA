@@ -54,6 +54,8 @@ grails.project.dependency.resolution = {
         test "org.seleniumhq.selenium:selenium-support:2.39.0"
         test "org.seleniumhq.selenium:selenium-chrome-driver:2.39.0"
         test "org.seleniumhq.selenium:selenium-firefox-driver:2.39.0"
+        compile ':excel-import:1.0.0'
+        compile ':excel-import:1.1.0.BUILD-SNAPSHOT'
     }
 
     plugins {
