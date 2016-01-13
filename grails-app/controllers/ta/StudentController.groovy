@@ -291,51 +291,36 @@ class StudentController {
         String login = params.selector
         String[] criteria = params.criterionName
 
-        if (EvaluationCriterion.findByName(criteria[0]) == null) {
-            String select = ""
-            int size = selector.length
-            for (int j = 0; j < size; j++) {
-                select = select + selector[j]
+        int a = 0;
+        for (int i = 0; i < selector.size(); i++) {
+            if (selector[i].equalsIgnoreCase("")) {
+                a = a + 1;
             }
-            String criterion = ""
-            size = criteria.length
-            for (int j = 0; j < size; j++) {
-                criterion = criterion + criteria[j]
-
-                int a = 0;
-                for (int i = 0; i < selector.size(); i++) {
-                    if (selector[i].equalsIgnoreCase("")) {
-                        a = a + 1;
-                    }
-                }
+        }
 
 
-
-                if (login.equalsIgnoreCase("")) {
-                    flash.error = "Choose a student"
-                    render view: "autoEvaluation"
-                } else if (a > 0) {
-                    flash.error = "Evaluate yourself for all criteria"
-                    render view: "autoEvaluation"
-                } else if (EvaluationCriterion.findByName(criteria[0]) == null) {
-                    for (int i = 1; i < criteria.size(); i++) {
-                        criteria[0] = criteria[0] + criteria[i]
-                        selector[0] = selector[0] + selector[i]
-                    }
-
-                    updateAutoEvaluation(login, criteria[0], selector[0])
-
-                    redirect action: index(100)
-                } else {
-                    size = criteria.length
-                    for (int i = 0; i < criteria.length; i++) {
-                        updateConcepts(login, criteria[j], selector[j])
-                        updateAutoEvaluation(login, criteria[i], selector[i])
-                    }
-                    redirect action: index(100)
-                }
-                redirect action: index(10)
+        if (login.equalsIgnoreCase("")) {
+            flash.error = "Choose a student"
+            render view: "autoEvaluation"
+        } else if (a > 0) {
+            flash.error = "Evaluate yourself for all criteria"
+            render view: "autoEvaluation"
+        } else if (EvaluationCriterion.findByName(criteria[0]) == null) {
+            for (int i = 1; i < criteria.size(); i++) {
+                criteria[0] = criteria[0] + criteria[i]
             }
+            for (int i = 1; i < selector.size(); i++) {
+                selector[0] = selector[0] + selector[i]
+            }
+
+            updateAutoEvaluation(login, criteria[0], selector[0])
+
+            redirect action: index(100)
+        } else {
+            for (int i = 0; i < criteria.length; i++) {
+                updateAutoEvaluation(login, criteria[i], selector[i])
+            }
+            redirect action: index(100)
         }
     }
 
