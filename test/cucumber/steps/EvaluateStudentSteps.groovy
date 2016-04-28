@@ -2,6 +2,7 @@ package steps
 
 import pages.EvaluationCriterionPages.CreateEvaluationCriterionPage
 import pages.EvaluationCriterionPages.EvaluationCriterionPage
+import pages.ManualInputPage
 import pages.StudentPages.CreateStudentPage
 import pages.StudentPages.StudentPage
 import ta.EvaluationCriterion
@@ -9,6 +10,8 @@ import ta.Student
 
 this.metaClass.mixin(cucumber.api.groovy.Hooks)
 this.metaClass.mixin(cucumber.api.groovy.EN)
+
+def saved
 
 Given(~'^the system does not have an evaluation criterion with name "([^"]*)"$') { String criterionName ->
     assert EvaluationCriterion.findByName(criterionName) == null
@@ -36,18 +39,9 @@ Then(~'^the evaluation criterion with name "([^"]*)" was not stored in the syste
     assert EvaluationCriterion.findByName(criterionName) != null && !saved
 }
 
-//////////////////////////////////
-Given(~'^the system does not have an evaluation criterion with name "([^"]*)"2$') { String criterionName ->
-    assert EvaluationCriterion.findByName(criterionName) == null
-}
-
 And(~'^the student "([^"]*)" with login "([^"]*)" is registered in the system$') { String studentName, String studentLogin ->
     EvaluateStudentTestDataAndOperations.createStudent(studentLogin, studentName)
     assert Student.findByLogin(studentLogin) != null
-}
-
-When(~'^I create an evaluation criterion with name "([^"]*)"3$') { String criterionName ->
-    EvaluateStudentTestDataAndOperations.createEvaluationCriterion(criterionName)
 }
 
 Then(~'^the system evaluates "([^"]*)" also using the criterion "([^"]*)"$') { String studentName, String criterionName ->
@@ -87,30 +81,31 @@ Then(~'^I am should see a table with "([^"]*)" in a row and "([^"]*)" in a colum
 }
 
 /////////////////////////////////////
-Given(~'^I am on the Evaluation Criterion Page$') { ->
-    to EvaluationCriterionPage
-    at EvaluationCriterionPage
-}
-
-And(~'^I follow new evaluation criterion$') { ->
+When (~'I create a new evaluation criterion named "([^"]*)"$'){ String name ->
     to CreateEvaluationCriterionPage
     at CreateEvaluationCriterionPage
-}
 
-When(~'^I fill "([^"]*)" in the Name field$') { String criterionName ->
-    at CreateEvaluationCriterionPage
-
-    page.fillEvaluationCriterionDetails(criterionName)
-
-    criterionSaved = criterionName
-}
-
-And(~'^I click Save$') { ->
+    page.fillEvaluationCriterionDetails(name)
     page.selectCreateEvaluationCriterion()
 }
-Then(~'^I am should see the Students page with a new column named "([^"]*)"$') { String criterionName ->
+
+And (~'I go to the Manual Concept Input Page$') { ->
+    to ManualInputPage
+    at ManualInputPage
+}
+
+Then (~'I can see a column for the evaluation criterion "([^"]*)"$') { String name ->
+    at ManualInputPage
+    assert page.checkCriterion(name)
+}
+
+
+And (~'I go to the Student Page$') { ->
     to StudentPage
     at StudentPage
+}
 
-    assert criterionName == criterionSaved
+Then (~'I can see the criterion "([^"]*)" in the column evaluations for the student "([^"]*)"$') { String criterion, login ->
+    at StudentPage
+    assert page.checkCriterionConcept(login, criterion)
 }
