@@ -28,6 +28,7 @@ class EvaluationCriterionController {
     public boolean saveEvaluationCriterion(EvaluationCriterion evaluationCriterion) {
         if(EvaluationCriterion.findByName(evaluationCriterion.name) == null) {
             evaluationCriterion.save(flush: true)
+            //evaluationCriterion = evaluationCriterion.merge()
             new StudentController().updateStudentEvaluationCriteria()
             return true
         }
@@ -95,6 +96,8 @@ class EvaluationCriterionController {
             notFound()
             return
         }
+        def sc = new StudentController()
+        sc.updateStudentsCriteriaAfterDelete(evaluationCriterionInstance.name)
 
         evaluationCriterionInstance.delete flush:true
 

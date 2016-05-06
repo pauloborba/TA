@@ -1,4 +1,3 @@
-
 <%@ page import="ta.Student" %>
 <!DOCTYPE html>
 <html>
@@ -41,11 +40,36 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${studentInstance?.password}">
+				<li class="fieldcontain">
+					<span id="password-label" class="property-label"><g:message code="student.password.label" default="Password" /></span>
+					
+						<span class="property-value" aria-labelledby="password-label"><g:fieldValue bean="${studentInstance}" field="password"/></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${studentInstance?.evaluations}">
 				<li class="fieldcontain">
 					<span id="evaluations-label" class="property-label"><g:message code="student.evaluations.label" default="Evaluations" /></span>
 					
 						<span class="property-value" aria-labelledby="evaluations-label"><g:fieldValue bean="${studentInstance}" field="evaluations"/></span>
+					
+				</li>
+				</g:if>
+
+				<g:if test="${studentInstance?.autoEvaluations}">
+					<li class="fieldcontain">
+						<span id="autoEvaluations-label" class="property-label"><g:message code="student.autoEvaluations.label" default="autoEvaluations" /></span>
+						<span class="property-value" aria-labelledby="autoEvaluations-label"><g:fieldValue bean="${studentInstance}" field="autoEvaluations"/></span>
+					</li>
+				</g:if>
+				
+				<g:if test="${studentInstance?.finalGrades}">
+				<li class="fieldcontain">
+					<span id="finalGrades-label" class="property-label"><g:message code="student.finalGrades.label" default="Final Grades" /></span>
+					
+						<span class="property-value" aria-labelledby="finalGrades-label"><g:fieldValue bean="${studentInstance}" field="finalGrades"/></span>
 					
 				</li>
 				</g:if>

@@ -20,9 +20,27 @@
 
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: studentInstance, field: 'password', 'error')} ">
+	<label for="password">
+		<g:message code="student.password.label" default="Password" />
+		
+	</label>
+	<g:textField name="password" value="${studentInstance?.password}"/>
+
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: studentInstance, field: 'evaluations', 'error')} ">
 	<label for="evaluations">
 		<g:message code="student.evaluations.label" default="Evaluations" />
+		
+	</label>
+	
+
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: studentInstance, field: 'finalGrades', 'error')} ">
+	<label for="finalGrades">
+		<g:message code="student.finalGrades.label" default="Final Grades" />
 		
 	</label>
 	
