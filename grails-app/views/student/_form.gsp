@@ -23,9 +23,8 @@
 <div class="fieldcontain ${hasErrors(bean: studentInstance, field: 'evaluations', 'error')} ">
 	<label for="evaluations">
 		<g:message code="student.evaluations.label" default="Evaluations" />
-		
+
 	</label>
-	
+
 
 </div>
-

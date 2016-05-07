@@ -7,6 +7,8 @@ class ShowEvaluationPage extends Page{
     static url = "/TA/evaluation/show"
 
     static at = {
-        title ==~ /Show Evaluation/
+        String model = "Evaluation"
+        String msg = GetPageTitle.getMessage("default.show.label", "Evaluation")
+        title ==~ msg
     }
 }
