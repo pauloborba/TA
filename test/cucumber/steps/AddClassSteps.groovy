@@ -1,5 +1,6 @@
 import javafx.beans.binding.When
 import org.spockframework.compiler.model.ThenBlock
+import steps.ClassTestDataAndOperations
 
 /**
  * Created by dquei on 9/28/2016.
@@ -16,12 +17,17 @@ Then the class "ESS" with periodo "2016.2" is properly stored in the system
 
 Given(~'^the system has no class named "[(^")*]" and periodo "[(^")*]"$'){
     String id, periodo ->
+        assert ClassTestDataAndOperations.get_Class(id, periodo) == null
+
 }
 When(~'^I add a class with ID "[(^")*]" and periodo "[(^")*]"$'){
-    Strring id, periodo ->
+    String id, periodo ->
+        ClassTestDataAndOperations.createClass(id, periodo)
+        cl = ClassTestDataAndOperations.get_Class(id,periodo)
 }
 Then(~'^the class "[(^")*]" with periodo "[(^")*]" is properly stored in the system$'){
     String id, periodo ->
+        assert ClassTestDataAndOperations.compatibleTo(id, periodo, cl)
 }
 
 /*
@@ -34,12 +40,16 @@ Then the class "GDI" with periodo "2016.1" is not stored twice in the system
 
 Given(~'^the system already has a class with ID "[(^")*]" and periodo "[(^")*]"$'){
     String id, periodo ->
+        assert ClassTestDataAndOperations.get_Class(id, periodo) != null
 }
 When(~'^$I add a class with ID "[(^")*]" and periodo "[(^")*]"'){
     String id, periodo ->
+        ClassTestDataAndOperations.createClass(id, periodo)
+        cl = ClassTestDataAndOperations.get_Class(id, periodo)
 }
 Then(~'^$the class "[(^")*]" with periodo "[(^")*]" is not stored twice in the system'){
     String id, periodo ->
+        assert !ClassTestDataAndOperations.compatibleTo(id, periodo, cl)
 }
 
 /*
