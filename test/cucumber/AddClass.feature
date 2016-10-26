@@ -17,19 +17,17 @@ Feature: Add classes
 
 #GUI scenario
   Scenario: new class
-    Given I am at the "Turmas" page
-    When I select the "Adicionar" option
-    And fill the class details with name "ESS", periodo "2016.2"
+    Given I am at the Create Class page
+    When I fill the class details with name "ESS", periodo "2016.2"
     And I save the class
     Then I can see a confirmation message
-    And I can see the information for class "ESS" at the "Turmas" page
+    And I can see the information for class "ESS", periodo "2016.2" at the "Turmas" page
 
 #GUI scenario
   Scenario: new class with duplicate ID and periodo
     Given the system already has a class with name "GDI" and periodo "2016.1"
-    And I am at the "Turmas" page
-    When I select the "Adicionar" option
-    And fill the class details with name "GDI" and periodo "2016.1"
+    And I am at the Create Class page
+    When I fill the class details with name "GDI" and periodo "2016.1"
     And I save the class
     Then I see an error message
-    And I am taken to the "Turmas" page where class "GDI" is not listed twice
+    And I am taken to the "Turmas" page where class "GDI", periodo "2016.1" is not listed twice
