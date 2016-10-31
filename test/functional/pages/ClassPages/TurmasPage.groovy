@@ -14,7 +14,7 @@ class TurmasPage extends Page {
     }
 
     def assertClass(id, periodo){
-        
+
     }
 
     def assertNotDuplicateClass(id, periodo){

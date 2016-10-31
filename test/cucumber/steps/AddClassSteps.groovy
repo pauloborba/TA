@@ -41,11 +41,11 @@ Then the class "GDI" with periodo "2016.1" is not stored twice in the system
 */
 
 Given(~'^the system already has a class with ID "[(^")*]" and periodo "[(^")*]"$'){
-    String id, periodo ->
+    String id, String periodo ->
         assert ClassTestDataAndOperations.get_Class(id, periodo) != null
 }
 When(~'^$I add a class with ID "[(^")*]" and periodo "[(^")*]"'){
-    String id, periodo ->
+    String id, String periodo ->
         ClassTestDataAndOperations.createClass(id, periodo)
         cl = ClassTestDataAndOperations.get_Class(id, periodo)
 }
