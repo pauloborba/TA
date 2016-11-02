@@ -14,8 +14,14 @@ Feature: Configure the evaluation concept
     When I update the "MA, MPA, MANA" concept to "Usual Average" concept
     Then The evaluation concept is set
 
+  #Controller Scenario
   Scenario: Configure the atual evaluation concept with invalid attributes
     Given The evaluation concept is "MA, MPA, MANA"
-    When I update the "MA, MPA, MANA" concept to "New Concept"
+    When I update the "MA, MPA, MANA" concept to "New Concept" concept
     And the "New Concept" doesn't have any concept
-    Then An error message appears
+    Then The atual concept doesn't change
+
+  #GUI Scenario
+
+
+  #GUI Scenario
