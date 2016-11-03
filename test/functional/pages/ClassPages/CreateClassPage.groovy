@@ -11,7 +11,7 @@ class CreateClassPage extends Page{
 
 
     static at = {
-        title ==~ /Create Class/
+        title ==~ /Create Turma/
     }
 
     def fillClassDetails(String id, String periodo){

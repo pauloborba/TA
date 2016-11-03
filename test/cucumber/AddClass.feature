@@ -16,7 +16,7 @@ Feature: Add classes
     Then the class "GDI" with periodo "2016.1" is not stored twice in the system
 
 #GUI scenario
-  Scenario: new class
+  Scenario: new class gui
     Given I am at the Create Class page
     When I fill the class details with name "ESS", periodo "2016.2"
     And I save the class
@@ -24,7 +24,7 @@ Feature: Add classes
     And I can see the information for class "ESS", periodo "2016.2" at the "Turmas" page
 
 #GUI scenario
-  Scenario: new class with duplicate ID and periodo
+  Scenario: new class with duplicate ID and periodo gui
     Given the system already has a class with name "GDI" and periodo "2016.1"
     And I am at the Create Class page
     When I fill the class details with name "GDI" and periodo "2016.1"

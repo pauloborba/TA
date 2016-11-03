@@ -1,6 +1,6 @@
 package ta
 
-class Class {
+class Turma {
 
     String classID
     String periodo
@@ -12,7 +12,7 @@ class Class {
         periodo unique: false, blank: false, nullable: false
     }
 
-    public Class(String id, String periodo) {
+    public Turma(String id, String periodo) {
 
         this.classID = id
         this.periodo = periodo
