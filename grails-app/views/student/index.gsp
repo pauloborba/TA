@@ -30,6 +30,8 @@
 
 			<g:sortableColumn property="login" title="${message(code: 'student.login.label', default: 'Login')}" />
 
+			<g:sortableColumn property="email" title="${message(code: 'student.email.label', default: 'Email')}" />
+
 			<g:sortableColumn property="average" title="${message(code: 'student.average.label', default: 'Media')}" />
 
 		</tr>
