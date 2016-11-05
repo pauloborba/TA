@@ -9,7 +9,8 @@ class ShowCriterionPage extends Page {
     static url = "criterion/show"
 
     static at = {
-        title ==~ /Show Criterion/
+        //title ==~ /Show Criterion/
+        title ==~ /Ver Criterion/
     }
 
     def boolean selectDeleteCriterion() {
