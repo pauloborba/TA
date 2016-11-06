@@ -7,10 +7,10 @@
 
     #Controle
     Scenario: Visualizar a nota do aluno
-      Given o aluno “João Vasconcelos”, com login "jvsn", possui conceitos “MA”, “MPA” e “MA” em “Requisitos de sistemas”
+      Given o aluno “João Vasconcelos”, com login "jvsn", possui conceitos “MA”, “MPA” e “MA” em “Requisitos de Sistemas”
       And o aluno "João Vasconcelos", com login "jvsn", possui media “MA” em “Requisitos de Sistemas”
       When eu solicito a visualização da situação do aluno "João Vasconcelos" com login "jvsn"
-      Then a média de “João Vasconcelos”, com login "jvsn", em “Requisitos de Sistema” continua sendo “MA”
+      Then a média de “João Vasconcelos”, com login "jvsn", em “Requisitos de Sistemas” continua sendo “MA”
 
 
     #GUI
