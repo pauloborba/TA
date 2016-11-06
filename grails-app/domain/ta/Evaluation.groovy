@@ -5,10 +5,9 @@ class Evaluation {
     String value;
     Date applicationDate;
     Criterion criterion;
-    EvaluationConcept evaluationConcept;
     static constraints = {
         origin inList :["Test","Mini-Test","Form","Final"], blank: false
-        value inList :evaluationConcept.allConcept(), blank :false
+        value inList :["MA","MPA","MANA","--"], blank :false
         criterion nullable : false
     }
 
@@ -17,7 +16,6 @@ class Evaluation {
         this.value = value;
         this.applicationDate = applicationDate;
         this.criterion = Criterion.findById(Long.parseLong(criterion));
-        this.evaluationConcept = EvaluationConcept.findById(1.longValue())
     }
 
     public boolean compatibleTo(Evaluation evaluationInstance){
