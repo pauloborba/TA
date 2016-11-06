@@ -1,17 +1,18 @@
 package ta
 
 class EvaluationConcept {
-    String name;
-    int n_concepts;
-    String[] concepts;
+    String nome;
+    static hasMany = [conceitos: Concept]
 
     static constraints = {
-        name blank: false
+        nome blank: false, unique: true;
     }
-    //The default Evaluation Concept
-    public EvaluationConcept(String name, int n_concepts) {
-        this.name = name;
-        this.n_concepts = n_concepts;
-        this.concepts = name.split(", ");
+
+    List<String> allConcept(){
+        List<String> ret = [];
+        for(c in conceitos){
+            ret << c.nome;
+        }
+        ret;
     }
 }

@@ -23,27 +23,22 @@
 			</g:if>
 			<ol class="property-list evaluationConcept">
 			
-				<g:if test="${evaluationConceptInstance?.name}">
+				<g:if test="${evaluationConceptInstance?.nome}">
 				<li class="fieldcontain">
-					<span id="name-label" class="property-label"><g:message code="evaluationConcept.name.label" default="Name" /></span>
+					<span id="nome-label" class="property-label"><g:message code="evaluationConcept.nome.label" default="Nome" /></span>
 					
-						<span class="property-value" aria-labelledby="name-label"><g:fieldValue bean="${evaluationConceptInstance}" field="name"/></span>
+						<span class="property-value" aria-labelledby="nome-label"><g:fieldValue bean="${evaluationConceptInstance}" field="nome"/></span>
 					
 				</li>
 				</g:if>
 			
-				<g:if test="${evaluationConceptInstance?.concepts}">
+				<g:if test="${evaluationConceptInstance?.conceitos}">
 				<li class="fieldcontain">
-					<span id="concepts-label" class="property-label"><g:message code="evaluationConcept.concepts.label" default="Concepts" /></span>
+					<span id="conceitos-label" class="property-label"><g:message code="evaluationConcept.conceitos.label" default="conceitos" /></span>
 					
-				</li>
-				</g:if>
-			
-				<g:if test="${evaluationConceptInstance?.n_concepts}">
-				<li class="fieldcontain">
-					<span id="n_concepts-label" class="property-label"><g:message code="evaluationConcept.n_concepts.label" default="Nconcepts" /></span>
-					
-						<span class="property-value" aria-labelledby="n_concepts-label"><g:fieldValue bean="${evaluationConceptInstance}" field="n_concepts"/></span>
+						<g:each in="${evaluationConceptInstance.conceitos}" var="c">
+						<span class="property-value" aria-labelledby="conceitos-label"><g:link controller="concept" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></span>
+						</g:each>
 					
 				</li>
 				</g:if>
