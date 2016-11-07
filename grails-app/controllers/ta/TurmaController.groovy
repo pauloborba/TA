@@ -104,7 +104,34 @@ class TurmaController {
 
 
     //testes
-    Turma getTurma(String id, String periodo) {
-        return Turma.findByClassIDAndPeriodo(id, periodo)
+    Turma getTurma() {
+        def turmaInstance = new Turma(params)
+        return Turma.findByClassIDAndPeriodo(turmaInstance.classID, turmaInstance.periodo)
+    }
+
+    @Transactional
+    def createAndSaveTurma() {
+        Turma turmaInstance = new Turma(params)
+        if (Turma.findByClassIDAndPeriodo(turmaInstance.classID, turmaInstance.periodo) == null) {
+            if (turmaInstance.hasErrors()) {
+                respond turmaInstance.errors, view: 'create'
+                return
+            }
+            if(!turmaInstance.save(flush: true)){
+                render(view: "create", model: [turmaInstance: turmaInstance])
+                return
+            }
+            flash.message = message(code: 'default.created.message', args: [message(code: 'turma.label', default: 'Turma'), turmaInstance.id])
+            redirect(action: "show", id: turmaInstance.id)
+        }
+    }
+
+    public boolean onlyTurma() {
+        def turmaInstance = new Turma(params)
+        List t = Turma.findAllByClassIDAndPeriodoLike(turmaInstance.classID, turmaInstance.periodo)
+        if (t.size() > 1 || t.size() == 0){
+            return false
+        }
+        return true;
     }
 }

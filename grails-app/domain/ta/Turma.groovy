@@ -8,7 +8,7 @@ class Turma {
     static hasMany = [students: Student]
 
     static constraints = {
-        classID unique: false, blank: false, nullable: false
+        classID unique: 'periodo', blank: false, nullable: false
         periodo unique: false, blank: false, nullable: false
     }
 

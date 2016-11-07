@@ -1,5 +1,8 @@
 import pages.ClassPages.CreateClassPage
+import pages.ClassPages.TurmasPage
 import steps.ClassTestDataAndOperations
+import ta.Turma
+import ta.TurmaController
 
 /**
  * Created by dquei on 11/2/2016.
@@ -8,6 +11,8 @@ import steps.ClassTestDataAndOperations
 this.metaClass.mixin(cucumber.api.groovy.Hooks)
 this.metaClass.mixin(cucumber.api.groovy.EN)
 
+
+Turma t
 
 /*
 #Controller scenario
@@ -22,10 +27,11 @@ Given(~/^the system has no class named "([^"]*)" and periodo "([^"]*)"$/) { Stri
 }
 When(~/^I add a class with ID "([^"]*)" and periodo "([^"]*)"$/) { String id, String periodo ->
     ClassTestDataAndOperations.createClass(id, periodo)
+    t = ClassTestDataAndOperations.getTurma(id, periodo)
+    assert t != null
 }
 Then(~/^the class "([^"]*)" with periodo "([^"]*)" is properly stored in the system$/) { String id, String periodo ->
-    def cl = ClassTestDataAndOperations.getTurma(id, periodo)
-    assert ClassTestDataAndOperations.compatibleTo(id, periodo, cl)
+    assert ClassTestDataAndOperations.compatibleTo(id, periodo, t)
 }
 
 /*
@@ -38,10 +44,11 @@ Then the class "GDI" with periodo "2016.1" is not stored twice in the system
 
 Given(~/^the system already has a class with ID "([^"]*)" and periodo "([^"]*)"$/) { String id, String periodo ->
     ClassTestDataAndOperations.createClass(id, periodo)
-    assert ClassTestDataAndOperations.getTurma(id, periodo) != null
+    t = ClassTestDataAndOperations.getTurma(id, periodo)
+    assert t != null
 }
 Then(~/^the class "([^"]*)" with periodo "([^"]*)" is not stored twice in the system$/) { String id, String periodo ->
-    // Write code here that turns the phrase above into concrete actions
+    assert ClassTestDataAndOperations.onlyTurma(id, periodo)
 }
 
 /*
@@ -71,8 +78,10 @@ Then(~/^I can see a confirmation message$/) { ->
     // Write code here that turns the phrase above into concrete actions
 
 }
-And(~/^I can see the information for class "([^"]*)", periodo "([^"]*)" at the "([^"]*)" page$/) { String arg1, String arg2, String arg3 ->
-    // Write code here that turns the phrase above into concrete actions
+And(~/^I can see the information for class "([^"]*)", periodo "([^"]*)" at the Turma Listagem page$/) { String id, String periodo ->
+    to TurmasPage
+    at TurmasPage
+    assert page.confirmTurma(id, periodo)
 
 }
 
@@ -86,19 +95,21 @@ And(~/^I can see the information for class "([^"]*)", periodo "([^"]*)" at the "
   And I am taken to the Turmas page where class "GDI", periodo "2016.1" is not listed twice
 */
 
-Given(~/^the system already has a class with name "([^"]*)" and periodo "([^"]*)"$/) { String arg1, String arg2 ->
-    // Write code here that turns the phrase above into concrete actions
+Given(~/^the system already has a class with name "([^"]*)" and periodo "([^"]*)"$/) { String id, String periodo ->
+    to CreateClassPage
+    at CreateClassPage
+    page.fillClassDetails(id, periodo)
+    page.selectCreateClass()
 
 }
-When(~/^I fill the class details with name "([^"]*)" and periodo "([^"]*)"$/) { String arg1, String arg2 ->
-    // Write code here that turns the phrase above into concrete actions
+When(~/^I fill the class details with name "([^"]*)" and periodo "([^"]*)"$/) { String id, String periodo ->
+    at CreateClassPage
+    page.fillClassDetails(id, periodo)
+    page.selectCreateClass()
 
 }
 Then(~/^I see an error message$/) { ->
-    // Write code here that turns the phrase above into concrete actions
-
-}
-And(~/^I am taken to the "([^"]*)" page where class "([^"]*)", periodo "([^"]*)" is not listed twice$/) { String arg1, String arg2, String arg3 ->
-    // Write code here that turns the phrase above into concrete actions
+    at CreateClassPage
+    page.checkForErrors()
 
 }

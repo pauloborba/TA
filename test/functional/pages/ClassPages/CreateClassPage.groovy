@@ -7,7 +7,7 @@ import geb.Page
  */
 class CreateClassPage extends Page{
 
-    static url = "class/create"
+    static url = "turma/create"
 
 
     static at = {
@@ -15,7 +15,7 @@ class CreateClassPage extends Page{
     }
 
     def fillClassDetails(String id, String periodo){
-        $("form").name = id
+        $("form").classID = id
         $("form").periodo = periodo
     }
 
