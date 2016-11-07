@@ -73,7 +73,7 @@ class Student {
                     "taprojmailer@gmail.com",
                     this.email,
                     "Grades",
-                    message,
+                    ""+this.name+"'s Grades:\n"+message,
                     true,
                     null
             )
