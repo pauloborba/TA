@@ -37,7 +37,7 @@
 					<span id="conceitos-label" class="property-label"><g:message code="evaluationConcept.conceitos.label" default="conceitos" /></span>
 					
 						<g:each in="${evaluationConceptInstance.conceitos}" var="c">
-						<span class="property-value" aria-labelledby="conceitos-label"><g:link controller="concept" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="conceitos-label"><g:link controller="concept" action="show" id="${c.id}">${c?.nome}</g:link></span>
 						</g:each>
 					
 				</li>

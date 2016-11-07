@@ -16,7 +16,7 @@
 		<g:message code="evaluationConcept.conceitos.label" default="conceitos" />
 		
 	</label>
-	<g:select name="conceitos" from="${ta.Concept.list()}" multiple="multiple" optionKey="id" size="5" value="${evaluationConceptInstance?.conceitos*.id}" class="many-to-many"/>
+	<g:select name="conceitos" from="${ta.Concept.list()}" multiple="multiple" optionKey="id" optionValue="nome" class="many-to-many"/>
 
 </div>
 
