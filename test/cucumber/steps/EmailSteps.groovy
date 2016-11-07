@@ -7,6 +7,7 @@ import pages.AddEvaluationPage
 import pages.AddStudentsPage
 import pages.CreateCriterionPage
 import pages.EvaluationPages.EvaluationPage
+import pages.StudentPages.ResendPage
 import pages.StudentPages.StudentPage
 import ta.Student
 
@@ -30,9 +31,30 @@ Given(~/^There are grades from student “([^"]*)” with email “([^"]*)” ev
 }
 Then(~/^An email is sent to “([^"]*)” Telling he received an “([^"]*)” on “([^"]*)”$/) {
     String email,String grade,String criteria->
-        assert Student.findByEmail(email).criteriaAndEvaluations.evaluations[0].sent
+        to StudentPage
+        page.selectStudentEmail(email)
+        assert !($("td").has(text:"Not Sent"))
 }
 When(~/^I request to send new grades$/) { ->
     to StudentPage
     page.sendNewEvaluations()
+}
+Given(~/^All grades on the system have been already sent$/) { ->
+    to AddStudentsPage
+    page.fillStudentDetails("Tester", "test", "test@test.te")
+    page.selectAddStudent()
+    to CreateCriterionPage
+    page.createCriterion("C1")
+    to AddEvaluationPage
+    page.chooseCriterion("C1")
+    page.chooseValue("MPA")
+    page.selectAddEvaluation()
+    to StudentPage
+    page.sendNewEvaluations()
+}
+And(~/^I am on the students index page$/) { ->
+    to StudentPage
+}
+Then(~/^the system asks if I want to resend$/) { ->
+    at ResendPage
 }

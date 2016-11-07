@@ -9,11 +9,11 @@ Feature: Email New Grades
     When I request to send new grades
     Then An email is sent to “alpgc@cin.ufpe.br” Telling he received an “MANA” on “Cenarios”
 
-#  Scenario: No new grades to send
-#    Given All grades on the system have been already sent
-#    And I am on the evaluation index page
-#    When I request to send new grades
-#    Then the system asks if I want to resend
+  Scenario: No new grades to send
+    Given All grades on the system have been already sent
+    And I am on the students index page
+    When I request to send new grades
+    Then the system asks if I want to resend
 
 #  Scenario Registering new grades.
 #    Given All grades on the system have been already sent

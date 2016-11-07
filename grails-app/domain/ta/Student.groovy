@@ -54,25 +54,28 @@ class Student {
         }
     }
 
-    def sendNewEvaluations(){
+    boolean sendNewEvaluations(){
         String message="";
-        for(int i=0;i<this.criteriaAndEvaluations.size();i++){
-            if(this.criteriaAndEvaluations[i].hasUnsent==false)continue
-            message+=this.criteriaAndEvaluations[i].getNewEvaluations()
+        for(EvaluationsByCriterion CAE:this.criteriaAndEvaluations){
+            if(!CAE.hasUnsent)continue
+            message+=CAE.getNewEvaluations()
             message+="\n"
-            this.criteriaAndEvaluations[i].hasUnsent=false
+            CAE.hasUnsent=false
         }
-        messagingService.sendEmail(
-                "Gmail",
-                "taprojmailer@gmail.com",
-                "1234mail",
-                "taprojmailer@gmail.com",
-                this.email,
-                "Grades",
-                message,
-                true,
-                null
-        )
+        if(message.length()>0) {
+            messagingService.sendEmail(
+                    "Gmail",
+                    "taprojmailer@gmail.com",
+                    "1234mail",
+                    "Teacher assistant",
+                    this.email,
+                    "Grades",
+                    message,
+                    true,
+                    null
+            )
+            return true
+        }else return false
     }
     /*public void addEvaluation(Evaluation evaluationInstance){
         for(int i = 0; i< this.criteriaAndEvaluations.size(); i++){

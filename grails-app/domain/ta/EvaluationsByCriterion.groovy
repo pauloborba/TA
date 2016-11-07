@@ -47,7 +47,7 @@ class EvaluationsByCriterion {
             if(evaluations[i].sent==false)s+=" "+evaluations[i].value+","
             evaluations[i].sent=true
         }
-        if(s.size()==0)return criterion.getDescription()+": None Evaluated Yet"
+        if(s.length()==0)return ""
         s=s.substring(0,s.length()-1)
         return ""+criterion.getDescription()+":"+s
     }

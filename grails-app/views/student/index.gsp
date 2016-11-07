@@ -45,7 +45,7 @@
 
 				<td>${fieldValue(bean: studentInstance, field: "login")}</td>
 
-				<td>${fieldValue(bean: studentInstance, field: "email")}</td>
+				<td><g:link action="show" name="${studentInstance.email}" id="${studentInstance.id}">${fieldValue(bean: studentInstance, field: "email")}</g:link></td>
 
 				<td>${fieldValue(bean: studentInstance, field: "average")}</td>
 
