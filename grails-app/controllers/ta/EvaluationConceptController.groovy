@@ -8,7 +8,35 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class EvaluationConceptController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    @Transactional
+    public void saveEvalCon(){
+        def evaluationConceptInstance = new EvaluationConcept(params)
+        if (evaluationConceptInstance == null) {
+            notFound()
+            return
+        }
+
+        if (evaluationConceptInstance.hasErrors()) {
+            respond evaluationConceptInstance.errors, view:'create'
+            return
+        }
+        evaluationConceptInstance.save flush:true
+    }
+
+    public void updateEvalCon(){
+        def evaluationConceptInstance = EvaluationConcept.get(params.id)
+        if (evaluationConceptInstance == null) {
+            notFound()
+            return
+        }
+
+        if (evaluationConceptInstance.hasErrors()) {
+            respond evaluationConceptInstance.errors, view:'edit'
+            return
+        }
+
+        evaluationConceptInstance.save flush:true
+    }
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)

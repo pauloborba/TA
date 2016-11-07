@@ -16,21 +16,25 @@ String name_previous
 int n_previous
 String[] concepts_previous
 
-Given(~/^The evaluation concept is "([^"]*)"$/) { String ini_concept ->
-    EvalConceptDataAndOperations.createEvalConcept(ini_concept, 3, {"MA"; "MPA"; "MANA"})
-    ToCompare = EvaluationConcept.findByName(ini_concept) /*Como eu só terei um conceito de avaliação, o nome
-                                                                    Será único*/
-    assert ToCompare.name == ini_concept
+Given(~/^The evaluation concept is "([^"]*)"$/) { String nome ->
+    List<String> conceitos = ["MA", "MPA", "MANA"]
+    EvalConceptDataAndOperations.createEvalConcept(nome, conceitos)
+    assert  EvaluationConcept.findByNome(nome) != null
 }
-When(~/^I update the "([^"]*)" concept to "([^"]*)" concept$/) { String ini_concept, String new_concept ->
-    toUpdate = EvaluationConcept.findByName(ini_concept)
-    name_previous = toUpdate.name
-    concepts_previous = toUpdate.concepts
-    EvalConceptDataAndOperations.updateConcept(toUpdate, new_concept, toUpdate.n_concepts, toUpdate.concepts)
+When(~/^I update the "([^"]*)" concept to "([^"]*)" concept$/) { String inicial, String proximo ->
+    toUpdate =  EvaluationConcept.findByNome(inicial)
+    assert toUpdate != null
+    toUpdate.setNome(proximo)
+    assert toUpdate.nome == proximo
+    EvalConceptDataAndOperations.updateEvalConcept(toUpdate)
+    //EvaluationConcept.all
+    //EvaluationConcept aux = EvaluationConcept.findByNome(proximo)
+    assert EvaluationConcept.findByNome(proximo)!= null
 }
-Then(~/^The evaluation concept is set$/) { ->
-    assert toUpdate.name == new_concept
+Then(~/^The evaluation concept "([^"]*)" is set$/) { String nome ->
+    assert EvaluationConcept.findByNome(nome) != null
 }
+/*
 
 And(~/^the "([^"]*)" doesn't have any concept$/) { String new_concept ->
     n_previous = toUpdate.n_concepts
@@ -41,4 +45,21 @@ And(~/^the "([^"]*)" doesn't have any concept$/) { String new_concept ->
 Then(~/^The atual concept doesn't change$/) { ->
     EvalConceptDataAndOperations.updateConcept(toUpdate.name, name_previous, n_previous, concepts_previous)
     assert toUpdate.name == name_previous
+}*/
+
+When(~/^I update the "([^"]*)" concept to "([^"]*)" evaluation concept with no concepts$/) { String antigo, String novo ->
+    toUpdate = EvaluationConcept.findByNome(antigo)
+    assert toUpdate != null
+    toUpdate.nome = novo
+    toUpdate.conceitos = []
+    assert toUpdate.conceitos.empty
+    EvalConceptDataAndOperations.updateEvalConcept(toUpdate)
+    EvaluationConcept atual = EvaluationConcept.findByNome(antigo)
+    assert atual != null
+}
+
+Then(~/^The atual concept is "([^"]*)"$/) { String nome ->
+    EvaluationConcept eval = EvaluationConcept.findByNome(nome)
+    assert eval != null
+    assert eval.hasErrors()
 }

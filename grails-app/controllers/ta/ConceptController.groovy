@@ -74,6 +74,23 @@ class ConceptController {
     }
 
     @Transactional
+    def createAndSaveConcept(){
+        Concept instanceConcept = new Concept(params)
+        if(Concept.findByNome(instanceConcept.getNome()) == null){
+            if(instanceConcept.hasErrors()){
+                respond instanceConcept.errors, view: "create"
+                return
+            }
+            if(!instanceConcept.save(flush: true)){
+                render(view: "create", model: [instanceConcept: instanceConcept])
+                return
+            }
+            flash.message = message(code: 'default.created.message', args: [message(code: 'concept.label', default: 'Concept'), instanceConcept.id])
+            redirect(action: "show", id: instanceConcept.id)
+        }
+    }
+
+    @Transactional
     def delete(Concept conceptInstance) {
 
         if (conceptInstance == null) {

@@ -12,27 +12,26 @@ Feature: Configure the evaluation concept
   Scenario: Configure the atual evaluation concept.
     Given The evaluation concept is "MA, MPA, MANA"
     When I update the "MA, MPA, MANA" concept to "Usual Average" concept
-    Then The evaluation concept is set
+    Then The evaluation concept "Usual Average" is set
 
   #Controller Scenario
   Scenario: Configure the atual evaluation concept with invalid attributes.
     Given The evaluation concept is "MA, MPA, MANA"
-    When I update the "MA, MPA, MANA" concept to "New Concept" concept
-    And the "New Concept" doesn't have any concept
-    Then The atual concept doesn't change
+    When I update the "MA, MPA, MANA" concept to "New Concept" evaluation concept with no concepts
+    Then The atual concept is "MA, MPA, MANA"
 
-  #GUI Scenario
-  Scenario: Configure the atual evaluation concept with a invalid value.
-    Given I am at the home page
-    And The "MA, MPA, MANA" evaluation concept is set
-    When I choose "Edit Evaluation Concept"
-    And I change the number of concept to 0
-    Then An error message appears.
-
-  #GUI Scenario
-  Scenario: Configure the parameters of the atual evaluation concept.
-    Given I'm on the home page
-    And The "MA, MPA, MANA" evaluation concept is set
-    When I choose "Edit Evaluation Concept"
-    And Change the field "MA" to "Meta Alcançada"
-    Then I can see the concept "Meta Alcançada".
+#  #GUI Scenario
+#  Scenario: Configure the atual evaluation concept with a invalid value.
+#    Given I am at the home page
+#    And The "MA, MPA, MANA" evaluation concept is set
+#    When I choose "Edit Evaluation Concept"
+#    And I change the number of concept to 0
+#    Then An error message appears.
+#
+#  #GUI Scenario
+#  Scenario: Configure the parameters of the atual evaluation concept.
+#    Given I'm on the home page
+#    And The "MA, MPA, MANA" evaluation concept is set
+#    When I choose "Edit Evaluation Concept"
+#    And Change the field "MA" to "Meta Alcançada"
+#    Then I can see the concept "Meta Alcançada".
