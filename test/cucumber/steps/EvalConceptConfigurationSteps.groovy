@@ -1,6 +1,7 @@
 package cucumber.steps
 
 import cucumber.api.PendingException
+import pages.ConceptPages.AddConceptPage
 import steps.EvalConceptDataAndOperations
 import ta.EvaluationConcept
 
@@ -11,10 +12,7 @@ import ta.EvaluationConcept
 this.metaClass.mixin(cucumber.api.groovy.Hooks)
 this.metaClass.mixin(cucumber.api.groovy.EN)
 
-EvaluationConcept ToCompare, toUpdate
-String name_previous
-int n_previous
-String[] concepts_previous
+EvaluationConcept toUpdate
 
 Given(~/^The evaluation concept is "([^"]*)"$/) { String nome ->
     List<String> conceitos = ["MA", "MPA", "MANA"]
@@ -62,4 +60,9 @@ Then(~/^The atual concept is "([^"]*)"$/) { String nome ->
     EvaluationConcept eval = EvaluationConcept.findByNome(nome)
     assert eval != null
     assert eval.hasErrors()
+}
+Given(~/^The "([^"]*)" evaluation concept is set$/) { String arg1 ->
+    to AddConceptPage
+    at AddConceptPage
+
 }

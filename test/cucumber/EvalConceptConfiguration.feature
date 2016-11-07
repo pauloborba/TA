@@ -20,13 +20,12 @@ Feature: Configure the evaluation concept
     When I update the "MA, MPA, MANA" concept to "New Concept" evaluation concept with no concepts
     Then The atual concept is "MA, MPA, MANA"
 
-#  #GUI Scenario
-#  Scenario: Configure the atual evaluation concept with a invalid value.
-#    Given I am at the home page
-#    And The "MA, MPA, MANA" evaluation concept is set
-#    When I choose "Edit Evaluation Concept"
-#    And I change the number of concept to 0
-#    Then An error message appears.
+  #GUI Scenario
+  Scenario: Configure the atual evaluation concept with a invalid value.
+    Given The "MA, MPA, MANA" evaluation concept is set
+    When I choose "Edit Evaluation Concept"
+    And I change the number of concept to 0
+    Then An error message appears.
 #
 #  #GUI Scenario
 #  Scenario: Configure the parameters of the atual evaluation concept.
