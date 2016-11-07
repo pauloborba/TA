@@ -21,9 +21,6 @@ class StudentPage extends Page {
     }
 
 
-    boolean checkForUnsent() {
-        return ($("td").has(text:"Not Sent"));
-    }
 
     def sendNewEvaluations(){
         $("a", class: "sendNew").click()
@@ -33,8 +30,8 @@ class StudentPage extends Page {
         $("tr").find("td").has("a",text: name).click()
     }
 
-    def selectStudentEmail(String email){
-        $("tr").find("td").has("a",text: email).click()
+    def selectStudentByEmail(String email){
+        $("a", name: email).click()
     }
 
     def selectStudentByLogin(String login) {

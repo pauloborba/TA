@@ -6,7 +6,7 @@ class Student {
     String email;
     def messagingService;
     double average;
-    List criteriaAndEvaluations
+    List<EvaluationsByCriterion> criteriaAndEvaluations
     static hasMany = [criteriaAndEvaluations:EvaluationsByCriterion]
 
     static constraints = {
@@ -56,18 +56,21 @@ class Student {
 
     boolean sendNewEvaluations(){
         String message="";
-        for(EvaluationsByCriterion CAE:this.criteriaAndEvaluations){
-            if(!CAE.hasUnsent)continue
-            message+=CAE.getNewEvaluations()
-            message+="\n"
-            CAE.hasUnsent=false
+        this.criteriaAndEvaluations.each { EvaluationsByCriterion CAE ->
+            if (CAE.getHasUnsent()) {
+                println(""+CAE.getHasUnsent())
+                message += CAE.getNewEvaluations()
+                message += "\n"
+                CAE.setHasUnsent(false)
+                println(""+criteriaAndEvaluations.get(0).hasUnsent+CAE.getHasUnsent()+""+CAE.getNewEvaluations())
+            }
         }
-        if(message.length()>0) {
+        if(message.size()>0) {
             messagingService.sendEmail(
                     "Gmail",
                     "taprojmailer@gmail.com",
                     "1234mail",
-                    "Teacher assistant",
+                    "taprojmailer@gmail.com",
                     this.email,
                     "Grades",
                     message,
@@ -75,7 +78,9 @@ class Student {
                     null
             )
             return true
-        }else return false
+        }else {
+            return false
+        }
     }
     /*public void addEvaluation(Evaluation evaluationInstance){
         for(int i = 0; i< this.criteriaAndEvaluations.size(); i++){

@@ -13,6 +13,10 @@ class ShowStudentPage extends Page {
         title ==~ /Show Student/
     }
 
+    def boolean isAllSent(){
+        return !($("tr").has("td",text:"Not Sent"))
+    }
+
     def boolean checkForCriterion(String desc) {
         if ($("tbody").has("a", name: desc)) return false
         return true

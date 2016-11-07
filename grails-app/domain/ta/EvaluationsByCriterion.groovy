@@ -4,7 +4,7 @@ package ta
  */
 class EvaluationsByCriterion {
     Criterion criterion
-    List evaluations
+    List<Evaluation> evaluations
     static hasMany = [evaluations:Evaluation]
     double criterionAverage
     boolean hasUnsent
@@ -23,7 +23,7 @@ class EvaluationsByCriterion {
     public void addEvaluation(Evaluation evaluationInstance) {
         addToEvaluations(evaluationInstance)
         doMedia();
-        this.hasUnsent = true
+        if(!evaluationInstance.sent)this.hasUnsent = true
     }
 
     public void doMedia(){
@@ -43,9 +43,9 @@ class EvaluationsByCriterion {
 
     String getNewEvaluations(){
         String s=""
-        for(int i=0;i<evaluations.size();i++){
-            if(evaluations[i].sent==false)s+=" "+evaluations[i].value+","
-            evaluations[i].sent=true
+        evaluations.each{Evaluation ev->
+            if(!ev.sent)s+=" "+ev.value+","
+            ev.sent=true
         }
         if(s.length()==0)return ""
         s=s.substring(0,s.length()-1)

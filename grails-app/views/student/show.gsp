@@ -74,7 +74,7 @@
 							​
 							<td>${fieldValue(bean: criteriaAndEvaluations, field: "criterionAverage")}</td>
 
-                            <td>${fieldValue(bean: criteriaAndEvaluations, field: "hasUnsent")?message(code: 'evaluation.toSend.label', default: 'Not Sent'):message(code: 'evaluation.sent.label', default: 'Sent')}</td>
+                            <td>${fieldValue(bean: criteriaAndEvaluations, field: "hasUnsent")==~"true"?"Not Sent":"All Sent"}</td>
 						</tr>
 				</g:each>
 				</tbody>

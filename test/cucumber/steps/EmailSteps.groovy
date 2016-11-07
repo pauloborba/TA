@@ -8,6 +8,7 @@ import pages.AddStudentsPage
 import pages.CreateCriterionPage
 import pages.EvaluationPages.EvaluationPage
 import pages.StudentPages.ResendPage
+import pages.StudentPages.ShowStudentPage
 import pages.StudentPages.StudentPage
 import ta.Student
 
@@ -32,8 +33,9 @@ Given(~/^There are grades from student “([^"]*)” with email “([^"]*)” ev
 Then(~/^An email is sent to “([^"]*)” Telling he received an “([^"]*)” on “([^"]*)”$/) {
     String email,String grade,String criteria->
         to StudentPage
-        page.selectStudentEmail(email)
-        assert !($("td").has(text:"Not Sent"))
+        page.selectStudentByEmail(email)
+        at ShowStudentPage
+        assert page.isAllSent()
 }
 When(~/^I request to send new grades$/) { ->
     to StudentPage
@@ -57,4 +59,12 @@ And(~/^I am on the students index page$/) { ->
 }
 Then(~/^the system asks if I want to resend$/) { ->
     at ResendPage
+}
+When(~/^I successfully import students evaluation for the "([^"]*)" criterion\.\.\.$/) { String arg1 ->
+    // Write code here that turns the phrase above into concrete actions
+    throw new PendingException()
+}
+Then(~/^The system is marked as having grades to send$/) { ->
+    // Write code here that turns the phrase above into concrete actions
+    throw new PendingException()
 }

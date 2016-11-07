@@ -15,6 +15,7 @@ Feature: Email New Grades
     When I request to send new grades
     Then the system asks if I want to resend
 
+#  Cant be tested yet, need importing grades
 #  Scenario Registering new grades.
 #    Given All grades on the system have been already sent
 #    When I successfully import students evaluation for the "Cenarios" criterion...
