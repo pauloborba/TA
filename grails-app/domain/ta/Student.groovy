@@ -4,6 +4,7 @@ class Student {
     String name;
     String login;
     String email;
+    def messagingService;
     double average;
     List criteriaAndEvaluations
     static hasMany = [criteriaAndEvaluations:EvaluationsByCriterion]
@@ -26,7 +27,7 @@ class Student {
     }
 
 
-    public Student(String name, String login,String email){
+    public Student(String name, String login,String email) {
         this.name = name;
         this.login = login;
         this.email = email;
@@ -53,6 +54,24 @@ class Student {
         }
     }
 
+    def sendNewEvaluations(){
+        String message="";
+        for(int i=0;i<this.criteriaAndEvaluations.size();i++){
+            message+=this.criteriaAndEvaluations[i].getNewEvaluations()
+            message+="\n"
+        }
+        messagingService.sendEmail(
+                "Gmail",
+                "taprojmailer@gmail.com",
+                "1234mail",
+                "taprojmailer@gmail.com",
+                this.email,
+                "Grades",
+                message,
+                true,
+                null
+        )
+    }
     /*public void addEvaluation(Evaluation evaluationInstance){
         for(int i = 0; i< this.criteriaAndEvaluations.size(); i++){
             if(this.criteriaAndEvaluations.get(i).getCriterion().getDescription().equals(evaluationInstance.criterion.description)){

@@ -18,6 +18,12 @@ class AddStudentsPage extends Page{
         $("form").login = login
     }
 
+    def fillStudentDetails(String name, String login,String email) {
+        $("form").name = name
+        $("form").login = login
+        $("form").email = email
+    }
+
     def selectAddStudent() {
         $("input", name: "create").click()
     }

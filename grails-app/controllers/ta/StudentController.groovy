@@ -225,6 +225,13 @@ class StudentController {
         render view: "search"
     }
 
+    def sendNew(){
+        for (Student student : Student.list()) {
+            student.sendNewEvaluations()
+        }
+        render view: "index"
+    }
+
     def consult() {
         def auxList = Student.list()
         def studentList = auxList.findAll {
