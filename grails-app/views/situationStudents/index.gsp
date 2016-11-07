@@ -41,8 +41,8 @@
             <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 
                 <td>${fieldValue(bean: studentInstance, field: "login")}</td>
-                <g:each in="${ta.Criterion.list()}" var="criterion">
-                    <td>${studentInstance}</td>
+                <g:each in="${studentInstance.criteriaAndEvaluations}"  status="j" var="criterion">
+                    <td>${studentInstance.criteriaAndEvaluations[j].criterionAverage}</td>
                 </g:each>
             </tr>
         </g:each>
