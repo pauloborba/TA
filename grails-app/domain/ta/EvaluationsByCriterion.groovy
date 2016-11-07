@@ -7,7 +7,7 @@ class EvaluationsByCriterion {
     List evaluations
     static hasMany = [evaluations:Evaluation]
     double criterionAverage
-
+    boolean hasUnsent
     static constraints = {
         criterion nullable: false
         evaluations nullable : false
@@ -17,11 +17,13 @@ class EvaluationsByCriterion {
         this.criterion = criterion;
         this.evaluations = []
         this.criterionAverage = 0;
+        this.hasUnsent = false
     }
 
     public void addEvaluation(Evaluation evaluationInstance) {
         addToEvaluations(evaluationInstance)
         doMedia();
+        this.hasUnsent = true
     }
 
     public void doMedia(){
@@ -45,7 +47,7 @@ class EvaluationsByCriterion {
             if(evaluations[i].sent==false)s+=" "+evaluations[i].value+","
             evaluations[i].sent=true
         }
-        if(s.size()==0)return criterion.getDescription()+": Not Evaluated Yet"
+        if(s.size()==0)return criterion.getDescription()+": None Evaluated Yet"
         s=s.substring(0,s.length()-1)
         return ""+criterion.getDescription()+":"+s
     }

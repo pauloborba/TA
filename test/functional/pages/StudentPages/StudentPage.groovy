@@ -21,7 +21,7 @@ class StudentPage extends Page {
     }
 
     def sendNewEvaluations(){
-        $("a", name: "sendNew").click()
+        $("a", class: "sendNew").click()
     }
 
     def selectStudent(String name){

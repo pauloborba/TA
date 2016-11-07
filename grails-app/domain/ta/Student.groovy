@@ -57,8 +57,10 @@ class Student {
     def sendNewEvaluations(){
         String message="";
         for(int i=0;i<this.criteriaAndEvaluations.size();i++){
+            if(this.criteriaAndEvaluations[i].hasUnsent==false)continue
             message+=this.criteriaAndEvaluations[i].getNewEvaluations()
             message+="\n"
+            this.criteriaAndEvaluations[i].hasUnsent=false
         }
         messagingService.sendEmail(
                 "Gmail",

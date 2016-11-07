@@ -4,7 +4,7 @@ class Evaluation {
     String origin;
     String value;
     Date applicationDate;
-    Boolean sent;
+    boolean sent;
     Criterion criterion;
     static constraints = {
         origin inList :["Test","Mini-Test","Form","Final"], blank: false

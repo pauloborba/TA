@@ -45,6 +45,8 @@
 
 				<td>${fieldValue(bean: studentInstance, field: "login")}</td>
 
+				<td>${fieldValue(bean: studentInstance, field: "email")}</td>
+
 				<td>${fieldValue(bean: studentInstance, field: "average")}</td>
 
 			</tr>

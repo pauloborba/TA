@@ -62,6 +62,8 @@
 
 					<g:sortableColumn property="media" title="${message(code: 'evaluation.value.label', default: 'Media')}" />
 
+					<g:sortableColumn property="sent" title="${message(code: 'evaluation.sent.label', default: 'Sent')}" />
+
 				</tr>
 				</thead>
 				<tbody>
@@ -71,7 +73,8 @@
 							<td><g:link name="${criteriaAndEvaluations.criterion.description}" controller="evaluationsByCriterion" action="show" id="${criteriaAndEvaluations.id}">${fieldValue(bean: criteriaAndEvaluations, field: "criterion.description")}</g:link></td>
 							​
 							<td>${fieldValue(bean: criteriaAndEvaluations, field: "criterionAverage")}</td>
-							​
+
+                            <td>${fieldValue(bean: criteriaAndEvaluations, field: "hasUnsent")?message(code: 'evaluation.toSend.label', default: 'Not Sent'):message(code: 'evaluation.sent.label', default: 'Sent')}</td>
 						</tr>
 				</g:each>
 				</tbody>

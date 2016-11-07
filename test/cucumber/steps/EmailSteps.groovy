@@ -3,6 +3,7 @@ package steps
 import cucumber.api.PendingException
 import cucumber.api.groovy.EN
 import cucumber.api.groovy.Hooks
+import pages.AddEvaluationPage
 import pages.AddStudentsPage
 import pages.CreateCriterionPage
 import pages.EvaluationPages.EvaluationPage
@@ -22,11 +23,14 @@ Given(~/^There are grades from student “([^"]*)” with email “([^"]*)” ev
             page.selectAddStudent()
             to CreateCriterionPage
             page.createCriterion(criteria)
-            //to EvaluationPage
-
+            to AddEvaluationPage
+            page.chooseCriterion(criteria)
+            page.chooseValue(grade)
+            page.selectAddEvaluation()
 }
-Then(~/^An email is sent to “([^"]*)” Telling he received an “([^"]*)” on “([^"]*)” and that his “([^"]*)” criteria was not evaluated yet\.$/) {
-    String email,String grade,String criteria1,String criteria2->
+Then(~/^An email is sent to “([^"]*)” Telling he received an “([^"]*)” on “([^"]*)”$/) {
+    String email,String grade,String criteria->
+        assert Student.findByEmail(email).criteriaAndEvaluations.evaluations[0].sent
 }
 When(~/^I request to send new grades$/) { ->
     to StudentPage
