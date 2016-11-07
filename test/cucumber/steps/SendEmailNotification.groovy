@@ -2,6 +2,11 @@ package steps
 
 import cucumber.api.groovy.EN
 import cucumber.api.groovy.Hooks
+import pages.AddEvaluationPage
+import pages.AddStudentsPage
+import pages.CreateCriterionPage
+import pages.EvaluationPages.EvaluationPage
+import pages.StudentPages.StudentPage
 import ta.Criterion
 import ta.Student
 
@@ -14,52 +19,61 @@ this.metaClass.mixin(EN)
 /*
     #Controller Scenario
   Scenario: notify that a email has to be send
-    Given the created criterion are "Requirements definition" and "Test implementation"
-    And the student "João" and the student "Pedro" are registered in the system
-    When I update the grade of "João" to "MPA" in the criterion "Requirements definition"
-    And I update the grade of "Pedro" to "MA" in the criterion "Requirements definition"
-    Then the system notifies that is necessary send a new email with the evaluated criterion to the students
+    Given the criterion "Requirements definition" already exists
+    And the criterion "Test implementation" also exists
+    And the student "João" with login "J" is registered in the system
+    And the student "Pedro" with login "P" is also registered in the system
+    When I update the grade of all students in the criterion "Requirements definition" originated from "Test" and dated from "02/02/2016"
+    Then the system notifies that is necessary to send a new email with the evaluated criterion to the students
  */
+String login1, login2
+Criterion crit1
 
-Criterion crit1, crit2
+//GUI Scenario
+Given(~'^I see the students "([^"]*)" with login "([^"]*)" and "([^"]*)" with login "([^"]*)" and the criterion "([^"]*)"$') {
+    String name1, login_1, name2, login_2, c1 ->
+        to AddStudentsPage
+//        at AddStudentsPage
 
-//Controller Scenario
-Given(~'^The criterion "([^"]*)" already exists$') {
-    String c ->
-        CriterionTestDataAndOperations.createCriterion(c)
-        Criterion crit = CriterionTestDataAndOperations(c)
-        assert crit.description.equals(c)
-        crit1 = crit
-}
-And(~'^The criterion "([^"]*)" also exists$') {
-    String c ->
-        CriterionTestDataAndOperations.createCriterion(c)
-        Criterion crit = CriterionTestDataAndOperations.getCriterion(c)
-        assert crit.description.equals(c)
-        crit2 = crit
-}
-And(~'^The student "([^"]*)" with login "([^"]*)" is registered in the system$') {
-    String name, login ->
-        AddStudentsTestDataAndOperations.createStudent(name, login)
-        assert Student.findByLogin(login) != null
-}
-And(~'^The student "([^"]*)" with login "([^"]*)" is also registered in the system$') {
-    String name, login ->
-        AddStudentsTestDataAndOperations.createStudent(name, login)
-        assert Student.findByLogin(login) != null
-}
-When(~'I update the grade of "([^"]*)" with login "([^"]*)" to "([^"]*) in the criterion "([^"]*) originated from "([^"]*)" and dated from "([^"]*)"$') {
-    String name, login, grade, c, form, date ->
-        EvaluationDataAndOperations.createStudent(login, name);
-        EvaluationDataAndOperations.createCriterion(c);
-        EvaluationDataAndOperations.createEvaluation(grade,c, form, date);
-}
-And(~'I update the grade of "([^"]*)" with login "([^"]*)" to "([^"]*) in the criterion "([^"]*) originated from "([^"]*)" and dated from "([^"]*)"$') {
-    String name, login, grade, c, form, date ->
-        EvaluationDataAndOperations.createStudent(login, name);
-        EvaluationDataAndOperations.createCriterion(c);
-        EvaluationDataAndOperations.createEvaluation(grade,c, form, date);
-}
-Then(~'The system notifies that is necessary to send a new email with the evaluated criterion to the students') {
+        page.fillStudentDetails(name1, login_1)
+        page.selectCreateStudent()
 
+        to StudentPage
+
+        assert page.confirmStudent(name1, login_1)
+
+        to AddStudentsPage
+        //at AddStudentsPage
+
+        page.fillStudentDetails(name2, login_2)
+        page.selectCreateStudent()
+
+        to StudentPage
+
+        assert page.confirmStudent(name2, login_2)
+
+        to CreateCriterionPage
+//        at CreateCriterionPage
+
+        page.fillCriterionDetails(c1)
+        page.selectCreateCriterion()
+
+        to CriterionPage
+
+        assert page.confirmCriterion(c1)
+}
+When(~'^I update the grade of all students in the criterion "([^"]*)" originated from "([^"]*)" and dated from "([^"]*)"$') {
+    String grade, c1, Origin, Date ->
+        to AddEvaluationPage
+        at AddEvaluationPage
+        page.chooseValue(grade)
+        page.chooseCriterion(c1)
+        page.chooseOrigin(Origin)
+        page.chooseEvaluationDate(Date)
+        assert page.selectCreateStudent()
+}
+Then(~'^the system notifies that is necessary to send a new email with the evaluated criterion to the students$') {
+        to EvaluationPage
+        at EvaluationPage
+        assert page.needEmail()
 }

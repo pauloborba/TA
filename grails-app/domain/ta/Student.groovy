@@ -3,13 +3,16 @@ package ta
 class Student {
     String name;
     String login;
+    String email;
     double average;
+    def messageService;
     List criteriaAndEvaluations
     static hasMany = [criteriaAndEvaluations:EvaluationsByCriterion]
 
     static constraints = {
         name blank : false
-        login unique : true, blank:false;
+        login unique : true, blank : false
+        email blank : true, nullable : true
     }
 
     static mapping = {
@@ -20,6 +23,13 @@ class Student {
     public Student(String name, String login){
         this.name = name;
         this.login = login;
+        this.criteriaAndEvaluations = [];
+    }
+
+    public Student(String name, String login, String email) {
+        this.name = name;
+        this.login = login;
+        this.email = email;
         this.criteriaAndEvaluations = [];
     }
 
@@ -41,6 +51,15 @@ class Student {
         } else {
             this.average = 0
         }
+    }
+
+    def sendCriterion(){
+        String message="Critérios avaliados:\n";
+        for(int i=0;i<this.criteriaAndEvaluations.size();i++){
+            message+=this.criteriaAndEvaluations[i].getNewEvaluations()
+            message+="\n"
+        }
+        messageService.sendEmail("Gmail", "taprojmailer@gmail.com", "1234mail", "taprojmailer@gmail.com", this.email, "Grades", message, true, null)
     }
 
     /*public void addEvaluation(Evaluation evaluationInstance){

@@ -39,6 +39,16 @@ class EvaluationsByCriterion {
         }
     }
 
+    String getNewEvaluations(){
+        String s=""
+        for(int i=0;i<evaluations.size();i++){
+            s+=" "+evaluations[i].value+","
+        }
+        if(s.size()==0)return criterion.getDescription()+": None Evaluated Yet"
+        s=s.substring(0,s.length()-1)
+        return ""+criterion.getDescription()+":"+s
+    }
+
     /*  ------------------------
       | MÉTODOS USADOS EM TESTES |
         ------------------------  */

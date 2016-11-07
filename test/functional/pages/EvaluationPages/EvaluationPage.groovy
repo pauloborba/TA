@@ -24,4 +24,11 @@ class EvaluationPage extends Page {
         return r
     }
 
+    def sendCriterion(){
+        $("a", class: "sendEmail").click()
+    }
+
+    def needEmail() {
+        ${"div.message"}.text()
+    }
 }

@@ -220,7 +220,6 @@ class StudentController {
         respond new Student(params)
     }
 
-
     def search() {
         render view: "search"
     }

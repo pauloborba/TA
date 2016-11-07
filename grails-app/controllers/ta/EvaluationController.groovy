@@ -46,6 +46,13 @@ class EvaluationController {
         respond evaluationInstance
     }
 
+    def sendEmail(){
+        for (Student student : Student.list()) {
+            student.sendCriterion()
+        }
+        render view: "index"
+    }
+
     def create() {
         respond new Evaluation(params)
     }
@@ -117,6 +124,7 @@ class EvaluationController {
             listEvaluation.add(newEvaluation)
         }
         student.addEvaluationsToAllStudents(listEvaluation)
+        flash.message = message(code: 'default.sendEmailMessage.label', default: 'You need to send a new email with the evaluated criterion')
         redirect action:"index", method:"GET"
     }
 

@@ -30,6 +30,8 @@
 
 			<g:sortableColumn property="login" title="${message(code: 'student.login.label', default: 'Login')}" />
 
+            <g:sortableColumn property="email" title="${message(code: 'student.email.label', default: 'Email')}" />
+
 			<g:sortableColumn property="average" title="${message(code: 'student.average.label', default: 'Media')}" />
 
 		</tr>
@@ -41,6 +43,7 @@
 				<td><g:link action="show" name="${studentInstance.login}" id="${studentInstance.id}">${fieldValue(bean: studentInstance, field: "name")}</g:link></td>
 
 				<td>${fieldValue(bean: studentInstance, field: "login")}</td>
+                <td>${fieldValue(bean: studentInstance, field: "email")}</td>
 
 				<td>${fieldValue(bean: studentInstance, field: "average")}</td>
 
