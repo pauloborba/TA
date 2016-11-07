@@ -10,6 +10,7 @@ import steps.CommonTestDataAndOperations
 import steps.CriterionTestDataAndOperations
 import steps.EvaluationDataAndOperations
 import steps.SituationStudentsTestDataAndOperation
+import ta.Evaluation
 import ta.Student
 import ta.StudentController
 
@@ -28,16 +29,19 @@ this.metaClass.mixin(EN)
 
 Student studentToCheck
 
-Given(~'^o aluno "([^"]*)", com login "([^"]*)", possui conceitos "([^"]*)", "([^"]*)" e "([^"]*)" em "([^"]*)"$'){
-    String aluno, String login, String conceito1, String conceito2, String conceito3, String materia ->
+Given(~'^o aluno "([^"]*)", com login "([^"]*)", possui conceitos "([^"]*)", "([^"]*)" e "([^"]*)" em "([^"]*)"$') {
+    String aluno, login, conceito1, conceito2, conceito3, materia ->
         AddStudentsTestDataAndOperations.createStudent(aluno, login)
         studentToCheck = Student.findByLogin(login)
         assert studentToCheck.login.equals(login)
         assert studentToCheck.name.equals(aluno)
         CriterionTestDataAndOperations.createCriterion(materia)
-        EvaluationDataAndOperations.createEvaluation(conceito1, materia, "Prova", "01/10/2016")
+        assert CommonTestDataAndOperations.giveEvaluationToCriterion(conceito1, materia, "Form", "10/10/2016", login)
+        assert CommonTestDataAndOperations.giveEvaluationToCriterion(conceito2, materia, "Mini-Test", "09/10/2016", login)
+        assert CommonTestDataAndOperations.giveEvaluationToCriterion(conceito3, materia, "Test", "11/10/2016", login)
+
 }
-/*
+
 And(~'o aluno "([^"]*)", com login "([^"]*)", possui media "([^"]*)" em "([^"]*)"'){
     String aluno, String login, String media, String conceito ->
 
@@ -50,4 +54,3 @@ When(~'eu solicito a visualização da situação do aluno "([^"]*)" com login "
 Then(~'a média de "([^"]*)", com login "([^"]*)", em "([^"]*)" continua sendo "([^"]*)"'){
     String aluno, String login, String conceito, String media ->
 }
-*/
