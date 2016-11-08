@@ -9,8 +9,8 @@ class EditEvaluationConceptPage extends Page{
     static url = "TA/evaluationConcept/edit/"
 
     static at = {
-        title ==~ /Editar EvaluationConcept/
-        //title ==~ /Edit EvaluationConcept/
+//        title ==~ /Editar EvaluationConcept/
+        title ==~ /Edit EvaluationConcept/
     }
 
     def editEvalConceptWithoutConcept(){

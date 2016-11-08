@@ -9,8 +9,8 @@ class AddEvaluationConceptPage extends Page{
     static url = "/TA/evaluationConcept/create"
 
     static at = {
-        title ==~ /Criar EvaluationConcept/
-//        title ==~ /Create EvaluationConcept/
+//        title ==~ /Criar EvaluationConcept/
+        title ==~ /Create EvaluationConcept/
     }
 
 
