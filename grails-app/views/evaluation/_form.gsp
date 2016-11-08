@@ -48,7 +48,7 @@
 		</thead>
 		<tbody>
 		<g:each in="${ta.Student.list()}" status="i" var="studentInstance">
-			<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+			<tr id="${studentInstance.login}" class="${(i % 2) == 0 ? 'even' : 'odd'}">
 
 				<td><g:link action="show" id="${studentInstance.id}">${fieldValue(bean: studentInstance, field: "name")}</g:link></td>
 
