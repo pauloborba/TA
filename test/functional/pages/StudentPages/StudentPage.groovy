@@ -35,5 +35,15 @@ class StudentPage extends Page {
         if(qtdStudent == (qtdTable)/3) r = true
         return r
     }
+    def sendCriterion(){
+        $("a", class: "sendNew").click()
+    }
+
+    def EmailWithNoAvaliatedCriterion() {
+        $("div.message2").text()
+    }
+    def emailSend() {
+        $("div.message").text()
+    }
 }
 

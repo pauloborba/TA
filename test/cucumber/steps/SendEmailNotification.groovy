@@ -5,10 +5,14 @@ import cucumber.api.groovy.Hooks
 import pages.AddEvaluationPage
 import pages.AddStudentsPage
 import pages.CreateCriterionPage
+import pages.CriterionPages.CriterionPage
 import pages.EvaluationPages.EvaluationPage
 import pages.StudentPages.StudentPage
 import ta.Criterion
+import ta.Evaluation
+import ta.EvaluationsByCriterion
 import ta.Student
+import ta.StudentController
 
 this.metaClass.mixin(Hooks)
 this.metaClass.mixin(EN)
@@ -16,41 +20,85 @@ this.metaClass.mixin(EN)
  * Created by Rodrigo on 05/11/2016.
  */
 
-/*
-    #Controller Scenario
-  Scenario: notify that a email has to be send
-    Given the criterion "Requirements definition" already exists
-    And the criterion "Test implementation" also exists
-    And the student "João" with login "J" is registered in the system
-    And the student "Pedro" with login "P" is also registered in the system
-    When I update the grade of all students in the criterion "Requirements definition" originated from "Test" and dated from "02/02/2016"
-    Then the system notifies that is necessary to send a new email with the evaluated criterion to the students
- */
-String login1, login2
-Criterion crit1
-
-//GUI Scenario
-Given(~'^I see the students "([^"]*)" with login "([^"]*)" and "([^"]*)" with login "([^"]*)" and the criterion "([^"]*)"$') {
-    String name1, login_1, name2, login_2, c1 ->
+Given(~'^the student "([^"]*)" login "([^"]*)" and the criterion "([^"]*)" are registered in the system$') {
+    String name, login, c ->
         to AddStudentsPage
 //        at AddStudentsPage
 
-        page.fillStudentDetails(name1, login_1)
-        page.selectCreateStudent()
+        page.fillStudentDetails(name, login, login+"@cin.ufpe.br")
+        page.selectAddStudent()
+
+        to StudentPage
+
+        assert page.confirmStudent(name, login)
+
+        to CreateCriterionPage
+//        at CreateCriterionPage
+
+        page.fillCriterionDetails(c)
+        page.selectCreateCriterion()
+
+        to CriterionPage
+        at CriterionPage
+        assert page.confirmCriterion(c)
+}
+When(~'^I request to send email with evaluated criterion$') { ->
+    to StudentPage
+    page.sendCriterion()
+}
+Then(~'^I should see a message notifying that the email have been successfully sent$') { ->
+    at StudentPage
+    assert page.emailSend() != null
+}
+
+Given(~'^I see the student "([^"]*)" login "([^"]*)" and the criterion "([^"]*)"$') {
+    String name, login, c ->
+        to AddStudentsPage
+//        at AddStudentsPage
+
+        page.fillStudentDetails(name, login, login+"@cin.ufpe.br")
+        page.selectAddStudent()
+
+        to StudentPage
+
+        assert page.confirmStudent(name, login)
+
+        to CreateCriterionPage
+//        at CreateCriterionPage
+
+        page.fillCriterionDetails(c)
+        page.selectCreateCriterion()
+
+        to CriterionPage
+        at CriterionPage
+        assert page.confirmCriterion(c)
+
+}
+And(~'^the system verify that there is no evaluated criterion$') {->
+    to EvaluationPage
+    assert Evaluation.list().size() == 0
+}
+When(~'^I request a sending email with the evaluated criterion$') {->
+    to StudentPage
+    page.sendCriterion()
+}
+Then(~'^the system notify that I sent a email only with the criterion that is going to be evaluated yet$') { ->
+    at StudentPage
+    assert page.EmailWithNoAvaliatedCriterion() != null
+}
+
+//GUI Scenario
+Given(~'^I see the student "([^"]*)" with login "([^"]*)" and the criterion "([^"]*)"$') {
+    String name1, login_1, c1 ->
+        to AddStudentsPage
+//        at AddStudentsPage
+
+        page.fillStudentDetails(name1, login_1, login_1+"@cin.ufpe.br")
+        page.selectAddStudent()
 
         to StudentPage
 
         assert page.confirmStudent(name1, login_1)
-
-        to AddStudentsPage
-        //at AddStudentsPage
-
-        page.fillStudentDetails(name2, login_2)
-        page.selectCreateStudent()
-
-        to StudentPage
-
-        assert page.confirmStudent(name2, login_2)
 
         to CreateCriterionPage
 //        at CreateCriterionPage
@@ -59,21 +107,32 @@ Given(~'^I see the students "([^"]*)" with login "([^"]*)" and "([^"]*)" with lo
         page.selectCreateCriterion()
 
         to CriterionPage
-
+        at CriterionPage
         assert page.confirmCriterion(c1)
 }
 When(~'^I update the grade of all students in the criterion "([^"]*)" originated from "([^"]*)" and dated from "([^"]*)"$') {
-    String grade, c1, Origin, Date ->
+    String c1, Origin, Date ->
         to AddEvaluationPage
-        at AddEvaluationPage
-        page.chooseValue(grade)
+        //at AddEvaluationPage
+        page.chooseValue("MANA")
         page.chooseCriterion(c1)
-        page.chooseOrigin(Origin)
-        page.chooseEvaluationDate(Date)
-        assert page.selectCreateStudent()
+        page.selectAddEvaluation()
 }
-Then(~'^the system notifies that is necessary to send a new email with the evaluated criterion to the students$') {
-        to EvaluationPage
+Then(~'^the system notifies that is necessary to send a new email with the evaluated criterion to the students$') {->
+        //to EvaluationPage
         at EvaluationPage
-        assert page.needEmail()
+        assert page.needEmail() != null
+}
+Student studentGlobal;
+Given(~'^the student "([^"]*)" login "([^"]*)" is in the system$') {
+    String name, login ->
+        def student = new Student(name, login, login+"@cin.ufpe.br")
+        studentGlobal = student
+}
+When(~'^I request to send an email with evaluated criterion$') { ->
+    studentGlobal.sendCriterion()
+}
+Then(~'^the student "([^"]*)" is still in the system$') {
+    String name ->
+    assert studentGlobal != null
 }

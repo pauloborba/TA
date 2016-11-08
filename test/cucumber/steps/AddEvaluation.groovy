@@ -91,7 +91,7 @@ Then(~'^all evaluations will be stored on the "([^"]*)" criterias history of eac
     String criterionName ->
         assert EvaluationDataAndOperations.checkImportCriterion(criterionName) == false;
 }*/
-// DAQ PRA CIMA NAO TIRANDO O BOOL STORED
+
 def numberOfEvaluationsBeforeStep = []
 Given(~/^there are no evaluations to all students to the "([^"]*)" criterion, originated from a "([^"]*)" and dated from "([^"]*)"$/) {
     String criterionName, origin, dateInString ->
@@ -155,7 +155,7 @@ String studentNameGlobal, studentLoginGlobal;
 Given(~/^I see the student "([^"]*)", login "([^"]*)" and the criterion "([^"]*)"$/) {
     String studentName, studentLogin, criterionName ->
         to AddStudentsPage
-//        at AddStudentsPage ESSA LINHA JA TAVA COMENTADA
+//        at AddStudentsPage
         studentLoginGlobal = studentLogin;
         studentNameGlobal = studentName;
         page.fillStudentDetails(studentName, studentLogin)
@@ -166,7 +166,7 @@ Given(~/^I see the student "([^"]*)", login "([^"]*)" and the criterion "([^"]*)
         assert page.confirmStudent(studentName, studentLogin)
 
         to CreateCriterionPage
-//        at CreateCriterionPage ESSA LINHA JA TAVA COMENTADA
+//        at CreateCriterionPage
 
         page.fillCriterionDetails(criterionName)
         page.selectCreateCriterion()
@@ -205,7 +205,6 @@ Then(~/^I can see the evaluation valued "([^"]*)" in the criterion "([^"]*)", fr
         assert page.checkForEvaluation(value)
 }
 
-//DAQ PRA BAIXO NAO
 /*
 Given(~/^I am at the "([^"]*)" screen$/) { String arg1 ->
     // Write code here that turns the phrase above into concrete actions
