@@ -9,8 +9,8 @@ class ShowConceptPage extends Page {
     static link = "/TA/concept/show"
 
     static at = {
-        //title ==~ /Show Concept/
-        title ==~ /Ver Concept/
+        title ==~ /Show Concept/
+//        title ==~ /Ver Concept/
     }
 
     def editButton(){

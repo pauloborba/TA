@@ -9,8 +9,8 @@ class ShowEvaluationConceptPage extends Page{
     static url = "TA/evaluationConcept/show/"
 
     static at = {
-        title ==~ /Ver EvaluationConcept/
-        //title ==~ /Show EvaluationConcept/
+//        title ==~ /Ver EvaluationConcept/
+        title ==~ /Show EvaluationConcept/
     }
 
     def editEvalConcept(){

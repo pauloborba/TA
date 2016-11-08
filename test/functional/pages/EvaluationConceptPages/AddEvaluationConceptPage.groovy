@@ -10,7 +10,7 @@ class AddEvaluationConceptPage extends Page{
 
     static at = {
         title ==~ /Criar EvaluationConcept/
-        //title ==~ /Create EvaluationConcept/
+//        title ==~ /Create EvaluationConcept/
     }
 
 

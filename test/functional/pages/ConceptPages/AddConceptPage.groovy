@@ -9,8 +9,8 @@ class AddConceptPage extends Page{
     static url = "/TA/concept/create"
 
     static at = {
-        title ==~ /Criar Concept/
-        //title ==~ /Criar Concept/
+//        title ==~ /Criar Concept/
+        title ==~ /Create Concept/
     }
 
     def fillConceptDetails(String nome){

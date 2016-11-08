@@ -9,8 +9,8 @@ class EditConceptPage extends Page{
     static link = "/TA/concept/edit"
 
     static at = {
-        //title ==~ /Edit Concept/
-        title ==~ /Editar Concept/
+        title ==~ /Edit Concept/
+//        title ==~ /Editar Concept/
     }
 
     def fillConceptName(String novo){
