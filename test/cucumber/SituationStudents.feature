@@ -1,5 +1,5 @@
 #Lavinia Paganini
-  
+
   Feature: Situation Students
     As the teacher
     I want to see the situation of student
@@ -9,8 +9,8 @@
     Scenario: Visualizar a nota do aluno
       Given o aluno "João Vasconcelos", com login "jvsn", possui conceitos "MA", "MPA" e "MA" em "RS"
       And o aluno "João Vasconcelos", com login "jvsn", possui media "8" em "RS"
-      When eu solicito a situação do aluno "Vasconcelos" com login "jvsn"
-      Then a média de "Vasconcelos", com login "jvsn", em "RS" continua sendo "8"
+      When eu solicito a situação do aluno "João Vasconcelos" com login "jvsn"
+      Then a média de "João Vasconcelos", com login "jvsn", em "RS" continua sendo "8"
 
     #GUI
     Scenario: Visualizar media positiva dos alunos
