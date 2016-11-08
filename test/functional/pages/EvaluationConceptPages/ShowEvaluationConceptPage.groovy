@@ -13,7 +13,7 @@ class ShowEvaluationConceptPage extends Page{
         //title ==~ /Show EvaluationConcept/
     }
 
-    def editConcept(){
+    def editEvalConcept(){
         $("a", class: "edit").click()
     }
 
@@ -22,10 +22,21 @@ class ShowEvaluationConceptPage extends Page{
         if(b.size() == concepts.size()) {
             b.sort({it.getText()})
             for(int i = 0; i < concepts.size(); ++i){
-                if(concepts[i] != b[i]) return false
+                if(concepts[i] != b[i].getText()) return false
             }
             return true
         }
         return false
+    }
+
+    def btnEditConcept(String concept){
+        def b = $("a", class: "concepts").allElements()
+        for(links in b){
+            def ka = links.getText()
+            if(links.getText() == concept){
+                links.click()
+                break
+            }
+        }
     }
 }

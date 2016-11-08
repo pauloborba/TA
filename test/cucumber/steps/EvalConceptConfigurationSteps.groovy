@@ -2,6 +2,8 @@ package cucumber.steps
 
 import cucumber.api.PendingException
 import pages.ConceptPages.AddConceptPage
+import pages.ConceptPages.EditConceptPage
+import pages.ConceptPages.ShowConceptPage
 import pages.EvaluationConceptPages.AddEvaluationConceptPage
 import pages.EvaluationConceptPages.EditEvaluationConceptPage
 import pages.EvaluationConceptPages.ShowEvaluationConceptPage
@@ -69,15 +71,32 @@ Given(~/^The "([^"]*)" evaluation concept is set$/) { String ini ->
     page.createEvalConcept()
 }
 
-When(~/^I edit the "([^"]*)" evaluation concept with a invalida number of concepts$/) { String arg1 ->
+When(~/^I edit the "([^"]*)" evaluation concept with a invalid number of concepts$/) { String arg1 ->
     at ShowEvaluationConceptPage
-    page.editConcept()
+    page.editEvalConcept()
     at EditEvaluationConceptPage
     page.editEvalConceptWithoutConcept()
     at ShowEvaluationConceptPage
 }
 
 Then(~/^The concepts of "([^"]*)" are the same\.$/) { String entr ->
-    assert page.testConcepts(entr.split(", "))
-    def a = 2
+    assert page.testConcepts(entr.split(", ").sort())
+}
+
+When(~/^I edit the "([^"]*)" field to "([^"]*)" evaluation concept$/) { String antigo, String novo ->
+    at ShowEvaluationConceptPage
+    page.btnEditConcept(antigo)
+    at ShowConceptPage
+    page.editButton()
+    at EditConceptPage
+    page.fillConceptName(novo)
+    page.btnUpdateConcept()
+    at ShowConceptPage
+}
+
+Then(~/^I can see the concept "([^"]*)"$/) { String concept ->
+    assert page.matchConcept(concept)
+}
+And(~/^I can't see the concept "([^"]*)"\.$/) { String concept_fail ->
+    assert !page.matchConcept(concept_fail)
 }

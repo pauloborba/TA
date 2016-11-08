@@ -17,4 +17,8 @@ class EditEvaluationConceptPage extends Page{
         $("input", name: "_action_update").click()
     }
 
+    def editEvalConcept(String anterior){
+
+    }
+
 }
