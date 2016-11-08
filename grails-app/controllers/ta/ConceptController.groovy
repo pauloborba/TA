@@ -97,7 +97,6 @@ class ConceptController {
             notFound()
             return
         }
-
         conceptInstance.delete flush:true
 
         request.withFormat {

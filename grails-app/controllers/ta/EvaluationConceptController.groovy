@@ -8,7 +8,7 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class EvaluationConceptController {
 
-    @Transactional
+/*    @Transactional
     public void saveEvalCon(){
         def evaluationConceptInstance = new EvaluationConcept(params)
         if (evaluationConceptInstance == null) {
@@ -36,7 +36,7 @@ class EvaluationConceptController {
         }
 
         evaluationConceptInstance.save flush:true
-    }
+    }*/
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)

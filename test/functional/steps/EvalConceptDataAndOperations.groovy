@@ -10,20 +10,21 @@ import ta.Concept
  */
 class EvalConceptDataAndOperations {
     public static void createEvalConcept(String nome, List<String> conceitos){
+        def evalConcept = new EvaluationConcept()
+        evalConcept.nome = nome
         List l_conceitos = []
         for(conceito in conceitos){
             Concept concept = new Concept(conceito)
-            l_conceitos.add(concept)
+            evalConcept.addToConceitos(concept)
         }
         def e_controller = new EvaluationConceptController()
-        e_controller.params << [nome: nome, conceitos: l_conceitos]
-        e_controller.saveEvalCon()
+        e_controller.save(evalConcept)
         e_controller.response.reset()
     }
 
     public static updateEvalConcept(EvaluationConcept novo){
         def e_controller = new EvaluationConceptController()
-        e_controller.params.id = novo.id
-        e_controller.updateEvalCon()
+        e_controller.update(novo)
+        e_controller.response.reset()
     }
 }

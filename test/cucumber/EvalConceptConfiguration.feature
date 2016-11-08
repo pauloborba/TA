@@ -23,9 +23,8 @@ Feature: Configure the evaluation concept
   #GUI Scenario
   Scenario: Configure the atual evaluation concept with a invalid value.
     Given The "MA, MPA, MANA" evaluation concept is set
-    When I choose "Edit Evaluation Concept"
-    And I change the number of concept to 0
-    Then An error message appears.
+    When I edit the "MA, MPA, MANA" evaluation concept with a invalida number of concepts
+    Then The concepts of "MA, MPA, MANA" are the same.
 #
 #  #GUI Scenario
 #  Scenario: Configure the parameters of the atual evaluation concept.
