@@ -23,6 +23,17 @@ class StudentController {
         respond Student.list(params), model: [studentInstanceCount: Student.count()]
     }
 
+    def studentsReport() {
+        def students = Student.findAll()
+
+        render view: "studentsReport", model: [studentsReportInstanceList: students]
+
+//        def students = Student.findAll()
+//        def criteria = EvaluationCriterion.findAll()
+//
+//        render view: "manualInput", model: [students: students, criteria: criteria]
+    }
+
     public double checkPercentageEvaluationStudent(String evalValue, String loginA) {
         def student = Student.findByLogin(loginA)
         int contE = 0
@@ -365,6 +376,25 @@ class StudentController {
     def createGroup() {
         respond view: 'createGroup'
     }
+
+
+    def getTotalAprovacoesReprovacoes(String tipo) {
+        int aprovados = 0, aprovadosFinal = 0, reprovadosNota=0, reprovadosFalta=0
+        int totalCriterios = ta.Criterion.list().size()
+
+        Student.list().each { Student student ->
+            boolean reproved = student.reprovado
+            if(student.average >= 7 && !reproved) aprovados++
+            else if(student.average < 7 && student.average >= 5 && !reproved) aprovadosFinal++
+            else if(!reproved) reprovadosNota++
+            else reprovadosFalta++
+        }
+        if(tipo == "aprovados") return aprovados
+        else if(tipo == "aprovadosFinal") return aprovadosFinal
+        else if(tipo == "reprovadosNota") return reprovadosNota
+        else return reprovadosFalta
+    }
+
 }
 
 

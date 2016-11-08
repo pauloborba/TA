@@ -21,4 +21,6 @@ class AddStudentsPage extends Page{
     def selectAddStudent() {
         $("input", name: "create").click()
     }
+
+    def setF
 }
