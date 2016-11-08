@@ -2,30 +2,30 @@
 <html>
 	<head>
 		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'evaluation.label', default: 'Evaluation')}" />
+		<g:set var="entityName" value="${message(code: 'report.label', default: 'Report')}" />
 		<title><g:message code="default.create.label" args="[entityName]" /></title>
 	</head>
 	<body>
-		<a href="#create-evaluation" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
+		<a href="#create-report" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div class="nav" role="navigation">
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
 				<li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
-		<div id="create-evaluation" class="content scaffold-create" role="main">
+		<div id="create-report" class="content scaffold-create" role="main">
 			<h1><g:message code="default.create.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
-			<g:hasErrors bean="${evaluationInstance}">
+			<g:hasErrors bean="${reportInstance}">
 			<ul class="errors" role="alert">
-				<g:eachError bean="${evaluationInstance}" var="error">
+				<g:eachError bean="${reportInstance}" var="error">
 				<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form url="[action:'saveAll']" >
+			<g:form url="[resource:reportInstance, action:'save']" >
 				<fieldset class="form">
 					<g:render template="form"/>
 				</fieldset>
@@ -34,26 +34,5 @@
 				</fieldset>
 			</g:form>
 		</div>
-	<g:javascript>
-
-		function getStudents() {
-			var id = $("#criterion").val();
-			$.ajax({
-				method: "GET",
-				url: "/TA/criterion/getStudentsList/"+id,
-			})
-					.done(function( msg ) {
-				$( "#ajaxbody" ).empty();
-				$("#ajaxbody").append(msg);
-			});
-
-		}
-
-
-		getStudents();
-
-		$("#criterion").change(getStudents);
-
-</g:javascript>
 	</body>
 </html>
