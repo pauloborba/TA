@@ -1,8 +1,7 @@
-import pages.ClassPages.CreateClassPage
-import pages.ClassPages.TurmasPage
+import pages.TurmaPages.CreateTurmaPage
+import pages.TurmaPages.TurmasPage
 import steps.ClassTestDataAndOperations
 import ta.Turma
-import ta.TurmaController
 
 /**
  * Created by dquei on 11/2/2016.
@@ -62,17 +61,17 @@ And I can see the information for class "ESS", periodo "2016.2" at the Turmas pa
 */
 
 Given(~/^I am at the Create Class page$/) { ->
-    to CreateClassPage
-    at CreateClassPage
+    to CreateTurmaPage
+    at CreateTurmaPage
 
 }
 When(~/^I fill the class details with name "([^"]*)", periodo "([^"]*)"$/) { String id, String periodo ->
-    at CreateClassPage
-    page.fillClassDetails(id, periodo)
+    at CreateTurmaPage
+    page.fillTurmaDetails(id, periodo)
 }
 And(~/^I save the class$/) { ->
-    at CreateClassPage
-    page.selectCreateClass()
+    at CreateTurmaPage
+    page.selectCreateTurma()
 }
 Then(~/^I can see a confirmation message$/) { ->
     // Write code here that turns the phrase above into concrete actions
@@ -96,20 +95,20 @@ And(~/^I can see the information for class "([^"]*)", periodo "([^"]*)" at the T
 */
 
 Given(~/^the system already has a class with name "([^"]*)" and periodo "([^"]*)"$/) { String id, String periodo ->
-    to CreateClassPage
-    at CreateClassPage
-    page.fillClassDetails(id, periodo)
-    page.selectCreateClass()
+    to CreateTurmaPage
+    at CreateTurmaPage
+    page.fillTurmaDetails(id, periodo)
+    page.selectCreateTurma()
 
 }
 When(~/^I fill the class details with name "([^"]*)" and periodo "([^"]*)"$/) { String id, String periodo ->
-    at CreateClassPage
-    page.fillClassDetails(id, periodo)
-    page.selectCreateClass()
+    at CreateTurmaPage
+    page.fillTurmaDetails(id, periodo)
+    page.selectCreateTurma()
 
 }
 Then(~/^I see an error message$/) { ->
-    at CreateClassPage
+    at CreateTurmaPage
     page.checkForErrors()
 
 }

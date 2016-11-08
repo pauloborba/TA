@@ -1,11 +1,11 @@
-package pages.ClassPages
+package pages.TurmaPages
 
 import geb.Page
 
 /**
  * Created by dquei on 10/25/2016.
  */
-class CreateClassPage extends Page{
+class CreateTurmaPage extends Page{
 
     static url = "turma/create"
 
@@ -14,12 +14,12 @@ class CreateClassPage extends Page{
         title ==~ /Create Turma/
     }
 
-    def fillClassDetails(String id, String periodo){
+    def fillTurmaDetails(String id, String periodo){
         $("form").classID = id
         $("form").periodo = periodo
     }
 
-    def selectCreateClass(){
+    def selectCreateTurma(){
         $("input", name: "create").click()
     }
 
