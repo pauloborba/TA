@@ -27,11 +27,6 @@ class StudentController {
         def students = Student.findAll()
 
         render view: "studentsReport", model: [studentsReportInstanceList: students]
-
-//        def students = Student.findAll()
-//        def criteria = EvaluationCriterion.findAll()
-//
-//        render view: "manualInput", model: [students: students, criteria: criteria]
     }
 
     public double checkPercentageEvaluationStudent(String evalValue, String loginA) {

@@ -1,12 +1,6 @@
 package steps
 
-
-
-
-
-
 import geb.Page
-
 import cucumber.api.PendingException
 import pages.AddEvaluationPage
 import pages.AddStudentsPage
@@ -22,26 +16,15 @@ import pages.ReportsPages.ShowReportsPage
 import static steps.EvaluationDataAndOperations.*
 import pages.ReportsPages.IndexReport
 
-
-
-
 this.metaClass.mixin(cucumber.api.groovy.Hooks)
 this.metaClass.mixin(cucumber.api.groovy.EN)
-
-
-
 
 /**
  * #Victor Augusto Pereira Porciúncula - vapp
  feature relatorio de notas
  */
 
-
-
-
-
-
-Given(~/^Eu crio os alunos "([^"]*)", "([^"]*)", "([^"]*)" de logins: "([^"]*)", "([^"]*)", "([^"]*)"  respectivamente/) { String arg1, String arg2, String arg3, String arg4, String arg5, String arg6->
+Given(~/^I create the students "([^"]*)", "([^"]*)", "([^"]*)" of logins "([^"]*)", "([^"]*)", "([^"]*)" respectively/) { String arg1, String arg2, String arg3, String arg4, String arg5, String arg6->
     to AddStudentsPage
     at AddStudentsPage
     page.fillStudentDetails(arg1, arg4)
@@ -57,9 +40,7 @@ Given(~/^Eu crio os alunos "([^"]*)", "([^"]*)", "([^"]*)" de logins: "([^"]*)",
     page.fillStudentDetails(arg3, arg6)
     page.selectAddStudent()
 }
-
-
-And(~/^Eu crio os criterios "([^"]*)", "([^"]*)", "([^"]*)"$/) { String arg1, String arg2, String arg3 ->
+And(~/^I create the criterions "([^"]*)", "([^"]*)", "([^"]*)"$/) { String arg1, String arg2, String arg3 ->
     to CreateCriterionPage
     at CreateCriterionPage
     page.createCriterion(arg1)
@@ -72,9 +53,7 @@ And(~/^Eu crio os criterios "([^"]*)", "([^"]*)", "([^"]*)"$/) { String arg1, St
     at CreateCriterionPage
     page.createCriterion(arg3)
 }
-
-
-And(~/^Eu avalio os criterios "([^"]*)", "([^"]*)" e "([^"]*)" dos alunos com logins "([^"]*)", "([^"]*)", "([^"]*)" como "([^"]*)", "([^"]*)", "([^"]*)", respectivamente para cada login repetido em cada criterio$/) { String arg1, String arg2, String arg3, String arg4, String arg5, String arg6, String arg7, String arg8, String arg9 ->
+And(~/^I evaluate the criterions "([^"]*)", "([^"]*)" e "([^"]*)" of the logins' students "([^"]*)", "([^"]*)", "([^"]*)" as "([^"]*)", "([^"]*)", "([^"]*)", respectively, for each login in each criterion$/) { String arg1, String arg2, String arg3, String arg4, String arg5, String arg6, String arg7, String arg8, String arg9 ->
     to AddEvaluationPage
     at AddEvaluationPage
     page.chooseOrigin("Test")
@@ -102,30 +81,26 @@ And(~/^Eu avalio os criterios "([^"]*)", "([^"]*)" e "([^"]*)" dos alunos com lo
     page.chooseStudentValue(arg6, arg9)
     page.selectAddEvaluation()
 }
-
-When(~/^Vejo o Relatório dos estudantes$/) { ->
+When(~/^I see the Students Report$/) { ->
     to StudentsReportPage
     at StudentsReportPage
 }
-Then(~/^a linha do alunos de login "([^"]*)", "([^"]*)", "([^"]*)" serao das cores "([^"]*)", "([^"]*)", "([^"]*)" no Relatório de notas$/) { String arg1, String arg2, String arg3, String arg4, String arg5, String arg6 ->
+Then(~/^The row's color of the logins "([^"]*)", "([^"]*)", "([^"]*)" will be the colors "([^"]*)", "([^"]*)", "([^"]*)" on the Students Report$/) { String arg1, String arg2, String arg3, String arg4, String arg5, String arg6 ->
     at StudentsReportPage
-    assert page.isColor(arg1, arg4)
-    assert page.isColor(arg2, arg5)
-    assert page.isColor(arg3, arg6)
+    assert page.isLoginColor(arg1, arg4)
+    assert page.isLoginColor(arg2, arg5)
+    assert page.isLoginColor(arg3, arg6)
 }
 
 
 
-
-
-
-Given(~/^Eu crio o aluno "([^"]*)" de login "([^"]*)"$/) { String arg1, String arg2 ->
+Given(~/^I create the student "([^"]*)" of login "([^"]*)"$/) { String arg1, String arg2 ->
     to AddStudentsPage
     at AddStudentsPage
     page.fillStudentDetails(arg1, arg2)
     page.selectAddStudent()
 }
-And(~/^Eu crio os criterios "([^"]*)", "([^"]*)", "([^"]*)" e "([^"]*)"$/) { String arg1, String arg2, String arg3, String arg4 ->
+And(~/^I create the criterions "([^"]*)", "([^"]*)", "([^"]*)" and "([^"]*)"$/) { String arg1, String arg2, String arg3, String arg4 ->
     to CreateCriterionPage
     at CreateCriterionPage
     page.createCriterion(arg1)
@@ -142,7 +117,7 @@ And(~/^Eu crio os criterios "([^"]*)", "([^"]*)", "([^"]*)" e "([^"]*)"$/) { Str
     at CreateCriterionPage
     page.createCriterion(arg4)
 }
-And(~/^Eu adiciono os conceitos para "([^"]*)", "([^"]*)", "([^"]*)" e "([^"]*)" do aluno de login "([^"]*)" para "([^"]*)"$/) { String arg1, String arg2, String arg3, String arg4, String arg5, String arg6 ->
+And(~/^I evaluate the criterions "([^"]*)", "([^"]*)", "([^"]*)" and "([^"]*)" of login's student "([^"]*)" to "([^"]*)"$/) { String arg1, String arg2, String arg3, String arg4, String arg5, String arg6 ->
     to AddEvaluationPage
     at AddEvaluationPage
     page.chooseOrigin("Test")
@@ -171,18 +146,18 @@ And(~/^Eu adiciono os conceitos para "([^"]*)", "([^"]*)", "([^"]*)" e "([^"]*)"
     page.chooseStudentValue(arg5, arg6)
     page.selectAddEvaluation()
 }
-When(~/^Checo o Relatório dos estudantes$/) { ->
+When(~/^I check the students report$/) { ->
     to StudentsReportPage
     at StudentsReportPage
 }
-Then(~/^a coluna "([^"]*)" do aluno de login "([^"]*)" será "([^"]*)"$/) { String arg1, String arg2, String arg3 ->
-    to StudentsReportPage
+Then(~/^The column "([^"]*)" of the login's student "([^"]*)" will be "([^"]*)"$/) { String arg1, String arg2, String arg3 ->
     at StudentsReportPage
-    assert page.isColumn(arg1, arg2, arg3)
+    assert page.isColumnLoginValue(arg1, arg2, arg3)
 }
 
 
-Given(~/^Eu crio os alunos "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)" de logins: "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)"  respectivamente$/) { String arg1, String arg2, String arg3, String arg4, String arg5, String arg6, String arg7, String arg8 ->
+
+Given(~/^I create the students "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)" of logins "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", respectively/) { String arg1, String arg2, String arg3, String arg4, String arg5, String arg6, String arg7, String arg8 ->
     to AddStudentsPage
     at AddStudentsPage
     page.fillStudentDetails(arg1, arg5)
@@ -203,7 +178,7 @@ Given(~/^Eu crio os alunos "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)" de logins:
     page.fillStudentDetails(arg4, arg8)
     page.selectAddStudent()
 }
-And(~/^Eu crio os criterios "([^"]*)", "([^"]*)"$/) { String arg1, String arg2 ->
+And(~/^I create the criterions "([^"]*)", "([^"]*)"$/) { String arg1, String arg2 ->
     to CreateCriterionPage
     at CreateCriterionPage
     page.createCriterion(arg1)
@@ -212,7 +187,7 @@ And(~/^Eu crio os criterios "([^"]*)", "([^"]*)"$/) { String arg1, String arg2 -
     at CreateCriterionPage
     page.createCriterion(arg2)
 }
-And(~/^And Eu avalio os criterios "([^"]*)", e "([^"]*)" dos alunos com logins "([^"]*)", "([^"]*)", "([^"]*)" e "([^"]*)" como "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)" e "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", respectivamente para cada login$/) { String arg1, String arg2, String arg3, String arg4, String arg5, String arg6, String arg7, String arg8, String arg9, String arg10, String arg11, String arg12, String arg13, String arg14 ->
+And(~/^I evaluate the criterions "([^"]*)" and "([^"]*)" of the logins' students "([^"]*)", "([^"]*)", "([^"]*)" and "([^"]*)" as "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)" and "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", respectively for each login$/) { String arg1, String arg2, String arg3, String arg4, String arg5, String arg6, String arg7, String arg8, String arg9, String arg10, String arg11, String arg12, String arg13, String arg14 ->
     to AddEvaluationPage
     at AddEvaluationPage
     page.chooseOrigin("Test")
@@ -233,16 +208,16 @@ And(~/^And Eu avalio os criterios "([^"]*)", e "([^"]*)" dos alunos com logins "
     page.chooseStudentValue(arg6, arg14)
     page.selectAddEvaluation()
 }
-When(~/^Vou para o Relatório de notas$/) { ->
+When(~/^I go to Students Report$/) { ->
     to StudentsReportPage
     at StudentsReportPage
 }
 
-Then(~/^Os campos "([^"]*)", "([^"]*)", "([^"]*)" ,"([^"]*)", "([^"]*)" serao iguais a "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", respectivamente$/) { String arg1, String arg2, String arg3, String arg4, String arg5, String arg6, String arg7, String arg8, String arg9, String arg10 ->
+Then(~/^The columns' numbers of "([^"]*)", "([^"]*)", "([^"]*)" ,"([^"]*)" and "([^"]*)" are going to be equal to "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)" and "([^"]*)", respectively/) { String arg1, String arg2, String arg3, String arg4, String arg5, String arg6, String arg7, String arg8, String arg9, String arg10 ->
     at StudentsReportPage
-    assert page.isColumnGeneral(arg1, arg6)
-    assert page.isColumnGeneral(arg2, arg7)
-    assert page.isColumnGeneral(arg3, arg8)
-    assert page.isColumnGeneral(arg4, arg9)
-    assert page.isColumnGeneral(arg5, arg10)
+    assert page.isColumnNumber(arg1, arg6)
+    assert page.isColumnNumber(arg2, arg7)
+    assert page.isColumnNumber(arg3, arg8)
+    assert page.isColumnNumber(arg4, arg9)
+    assert page.isColumnNumber(arg5, arg10)
 }

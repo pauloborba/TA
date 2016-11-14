@@ -7,8 +7,7 @@ class Student {
     int ma, mpa, mana, total
     boolean reprovado
     List criteriaAndEvaluations
-    boolean firstCalc
-    int lastCrit
+
     static hasMany = [criteriaAndEvaluations:EvaluationsByCriterion]
 
     static constraints = {
@@ -26,8 +25,6 @@ class Student {
         this.login = login;
         this.criteriaAndEvaluations = [];
         this.reprovado = false
-        this.firstCalc = true
-        this.lastCrit = 0
     }
 
     public void calcMaMpaMana() {
@@ -53,7 +50,6 @@ class Student {
         StudentController sc = new StudentController()
         int qtdEvaluations = 0
         double tempMedia = 0
-        int count
         List<Evaluation> evaluationsInCriterion
         for (int i = 0; i < this.criteriaAndEvaluations.size(); i++) {
             evaluationsInCriterion = this.criteriaAndEvaluations[i].getEvaluations()
@@ -114,18 +110,6 @@ class Student {
                 }
             }
             return null
-        }
-    }
-
-    public int getTotalValidCriterions() {
-        int count = 0
-        if (this.criteriaAndEvaluations != null) {
-            for(int i =0; i<this.criteriaAndEvaluations.size(); i++){
-                if(!this.criteriaAndEvaluations[i].getCriterion().getDescription().equals("--")){
-                    count++
-                }
-            }
-            return count
         }
     }
 
