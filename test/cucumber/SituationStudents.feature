@@ -8,15 +8,15 @@
     #Controle
     Scenario: Visualizar a nota do aluno
       Given o aluno "João Vasconcelos", com login "jvsn", possui conceitos "MA", "MPA" e "MA" em "RS"
-      And o aluno "João Vasconcelos", com login "jvsn", possui media "8" em "RS"
-      When eu solicito a situação do aluno "João Vasconcelos" com login "jvsn"
-      Then a média de "João Vasconcelos", com login "jvsn", em "RS" continua sendo "8"
+      And o aluno "João Vasconcelos", possui media "8" em "RS"
+      When eu solicito a situação do aluno "João Vasconcelos"
+      Then a média de "João Vasconcelos" em "RS" continua sendo "8"
 
-  #  #GUI
-   # Scenario: Visualizar media positiva dos alunos
-    #  Given o aluno "João Vasconcelos", com login "jvsn", possui média "8" em "Requisitos de Sistemas"
-     # When eu solicito a página "Visualização"
-      #Then a média do aluno "João Vasconcelos", com login "jvsn", em "Requisitos de Sistemas" aparece verde e com uma seta para cima
+    #GUI
+    Scenario: Visualizar media positiva dos alunos
+      Given o aluno "João Vasconcelos", com login "jvsn", possui média "9" em "Requisitos de Sistemas"
+      When eu solicito a página "Visualização"
+      Then a média do aluno "João Vasconcelos" em "Requisitos de Sistemas" aparece verde e com uma seta para cima
 
 
  ###*  #GUI

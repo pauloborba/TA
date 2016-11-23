@@ -20,7 +20,7 @@ class StudentController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 100, 100)
-        respond Student.list(params), model: [studentInstanceCount: Student.count()]
+        respond Student.list(params) , model: [studentInstanceCount: Student.count()]
     }
 
     public double checkPercentageEvaluationStudent(String evalValue, String loginA) {

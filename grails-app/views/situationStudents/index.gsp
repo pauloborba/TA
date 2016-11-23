@@ -29,7 +29,7 @@
         <thead>
         <tr>
 
-            
+
             <g:sortableColumn property="login" title="${message(code: 'student.login.label', default: 'Login')}" defaultOrder ="asc"/>
 
             <g:each in="${ta.Criterion.list()}" var="criterion">

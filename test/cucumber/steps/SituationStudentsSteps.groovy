@@ -3,10 +3,6 @@
  */
 
 
-import cucumber.api.groovy.EN
-import cucumber.api.groovy.Hooks
-import pages.AddStudentsPage
-import pages.CreateCriterionPage
 import steps.AddStudentsTestDataAndOperations
 import steps.CommonTestDataAndOperations
 import steps.CriterionTestDataAndOperations
@@ -17,12 +13,16 @@ import ta.EvaluationsByCriterion
 import ta.SituationStudentsController
 import ta.Student
 import ta.StudentController
+import pages.AddEvaluationPage
+import pages.AddStudentsPage
+import pages.CreateCriterionPage
+import pages.CriterionPages.CriterionPage
 
 import static pages.AddStudentsPage.*
 
 
-this.metaClass.mixin(Hooks)
-this.metaClass.mixin(EN)
+this.metaClass.mixin(cucumber.api.groovy.Hooks)
+this.metaClass.mixin(cucumber.api.groovy.EN)
 
 /*
     #Controle
@@ -49,20 +49,20 @@ Given(~'^o aluno "([^"]*)", com login "([^"]*)", possui conceitos "([^"]*)", "([
 
 }
 
-And(~'o aluno "([^"]*)", com login "([^"]*)", possui media "([^"]*)" em "([^"]*)"'){
-    String aluno, String login, Double media, String conceito ->
+And(~'o aluno "([^"]*)", possui media "([^"]*)" em "([^"]*)"'){
+    String aluno, Double media, String conceito ->
         Student estudante = Student.findByName(aluno)
         estudante.calcMedia()
         assert(estudante.findEvaluationByCriterion(conceito).criterionAverage.equals(media))
 }
 
-When(~'eu solicito a situação do aluno "([^"]*)" com login "([^"]*)"'){
-    String aluno, String login ->
+When(~'eu solicito a situação do aluno "([^"]*)"'){
+    String aluno ->
     Student estudante = Student.findByName(aluno)
         criteriosLista = estudante.getCriteriaAndEvaluations()
 }
-Then(~'a média de "([^"]*)", com login "([^"]*)", em "([^"]*)" continua sendo "([^"]*)"'){
-    String aluno, String login, String conceito, Double media ->
+Then(~'a média de "([^"]*)" em "([^"]*)" continua sendo "([^"]*)"'){
+    String aluno, String conceito, Double media ->
         assert(Student.findByName(aluno).getCriteriaAndEvaluations().equals(criteriosLista))
         assert(Student.findByName(aluno).findEvaluationByCriterion(conceito).criterionAverage.equals(media))
 }
@@ -72,8 +72,33 @@ Then(~'a média de "([^"]*)", com login "([^"]*)", em "([^"]*)" continua sendo "
     Scenario: Visualizar media positiva dos alunos
       Given o aluno "João Vasconcelos", com login "jvsn", possui média "8" em "Requisitos de Sistemas"
       When eu solicito a página "Visualização"
-      Then a média do aluno "João Vasconcelos", com login "jvsn", em "Requisitos de Sistemas" aparece verde e com uma seta para cima
+      Then a média do aluno "João Vasconcelos" em "Requisitos de Sistemas" aparece verde e com uma seta para cima
  */
+Given(~/^o aluno "([^"]*)", com login "([^"]*)", possui média "([^"]*)" em "([^"]*)"$/){
+    String aluno, String login, Double media, String conceito ->
+        to AddStudentsPage
+        at AddStudentsPage
+        page.fillStudentDetails(aluno, login)
+        page.selectAddStudent()
+        to CreateCriterionPage
+        page.createCriterion(conceito)
+        to AddEvaluationPage
+        page.chooseCriterion(conceito)
+        page.chooseValue("MA")
+        page.chooseOrigin("Test")
+        page.selectAddEvaluation()
+
+}
+
+When(~/^eu solicito a pagina "([^"]*)"$/){
+    String pagina ->
+
+}
+
+Then(~/^a media de "([^"]*)" em "([^"]*)" aparece verde e com uma seta para cima$/){
+    String nome, String conceito ->
+}
+
 /*
 Given(~'^o aluno "([^"]*)", com login "([^"]*)", possui média "([^"]*)" em "([^"]*)"$'){
     String aluno, String login, double media, String conceito ->
