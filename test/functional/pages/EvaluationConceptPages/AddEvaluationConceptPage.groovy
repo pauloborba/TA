@@ -25,8 +25,8 @@ class AddEvaluationConceptPage extends Page{
         $("form").nome = nome
     }
 
-    def selectConcepts(String[] l_conceitos){
-        $("form").conceitos = ["MA", "MPA", "MANA"]
+    def selectConcepts(Set<String> l_conceitos){
+        $("form").conceitos = l_conceitos.findAll()
     }
 
     def createEvalConcept(){

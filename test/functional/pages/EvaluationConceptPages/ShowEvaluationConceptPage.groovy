@@ -39,7 +39,6 @@ class ShowEvaluationConceptPage extends Page{
     def btnEditConcept(String concept){
         def b = $("a", class: "concepts").allElements()
         for(links in b){
-            def ka = links.getText()
             if(links.getText() == concept){
                 links.click()
                 break
