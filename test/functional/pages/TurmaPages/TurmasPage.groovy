@@ -16,9 +16,6 @@ class TurmasPage extends Page {
     boolean confirmTurma(String id, String periodo){
         boolean r = false
         boolean findTurma = $("tr").has("td", text: periodo).find("td").has("a", text: id)
-        if(findTurma){
-            r = true
-        }
-        return r
+        return findTurma
     }
 }
