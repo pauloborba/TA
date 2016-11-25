@@ -56,27 +56,14 @@ class Student {
 
     boolean sendNewEvaluations(){
         String message="";
-        this.criteriaAndEvaluations.each { EvaluationsByCriterion CAE ->
-            if (CAE.getHasUnsent()) {
-                println(""+CAE.getHasUnsent())
-                message += CAE.getNewEvaluations()
-                message += "\n"
-                CAE.setHasUnsent(false)
-                println(""+criteriaAndEvaluations.get(0).hasUnsent+CAE.getHasUnsent()+""+CAE.getNewEvaluations())
+        this.criteriaAndEvaluations.each { EvaluationsByCriterion evByCriterion ->
+            if (evByCriterion.getPendingMail()) {
+                message += evByCriterion.newEvalToMessage()
+                evByCriterion.setPendingMail(false)
             }
         }
         if(message.size()>0) {
-            messagingService.sendEmail(
-                    "Gmail",
-                    "taprojmailer@gmail.com",
-                    "1234mail",
-                    "taprojmailer@gmail.com",
-                    this.email,
-                    "Grades",
-                    ""+this.name+"'s Grades:\n"+message,
-                    true,
-                    null
-            )
+            MailerController.sendMail(this.email,"Grades",""+this.name+"'s Grades:\n"+message)
             return true
         }else {
             return false

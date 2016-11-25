@@ -6,6 +6,7 @@ Feature: Email New Grades
   #-Created By Arthur Costa
   Scenario: Sending new grades
     Given There are grades from student “Arthur” with email “alpgc@cin.ufpe.br” evaluated as “MANA” in the “Cenarios” criteria on the system that were not yet sent
+    And  There are grades from student “Arthur” with email “arthurlpgc@gmail.com” evaluated as “MPA” in the “Cenarios” criteria on the system that were not yet sent
     When I request to send new grades
     Then An email is sent to “alpgc@cin.ufpe.br” Telling he received an “MANA” on “Cenarios”
 

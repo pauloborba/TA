@@ -60,11 +60,3 @@ And(~/^I am on the students index page$/) { ->
 Then(~/^the system asks if I want to resend$/) { ->
     at ResendPage
 }
-When(~/^I successfully import students evaluation for the "([^"]*)" criterion\.\.\.$/) { String arg1 ->
-    // Write code here that turns the phrase above into concrete actions
-    throw new PendingException()
-}
-Then(~/^The system is marked as having grades to send$/) { ->
-    // Write code here that turns the phrase above into concrete actions
-    throw new PendingException()
-}

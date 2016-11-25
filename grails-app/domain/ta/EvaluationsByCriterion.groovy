@@ -7,7 +7,7 @@ class EvaluationsByCriterion {
     List<Evaluation> evaluations
     static hasMany = [evaluations:Evaluation]
     double criterionAverage
-    boolean hasUnsent
+    boolean PendingMail
     static constraints = {
         criterion nullable: false
         evaluations nullable : false
@@ -17,13 +17,13 @@ class EvaluationsByCriterion {
         this.criterion = criterion;
         this.evaluations = []
         this.criterionAverage = 0;
-        this.hasUnsent = false
+        this.PendingMail = false
     }
 
     public void addEvaluation(Evaluation evaluationInstance) {
         addToEvaluations(evaluationInstance)
         doMedia();
-        if(!evaluationInstance.sent)this.hasUnsent = true
+        if(!evaluationInstance.sent)this.PendingMail = true
     }
 
     public void doMedia(){
@@ -41,7 +41,7 @@ class EvaluationsByCriterion {
         }
     }
 
-    String getNewEvaluations(){
+    String newEvalToMessage(){
         String s=""
         evaluations.each{Evaluation ev->
             if(!ev.sent)s+=" "+ev.value+","
@@ -49,7 +49,7 @@ class EvaluationsByCriterion {
         }
         if(s.length()==0)return ""
         s=s.substring(0,s.length()-1)
-        return ""+criterion.getDescription()+":"+s
+        return " *"+criterion.getDescription()+": "+s+"\n"
     }
     /*  ------------------------
       | MÉTODOS USADOS EM TESTES |

@@ -233,7 +233,7 @@ class StudentController {
         boolean sentAny = false
         for (Student student : Student.findAll()) {
             sentAny = sentAny || student.sendNewEvaluations()
-            savee(student)
+            student.save(flush: true)
         }
         if(sentAny) redirect action:"index", method:"GET"
         else redirect action:"resend", method:"GET"
