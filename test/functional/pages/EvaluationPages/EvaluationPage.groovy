@@ -10,7 +10,7 @@ class EvaluationPage extends Page {
     static url = "/TA/evaluation/index"
 
     static at =  {
-        title ==~ /Evaluation Listagem/
+        title ==~ /Evaluation List/
         //title ==~ /Create property Listagem/
     }
 
