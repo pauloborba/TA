@@ -15,8 +15,9 @@ class EvaluationConcept {
         }
     }
 
-    EvaluationConcept(String nome){
+    EvaluationConcept(String nome, Set<Concept> concepts){
         this.nome = nome;
+        this.conceitos = concepts;
     }
 
     List<String> allConcept(){
