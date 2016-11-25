@@ -19,15 +19,13 @@ this.metaClass.mixin(cucumber.api.groovy.EN)
 
 
 Given(~/^The evaluation concept is "([^"]*)"$/) { String nome ->
-    EvaluationConcept.all
     List<String> conceitos = ["MA", "MPA", "MANA"]
     EvalConceptDataAndOperations.createEvalConcept(nome, conceitos)
     def eval = EvaluationConcept.findByNome(nome)
-    EvaluationConcept.all
     assert eval != null
 }
 When(~/^I update the "([^"]*)" concept to "([^"]*)" concept$/) { String inicial, String proximo ->
-    def toUpdate =  EvaluationConcept.findByNome(inicial)
+    def toUpdate = EvaluationConcept.findByNome(inicial)
     assert toUpdate != null
     toUpdate.setNome(proximo)
     assert toUpdate.nome == proximo
@@ -56,8 +54,9 @@ Then(~/^The atual concept is "([^"]*)"$/) { String nome ->
     assert eval != null
     assert eval.hasErrors()
 }
-Given(~/^The "([^"]*)" evaluation concept is set$/) { String ini ->
-    String[] conceitos = ini.split(", ")
+Given(~/^The "([^"]*)" evaluation concept with concepts "([^"]*)", "([^"]*)", "([^"]*)" is set/)
+        { String ini, String c1, String c2, String c3 ->
+    Set<String> conceitos = [c1, c2, c3]
     for(conceito in conceitos){
         to AddConceptPage
         at AddConceptPage
@@ -66,7 +65,7 @@ Given(~/^The "([^"]*)" evaluation concept is set$/) { String ini ->
     }
     to AddEvaluationConceptPage
     at AddEvaluationConceptPage
-    page.fillNameEvalCon(ini)
+    page.fillNameEvaluationConcept(ini)
     page.selectConcepts(conceitos)
     page.createEvalConcept()
 }
