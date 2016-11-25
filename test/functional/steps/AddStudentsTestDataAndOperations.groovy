@@ -16,6 +16,13 @@ class AddStudentsTestDataAndOperations {
         cont.response.reset()
     }
 
+    static public void createStudent(String name, String login, String email) {
+        def cont = new StudentController()
+        cont.params <<[name: name, login: login, email: email]
+        cont.createAndSaveStudent()
+        cont.response.reset()
+    }
+
     static public boolean compatibleTo(Student student, String name, String login){
         if (name.equals("Milena Cabral")){
             boolean b = true
@@ -29,6 +36,12 @@ class AddStudentsTestDataAndOperations {
         n = no.equals(name)
         l = lo.equals(login)
         return compatible
+    }
+
+    static public Student sendStudentEmail() {
+        for(Student student : Student.list()) {
+            student.sendCriterion()
+        }
     }
 
     static public int countStudent(){

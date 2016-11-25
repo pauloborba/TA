@@ -10,7 +10,8 @@ class EvaluationPage extends Page {
     static url = "/TA/evaluation/index"
 
     static at =  {
-        title ==~ /Create property Listagem/
+        title ==~ /Evaluation Listagem/
+        //title ==~ /Create property Listagem/
     }
 
     boolean confirmEvalaution(String criterionName,String evaluationOrigin,Date evaluationDate) {

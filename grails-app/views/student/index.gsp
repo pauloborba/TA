@@ -15,7 +15,7 @@
 		<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
 		<li><g:link class="createGroup" action="createGroup"><g:message code="Import Students" args="[entityName]" /></g:link></li>
         <li><g:link class="search" action="search"><g:message code="default.search.label" args="[entityName]" /></g:link></li>
-        <li><g:link class = "sendNew" action = "sendNew"><g:message code = "default.SendEmail.label"/></g:link></li>
+        <li><g:link class = "sendNewEmail" action ="sendNewEmail"><g:message code = "default.SendEmail.label"/></g:link></li>
     </ul>
 </div>
 <div id="list-student" class="content scaffold-list" role="main">

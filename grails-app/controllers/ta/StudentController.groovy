@@ -224,13 +224,14 @@ class StudentController {
         render view: "search"
     }
 
-    def sendNew(){
-        for (Student student : Student.list()) {
+    def sendNewEmail(){
+       for(Student student : Student.list()) {
             student.sendCriterion()
         }
         if(Evaluation.list().size() == 0) flash.message2 = message(code: 'default.NoEvaluatedCriterion.label', default: 'Email sent with only the evaluated criterion')
         flash.message = message(code: 'default.EmailSent.label', default: 'Sent email successfully')
-        render view: "index"
+        redirect action: "index", method: "GET"
+
     }
 
     def consult() {

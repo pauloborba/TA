@@ -20,8 +20,8 @@ this.metaClass.mixin(EN)
  * Created by Rodrigo on 05/11/2016.
  */
 
-Given(~'^the student "([^"]*)" login "([^"]*)" and the criterion "([^"]*)" are registered in the system$') {
-    String name, login, c ->
+Given(~'^the student "([^"]*)" login "([^"]*)" has grade "([^"]*)" in the criterion "([^"]*)" that was not sent to the students$') {
+    String name, login, grade, c ->
         to AddStudentsPage
 //        at AddStudentsPage
 
@@ -41,6 +41,11 @@ Given(~'^the student "([^"]*)" login "([^"]*)" and the criterion "([^"]*)" are r
         to CriterionPage
         at CriterionPage
         assert page.confirmCriterion(c)
+
+        to AddEvaluationPage
+        page.chooseCriterion(c)
+        page.chooseValue(grade)
+        page.selectAddEvaluation()
 }
 When(~'^I request to send email with evaluated criterion$') { ->
     to StudentPage
@@ -123,16 +128,15 @@ Then(~'^the system notifies that is necessary to send a new email with the evalu
         at EvaluationPage
         assert page.needEmail() != null
 }
-Student studentGlobal;
+
 Given(~'^the student "([^"]*)" login "([^"]*)" is in the system$') {
     String name, login ->
-        def student = new Student(name, login, login+"@cin.ufpe.br")
-        studentGlobal = student
+        AddStudentsTestDataAndOperations.createStudent(name, login, login + "@cin.ufpe.br")
 }
 When(~'^I request to send an email with evaluated criterion$') { ->
-    studentGlobal.sendCriterion()
+    AddStudentsTestDataAndOperations.sendStudentEmail()
 }
-Then(~'^the student "([^"]*)" is still in the system$') {
-    String name ->
-    assert studentGlobal != null
+Then(~'^the student "([^"]*)" with login "([^"]*)" is still in the system$') {
+    String name, login ->
+        assert Student.findByLogin(login) != null
 }

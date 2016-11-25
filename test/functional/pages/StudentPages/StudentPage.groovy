@@ -7,8 +7,8 @@ class StudentPage extends Page {
     static url = "/TA/student/index"
 
     static at =  {
-        //title ==~ /Student List/
-        title ==~ /Student Listagem/
+        title ==~ /Student List/
+        //title ==~ /Student Listagem/
     }
 
     boolean confirmStudent(String name, String login) {
@@ -36,7 +36,7 @@ class StudentPage extends Page {
         return r
     }
     def sendCriterion(){
-        $("a", class: "sendNew").click()
+        $("a", class: "sendNewEmail").click()
     }
 
     def EmailWithNoAvaliatedCriterion() {
