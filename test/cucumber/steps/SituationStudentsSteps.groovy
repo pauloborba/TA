@@ -3,6 +3,7 @@
  */
 
 
+import pages.SituationStudentPage
 import steps.AddStudentsTestDataAndOperations
 import steps.CommonTestDataAndOperations
 import steps.CriterionTestDataAndOperations
@@ -34,7 +35,7 @@ this.metaClass.mixin(cucumber.api.groovy.EN)
  */
 
 List<EvaluationsByCriterion> criteriosLista
-
+String paginaDesejada
 
 Given(~'^o aluno "([^"]*)", com login "([^"]*)", possui conceitos "([^"]*)", "([^"]*)" e "([^"]*)" em "([^"]*)"$') {
     String aluno, login, conceito1, conceito2, conceito3, materia ->
@@ -77,7 +78,7 @@ Then(~'a média de "([^"]*)" em "([^"]*)" continua sendo "([^"]*)"'){
 Given(~/^o aluno "([^"]*)", com login "([^"]*)", possui média "([^"]*)" em "([^"]*)"$/){
     String aluno, String login, Double media, String conceito ->
         to AddStudentsPage
-        at AddStudentsPage
+        //at AddStudentsPage
         page.fillStudentDetails(aluno, login)
         page.selectAddStudent()
         to CreateCriterionPage
@@ -92,7 +93,9 @@ Given(~/^o aluno "([^"]*)", com login "([^"]*)", possui média "([^"]*)" em "([^
 
 When(~/^eu solicito a pagina "([^"]*)"$/){
     String pagina ->
-
+        paginaDesejada = pagina
+        to pagina
+        at pagina
 }
 
 Then(~/^a media de "([^"]*)" em "([^"]*)" aparece verde e com uma seta para cima$/){
