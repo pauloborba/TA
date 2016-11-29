@@ -1,23 +1,13 @@
 package pages.ConceptPages
 
-import geb.Page
-import grails.plugin.remotecontrol.RemoteControl
+import pages.PageWithInternationalization
 
-/**
- * Created by João Vasconcelos on 07/11/2016.
- */
-class EditConceptPage extends Page{
-    static link = "/TA/concept/edit"
+class EditConceptPage extends PageWithInternationalization{
+    static url = "/TA/concept/edit"
 
     static at = {
-        RemoteControl remoteControl = new RemoteControl()
-        def entityName =  remoteControl.exec {
-            ctx.messageSource.getMessage('concept.label', null, Locale.getDefault())
-        }
-        def titleLabel = remoteControl.exec {
-            ctx.messageSource.getMessage('default.edit.label', [entityName] as Object[], Locale.getDefault())
-        }
-        title == titleLabel
+        def conceptLabel = internationalizationHelper.getMessage('concept.label')
+        title == internationalizationHelper.getMessage('default.edit.label', conceptLabel)
     }
 
     def fillConceptName(String novo){

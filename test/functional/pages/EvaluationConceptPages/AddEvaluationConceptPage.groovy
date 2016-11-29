@@ -1,23 +1,13 @@
 package pages.EvaluationConceptPages
 
-import geb.Page
-import grails.plugin.remotecontrol.RemoteControl
+import pages.PageWithInternationalization
 
-/**
- * Created by João Vasconcelos on 07/11/2016.
- */
-class AddEvaluationConceptPage extends Page{
+class AddEvaluationConceptPage extends PageWithInternationalization{
     static url = "/TA/evaluationConcept/create"
 
     static at = {
-        RemoteControl remoteControl = new RemoteControl()
-        def entityName =  remoteControl.exec {
-            ctx.messageSource.getMessage('evaluationConcept.label', null, Locale.getDefault())
-        }
-        def titleLabel = remoteControl.exec {
-            ctx.messageSource.getMessage('default.create.label', [entityName] as Object[], Locale.getDefault())
-        }
-        title == titleLabel
+        def evalConceptLabel = internationalizationHelper.getMessage('evaluationConcept.label')
+        title == internationalizationHelper.getMessage('default.create.label', evalConceptLabel)
     }
 
 
