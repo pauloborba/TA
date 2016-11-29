@@ -1,10 +1,11 @@
 package ta
 
+import static ta.MailerController.sendMail
+
 class Student {
     String name;
     String login;
     String email;
-    def messagingService;
     double average;
     List<EvaluationsByCriterion> criteriaAndEvaluations
     static hasMany = [criteriaAndEvaluations:EvaluationsByCriterion]
@@ -63,7 +64,7 @@ class Student {
             }
         }
         if(message.size()>0) {
-            MailerController.sendMail(this.email,"Grades",""+this.name+"'s Grades:\n"+message)
+            sendMail(this.email,"Grades","Your Grades are:\n"+this.name+"'s Grades:\n"+message)
             return true
         }else {
             return false

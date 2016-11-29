@@ -232,7 +232,7 @@ class StudentController {
     def sendNew(){
         boolean sentAny = false
         for (Student student : Student.findAll()) {
-            sentAny = sentAny || student.sendNewEvaluations()
+            sentAny =  student.sendNewEvaluations() ||sentAny
             student.save(flush: true)
         }
         if(sentAny) redirect action:"index", method:"GET"

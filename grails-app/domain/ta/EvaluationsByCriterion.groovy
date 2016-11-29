@@ -47,9 +47,13 @@ class EvaluationsByCriterion {
             if(!ev.sent)s+=" "+ev.value+","
             ev.sent=true
         }
-        if(s.length()==0)return ""
-        s=s.substring(0,s.length()-1)
-        return " *"+criterion.getDescription()+": "+s+"\n"
+        return FormatMessage(s)
+    }
+
+    private String FormatMessage(String s) {
+        if (s.length() == 0) return ""
+        s = s.substring(0, s.length() - 1)
+        return " *" + criterion.getDescription() + ": " + s + "\n"
     }
     /*  ------------------------
       | MÉTODOS USADOS EM TESTES |

@@ -30,8 +30,8 @@ Given(~/^There are grades from student “([^"]*)” with email “([^"]*)” ev
             page.chooseValue(grade)
             page.selectAddEvaluation()
 }
-Then(~/^An email is sent to “([^"]*)” Telling he received an “([^"]*)” on “([^"]*)”$/) {
-    String email,String grade,String criteria->
+Then(~/^There are no new grades left to send to “([^"]*)”$/) {
+    String email->
         to StudentPage
         page.selectStudentByEmail(email)
         at ShowStudentPage

@@ -8,7 +8,8 @@ Feature: Email New Grades
     Given There are grades from student “Arthur” with email “alpgc@cin.ufpe.br” evaluated as “MANA” in the “Cenarios” criteria on the system that were not yet sent
     And  There are grades from student “Arthur” with email “arthurlpgc@gmail.com” evaluated as “MPA” in the “Cenarios” criteria on the system that were not yet sent
     When I request to send new grades
-    Then An email is sent to “alpgc@cin.ufpe.br” Telling he received an “MANA” on “Cenarios”
+    Then There are no new grades left to send to “arthurlpgc@gmail.com”
+    Then There are no new grades left to send to “alpgc@cin.ufpe.br”
 
   Scenario: No new grades to send
     Given All grades on the system have been already sent
