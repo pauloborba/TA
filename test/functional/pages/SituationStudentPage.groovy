@@ -9,6 +9,6 @@ class SituationStudentPage extends Page{
 
     static at =  {
         //title ==~ /SituationStudents List/
-        title ==~ /Create property/
+        title ==~ /Create property Listagem/
     }
 }
