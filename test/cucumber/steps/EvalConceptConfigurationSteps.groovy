@@ -23,40 +23,40 @@ Given(~/^The evaluation concept is "([^"]*)" with concepts "([^"]*)", "([^"]*)",
     def eval = EvaluationConcept.findByNome(evaluationConceptName)
     assert eval != null
 }
-When(~/^I update the "([^"]*)" concept to "([^"]*)" concept$/) { String inicial, String proximo ->
-    def toUpdate = EvaluationConcept.findByNome(inicial)
+When(~/^I update the "([^"]*)" concept to "([^"]*)" concept$/) { String initial, String next ->
+    def toUpdate = EvaluationConcept.findByNome(initial)
     assert toUpdate != null
-    toUpdate.setNome(proximo)
-    assert toUpdate.nome == proximo
+    toUpdate.setNome(next)
+    assert toUpdate.nome == next
     EvalConceptDataAndOperations.updateEvalConcept(toUpdate)
-    def eval = EvaluationConcept.findByNome(proximo)
+    def eval = EvaluationConcept.findByNome(next)
     assert eval != null
 }
-Then(~/^The evaluation concept "([^"]*)" is set$/) { String nome ->
-    def eval = EvaluationConcept.findByNome(nome)
+Then(~/^The evaluation concept "([^"]*)" is set$/) { String evaluationConceptName ->
+    def eval = EvaluationConcept.findByNome(evaluationConceptName)
     assert eval != null
 }
 
-When(~/^I update the "([^"]*)" concept to "([^"]*)" evaluation concept with no concepts$/) { String antigo, String novo ->
-    def toUpdate = EvaluationConcept.findByNome(antigo)
+When(~/^I update the "([^"]*)" concept to "([^"]*)" evaluation concept with no concepts$/) { String initial, String next ->
+    def toUpdate = EvaluationConcept.findByNome(initial)
     assert toUpdate != null
-    toUpdate.nome = novo
+    toUpdate.nome = next
     toUpdate.conceitos = []
     assert toUpdate.conceitos.empty
     EvalConceptDataAndOperations.updateEvalConcept(toUpdate)
-    EvaluationConcept atual = EvaluationConcept.findByNome(antigo)
-    assert atual != null
+    EvaluationConcept actual = EvaluationConcept.findByNome(initial)
+    assert actual != null
 }
 
-Then(~/^The atual concept is "([^"]*)"$/) { String nome ->
-    EvaluationConcept eval = EvaluationConcept.findByNome(nome)
+Then(~/^The atual concept is "([^"]*)"$/) { String conceptName ->
+    EvaluationConcept eval = EvaluationConcept.findByNome(conceptName)
     assert eval != null
     assert eval.hasErrors()
 }
 Given(~/^The "([^"]*)" evaluation concept with concepts "([^"]*)", "([^"]*)", "([^"]*)" is set/)
-        { String ini, String c1, String c2, String c3 ->
-    Set<String> conceitos = [c1, c2, c3]
-    for(conceito in conceitos){
+        { String evaluationConceptName, String c1, String c2, String c3 ->
+    Set<String> set_Concepts = [c1, c2, c3]
+    for(conceito in set_Concepts){
         to AddConceptPage
         at AddConceptPage
         page.fillConceptDetails(conceito)
@@ -64,8 +64,8 @@ Given(~/^The "([^"]*)" evaluation concept with concepts "([^"]*)", "([^"]*)", "(
     }
     to AddEvaluationConceptPage
     at AddEvaluationConceptPage
-    page.fillNameEvaluationConcept(ini)
-    page.selectConcepts(conceitos)
+    page.fillNameEvaluationConcept(evaluationConceptName)
+    page.selectConcepts(set_Concepts)
     page.createEvalConcept()
 }
 
@@ -81,13 +81,13 @@ Then(~/^The concepts of "([^"]*)" are the same\.$/) { String entr ->
     assert page.testConcepts(entr.split(", ").sort())
 }
 
-When(~/^I edit the "([^"]*)" field to "([^"]*)" evaluation concept$/) { String antigo, String novo ->
+When(~/^I edit the "([^"]*)" field to "([^"]*)" evaluation concept$/) { String initial, String next ->
     at ShowEvaluationConceptPage
-    page.btnEditConcept(antigo)
+    page.btnEditConcept(initial)
     at ShowConceptPage
     page.editButton()
     at EditConceptPage
-    page.fillConceptName(novo)
+    page.fillConceptName(next)
     page.btnUpdateConcept()
     at ShowConceptPage
 }
