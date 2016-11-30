@@ -11,4 +11,11 @@ class SituationStudentPage extends Page{
         //title ==~ /SituationStudents List/
         title ==~ /Create property Listagem/
     }
+
+    boolean mediaVerde(aluno, conceito){
+        String x = aluno+"+"+conceito
+        if($('#'+ x).attr('class').equals("green")){
+            return true
+        }
+    }
 }

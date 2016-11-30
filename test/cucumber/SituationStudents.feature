@@ -16,7 +16,7 @@
     Scenario: Visualizar media positiva dos alunos
       Given o aluno "João Vasconcelos", com login "jvsn", possui média "9" em "Requisitos de Sistemas"
       When eu solicito a página "SituationStudentPage"
-      Then a média do aluno "João Vasconcelos" em "Requisitos de Sistemas" aparece verde e com uma seta para cima
+      Then a média do aluno de login "jvsn" em "Requisitos de Sistemas" aparece verde e com uma seta para cima
 
 
  ###*  #GUI

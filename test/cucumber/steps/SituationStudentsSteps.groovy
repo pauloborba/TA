@@ -52,6 +52,6 @@ When(~/^eu solicito a página "([^"]*)"$/) { String pagina ->
         at SituationStudentPage
     }
 }
-Then(~/^a média do aluno "([^"]*)" em "([^"]*)" aparece verde e com uma seta para cima$/) { String aluno, String conceito ->
-
+Then(~/^a média do aluno de login "([^"]*)" em "([^"]*)" aparece verde e com uma seta para cima$/) { String aluno, String conceito ->
+        assert page.mediaVerde(aluno, conceito)
 }
