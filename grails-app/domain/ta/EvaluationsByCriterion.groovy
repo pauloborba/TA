@@ -41,8 +41,9 @@ class EvaluationsByCriterion {
 
     String writeEvaluations(){
         String s = ""
-        evaluations.each{ Evaluation e ->
-            s += " " + e.value + ";"
+        for(int i = 0; i < Evaluation.list().size(); i++) {
+            s += " " + Evaluation.list().get(i).value;
+            if(i != Evaluation.list().size() - 1) s += ","
         }
         if(!s.length()) return "None"
 

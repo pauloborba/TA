@@ -122,9 +122,10 @@ class StudentController {
     public String writeCriterions() {
         String str = "Critérios avaliados: \n";
         for(Criterion c : Criterion.list()) {
-            str += c.description + "; "
+            str += c.description
             str += "\n"
         }
+        str += "\n"
         return str
     }
 
@@ -245,7 +246,7 @@ class StudentController {
     def messagingService;
 
     def emailService(String email, String password, String from, String to, String subject, String message) {
-        messagingService.sendEmail("Gmail", email, password, from, to, subject, message, true, null);
+        messagingService.sendEmail("Gmail", email, password, from, to, subject, message, false, null);
     }
 
     def sendNewEmail(){

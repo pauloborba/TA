@@ -4,7 +4,6 @@ class Student {
     String name;
     String login;
     String email;
-    def messagingService;
     double average;
     List criteriaAndEvaluations
     static hasMany = [criteriaAndEvaluations:EvaluationsByCriterion]
@@ -57,7 +56,7 @@ class Student {
         String message;
         StudentController sc = new StudentController()
 
-        message = sc.writeEvaluations() + sc.writeCriterions()
+        message = sc.writeCriterions() + sc.writeEvaluations()
 
         sc.emailService("taprojmailer@gmail.com", "1234mail", "taprojmailer@gmail.com", this.email, "[ESS] Evaluated Criterion", message);
 
