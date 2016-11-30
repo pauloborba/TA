@@ -10,18 +10,17 @@ import pages.EvaluationConceptPages.ShowEvaluationConceptPage
 import steps.EvalConceptDataAndOperations
 import ta.Concept
 import ta.EvaluationConcept
+import ta.EvaluationConceptController
 
 this.metaClass.mixin(cucumber.api.groovy.Hooks)
 this.metaClass.mixin(cucumber.api.groovy.EN)
-/**
- * Created by João Vasconcelos on 02/11/2016.
- */
 
 
-Given(~/^The evaluation concept is "([^"]*)"$/) { String nome ->
-    List<String> conceitos = ["MA", "MPA", "MANA"]
-    EvalConceptDataAndOperations.createEvalConcept(nome, conceitos)
-    def eval = EvaluationConcept.findByNome(nome)
+Given(~/^The evaluation concept is "([^"]*)" with concepts "([^"]*)", "([^"]*)", "([^"]*)"$/) {
+            String evaluationConceptName, String c1, String c2, String c3 ->
+    List<String> list_concepts = [c1, c2, c3]
+    EvalConceptDataAndOperations.createEvalConcept(evaluationConceptName, list_concepts)
+    def eval = EvaluationConcept.findByNome(evaluationConceptName)
     assert eval != null
 }
 When(~/^I update the "([^"]*)" concept to "([^"]*)" concept$/) { String inicial, String proximo ->
@@ -98,4 +97,22 @@ Then(~/^I can see the concept "([^"]*)"$/) { String concept ->
 }
 And(~/^I can't see the concept "([^"]*)"\.$/) { String concept_fail ->
     assert !page.matchConcept(concept_fail)
+}
+When(~/^I delete the Concept "([^"]*)"$/) { String conceptName ->
+    EvalConceptDataAndOperations.deleteConcept(conceptName)
+}
+Then(~/^The Concept "([^"]*)" isn't deleted$/) { String conceptName ->
+    Concept concept = Concept.findByNome(conceptName)
+    assert concept != null
+}
+When(~/^I delete the Evaluation Concept "([^"]*)"$/) { String evaluationConceptName ->
+    EvalConceptDataAndOperations.deleteEvaluationConcept(evaluationConceptName)
+}
+Then(~/^The Evaluation Concept "([^"]*)" is deleted$/) { String evaluationConceptName ->
+    EvaluationConcept evaluationConcept = EvaluationConcept.findByNome(evaluationConceptName)
+    assert evaluationConcept == null
+}
+And(~/^the Concept "([^"]*)" is deleted$/) { String conceptName ->
+    Concept concept = Concept.findByNome(conceptName)
+    assert concept == null
 }
