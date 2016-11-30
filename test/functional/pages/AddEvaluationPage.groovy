@@ -39,5 +39,9 @@ class AddEvaluationPage extends Page {
         $("select", name: "origin").find("option").find{it.value().equals(origin)}.click()
     }
 
+    def chooseStudentValue(String login, String value) {
+        String id = "#" + login
+        $(id).find("option").find{it.value().equals(value)}.click()
+    }
 
 }

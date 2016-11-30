@@ -40,12 +40,10 @@ Then an error message related to trying to add a evaluation with missing values 
     to EvaluationPage
     at EvaluationPage
 }
-
 When(~'^I want to evaluate all students to a the "([^"]*)" criteria, without a specific origin and dated from"([^"]*)"$') {
     String criteriondName, dateInString ->
     page.fillEvaluationDetails(criterionName,dateInString)
 }
-
 Then(~'^an error message related to trying to add a evaluation with missing values will be displayed$') {
     page.showErrorMensagem("Missing values")
 }*/
@@ -68,12 +66,10 @@ When(~'^I want to import all evaluations from the spreedsheet named"([^"]*)" to 
     String fileName, criterionName, origin, dateInString ->
         EvaluationDataAndOperations.importSpreedSheet(criterionName,origin,dateInString,fileName)
 }
-
 Then(~'^all evaluations will be stored on the "([^"]*)" criterias history of each student $') {
     String criterionName ->
         assert EvaluationDataAndOperations.checkImportCriterion(criterionName) == true;
 }
-
 Given(~'^I organized all evaluations for the "([^"]*)" criterion originated from "([^"]*)", date from "([^"]*)" in a spreedsheet named "([^"]*)"$') {
     String criterionName, origin, dateInString, fileName ->
         EvaluationDataAndOperations.checkFileExistence(criterionName,origin,dateInString,fileName)
@@ -86,7 +82,6 @@ When(~'^I want to import all evaluations from the spreedsheet named"([^"]*)" to 
     String fileName, criterionName, origin, dateInString ->
         EvaluationDataAndOperations.importSpreedSheet(criterionName,origin,dateInString,fileName)
 }
-
 Then(~'^all evaluations will be stored on the "([^"]*)" criterias history of each student $') {
     String criterionName ->
         assert EvaluationDataAndOperations.checkImportCriterion(criterionName) == false;
@@ -207,24 +202,19 @@ Then(~/^I can see the evaluation valued "([^"]*)" in the criterion "([^"]*)", fr
 /*
 Given(~/^I am at the "([^"]*)" screen$/) { String arg1 ->
     // Write code here that turns the phrase above into concrete actions
-
 }
 And(~/^there already are evaluations for the "([^"]*)" criteria, originated from "([^"]*)" and dated from "([^"]*)" in the system$/) { String arg1, String arg2, String arg3 ->
     // Write code here that turns the phrase above into concrete actions
-
 }
 Then(~/^an error message related to trying to add a repetead mark will be displayed$/) { ->
     // Write code here that turns the phrase above into concrete actions
-
 }
 //
 Given(~/^I organized all evaluations for the "([^"]*)" criterion originated from "([^"]*)", dated from "([^"]*)" in a spreedsheet$/) { String arg1, String arg2, String arg3 ->
     // Write code here that turns the phrase above into concrete actions
-
 }
 When(~/^I want to import all evaluations from the spreedsheet to add to all students "([^"]*)" criterias history, originated from "([^"]*)" and dated from "([^"]*)"$/) { String arg1, String arg2, String arg3 ->
     // Write code here that turns the phrase above into concrete actions
-
 }
 Then(~/^all the marks will be stored in on the "([^"]*)" criteria's history of each student$/) { String arg1 ->
     // Write code here that turns the phrase above into concrete actions
@@ -233,14 +223,10 @@ Then(~/^all the marks will be stored in on the "([^"]*)" criteria's history of e
 //
 Given(~/^I organized all evaluations for the "([^"]*)" criterion originated from "([^"]*)" dated from "([^"]*)" in a spreedsheet$/) { String arg1, String arg2, String arg3 ->
     // Write code here that turns the phrase above into concrete actions
-
 }
 And(~/^there already are evaluations for the "([^"]*)" criterion, originated from "([^"]*)" and dated from "([^"]*)" in the system$/) { String arg1, String arg2, String arg3 ->
     // Write code here that turns the phrase above into concrete actions
-
 }
 Then(~/^all the evaluations will not be stored in on the "([^"]*)" criteria's history of each student$/) { String arg1 ->
     // Write code here that turns the phrase above into concrete actions
-
 }*/
-

@@ -11,3 +11,16 @@
 *= require mobile
 *= require_self
 */
+
+.verde {
+    background: green;
+    text-align: center;
+}
+.amarelo {
+    background: yellow;
+    text-align: center;
+}
+.vermelho {
+    background: red;
+    text-align: center;
+}
