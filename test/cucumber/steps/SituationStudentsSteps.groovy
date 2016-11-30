@@ -4,6 +4,7 @@ import cucumber.api.PendingException
 import pages.AddEvaluationPage
 import pages.AddStudentsPage
 import pages.CreateCriterionPage
+import pages.SituationStudentPage
 
 
 /**
@@ -40,12 +41,16 @@ Given(~/^o aluno "([^"]*)", com login "([^"]*)", possui média "([^"]*)" em "([^
     to AddEvaluationPage
     at AddEvaluationPage
     page.chooseCriterion(conceito)
-    page.chooseValue("MA")
+    if(media.equals("9")){
+        page.chooseValue("MA")
+    }
     page.selectAddEvaluation()
 }
-When(~/^eu solicito a página "([^"]*)"$/) { String arg1 ->
-    // Write code here that turns the phrase above into concrete actions
-    throw new PendingException()
+When(~/^eu solicito a página "([^"]*)"$/) { String pagina ->
+    if(pagina.equals("SituationStudentPage")){
+        to SituationStudentPage
+        at SituationStudentPage
+    }
 }
 Then(~/^a média do aluno "([^"]*)" em "([^"]*)" aparece verde e com uma seta para cima$/) { String arg1, String arg2 ->
     // Write code here that turns the phrase above into concrete actions
