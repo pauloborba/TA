@@ -1,15 +1,17 @@
 package steps
 
 import cucumber.api.PendingException
+import pages.AddEvaluationPage
 import pages.AddStudentsPage
+import pages.CreateCriterionPage
 
 
 /**
  * Created by lavin on 29/11/2016.
  */
-
 this.metaClass.mixin(cucumber.api.groovy.Hooks)
 this.metaClass.mixin(cucumber.api.groovy.EN)
+
 
 Given(~/^o aluno "([^"]*)", com login "([^"]*)", possui conceitos "([^"]*)", "([^"]*)" e "([^"]*)" em "([^"]*)"$/) { String arg1, String arg2, String arg3, String arg4, String arg5, String arg6 ->
     // Write code here that turns the phrase above into concrete actions
@@ -27,11 +29,19 @@ Then(~/^a média de "([^"]*)" em "([^"]*)" continua sendo "([^"]*)"$/) { String 
     // Write code here that turns the phrase above into concrete actions
     throw new PendingException()
 }
-Given(~/^o aluno "([^"]*)", com login "([^"]*)", possui média "([^"]*)" em "([^"]*)"$/) {
-    String nome, String login, String media, String conceito ->
+Given(~/^o aluno "([^"]*)", com login "([^"]*)", possui média "([^"]*)" em "([^"]*)"$/) { String aluno, String login, String media, String conceito ->
     to AddStudentsPage
     at AddStudentsPage
-    page.fillStudentDetails(nome,login)
+    page.fillStudentDetails(aluno, login)
+    page.selectAddStudent()
+    to CreateCriterionPage
+    at CreateCriterionPage
+    page.createCriterion(conceito)
+    to AddEvaluationPage
+    at AddEvaluationPage
+    page.chooseCriterion(conceito)
+    page.chooseValue("MA")
+    page.selectAddEvaluation()
 }
 When(~/^eu solicito a página "([^"]*)"$/) { String arg1 ->
     // Write code here that turns the phrase above into concrete actions
