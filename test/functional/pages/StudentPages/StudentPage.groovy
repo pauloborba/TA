@@ -40,7 +40,7 @@ class StudentPage extends Page {
     }
 
     def EmailWithNoAvaliatedCriterion() {
-        $("div.message2").text()
+        $("div#message2.message").text()
     }
     def emailSend() {
         $("div.message").text()

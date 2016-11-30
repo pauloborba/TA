@@ -21,7 +21,7 @@
 <div id="list-student" class="content scaffold-list" role="main">
 	<h1><g:message code="default.list.label" args="[entityName]" /></h1>
 	<g:if test="${flash.message2}">
-        <div class="message2" role="status">${flash.message2}</div>
+        <div id = "message2" class="message" role="status">${flash.message2}</div>
     </g:if>
     <g:if test="${flash.message}">
 		<div class="message" role="status">${flash.message}</div>

@@ -110,6 +110,24 @@ class StudentController {
         addEvaluationsToStudentTests(studentLogin, listEval)
     }
 
+    public String writeEvaluations() {
+        String str = "Critérios já avaliados: \n";
+        for(EvaluationsByCriterion ec : EvaluationsByCriterion.list()) {
+            str += ec.writeEvaluations()
+            str += "\n"
+        }
+        return str
+    }
+
+    public String writeCriterions() {
+        String str = "Critérios avaliados: \n";
+        for(Criterion c : Criterion.list()) {
+            str += c.description + "; "
+            str += "\n"
+        }
+        return str
+    }
+
     public boolean addEvaluationToAllStudents() {
         def evaluationInstance = new Evaluation(params);
         for (Student student : Student.findAll()) {
@@ -222,6 +240,12 @@ class StudentController {
 
     def search() {
         render view: "search"
+    }
+
+    def messagingService;
+
+    def emailService(String email, String password, String from, String to, String subject, String message) {
+        messagingService.sendEmail("Gmail", email, password, from, to, subject, message, true, null);
     }
 
     def sendNewEmail(){

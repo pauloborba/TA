@@ -39,14 +39,14 @@ class EvaluationsByCriterion {
         }
     }
 
-    String getNewEvaluations(){
-        String s=""
+    String writeEvaluations(){
+        String s = ""
         evaluations.each{ Evaluation e ->
-            s+=" "+e.value+","
+            s += " " + e.value + ";"
         }
-        if(!s.length()) return "None";
-        s=s.substring(0,s.length()-1)
-        return ""+criterion.getDescription()+"-"+s
+        if(!s.length()) return "None"
+
+        return "" + criterion.getDescription() + " -" + s
     }
 
     /*  ------------------------

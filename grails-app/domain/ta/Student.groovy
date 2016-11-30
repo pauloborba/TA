@@ -6,7 +6,7 @@ class Student {
     String email;
     def messagingService;
     double average;
-    List<EvaluationsByCriterion> criteriaAndEvaluations
+    List criteriaAndEvaluations
     static hasMany = [criteriaAndEvaluations:EvaluationsByCriterion]
 
     static constraints = {
@@ -54,29 +54,12 @@ class Student {
     }
 
     public void sendCriterion(){
-        String message = "Critérios já avaliados:\n";
-        this.criteriaAndEvaluations.each { EvaluationsByCriterion ec ->
-            message += ec.getNewEvaluations()
-            message += "\n"
-        }
-        message += "Critérios avaliados:\n";
-        for(Criterion c : Criterion.list()) {
-            message += c.description
-            message += "\n"
-        }
+        String message;
+        StudentController sc = new StudentController()
 
+        message = sc.writeEvaluations() + sc.writeCriterions()
 
-        messagingService.sendEmail(
-                "Gmail",
-                "taprojmailer@gmail.com",
-                "1234mail",
-                "taprojmailer@gmail.com",
-                this.email,
-                "Evaluated Criterion",
-                message,
-                true,
-                null
-        )
+        sc.emailService("taprojmailer@gmail.com", "1234mail", "taprojmailer@gmail.com", this.email, "[ESS] Evaluated Criterion", message);
 
     }
 
