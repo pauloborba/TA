@@ -1,12 +1,9 @@
 package steps
 
-import pages.AddEvaluationPage
-import pages.AddStudentsPage
-import pages.CreateCriterionPage
-import pages.ReportingClassesPage
+import pages.*
 
 /**
- * Created by Sentinela on 07/11/2016.
+ * Created by Sentinela on 21/11/2016.
  */
 
 this.metaClass.mixin(cucumber.api.groovy.Hooks)
@@ -14,149 +11,132 @@ this.metaClass.mixin(cucumber.api.groovy.EN)
 
 // Scenario: Nenhuma turma cadastrada
 Given(~/^O sistema não tem nenhuma turma cadastrada$/) { ->
-    to ReportingClassesPage
-    at ReportingClassesPage
+    to TurmasPage
+    at TurmasPage
 
-    assert TA.Turma.list().size() == 0
+    assert $('#list-turma table tr').size() == 1
 }
 When(~/^Eu tento visualizar o relatórios e o gráfico das turmas$/) { ->
     to ReportingClassesPage
+}
+Then(~/^Nenhuma turma será listada$/) { ->
     at ReportingClassesPage
 
-}
-Then(~/^Nenhuma turma será listada$/) {
-    to ReportingClassesPage
-    at ReportingClassesPage
+    assert page.classesNotList()
 
-    assert $('#list-reportingClasses table tr').size() == 0
 }
 
-
-// Scenario: Uma única turma cadastrada
-Given(~/^O sistema tem apenas a turma "([^"]*)" cadastrada$/) { String turma ->
-    to ReportingClassesPage
-    at ReportingClassesPage
-
-    assert TA.Turma.list().size() == 0
-    assert TA.Turma.list().get(0).periodo == turma
-}
-When(~/^Eu tento fazer uma comparação somente com a turma "([^"]*)"$/) { String turma ->
-    at ReportingClassesPage
-
-    page.selectClass(turma)
-}
-Then(~/^Não será permitida fazer a comparação somente com a turma "([^"]*)"$/) { String turma ->
-    at ReportingClassesPage
-
-    assert $("input", name: "compare").attr("disabled") == 'disabled'
-}
-
-
-// Scenario: Várias turmas cadastradas
-Given(~/^O sistema tem as turmas "([^"]*)", "([^"]*)" e "([^"]*)" cadastradas$/) {
-    String class0, class1, class2 ->
+// Scenario: Média da turma
+Given(~/^O sistema possui o aluno "([^"]*)" com login "([^"]*)"$/) {
+    String name, String login ->
 
         to AddStudentsPage
         at AddStudentsPage
-        page.fillStudentDetails('Student1', 'student1@cin.ufpe.br')
+        page.fillStudentDetails(name, login)
         page.selectAddStudent()
+
+}
+And(~/^O aluno "([^"]*)" com login "([^"]*)"$/) {
+    String name, String login ->
 
         to AddStudentsPage
         at AddStudentsPage
-        page.fillStudentDetails('Student2', 'student2@cin.ufpe.br')
+        page.fillStudentDetails(name, login)
         page.selectAddStudent()
 
-        to AddStudentsPage
-        at AddStudentsPage
-        page.fillStudentDetails('Student3', 'student3@cin.ufpe.br')
-        page.selectAddStudent()
+}
+And(~/^Possui um critério de nome "([^"]*)"$/) {
+    String name ->
 
         to CreateCriterionPage
         at CreateCriterionPage
-        page.createCriterion('Criterion1')
+        page.createCriterion(name)
+
+}
+And(~/^O Student1 possui uma avaliação "([^"]*)" e o Student possui MA$/) {
+    String average ->
 
         to AddEvaluationPage
         at AddEvaluationPage
-        page.setEvaluationToStudent('student1@cin.ufpe.br', 'MA')
-        page.setEvaluationToStudent('student2@cin.ufpe.br', 'MPA')
-        page.setEvaluationToStudent('student3@cin.ufpe.br', 'MANA')
+        page.chooseValue(average)
         page.selectAddEvaluation()
 
-        to CreateClassPage
-        at CreateClassPage
-        page.createClass(class0, class0, 'student1@cin.ufpe.br')
-        page.createClass(class1, class1, 'student2@cin.ufpe.br')
-        page.createClass(class2, class2, 'student3@cin.ufpe.br')
+}
+And(~/^A turma "([^"]*)" de "([^"]*)" contém o aluno "([^"]*)" e o "([^"]*)"$/) {
+    String name, String period, String login1, String login2 ->
+
+        to CreateTurmaPage
+        at CreateTurmaPage
+        page.fillTurmaDetails(name, period)
+        $('select', name: 'students').find("option").find{it.text().equals(login1)}.click()
+        $('select', name: 'students').find("option").find{it.text().equals(login2)}.click()
+        page.selectCreateTurma()
 
 }
-When (~/^Eu irei fazer uma comparação entre a turma "([^"]*)" com média "([^"]*)" e "([^"]*)" com média "([^"]*)"$/) {
-    String class0, average0, class1, average1 ->
-        to ReportingClassesPage
+When(~/^Eu visualizo o relatório da turma cadastrada$/) { ->
+    to ReportingClassesPage
+}
+Then(~/^A turma "([^"]*)" possuirá a média "([^"]*)"$/) {
+    String _class, String average ->
+
         at ReportingClassesPage
 
-        page.selectClass(class0, average0)
-        page.selectClass(class1, average1)
-        $("input", name: "compare").click()
-}
-Then (~/^Será exibido um relatório onde informa que a turma "([^"]*)" teve uma diferença de "([^"]*)" em relação a turma "([^"]*)"$/) {
-    String class0, value, class1 ->
-        at ReportingClassesPage
+        assert page.confirmAverage(_class, average);
 
-        assert $('#alertContent').text() == "The class \"$class0\" has a \"$value%\" difference from the class \"$class1\""
 }
 
+// Scenario: Sinalização de média baixa
+Given(~/^O sistema tem a turma "([^"]*)" de "([^"]*)" cadastradas com o aluno "([^"]*)"$/) {
+    String name, String period, String login ->
 
-// Comparar mais de duas turmas simultaneamente
-Given(~/^O sistema tem as turmas "([^"]*)", "([^"]*)" e "([^"]*)" previamente cadastradas$/) {
-    String class0, class1, class2 ->
+        to CreateTurmaPage
+        at CreateTurmaPage
+        page.fillTurmaDetails(name, period)
+        $('select', name: 'students').find("option").find{it.text().equals(login)}.click()
+        page.selectCreateTurma()
 
-        to AddStudentsPage
-        at AddStudentsPage
-        page.fillStudentDetails('Student1', 'student1@cin.ufpe.br')
-        page.selectAddStudent()
-
-        to AddStudentsPage
-        at AddStudentsPage
-        page.fillStudentDetails('Student2', 'student2@cin.ufpe.br')
-        page.selectAddStudent()
-
-        to AddStudentsPage
-        at AddStudentsPage
-        page.fillStudentDetails('Student3', 'student3@cin.ufpe.br')
-        page.selectAddStudent()
+}
+And(~/^Recria o critério de nome "([^"]*)"$/) {
+    String name ->
 
         to CreateCriterionPage
         at CreateCriterionPage
-        page.createCriterion('Criterion1')
+        page.createCriterion(name)
+
+}
+And(~/^Reavalia o estudante Student1 com "([^"]*)" e o Student com MA$/) {
+    String average ->
 
         to AddEvaluationPage
         at AddEvaluationPage
-        page.setEvaluationToStudent('student1@cin.ufpe.br', 'MA')
-        page.setEvaluationToStudent('student2@cin.ufpe.br', 'MPA')
-        page.setEvaluationToStudent('student3@cin.ufpe.br', 'MANA')
+        page.chooseValue(average)
         page.selectAddEvaluation()
 
-        to CreateClassPage
-        at CreateClassPage
-        page.createClass(class0, class0, 'student1@cin.ufpe.br')
-        page.createClass(class1, class1, 'student2@cin.ufpe.br')
-        page.createClass(class2, class2, 'student3@cin.ufpe.br')
-
 }
-When (~/^Eu tento comparar as turmas "([^"]*)", "([^"]*)" e "([^"]*)" simultaneamente$/) {
-    String class0, class1, class2 ->
-        to ReportingClassesPage
-        at ReportingClassesPage
-
-        page.selectClass(class0)
-        page.selectClass(class1)
-        page.selectClass(class2)
-
+When(~/^Eu visualizo o relatório das turmas$/) { ->
+    to ReportingClassesPage
 }
-Then (~/^Não será permitida a seleção da turma "([^"]*)"$/) {
+Then(~/^A turma "([^"]*)" estará com o plano de fundo vermelho$/) {
     String _class ->
+
         at ReportingClassesPage
 
-        assert checkClassSelected(_class)
-        assert $('#alertContent').text() == "You can only compare two classes at a time"
+        assert page.backgroundRed(_class);
+
+}
+
+// Scenario: Geração de gráfico
+Given(~/^Que o sistema possui pelo menos uma turma cadastrada$/) { ->
+    to TurmasPage
+    at TurmasPage
+
+    assert $('#list-turma table tr').size() > 1
+}
+When(~/^Eu visualizo o gráfico de turmas$/) { ->
+    to ReportingClassesPage
+}
+Then(~/^Será gerado um gráfico$/) { ->
+    at ReportingClassesPage
+
+    assert page.classGraph();
 }
