@@ -20,15 +20,11 @@ class EvaluationConcept {
         this.conceitos = concepts;
     }
 
-    List<String> allConcept(){
+    List<String> allConcept() {
         List<String> ret = [];
-        for(c in conceitos){
+        for (c in conceitos) {
             ret << c.nome;
         }
         ret;
-    }
-
-    public setNome(String nome){
-        this.nome = nome;
     }
 }
