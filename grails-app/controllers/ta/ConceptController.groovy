@@ -39,7 +39,7 @@ class ConceptController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'Concept.label', default: 'Concept'), conceptInstance.id])
+                flash.message = message(code: 'default.created.message', args: [message(code: 'concept.label', default: 'Concept'), conceptInstance.id])
                 redirect conceptInstance
             }
             '*' { respond conceptInstance, [status: CREATED] }
@@ -66,7 +66,7 @@ class ConceptController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Concept.label', default: 'Concept'), conceptInstance.id])
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'concept.label', default: 'Concept'), conceptInstance.id])
                 redirect conceptInstance
             }
             '*'{ respond conceptInstance, [status: OK] }
@@ -85,7 +85,7 @@ class ConceptController {
                 render(view: "create", model: [instanceConcept: instanceConcept])
                 return
             }
-            flash.message = message(code: 'default.created.message', args: [message(code: 'Concept.label', default: 'Concept'), instanceConcept.id])
+            flash.message = message(code: 'default.created.message', args: [message(code: 'concept.label', default: 'Concept'), instanceConcept.id])
             redirect(action: "show", id: instanceConcept.id)
         }
     }
