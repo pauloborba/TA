@@ -10,7 +10,7 @@ class ShowStudentPage extends Page {
     static url = "student/show"
 
     static at = {
-        title ==~ /Show Student/
+        title ==~ /Ver Student/
     }
 
     def boolean checkForCriterion(String desc) {

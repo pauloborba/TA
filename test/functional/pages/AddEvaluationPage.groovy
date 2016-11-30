@@ -10,7 +10,7 @@ class AddEvaluationPage extends Page {
     static url = "/TA/evaluation/create"
 
     static at = {
-        title ==~ /Create Evaluation/
+        title ==~ /Criar Create property/
     }
 
     def selectAddEvaluation(){
