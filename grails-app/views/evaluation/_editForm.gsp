@@ -34,6 +34,10 @@
         <g:message code="evaluation.value.label" default="Value" />
         <span class="required-indicator">*</span>
     </label>
-    <g:select name="value" from="${evaluationInstance.constraints.value.inList}" required="" value="${evaluationInstance?.value}" valueMessagePrefix="evaluation.value"/>
-
+    <g:if test="${ta.EvaluationConcept.count}">
+        <g:select name="value" from="${ta.EvaluationConcept.first().allConcept()}" required="" value="${evaluationInstance?.value}" valueMessagePrefix="evaluation.value"/>
+    </g:if>
+    <g:else>
+        <g:select name="value" from="${["MA", "MPA", "MANA", "--"]}" required="" value="${evaluationInstance?.value}" valueMessagePrefix="evaluation.value"/>
+    </g:else>
 </div>
