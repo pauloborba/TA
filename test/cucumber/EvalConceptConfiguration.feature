@@ -22,13 +22,13 @@ Feature: Configure the evaluation concept
 
   #GUI Scenario
   Scenario: Configure the atual evaluation concept with a invalid value.
-    Given The "MA, MPA, MANA" evaluation concept is set
+    Given The "MA, MPA, MANA" evaluation concept with concepts "MA", "MPA", "MANA" is set
     When I edit the "MA, MPA, MANA" evaluation concept with a invalid number of concepts
     Then The concepts of "MA, MPA, MANA" are the same.
 
   #GUI Scenario
   Scenario: Configure the parameters of the atual evaluation concept.
-    Given The "MA, MPA, MANA" evaluation concept is set
+    Given The "MA, MPA, MANA" evaluation concept with concepts "MA", "MPA", "MANA" is set
     When I edit the "MA" field to "Meta Alcançada" evaluation concept
     Then I can see the concept "Meta Alcançada"
     And I can't see the concept "MA".
