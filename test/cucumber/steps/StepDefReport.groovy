@@ -40,7 +40,7 @@ Then(~'^70% of the student "([^"]*)" evaluations are composed of "([^"]*)"$'){
 
 
 And(~/^the report "([^"]*)" is updated adding the student with login "([^"]*)"$/) { String repoName, String loginA ->
-   assert ReportsDataAndOperations.checkUpdate(repoName,loginA)
+    assert ReportsDataAndOperations.checkUpdate(repoName,loginA)
 }
 //end controller scenario
 
@@ -71,7 +71,7 @@ When(~/^I select the "([^"]*)" report$/) { String arg1 ->
     page.selectReport(arg1)
 }
 Then(~/^I should see the details related to the "([^"]*)" report$/) { String arg1 ->
-    at ShowReportsPage
+    //at ShowReportsPage
 //    assert page.checkName(nomeReport)
 //    assert page.checkType(tipoReport)
 //    assert page.checkAvaliacao(avaliacaoReport)

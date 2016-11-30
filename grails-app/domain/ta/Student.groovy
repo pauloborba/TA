@@ -4,7 +4,10 @@ class Student {
     String name;
     String login;
     double average;
+    int ma, mpa, mana, total
+    boolean reprovado
     List criteriaAndEvaluations
+
     static hasMany = [criteriaAndEvaluations:EvaluationsByCriterion]
 
     static constraints = {
@@ -21,6 +24,26 @@ class Student {
         this.name = name;
         this.login = login;
         this.criteriaAndEvaluations = [];
+        this.reprovado = false
+    }
+
+    public void calcMaMpaMana() {
+        this.ma = 0
+        this.mana = 0
+        this.mpa = 0
+        List<Evaluation> evaluationsInCriterion
+        for (int i = 0; i < this.criteriaAndEvaluations.size(); i++) {
+            evaluationsInCriterion = this.criteriaAndEvaluations[i].getEvaluations()
+            for (int j = 0; j < evaluationsInCriterion.size(); j++) {
+                String eval = evaluationsInCriterion.get(j).value
+                if (eval.equals("MA")) {
+                    this.ma++
+                } else if (eval.equals("MANA")) {
+                    this.mana++
+                } else if (eval.equals("MPA")) this.mpa++
+                else reprovado = true
+            }
+        }
     }
 
     public void calcMedia() {
@@ -32,9 +55,12 @@ class Student {
             evaluationsInCriterion = this.criteriaAndEvaluations[i].getEvaluations()
             for (int j = 0; j < evaluationsInCriterion.size(); j++) {
                 String eval = evaluationsInCriterion.get(j).value
+                String ori = evaluationsInCriterion.get(j).origin
                 (qtdEvaluations, tempMedia) = sc.evaluate(eval, qtdEvaluations, tempMedia)
             }
+
         }
+        this.total = qtdEvaluations
         if (qtdEvaluations > 0) {
             tempMedia /= qtdEvaluations
             this.average = tempMedia
@@ -92,4 +118,6 @@ class Student {
             this.addToCriteriaAndEvaluations(evCriterion);
         }
     }
+
+
 }
