@@ -39,16 +39,6 @@ class AddEvaluationPage extends Page {
         $("select", name: "origin").find("option").find{it.value().equals(origin)}.click()
     }
 
-    def getIndexFromString(String value) {
-        if(value.equals("MPA")) {
-            return 0
-        } else if(value.equals("MA")) {
-            return 1
-        } else if(value.equals("MANA")) {
-            return 2
-        } else return 3
-    }
-
     def chooseStudentValue(String login, String value) {
         String id = "#" + login
         $(id).find("option").find{it.value().equals(value)}.click()

@@ -14,13 +14,16 @@ class StudentsReportPage extends Page{
 
     boolean isLoginColor(String login, String color) {
         String id = "#" + login
+        String colorParameter = getColorParameter(color)
+        return $(id).jquery.css("background-color").equals(colorParameter)
+    }
+
+    String getColorParameter(String color) {
         String colorParameter = ""
         if(color.equals("green")) colorParameter = "rgb(65, 128, 0)"
         else if(color.equals("yellow")) colorParameter = "rgb(255, 255, 0)"
         else if(color.equals("red")) colorParameter = "rgb(255, 0, 0)"
-
-        if($(id).jquery.css("background-color").equals(colorParameter)) return true
-        else return false
+        return colorParameter
     }
 
     def isColumnLoginValue(String criterio, String login, String value) {
@@ -33,6 +36,7 @@ class StudentsReportPage extends Page{
 
     def isColumnNumber(String coluna, String value) {
         String id = "#";
+        if(coluna == "") return false
         if(coluna == "Total de aprovados por media") id += "aprovadosMedia"
         else if(coluna == "Total de aprovados na final") id += "aprovadosFinal"
         else if(coluna == "Total de reprovados por falta") id += "reprovadosFalta"

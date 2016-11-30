@@ -24,7 +24,7 @@ this.metaClass.mixin(cucumber.api.groovy.EN)
  feature relatorio de notas
  */
 
-Given(~/^I create the students "([^"]*)", "([^"]*)", "([^"]*)" of logins "([^"]*)", "([^"]*)", "([^"]*)" respectively/) { String arg1, String arg2, String arg3, String arg4, String arg5, String arg6->
+Given(~/^The system has the students "([^"]*)", "([^"]*)", "([^"]*)" of logins "([^"]*)", "([^"]*)", "([^"]*)" respectively/) { String arg1, String arg2, String arg3, String arg4, String arg5, String arg6->
     to AddStudentsPage
     at AddStudentsPage
     page.fillStudentDetails(arg1, arg4)
@@ -40,7 +40,7 @@ Given(~/^I create the students "([^"]*)", "([^"]*)", "([^"]*)" of logins "([^"]*
     page.fillStudentDetails(arg3, arg6)
     page.selectAddStudent()
 }
-And(~/^I create the criterions "([^"]*)", "([^"]*)", "([^"]*)"$/) { String arg1, String arg2, String arg3 ->
+And(~/^The system has the criterions "([^"]*)", "([^"]*)", "([^"]*)"$/) { String arg1, String arg2, String arg3 ->
     to CreateCriterionPage
     at CreateCriterionPage
     page.createCriterion(arg1)
@@ -94,13 +94,13 @@ Then(~/^The row's color of the logins "([^"]*)", "([^"]*)", "([^"]*)" will be th
 
 
 
-Given(~/^I create the student "([^"]*)" of login "([^"]*)"$/) { String arg1, String arg2 ->
+Given(~/^The system has the student "([^"]*)" of login "([^"]*)"$/) { String arg1, String arg2 ->
     to AddStudentsPage
     at AddStudentsPage
     page.fillStudentDetails(arg1, arg2)
     page.selectAddStudent()
 }
-And(~/^I create the criterions "([^"]*)", "([^"]*)", "([^"]*)" and "([^"]*)"$/) { String arg1, String arg2, String arg3, String arg4 ->
+And(~/^The system has the criterions "([^"]*)", "([^"]*)", "([^"]*)" and "([^"]*)"$/) { String arg1, String arg2, String arg3, String arg4 ->
     to CreateCriterionPage
     at CreateCriterionPage
     page.createCriterion(arg1)
@@ -157,7 +157,7 @@ Then(~/^The column "([^"]*)" of the login's student "([^"]*)" will be "([^"]*)"$
 
 
 
-Given(~/^I create the students "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)" of logins "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", respectively/) { String arg1, String arg2, String arg3, String arg4, String arg5, String arg6, String arg7, String arg8 ->
+Given(~/^The system has the students "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)" of logins "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", respectively/) { String arg1, String arg2, String arg3, String arg4, String arg5, String arg6, String arg7, String arg8 ->
     to AddStudentsPage
     at AddStudentsPage
     page.fillStudentDetails(arg1, arg5)
@@ -178,7 +178,7 @@ Given(~/^I create the students "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)" of log
     page.fillStudentDetails(arg4, arg8)
     page.selectAddStudent()
 }
-And(~/^I create the criterions "([^"]*)", "([^"]*)"$/) { String arg1, String arg2 ->
+And(~/^The system has the criterions "([^"]*)", "([^"]*)"$/) { String arg1, String arg2 ->
     to CreateCriterionPage
     at CreateCriterionPage
     page.createCriterion(arg1)

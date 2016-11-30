@@ -22,5 +22,4 @@ class AddStudentsPage extends Page{
         $("input", name: "create").click()
     }
 
-    def setF
 }
