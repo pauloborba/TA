@@ -1,16 +1,13 @@
 package pages.EvaluationConceptPages
 
-import geb.Page
+import pages.PageWithInternationalization
 
-/**
- * Created by João Vasconcelos on 07/11/2016.
- */
-class ShowEvaluationConceptPage extends Page{
+class ShowEvaluationConceptPage extends PageWithInternationalization{
     static url = "TA/evaluationConcept/show/"
 
     static at = {
-//        title ==~ /Ver EvaluationConcept/
-        title ==~ /Show EvaluationConcept/
+        def evalConceptLabel = internationalizationHelper.getMessage('evaluationConcept.label')
+        title == internationalizationHelper.getMessage('default.show.label', evalConceptLabel)
     }
 
     def editEvalConcept(){
@@ -32,7 +29,6 @@ class ShowEvaluationConceptPage extends Page{
     def btnEditConcept(String concept){
         def b = $("a", class: "concepts").allElements()
         for(links in b){
-            def ka = links.getText()
             if(links.getText() == concept){
                 links.click()
                 break

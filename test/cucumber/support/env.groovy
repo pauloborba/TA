@@ -27,21 +27,18 @@ Before () {
 
 After () {
     cleanEnvironment()
-    def eConcepts = EvaluationConcept.all
-    for (c in eConcepts){
-        def e = c.delete(flush: true)
-        e
-    }
-    def concepts = Concept.all
-    for(c in concepts){
-        def e = c.delete(flush: true)
-        e
-    }
     scenarioInterceptor.destroy ()
     bindingUpdater.remove ()
 }
-
 def void cleanEnvironment() {
+    def eConcepts = EvaluationConcept.all
+    for (c in eConcepts){
+        c.delete(flush: true)
+    }
+    def concepts = Concept.all
+    for(c in concepts){
+        c.delete(flush: true)
+    }
     cleanList(Report.list())
     CriterionController criterionController = new CriterionController()
     Criterion.list().each { crit ->

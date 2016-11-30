@@ -1,24 +1,16 @@
 package pages.EvaluationConceptPages
 
-import geb.Page
+import pages.PageWithInternationalization
 
-/**
- * Created by João Vasconcelos on 07/11/2016.
- */
-class EditEvaluationConceptPage extends Page{
+class EditEvaluationConceptPage extends PageWithInternationalization{
     static url = "TA/evaluationConcept/edit/"
 
     static at = {
-//        title ==~ /Editar EvaluationConcept/
-        title ==~ /Edit EvaluationConcept/
+        def evalConceptLabel = internationalizationHelper.getMessage('evaluationConcept.label')
+        title == internationalizationHelper.getMessage('default.edit.label', evalConceptLabel)
     }
 
     def editEvalConceptWithoutConcept(){
         $("input", name: "_action_update").click()
     }
-
-    def editEvalConcept(String anterior){
-
-    }
-
 }

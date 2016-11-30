@@ -8,36 +8,6 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class EvaluationConceptController {
 
-/*    @Transactional
-    public void saveEvalCon(){
-        def evaluationConceptInstance = new EvaluationConcept(params)
-        if (evaluationConceptInstance == null) {
-            notFound()
-            return
-        }
-
-        if (evaluationConceptInstance.hasErrors()) {
-            respond evaluationConceptInstance.errors, view:'create'
-            return
-        }
-        evaluationConceptInstance.save flush:true
-    }
-
-    public void updateEvalCon(){
-        def evaluationConceptInstance = EvaluationConcept.get(params.id)
-        if (evaluationConceptInstance == null) {
-            notFound()
-            return
-        }
-
-        if (evaluationConceptInstance.hasErrors()) {
-            respond evaluationConceptInstance.errors, view:'edit'
-            return
-        }
-
-        evaluationConceptInstance.save flush:true
-    }*/
-
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond EvaluationConcept.list(params), model:[evaluationConceptInstanceCount: EvaluationConcept.count()]
@@ -48,6 +18,10 @@ class EvaluationConceptController {
     }
 
     def create() {
+        if(EvaluationConcept.count) {
+            flash.message = message(code: 'alreadyCreated.message')
+            redirect(action: "index")
+        }
         respond new EvaluationConcept(params)
     }
 
@@ -94,7 +68,7 @@ class EvaluationConceptController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'EvaluationConcept.label', default: 'EvaluationConcept'), evaluationConceptInstance.id])
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'evaluationConcept.label', default: 'EvaluationConcept'), evaluationConceptInstance.id])
                 redirect evaluationConceptInstance
             }
             '*'{ respond evaluationConceptInstance, [status: OK] }
@@ -113,7 +87,7 @@ class EvaluationConceptController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'EvaluationConcept.label', default: 'EvaluationConcept'), evaluationConceptInstance.id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'evaluationConcept.label', default: 'EvaluationConcept'), evaluationConceptInstance.id])
                 redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }

@@ -1,16 +1,13 @@
 package pages.ConceptPages
 
-import geb.Page
+import pages.PageWithInternationalization
 
-/**
- * Created by João Vasconcelos on 07/11/2016.
- */
-class ShowConceptPage extends Page {
-    static link = "/TA/concept/show"
+class ShowConceptPage extends PageWithInternationalization {
+    static url = "/TA/concept/show"
 
     static at = {
-        title ==~ /Show Concept/
-//        title ==~ /Ver Concept/
+        def conceptLabel = internationalizationHelper.getMessage('concept.label')
+        title == internationalizationHelper.getMessage('default.show.label', conceptLabel)
     }
 
     def editButton(){

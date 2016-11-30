@@ -66,7 +66,7 @@ class ConceptController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Concept.label', default: 'Concept'), conceptInstance.id])
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'concept.label', default: 'Concept'), conceptInstance.id])
                 redirect conceptInstance
             }
             '*'{ respond conceptInstance, [status: OK] }
@@ -97,6 +97,16 @@ class ConceptController {
             notFound()
             return
         }
+
+        if(EvaluationConcept.count){
+            EvaluationConcept atual = EvaluationConcept.first();
+            if(atual.conceitos.contains(conceptInstance)){
+                flash.message = message(code: 'linkedConcept.message', args:[atual.getNome()])
+                redirect (controller: "EvaluationConcept", action: "index")
+                return
+            }
+        }
+
         conceptInstance.delete flush:true
 
         request.withFormat {
@@ -111,7 +121,7 @@ class ConceptController {
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'concept.label', default: 'Concept'), params.id])
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'Concept.label', default: 'Concept'), params.id])
                 redirect action: "index", method: "GET"
             }
             '*'{ render status: NOT_FOUND }

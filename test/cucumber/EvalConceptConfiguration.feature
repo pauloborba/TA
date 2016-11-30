@@ -10,25 +10,38 @@ Feature: Configure the evaluation concept
 
   #Controller scenario
   Scenario: Configure the atual evaluation concept.
-    Given The evaluation concept is "MA, MPA, MANA"
+    Given The evaluation concept is "MA, MPA, MANA" with concepts "MA", "MPA", "MANA"
     When I update the "MA, MPA, MANA" concept to "Usual Average" concept
     Then The evaluation concept "Usual Average" is set
 
   #Controller Scenario
   Scenario: Configure the atual evaluation concept with invalid attributes.
-    Given The evaluation concept is "MA, MPA, MANA"
+    Given The evaluation concept is "MA, MPA, MANA" with concepts "MA", "MPA", "MANA"
     When I update the "MA, MPA, MANA" concept to "New Concept" evaluation concept with no concepts
     Then The atual concept is "MA, MPA, MANA"
 
   #GUI Scenario
   Scenario: Configure the atual evaluation concept with a invalid value.
-    Given The "MA, MPA, MANA" evaluation concept is set
+    Given The "MA, MPA, MANA" evaluation concept with concepts "MA", "MPA", "MANA" is set
     When I edit the "MA, MPA, MANA" evaluation concept with a invalid number of concepts
     Then The concepts of "MA, MPA, MANA" are the same.
 
   #GUI Scenario
   Scenario: Configure the parameters of the atual evaluation concept.
-    Given The "MA, MPA, MANA" evaluation concept is set
+    Given The "MA, MPA, MANA" evaluation concept with concepts "MA", "MPA", "MANA" is set
     When I edit the "MA" field to "Meta Alcançada" evaluation concept
     Then I can see the concept "Meta Alcançada"
     And I can't see the concept "MA".
+
+  #Controller Scenario
+  Scenario: Deleting a linked concept
+    Given The evaluation concept is "MA, MPA, MANA" with concepts "MA", "MPA", "MANA"
+    When I delete the Concept "MA"
+    Then The Concept "MA" isn't deleted
+
+  #Controller Scenario
+  Scenario: Deleting a Evaluation Concept and it's Concepts
+    Given The evaluation concept is "MA, MPA, MANA" with concepts "MA", "MPA", "MANA"
+    When I delete the Evaluation Concept "MA, MPA, MANA"
+    Then The Evaluation Concept "MA, MPA, MANA" is deleted
+    And the Concept "MA" is deleted

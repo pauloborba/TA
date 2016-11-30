@@ -1,25 +1,22 @@
 package pages.EvaluationConceptPages
 
-import geb.Page
+import pages.PageWithInternationalization
 
-/**
- * Created by João Vasconcelos on 07/11/2016.
- */
-class AddEvaluationConceptPage extends Page{
+class AddEvaluationConceptPage extends PageWithInternationalization{
     static url = "/TA/evaluationConcept/create"
 
     static at = {
-//        title ==~ /Criar EvaluationConcept/
-        title ==~ /Create EvaluationConcept/
+        def evalConceptLabel = internationalizationHelper.getMessage('evaluationConcept.label')
+        title == internationalizationHelper.getMessage('default.create.label', evalConceptLabel)
     }
 
 
-    def fillNameEvalCon(String nome){
+    def fillNameEvaluationConcept(String nome){
         $("form").nome = nome
     }
 
-    def selectConcepts(String[] l_conceitos){
-        $("form").conceitos = ["MA", "MPA", "MANA"]
+    def selectConcepts(Set<String> l_conceitos){
+        $("form").conceitos = l_conceitos.findAll()
     }
 
     def createEvalConcept(){
