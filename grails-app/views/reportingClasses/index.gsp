@@ -33,8 +33,7 @@
 	%{--<g:if test="${flash.message}">--}%
 	%{--<div class="message" role="status">${flash.message}</div>--}%
 	%{--</g:if>--}%
-
-
+	
 
 	<!-- MA = 9, MPA = 6, MANA = 3 -->
 

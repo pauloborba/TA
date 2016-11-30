@@ -140,3 +140,4 @@ Then(~/^Será gerado um gráfico$/) { ->
 
     assert page.classGraph();
 }
+

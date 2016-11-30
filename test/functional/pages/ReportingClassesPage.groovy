@@ -14,7 +14,7 @@ class ReportingClassesPage extends Page {
     }
 
     def boolean classesNotList() {
-        return $('#list-reportingClasses table tr').size() == 1;
+        return $('#list-reportingClasses table tr') != null;
     }
 
     def boolean confirmAverage(String _class, String average) {
