@@ -52,7 +52,6 @@ When(~/^eu solicito a página "([^"]*)"$/) { String pagina ->
         at SituationStudentPage
     }
 }
-Then(~/^a média do aluno "([^"]*)" em "([^"]*)" aparece verde e com uma seta para cima$/) { String arg1, String arg2 ->
-    // Write code here that turns the phrase above into concrete actions
-    throw new PendingException()
+Then(~/^a média do aluno "([^"]*)" em "([^"]*)" aparece verde e com uma seta para cima$/) { String aluno, String conceito ->
+
 }

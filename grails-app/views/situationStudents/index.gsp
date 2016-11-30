@@ -47,8 +47,11 @@
                     <g:if test="${studentInstance.criteriaAndEvaluations[j].criterionAverage>6}">
                         <td class="green">${studentInstance.criteriaAndEvaluations[j].criterionAverage}</td>
                     </g:if>
-                    <g:else>
+                    <g:elseif test="${studentInstance.criteriaAndEvaluations[j].criterionAverage<5}">
                         <td class="red">${studentInstance.criteriaAndEvaluations[j].criterionAverage}</td>
+                    </g:elseif>
+                    <g:else>
+                        <td class="black">${studentInstance.criteriaAndEvaluations[j].criterionAverage}</td>
                     </g:else>
 
                 </g:each>
