@@ -5,6 +5,8 @@ import pages.AddEvaluationPage
 import pages.AddStudentsPage
 import pages.CreateCriterionPage
 import pages.SituationStudentPage
+import ta.EvaluationsByCriterion
+import ta.Student
 
 
 /**
@@ -13,22 +15,31 @@ import pages.SituationStudentPage
 this.metaClass.mixin(cucumber.api.groovy.Hooks)
 this.metaClass.mixin(cucumber.api.groovy.EN)
 
+List<EvaluationsByCriterion> criteriosLista
 
-Given(~/^o aluno "([^"]*)", com login "([^"]*)", possui conceitos "([^"]*)", "([^"]*)" e "([^"]*)" em "([^"]*)"$/) { String arg1, String arg2, String arg3, String arg4, String arg5, String arg6 ->
+Given(~/^o aluno "([^"]*)", com login "([^"]*)", possui conceitos "([^"]*)", "([^"]*)" e "([^"]*)" em "([^"]*)"$/) { String aluno, String login, String conceito1, String conceito2, String conceito3, String materia ->
     // Write code here that turns the phrase above into concrete actions
-    throw new PendingException()
+    AddStudentsTestDataAndOperations.createStudent(aluno, login)
+    studentToCheck = Student.findByLogin(login)
+    assert studentToCheck.login.equals(login)
+    assert studentToCheck.name.equals(aluno)
+    CriterionTestDataAndOperations.createCriterion(materia)
+    assert CommonTestDataAndOperations.giveEvaluationToCriterion(conceito1, materia, "Form", "10/10/2016", login)
+    assert CommonTestDataAndOperations.giveEvaluationToCriterion(conceito2, materia, "Mini-Test", "09/10/2016", login)
+    assert CommonTestDataAndOperations.giveEvaluationToCriterion(conceito3, materia, "Test", "11/10/2016", login)
 }
-And(~/^o aluno "([^"]*)", possui media "([^"]*)" em "([^"]*)"$/) { String arg1, String arg2, String arg3 ->
-    // Write code here that turns the phrase above into concrete actions
-    throw new PendingException()
+And(~/^o aluno "([^"]*)", possui media "([^"]*)" em "([^"]*)"$/) { String aluno, Double media, String conceito ->
+    Student estudante = Student.findByName(aluno)
+    estudante.calcMedia()
+    assert(estudante.findEvaluationByCriterion(conceito).criterionAverage.equals(media))
 }
-When(~/^eu solicito a situação do aluno "([^"]*)"$/) { String arg1 ->
-    // Write code here that turns the phrase above into concrete actions
-    throw new PendingException()
+When(~/^eu solicito a situação do aluno "([^"]*)"$/) { String aluno ->
+    Student estudante = Student.findByName(aluno)
+    criteriosLista = estudante.getCriteriaAndEvaluations()
 }
-Then(~/^a média de "([^"]*)" em "([^"]*)" continua sendo "([^"]*)"$/) { String arg1, String arg2, String arg3 ->
-    // Write code here that turns the phrase above into concrete actions
-    throw new PendingException()
+Then(~/^a média de "([^"]*)" em "([^"]*)" continua sendo "([^"]*)"$/) { String aluno, String conceito, Double media ->
+    assert(Student.findByName(aluno).getCriteriaAndEvaluations().equals(criteriosLista))
+    assert(Student.findByName(aluno).findEvaluationByCriterion(conceito).criterionAverage.equals(media))
 }
 Given(~/^o aluno "([^"]*)", com login "([^"]*)", possui média "([^"]*)" em "([^"]*)"$/) { String aluno, String login, String media, String conceito ->
     to AddStudentsPage
