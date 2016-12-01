@@ -13,8 +13,9 @@ class SituationStudentPage extends Page{
     }
 
     boolean mediaVerde(aluno, conceito){
-        String x = aluno+"+"+conceito
-        if($('#'+ x).attr('class').equals("green")){
+        def x = aluno + "+" + conceito
+        assert $("td", id:x)!= null
+        if( $('.green').attr('id').equals(x)){
             return true
         }
     }
