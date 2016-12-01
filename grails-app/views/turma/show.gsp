@@ -41,12 +41,12 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${turmaInstance?.students}">
+				<g:if test="${turmaInstance?.regStudents}">
 				<li class="fieldcontain">
-					<span id="students-label" class="property-label"><g:message code="turma.students.label" default="Students" /></span>
+					<span id="regStudents-label" class="property-label"><g:message code="turma.regStudents.label" default="Reg Students" /></span>
 					
-						<g:each in="${turmaInstance.students}" var="s">
-						<span class="property-value" aria-labelledby="students-label"><g:link controller="student" action="show" id="${s.id}">${s?.encodeAsHTML()}</g:link></span>
+						<g:each in="${turmaInstance.regStudents}" var="r">
+						<span class="property-value" aria-labelledby="regStudents-label"><g:link controller="registeredStudent" action="show" id="${r.id}">${r?.encodeAsHTML()}</g:link></span>
 						</g:each>
 					
 				</li>

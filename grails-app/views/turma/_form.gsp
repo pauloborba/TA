@@ -20,12 +20,3 @@
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: turmaInstance, field: 'students', 'error')} ">
-	<label for="students">
-		<g:message code="turma.students.label" default="Students" />
-		
-	</label>
-	<g:select name="students" from="${ta.Student.list()}" multiple="multiple" optionKey="id" size="5" optionValue="login" value="${turmaInstance?.students*.id}" class="many-to-many"/>
-
-</div>
-

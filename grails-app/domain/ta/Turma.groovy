@@ -4,8 +4,8 @@ class Turma {
 
     String classID
     String periodo
-    List students
-    static hasMany = [students: Student]
+    List regStudents
+    static hasMany = [regStudents: RegisteredStudent]
 
     static constraints = {
         classID unique: 'periodo', blank: false, nullable: false
@@ -16,7 +16,7 @@ class Turma {
 
         this.classID = id
         this.periodo = periodo
-        this.students = []
+        this.regStudents = []
 
     }
 }
