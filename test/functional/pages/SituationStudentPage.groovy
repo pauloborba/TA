@@ -19,4 +19,12 @@ class SituationStudentPage extends Page{
             return true
         }
     }
+
+    boolean mediaVermelha(aluno, conceito){
+        def x = aluno + "+" + conceito
+        assert $("td", id:x)!= null
+        if( $('.red').attr('id').equals(x)){
+            return true
+        }
+    }
 }

@@ -55,3 +55,26 @@ When(~/^eu solicito a página "([^"]*)"$/) { String pagina ->
 Then(~/^a média do aluno de login "([^"]*)" em "([^"]*)" aparece verde e com uma seta para cima$/) { String aluno, String conceito ->
         assert page.mediaVerde(aluno, conceito)
 }
+
+Given(~/^o aluno "([^"]*)", com login "([^"]*)", possui media "([^"]*)" em "([^"]*)"$/) { String aluno, String login, String media, String conceito ->
+    to AddStudentsPage
+    at AddStudentsPage
+    page.fillStudentDetails(aluno, login)
+    page.selectAddStudent()
+    to CreateCriterionPage
+    at CreateCriterionPage
+    page.createCriterion(conceito)
+    to AddEvaluationPage
+    at AddEvaluationPage
+    page.chooseCriterion(conceito)
+    if(media.equals("3")){
+        page.chooseValue("MANA")
+    }
+    page.selectAddEvaluation()
+}
+
+Then(~/^a média do aluno de login "([^"]*)" em "([^"]*)" aparece vermelho e com uma seta para baixo$/) { String aluno, String conceito ->
+    to SituationStudentPage
+    at SituationStudentPage
+    assert page.mediaVermelha(aluno,conceito)
+}
