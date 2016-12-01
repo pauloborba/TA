@@ -5,7 +5,6 @@ Feature: Reporting Classes
   I want to Criar Relatórios
   so that Gerar um comparativo de desempenho entre as turmas
 
-
 #GUI Scenario:
 
   Scenario: Nenhuma turma cadastrada
