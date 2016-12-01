@@ -4,7 +4,7 @@ import geb.Page
 
 class CreateStudentPage extends Page {
 
-    static url = "/TA/student/create"
+    static url = "student/create"
 
     static at =  {
         title ==~ /Create Student/

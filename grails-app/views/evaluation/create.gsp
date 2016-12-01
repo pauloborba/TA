@@ -25,14 +25,7 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-
-			<div id="questionfields">
-
-			</div>
-
-			<button onclick="newQuestion();">New Question</button>
-
-			<g:form url="[resource:evaluationInstance, action:'save']" >
+			<g:form url="[action:'saveAll']" >
 				<fieldset class="form">
 					<g:render template="form"/>
 				</fieldset>
@@ -42,18 +35,27 @@
 			</g:form>
 		</div>
 
-		<script type="text/javascript">
-			var index = 0;
+	<g:javascript>
 
-			function newQuestion(){
-				console.log('hello');
-				document.getElementById('questionfields').innerHTML += "<div class=\"fieldcontain \${hasErrors(bean: questionInstance, field: 'question', 'error')} required\">"
-				document.getElementById('questionfields').innerHTML += "<label for=\"question\">"
-				document.getElementById('questionfields').innerHTML += "<span class=\"required-indicator\">*</span>"
-				document.getElementById('questionfields').innerHTML += "</label>"
-				document.getElementById('questionfields').innerHTML += "</div>"
+		function getStudents() {
+			var id = $("#criterion").val();
+			$.ajax({
+				method: "GET",
+				url: "/ta-turma/criterion/getStudentsList/"+id,
+			})
+					.done(function( msg ) {
+				$( "#ajaxbody" ).empty();
+				$("#ajaxbody").append(msg);
+			});
 
-			}
-		</script>
+		}
+
+
+		getStudents();
+
+		$("#criterion").change(getStudents);
+
+</g:javascript>
+
 	</body>
 </html>
