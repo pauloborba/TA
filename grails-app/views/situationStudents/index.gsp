@@ -48,7 +48,7 @@
                         <td class="green" id="${studentInstance.getLogin()}+${studentInstance.criteriaAndEvaluations[j].getCriterion().getDescription()}">${studentInstance.criteriaAndEvaluations[j].criterionAverage}</td>
                     </g:if>
                     <g:elseif test="${studentInstance.criteriaAndEvaluations[j].criterionAverage<5}">
-                        <td class="red">${studentInstance.criteriaAndEvaluations[j].criterionAverage}</td>
+                        <td class="red" id="${studentInstance.getLogin()}+${studentInstance.criteriaAndEvaluations[j].getCriterion().getDescription()}">${studentInstance.criteriaAndEvaluations[j].criterionAverage}</td>
                     </g:elseif>
                     <g:else>
                         <td class="black">${studentInstance.criteriaAndEvaluations[j].criterionAverage}</td>
