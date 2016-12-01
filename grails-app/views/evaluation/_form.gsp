@@ -30,7 +30,6 @@
 
 </div>
 
-
 <div id="list-student" class="content scaffold-list" role="main">
 	<h1><g:message code="default.list.label" args="[entityName]" /></h1>
 	<g:if test="${flash.message}">
@@ -50,7 +49,6 @@
 		</thead>
 
 		<tbody id="ajaxbody">
-
 
 		</tbody>
 	</table>

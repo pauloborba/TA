@@ -34,6 +34,21 @@
 				</fieldset>
 			</g:form>
 		</div>
+	<g:javascript>
+
+		function getStudents() {
+			var id = $("#criterion").val();
+			$.ajax({
+				method: "GET",
+				url: "/TA/criterion/getStudentsList/"+id,
+			})
+					.done(function( msg ) {
+				$( "#ajaxbody" ).empty();
+				$("#ajaxbody").append(msg);
+			});
+
+		}
+
 
 	<g:javascript>
 
@@ -55,7 +70,15 @@
 
 		$("#criterion").change(getStudents);
 
+
+
+
+		getStudents();
+
+		$("#criterion").change(getStudents);
+
 </g:javascript>
+	</g:javascript>
 
 	</body>
 </html>

@@ -12,11 +12,12 @@ class Turma {
         periodo (unique: ['classID'], blank: false, nullable: false)
     }
 
-    public Turma(String classID, String periodo) {
+    public Turma(String id, String periodo) {
 
-        this.classID = classID
+        this.classID = id
         this.periodo = periodo
         this.students = []
 
     }
+
 }

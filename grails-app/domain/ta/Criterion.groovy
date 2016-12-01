@@ -12,7 +12,6 @@ class Criterion {
     public Criterion(String description, String turma){
         this.description = description
         this.turma = Turma.findById(Long.parseLong(turma))
-
     }
 
     public Criterion(String description, String classID, String periodo){

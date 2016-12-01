@@ -28,6 +28,7 @@
 					
 						<g:sortableColumn property="periodo" title="${message(code: 'turma.periodo.label', default: 'Periodo')}" />
 						<th></th>
+
 					
 					</tr>
 				</thead>
@@ -38,8 +39,9 @@
 						<td><g:link action="show" id="${turmaInstance.id}">${fieldValue(bean: turmaInstance, field: "classID")}</g:link></td>
 					
 						<td>${fieldValue(bean: turmaInstance, field: "periodo")}</td>
+
 						<td><g:link action="copy" id="${turmaInstance.id}">Criar Cópia</g:link></td>
-					
+
 					</tr>
 				</g:each>
 				</tbody>

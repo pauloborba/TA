@@ -37,13 +37,13 @@ class StudentController {
                 }
             }
         }
+
         if (tamanho == 0)
         {
             tamanho = 1
         }
 
         return contE / tamanho
-
     }
 
     def updateAllAverages() {
@@ -132,9 +132,7 @@ class StudentController {
     public void checkConditionPercentage(String loginA, Report reportInstance) {
         double aux = checkPercentageEvaluationStudent(reportInstance.avaliacao, loginA)
         def controllerRepo = new ReportController()
-
         if (aux*100 >= reportInstance.valor) {
-
             Student student = Student.findByLogin(loginA)
             controllerRepo.addStudentToReport(student, reportInstance)
         }
@@ -147,7 +145,6 @@ class StudentController {
             controllerRepo.addStudentToReport(student, reportInstance)
         }
     }
-
 
     public double checkPorcentageEvaluationStudent(String evalValue, String loginA) {
         def student = Student.findByLogin(loginA)
@@ -165,7 +162,6 @@ class StudentController {
         }
         return contE / tamanho;
     }
-
 
     public boolean updateEvaluation(String studentLogin, String newEvaluation, String criterionName, String evaluationOrigin){
         Student updatedStudent = Student.findByLogin(studentLogin)

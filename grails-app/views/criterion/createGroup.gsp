@@ -36,14 +36,16 @@
                 <span class="required-indicator">*</span>
             </label>
             <g:textField name="description" required="" value="" size="60"/>
-        </div>
 
+        </div>
 
         <div class="fieldcontain  required" id="turma-group" class="property-label">
             <label for="turma">
                 <g:message code="criterion.turma.label" default="Turma" />
             </label>
             <g:select id="turma" name="turma.id" from="${ta.Turma.list()}" optionKey="id" required="" optionValue="${{it.classID+'-'+it.periodo}}" value="${criterionInstance?.turma?.id}" class="many-to-one"/>
+        </div>
+
         </div>
 
         <fieldset class="buttons">

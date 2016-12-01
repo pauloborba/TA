@@ -4,6 +4,7 @@ Feature: Copy Criterion from existing Class to new Class
   So that I can better manage my different classes
 
 #Controller scenario
+
 ##  Scenario: copy class and reuse criterion
  #   Given the system has a class named "ESS" and periodo "2016.2"
  #   And the system has no class named "ESS" with periodo "2017.1"

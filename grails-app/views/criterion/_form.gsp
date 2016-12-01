@@ -9,7 +9,6 @@
 	</label>
 	<g:textField name="description" required="" value="${criterionInstance?.description}"/>
 
-
 	<div class="fieldcontain ${hasErrors(bean: criterionInstance, field: 'turma', 'error')} required">
 		<label for="turma">
 			<g:message code="criterion.turma.label" default="Turma" />

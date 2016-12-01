@@ -64,6 +64,7 @@ class TurmaController {
                 List<Score> scores = Score.findAllByEvaluation(evaluations[i])
                 for (int k = 0; k < scores.size(); k++) {
                     if (scores[k].value=="MANA"){
+
                         if (!reprovados.contains(scores[k].student)){
                             reprovados.add(scores[k].student)
                         }
@@ -124,6 +125,7 @@ class TurmaController {
 
         Turma newTurma = new Turma(params.classID, params.periodo)
 
+
         List <String> studentIds = params.list('students')
         Turma oldTurma = Turma.findById(params.id)
         List<Criterion> criterions = Criterion.findAllByTurma(oldTurma)
@@ -139,7 +141,7 @@ class TurmaController {
             Criterion criterion = new Criterion(criterions[i].description, (String)newTurma.id)
             criterion.save flush: true
         }
-
+        
         redirect newTurma
 
     }

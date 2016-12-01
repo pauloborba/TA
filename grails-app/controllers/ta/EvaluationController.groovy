@@ -105,6 +105,7 @@ class EvaluationController {
     def saveAll() {
         def allValues = params.list('value')
 
+
         Evaluation newEvaluation = new Evaluation(params.origin, "MA", params.applicationDate,(String)params.criterion.id)
         newEvaluation.save flush: true
 
@@ -118,10 +119,13 @@ class EvaluationController {
 
             Score novo = new Score(value, studentId, newEvaluation.id.toString())
 
+
             novo.save()
 
         }
+
         //redirect action:"index", method:"GET"
+
     }
 
     def edit(Evaluation evaluationInstance) {
