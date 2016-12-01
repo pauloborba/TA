@@ -35,6 +35,7 @@
 	%{--</g:if>--}%
 
 
+
 	<!-- MA = 9, MPA = 6, MANA = 3 -->
 
 	<form name="compareClasses" action="javascript:compareClasses()" method="post" enctype="multipart/form-data">
