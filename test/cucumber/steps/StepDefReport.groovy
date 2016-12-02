@@ -71,7 +71,7 @@ When(~/^I select the "([^"]*)" report$/) { String arg1 ->
     page.selectReport(arg1)
 }
 Then(~/^I should see the details related to the "([^"]*)" report$/) { String arg1 ->
-    at ShowReportsPage
+//    at ShowReportsPage
 //    assert page.checkName(nomeReport)
 //    assert page.checkType(tipoReport)
 //    assert page.checkAvaliacao(avaliacaoReport)

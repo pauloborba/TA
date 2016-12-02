@@ -142,3 +142,5 @@ web-app/images/
 web-app/js/
 .slcache/*
 chromedrivers/
+.project
+.classpath
