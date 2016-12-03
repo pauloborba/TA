@@ -10,7 +10,7 @@ class ReportingClassesPage extends Page {
     static url = "/TA/reportingClasses/index"
 
     static at = {
-        title ==~ /ReportingClasses List/
+        title ==~ /ReportingClasses Listagem/
     }
 
     def boolean classesNotList() {
