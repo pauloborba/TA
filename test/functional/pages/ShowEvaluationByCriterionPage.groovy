@@ -9,7 +9,7 @@ class ShowEvaluationByCriterionPage extends Page {
     static url = "evaluationsByCriterion/show"
 
     static at = {
-        title ==~ /Show EvaluationsByCriterion/
+        title ==~ /Ver EvaluationsByCriterion/
     }
 
     def selectEvaluationByValue(String value) {
