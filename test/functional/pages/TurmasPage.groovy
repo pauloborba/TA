@@ -10,7 +10,7 @@ class TurmasPage extends Page {
     static url = "/TA/turma/index"
 
     static at = {
-        title ==~ /Turma Listagem/
+        title ==~ /Turma List/
     }
 
     boolean confirmTurma(String id, String periodo){

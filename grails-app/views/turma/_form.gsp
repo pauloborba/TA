@@ -28,3 +28,4 @@
 	<g:select name="students" from="${ta.Student.list()}" multiple="multiple" optionKey="id" size="5" optionValue="login" value="${turmaInstance?.students*.id}" class="many-to-many"/>
 
 </div>
+

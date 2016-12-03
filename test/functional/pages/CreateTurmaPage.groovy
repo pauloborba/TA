@@ -11,7 +11,7 @@ class CreateTurmaPage extends Page{
 
 
     static at = {
-        title ==~ /Criar Turma/
+        title ==~ /Create Turma/
     }
 
     def fillTurmaDetails(String id, String periodo){
