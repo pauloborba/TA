@@ -44,3 +44,4 @@ class ReportingClassesPage extends Page {
     }
 
 }
+

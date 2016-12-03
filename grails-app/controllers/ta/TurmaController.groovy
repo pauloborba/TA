@@ -134,5 +134,4 @@ class TurmaController {
         }
         return true;
     }
-    
 }

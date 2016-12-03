@@ -27,3 +27,4 @@ class CreateTurmaPage extends Page{
         return $("ul", class: "errors").isDisplayed()
     }
 }
+
