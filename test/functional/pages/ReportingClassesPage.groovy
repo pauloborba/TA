@@ -45,3 +45,4 @@ class ReportingClassesPage extends Page {
 
 }
 
+

@@ -23,4 +23,3 @@ class TurmasPage extends Page {
     }
 
 }
-
