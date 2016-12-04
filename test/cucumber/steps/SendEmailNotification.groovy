@@ -83,7 +83,7 @@ And(~'the criterion "([^"]*)" is registered in the system$') {
 }
 And(~'^the system verifies that there is no evaluated criterion$') {->
     to EvaluationPage
-    assert Evaluation.list().size() == 0
+    assert page.NoExistEvaluation() == 0
 }
 When(~'^I request a sending email with the evaluated criterion$') {->
     to StudentPage

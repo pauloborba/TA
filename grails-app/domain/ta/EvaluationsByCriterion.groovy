@@ -46,8 +46,8 @@ class EvaluationsByCriterion {
             if(i != Evaluation.list().size() - 1) s += ","
         }
         if(!s.length()) return "None"
-
-        return "" + criterion.getDescription() + " -" + s
+        s = "" + criterion.getDescription() + " -" + s
+        return s
     }
 
     /*  ------------------------

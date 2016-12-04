@@ -110,7 +110,7 @@ class StudentController {
         addEvaluationsToStudentTests(studentLogin, listEval)
     }
 
-    public String writeEvaluations() {
+    def writeEvaluations() {
         String str = "Critérios já avaliados: \n";
         for(EvaluationsByCriterion ec : EvaluationsByCriterion.list()) {
             str += ec.writeEvaluations()
@@ -119,7 +119,7 @@ class StudentController {
         return str
     }
 
-    public String writeCriterions() {
+    def writeCriterions() {
         String str = "Critérios avaliados: \n";
         for(Criterion c : Criterion.list()) {
             str += c.description
