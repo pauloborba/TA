@@ -63,8 +63,8 @@ When(~/^eu solicito a página "([^"]*)"$/) { String pagina ->
         at SituationStudentPage
     }
 }
-Then(~/^a média do aluno de login "([^"]*)" em "([^"]*)" aparece verde e com uma seta para cima$/) { String aluno, String conceito ->
-        assert page.mediaVerde(aluno, conceito)
+Then(~/^a média do aluno de login "([^"]*)" em "([^"]*)" aparece "([^"]*)" e com uma seta para cima$/) { String aluno, String conceito, String color ->
+        assert page.media(aluno, conceito,color)
 }
 
 Given(~/^o aluno "([^"]*)", com login "([^"]*)", possui media "([^"]*)" em "([^"]*)"$/) { String aluno, String login, String media, String conceito ->
@@ -84,8 +84,8 @@ Given(~/^o aluno "([^"]*)", com login "([^"]*)", possui media "([^"]*)" em "([^"
     page.selectAddEvaluation()
 }
 
-Then(~/^a média do aluno de login "([^"]*)" em "([^"]*)" aparece vermelho e com uma seta para baixo$/) { String aluno, String conceito ->
+Then(~/^a média do aluno de login "([^"]*)" em "([^"]*)" aparece "([^"]*)" e com uma seta para baixo$/) { String aluno, String conceito, String color ->
     to SituationStudentPage
     at SituationStudentPage
-    assert page.mediaVermelha(aluno,conceito)
+    assert page.media(aluno,conceito,color)
 }
