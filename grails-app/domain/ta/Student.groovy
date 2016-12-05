@@ -1,7 +1,7 @@
 package ta
 
 
-import static ta.MailerController.*
+import static ta.MailService.*
 
 class Student {
     String name;
