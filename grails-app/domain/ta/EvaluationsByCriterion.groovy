@@ -7,7 +7,7 @@ class EvaluationsByCriterion {
     List<Evaluation> evaluations
     static hasMany = [evaluations:Evaluation]
     double criterionAverage
-    boolean PendingMail
+    boolean pendingMail
     static constraints = {
         criterion nullable: false
         evaluations nullable : false
@@ -17,13 +17,13 @@ class EvaluationsByCriterion {
         this.criterion = criterion;
         this.evaluations = []
         this.criterionAverage = 0;
-        this.PendingMail = false
+        this.pendingMail = false
     }
 
     public void addEvaluation(Evaluation evaluationInstance) {
         addToEvaluations(evaluationInstance)
         doMedia();
-        if(!evaluationInstance.sent)this.PendingMail = true
+        if(!evaluationInstance.sent)this.pendingMail = true
     }
 
     public void doMedia(){

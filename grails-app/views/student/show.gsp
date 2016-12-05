@@ -74,7 +74,7 @@
 							​
 							<td>${fieldValue(bean: criteriaAndEvaluations, field: "criterionAverage")}</td>
 
-                            <td>${fieldValue(bean: criteriaAndEvaluations, field: "PendingMail")==~"true"?"Not Sent":"All Sent"}</td>
+                            <td>${fieldValue(bean: criteriaAndEvaluations, field: "pendingMail")==~"true"?"Not Sent":"All Sent"}</td>
 						</tr>
 				</g:each>
 				</tbody>
