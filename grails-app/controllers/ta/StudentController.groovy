@@ -32,7 +32,7 @@ class StudentController {
             def evaluat = evaluationLists[i].getEvaluations()
             tamanho += evaluat.size()
             for (int j = 0; j < evaluat.size(); j++) {
-                if (evaluat.get(i).value.equalsIgnoreCase(evalValue)) {
+                if (evaluat.get(j).value.equalsIgnoreCase(evalValue)) {
                     contE++
                 }
             }
