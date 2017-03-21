@@ -26,4 +26,5 @@ class Evaluation {
             return false
         }
     }
+
 }

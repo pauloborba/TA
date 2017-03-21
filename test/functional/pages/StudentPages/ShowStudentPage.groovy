@@ -11,6 +11,7 @@ class ShowStudentPage extends Page {
 
     static at = {
         title ==~ /Show Student/
+        //title ==~ /Ver Student/
     }
 
     def boolean checkForCriterion(String desc) {

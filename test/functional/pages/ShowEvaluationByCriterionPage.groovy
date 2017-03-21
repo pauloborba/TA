@@ -10,6 +10,7 @@ class ShowEvaluationByCriterionPage extends Page {
 
     static at = {
         title ==~ /Show EvaluationsByCriterion/
+        //title ==~ /Ver EvaluationsByCriterion/
     }
 
     def selectEvaluationByValue(String value) {

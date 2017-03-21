@@ -9,6 +9,7 @@ class CriterionPage extends Page {
 
     static at = {
         title ==~ /Criterion List/
+        //title ==~ /Criterion Listagem/
     }
 
     def selectCriterion(String desc) {

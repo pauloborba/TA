@@ -11,6 +11,7 @@ class AddEvaluationPage extends Page {
 
     static at = {
         title ==~ /Create Evaluation/
+        //title ==~ /Criar Create property/
     }
 
     def selectAddEvaluation(){

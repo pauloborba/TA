@@ -110,6 +110,25 @@ class StudentController {
         addEvaluationsToStudentTests(studentLogin, listEval)
     }
 
+    def writeEvaluations() {
+        String str = "Critérios já avaliados: \n";
+        for(EvaluationsByCriterion ec : EvaluationsByCriterion.list()) {
+            str += ec.writeEvaluations()
+            str += "\n"
+        }
+        return str
+    }
+
+    def writeCriterions() {
+        String str = "Critérios avaliados: \n";
+        for(Criterion c : Criterion.list()) {
+            str += c.description
+            str += "\n"
+        }
+        str += "\n"
+        return str
+    }
+
     public boolean addEvaluationToAllStudents() {
         def evaluationInstance = new Evaluation(params);
         for (Student student : Student.findAll()) {
@@ -220,9 +239,24 @@ class StudentController {
         respond new Student(params)
     }
 
-
     def search() {
         render view: "search"
+    }
+
+    def messagingService;
+
+    def emailService(String email, String password, String from, String to, String subject, String message) {
+        messagingService.sendEmail("Gmail", email, password, from, to, subject, message, false, null);
+    }
+
+    def sendNewEmail(){
+       for(Student student : Student.list()) {
+            student.sendCriterion()
+        }
+        if(Evaluation.list().size() == 0) flash.message2 = message(code: 'default.NoEvaluatedCriterion.label', default: 'Email sent with only the evaluated criterion')
+        flash.message = message(code: 'default.EmailSent.label', default: 'Sent email successfully')
+        redirect action: "index", method: "GET"
+
     }
 
     def consult() {

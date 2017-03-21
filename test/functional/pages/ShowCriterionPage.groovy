@@ -10,6 +10,7 @@ class ShowCriterionPage extends Page {
 
     static at = {
         title ==~ /Show Criterion/
+        //title ==~ /Ver Criterion/
     }
 
     def boolean selectDeleteCriterion() {

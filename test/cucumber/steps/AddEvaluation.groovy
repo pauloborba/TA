@@ -91,6 +91,7 @@ Then(~'^all evaluations will be stored on the "([^"]*)" criterias history of eac
     String criterionName ->
         assert EvaluationDataAndOperations.checkImportCriterion(criterionName) == false;
 }*/
+
 def numberOfEvaluationsBeforeStep = []
 Given(~/^there are no evaluations to all students to the "([^"]*)" criterion, originated from a "([^"]*)" and dated from "([^"]*)"$/) {
     String criterionName, origin, dateInString ->

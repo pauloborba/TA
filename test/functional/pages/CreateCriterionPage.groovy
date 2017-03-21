@@ -13,6 +13,7 @@ class CreateCriterionPage extends Page {
 
     static at = {
         title ==~ /Create Criterion/
+        //title ==~ /Criar Criterion/
     }
 
     def createCriterion(desc) {

@@ -4,7 +4,7 @@ package ta
  */
 class EvaluationsByCriterion {
     Criterion criterion
-    List evaluations
+    List<Evaluation> evaluations
     static hasMany = [evaluations:Evaluation]
     double criterionAverage
 
@@ -37,6 +37,17 @@ class EvaluationsByCriterion {
         } else {
             this.criterionAverage = 0
         }
+    }
+
+    String writeEvaluations(){
+        String s = ""
+        for(int i = 0; i < Evaluation.list().size(); i++) {
+            s += " " + Evaluation.list().get(i).value;
+            if(i != Evaluation.list().size() - 1) s += ","
+        }
+        if(!s.length()) return "None"
+        s = "" + criterion.getDescription() + " -" + s
+        return s
     }
 
     /*  ------------------------

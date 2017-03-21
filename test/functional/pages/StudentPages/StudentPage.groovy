@@ -8,6 +8,7 @@ class StudentPage extends Page {
 
     static at =  {
         title ==~ /Student List/
+        //title ==~ /Student Listagem/
     }
 
     boolean confirmStudent(String name, String login) {
@@ -33,6 +34,16 @@ class StudentPage extends Page {
         int qtdTable = $("tr").find("td").allElements().size()
         if(qtdStudent == (qtdTable)/3) r = true
         return r
+    }
+    def sendCriterion(){
+        $("a", class: "sendNewEmail").click()
+    }
+
+    def EmailWithNoAvaliatedCriterion() {
+        $("div#message2.message").text()
+    }
+    def emailSend() {
+        $("div.message").text()
     }
 }
 

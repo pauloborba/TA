@@ -11,11 +11,18 @@ class AddStudentsPage extends Page{
 
     static at =  {
         title ==~ /Create Student/
+        //title ==~ /Criar Student/
     }
 
     def fillStudentDetails(String name, String login) {
         $("form").name = name
         $("form").login = login
+    }
+
+    def fillStudentDetails(String name, String login, String email) {
+        $("form").name = name
+        $("form").login = login
+        $("form").email = email
     }
 
     def selectAddStudent() {

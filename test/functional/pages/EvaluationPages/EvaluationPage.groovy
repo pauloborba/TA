@@ -1,7 +1,7 @@
 package pages.EvaluationPages
 
 import geb.Page
-
+import ta.Evaluation
 /**
  * Created by Danilo on 23/06/2016.
  */
@@ -10,7 +10,8 @@ class EvaluationPage extends Page {
     static url = "/TA/evaluation/index"
 
     static at =  {
-        title ==~ /Evaluation Listagem/
+        title ==~ /Evaluation List/
+        //title ==~ /Create property Listagem/
     }
 
     boolean confirmEvalaution(String criterionName,String evaluationOrigin,Date evaluationDate) {
@@ -24,4 +25,15 @@ class EvaluationPage extends Page {
         return r
     }
 
+    def NoExistEvaluation() {
+        Evaluation.list().size()
+    }
+
+    def sendCriterion(){
+        $("a", class: "sendEmail").click()
+    }
+
+    def needEmail() {
+        $("div.message").text()
+    }
 }
