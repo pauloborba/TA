@@ -20,8 +20,18 @@ class StudentPage extends Page {
         return r
     }
 
+
+
+    def sendNewEvaluations(){
+        $("a", class: "sendNew").click()
+    }
+
     def selectStudent(String name){
         $("tr").find("td").has("a",text: name).click()
+    }
+
+    def selectStudentByEmail(String email){
+        $("a", name: email).click()
     }
 
     def selectStudentByLogin(String login) {

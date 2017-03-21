@@ -1,15 +1,20 @@
 package ta
 
+
+import static ta.MailService.*
+
 class Student {
     String name;
     String login;
+    String email;
     double average;
-    List criteriaAndEvaluations
+    List<EvaluationsByCriterion> criteriaAndEvaluations
     static hasMany = [criteriaAndEvaluations:EvaluationsByCriterion]
 
     static constraints = {
         name blank : false
-        login unique : true, blank:false;
+        login unique : true, blank:false
+        email blank: true, nullable: true
     }
 
     static mapping = {
@@ -20,6 +25,14 @@ class Student {
     public Student(String name, String login){
         this.name = name;
         this.login = login;
+        this.criteriaAndEvaluations = [];
+    }
+
+
+    public Student(String name, String login,String email) {
+        this.name = name;
+        this.login = login;
+        this.email = email;
         this.criteriaAndEvaluations = [];
     }
 
@@ -43,6 +56,21 @@ class Student {
         }
     }
 
+    boolean sendNewEvaluations(){
+        String message="";
+        this.criteriaAndEvaluations.each { EvaluationsByCriterion evByCriterion ->
+            if (evByCriterion.getPendingMail()) {
+                message += evByCriterion.newEvalToMessage()
+                evByCriterion.setPendingMail(false)
+            }
+        }
+        if(message.size()>0) {
+            sendMail(this.email,"Grades","Your Grades are:\n"+this.name+"'s Grades:\n"+message)
+            return true
+        }else {
+            return false
+        }
+    }
     /*public void addEvaluation(Evaluation evaluationInstance){
         for(int i = 0; i< this.criteriaAndEvaluations.size(); i++){
             if(this.criteriaAndEvaluations.get(i).getCriterion().getDescription().equals(evaluationInstance.criterion.description)){

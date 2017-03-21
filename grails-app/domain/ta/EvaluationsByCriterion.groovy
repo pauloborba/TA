@@ -4,10 +4,10 @@ package ta
  */
 class EvaluationsByCriterion {
     Criterion criterion
-    List evaluations
+    List<Evaluation> evaluations
     static hasMany = [evaluations:Evaluation]
     double criterionAverage
-
+    boolean pendingMail
     static constraints = {
         criterion nullable: false
         evaluations nullable : false
@@ -17,11 +17,13 @@ class EvaluationsByCriterion {
         this.criterion = criterion;
         this.evaluations = []
         this.criterionAverage = 0;
+        this.pendingMail = false
     }
 
     public void addEvaluation(Evaluation evaluationInstance) {
         addToEvaluations(evaluationInstance)
         doMedia();
+        if(!evaluationInstance.sent)this.pendingMail = true
     }
 
     public void doMedia(){
@@ -39,6 +41,20 @@ class EvaluationsByCriterion {
         }
     }
 
+    String newEvalToMessage(){
+        String s=""
+        evaluations.each{Evaluation ev->
+            if(!ev.sent)s+=" "+ev.value+","
+            ev.sent=true
+        }
+        return FormatMessage(s)
+    }
+
+    private String FormatMessage(String s) {
+        if (s.length() == 0) return ""
+        s = s.substring(0, s.length() - 1)
+        return " *" + criterion.getDescription() + ": " + s + "\n"
+    }
     /*  ------------------------
       | MÉTODOS USADOS EM TESTES |
         ------------------------  */

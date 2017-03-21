@@ -225,6 +225,20 @@ class StudentController {
         render view: "search"
     }
 
+    def resend(){
+        render view: "resend"
+    }
+
+    def sendNew(){
+        boolean sentAny = false
+        for (Student student : Student.findAll()) {
+            sentAny =  student.sendNewEvaluations() ||sentAny
+            student.save(flush: true)
+        }
+        if(sentAny) redirect action:"index", method:"GET"
+        else redirect action:"resend", method:"GET"
+    }
+
     def consult() {
         def auxList = Student.list()
         def studentList = auxList.findAll {

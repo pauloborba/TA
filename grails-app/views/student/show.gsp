@@ -41,6 +41,15 @@
 			</li>
 		</g:if>
 
+		<g:if test="${studentInstance?.email}">
+			<li class="fieldcontain">
+				<span id="email-label" class="property-label"><g:message code="student.email.label" default="Email" /></span>
+
+				<span class="property-value" aria-labelledby="email-label"><g:fieldValue bean="${studentInstance}" field="email"/></span>
+
+			</li>
+		</g:if>
+
 		<div id="list-evaluation" class="content scaffold-list" role="main">
 			<g:if test="${flash.message}">
 				<div class="message" role="status">${flash.message}</div>
@@ -53,6 +62,8 @@
 
 					<g:sortableColumn property="media" title="${message(code: 'evaluation.value.label', default: 'Media')}" />
 
+					<g:sortableColumn property="sent" title="${message(code: 'evaluation.sent.label', default: 'Sent')}" />
+
 				</tr>
 				</thead>
 				<tbody>
@@ -62,7 +73,8 @@
 							<td><g:link name="${criteriaAndEvaluations.criterion.description}" controller="evaluationsByCriterion" action="show" id="${criteriaAndEvaluations.id}">${fieldValue(bean: criteriaAndEvaluations, field: "criterion.description")}</g:link></td>
 							​
 							<td>${fieldValue(bean: criteriaAndEvaluations, field: "criterionAverage")}</td>
-							​
+
+                            <td>${fieldValue(bean: criteriaAndEvaluations, field: "pendingMail")==~"true"?"Not Sent":"All Sent"}</td>
 						</tr>
 				</g:each>
 				</tbody>

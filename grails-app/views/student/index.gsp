@@ -15,6 +15,7 @@
 		<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
 		<li><g:link class="createGroup" action="createGroup"><g:message code="Import Students" args="[entityName]" /></g:link></li>
 		<li><g:link class="search" action="search"><g:message code="default.search.label" args="[entityName]" /></g:link></li>
+		<li><g:link class="sendNew" action="sendNew"><g:message code="default.sendnew.label" args="" /></g:link></li>
 	</ul>
 </div>
 <div id="list-student" class="content scaffold-list" role="main">
@@ -30,6 +31,8 @@
 
 			<g:sortableColumn property="login" title="${message(code: 'student.login.label', default: 'Login')}" />
 
+			<g:sortableColumn property="email" title="${message(code: 'student.email.label', default: 'Email')}" />
+
 			<g:sortableColumn property="average" title="${message(code: 'student.average.label', default: 'Media')}" />
 
 		</tr>
@@ -41,6 +44,8 @@
 				<td><g:link action="show" name="${studentInstance.login}" id="${studentInstance.id}">${fieldValue(bean: studentInstance, field: "name")}</g:link></td>
 
 				<td>${fieldValue(bean: studentInstance, field: "login")}</td>
+
+				<td><g:link action="show" name="${studentInstance.email}" id="${studentInstance.id}">${fieldValue(bean: studentInstance, field: "email")}</g:link></td>
 
 				<td>${fieldValue(bean: studentInstance, field: "average")}</td>
 
