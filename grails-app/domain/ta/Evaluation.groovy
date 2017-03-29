@@ -3,6 +3,7 @@ package ta
 class Evaluation {
     String origin;
     String value;
+    boolean sent;
     Date applicationDate;
     Criterion criterion;
     static constraints = {
@@ -16,6 +17,7 @@ class Evaluation {
         this.value = value;
         this.applicationDate = applicationDate;
         this.criterion = Criterion.findById(Long.parseLong(criterion));
+        this.sent = false;
     }
 
     public boolean compatibleTo(Evaluation evaluationInstance){
@@ -26,4 +28,5 @@ class Evaluation {
             return false
         }
     }
+
 }

@@ -20,3 +20,10 @@
 
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: studentInstance, field: 'email', 'error')}">
+	<label for="email">
+		<g:message code="student.email.label" default="Email" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:textField name="email" value="${studentInstance?.email}"/>
+</div>

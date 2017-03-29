@@ -39,6 +39,15 @@ class EvaluationsByCriterion {
         }
     }
 
+    String getNewEvaluations(){
+        String s=""
+        for(int i=0;i<evaluations.size();i++){
+            s+=" "+evaluations[i].value+","
+        }
+        s=s.substring(0,s.length()-1)
+        return ""+criterion.getDescription()+":"+s
+    }
+
     /*  ------------------------
       | MÉTODOS USADOS EM TESTES |
         ------------------------  */

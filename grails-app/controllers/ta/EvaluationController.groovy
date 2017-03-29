@@ -40,6 +40,7 @@ class EvaluationController {
         }else{
             return false
         }
+
     }
 
     def show(Evaluation evaluationInstance) {
@@ -118,6 +119,7 @@ class EvaluationController {
         }
         student.addEvaluationsToAllStudents(listEvaluation)
         redirect action:"index", method:"GET"
+        flash.message = message(code: 'default.sendEmailMessage.label', default: 'You need to send a new email with the evaluated criterion')
     }
 
     def edit(Evaluation evaluationInstance) {

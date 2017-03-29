@@ -8,7 +8,8 @@ class CriterionPage extends Page {
     static url = "/TA/criterion/index"
 
     static at = {
-        title ==~ /Criterion List/
+        //title ==~ /Criterion List/
+        title ==~ /Criterion Listagem/
     }
 
     def selectCriterion(String desc) {
