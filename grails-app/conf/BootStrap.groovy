@@ -1,5 +1,3 @@
-import ta.ReportController
-
 class BootStrap {
 
     def init = {
