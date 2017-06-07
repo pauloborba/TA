@@ -29,7 +29,7 @@ def void cleanEnvironment() {
         criterionController.delete(crit)
     }
     cleanList(EvaluationsByCriterion.list())
-    cleanList(Student.list())
+    cleanList(Aluno.list())
     */
 }
 
