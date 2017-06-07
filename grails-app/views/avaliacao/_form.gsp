@@ -7,7 +7,7 @@
 		<g:message code="avaliacao.nome.label" default="Nome" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="nome" required="" value="${avaliacaoInstance?.nome}"/>
+	<g:select name="nome" from="${avaliacaoInstance.constraints.nome.inList}" required="" value="${avaliacaoInstance?.nome}" valueMessagePrefix="avaliacao.nome"/>
 
 </div>
 

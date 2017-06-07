@@ -8,4 +8,8 @@ class Resultado {
         conceito unique: true
         conceito inList :["MA","MPA","MANA","--"], blank :false
     }
+
+    String toString() {
+        return meta.toString()
+    }
 }

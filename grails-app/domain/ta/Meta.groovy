@@ -6,4 +6,8 @@ class Meta {
     static constraints = {
         nome unique: true, blank : false
     }
+
+    String toString() {
+        return nome
+    }
 }

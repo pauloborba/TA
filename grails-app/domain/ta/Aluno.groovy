@@ -12,4 +12,9 @@ class Aluno {
         loginSlack unique : true , blank : false
         loginGitHub unique : true , blank : false
     }
+
+    @Override
+    String toString() {
+        return nome
+    }
 }
