@@ -12,4 +12,8 @@ class Aluno {
         loginSlack unique : true , blank : false
         loginGitHub unique : true , blank : false
     }
+
+    String toString() {
+        return this.nome
+    }
 }

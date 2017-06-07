@@ -14,4 +14,8 @@ class Turma {
         this.matriculas = []
         this.metas = []
     }
+
+    String toString() {
+        return this.nome
+    }
 }
