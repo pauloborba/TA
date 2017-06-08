@@ -5,7 +5,6 @@ class Resultado {
     String conceito
 
     static constraints = {
-        conceito unique: true
         conceito inList :["MA","MPA","MANA","--"], blank :false
     }
 }

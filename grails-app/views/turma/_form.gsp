@@ -16,7 +16,16 @@
 		<g:message code="turma.matriculas.label" default="Matriculas" />
 		
 	</label>
-	<g:select name="matriculas" from="${ta.Matricula.list()}" multiple="multiple" optionKey="id" size="5" value="${turmaInstance?.matriculas*.id}" class="many-to-many"/>
+	
+<ul class="one-to-many">
+<g:each in="${turmaInstance?.matriculas?}" var="m">
+    <li><g:link controller="matricula" action="show" id="${m.id}">${m?.encodeAsHTML()}</g:link></li>
+</g:each>
+<li class="add">
+<g:link controller="matricula" action="create" params="['turma.id': turmaInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'matricula.label', default: 'Matricula')])}</g:link>
+</li>
+</ul>
+
 
 </div>
 

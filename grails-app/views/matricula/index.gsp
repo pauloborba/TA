@@ -26,6 +26,8 @@
 					
 						<th><g:message code="matricula.aluno.label" default="Aluno" /></th>
 					
+						<th><g:message code="matricula.turma.label" default="Turma" /></th>
+					
 					</tr>
 				</thead>
 				<tbody>
@@ -33,6 +35,8 @@
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
 						<td><g:link action="show" id="${matriculaInstance.id}">${fieldValue(bean: matriculaInstance, field: "aluno")}</g:link></td>
+					
+						<td>${fieldValue(bean: matriculaInstance, field: "turma")}</td>
 					
 					</tr>
 				</g:each>

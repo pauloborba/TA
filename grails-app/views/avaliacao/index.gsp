@@ -26,6 +26,8 @@
 					
 						<g:sortableColumn property="nome" title="${message(code: 'avaliacao.nome.label', default: 'Nome')}" />
 					
+						<g:sortableColumn property="tipo" title="${message(code: 'avaliacao.tipo.label', default: 'Tipo')}" />
+					
 					</tr>
 				</thead>
 				<tbody>
@@ -33,6 +35,8 @@
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
 						<td><g:link action="show" id="${avaliacaoInstance.id}">${fieldValue(bean: avaliacaoInstance, field: "nome")}</g:link></td>
+					
+						<td>${fieldValue(bean: avaliacaoInstance, field: "tipo")}</td>
 					
 					</tr>
 				</g:each>

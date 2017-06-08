@@ -32,6 +32,15 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${avaliacaoInstance?.tipo}">
+				<li class="fieldcontain">
+					<span id="tipo-label" class="property-label"><g:message code="avaliacao.tipo.label" default="Tipo" /></span>
+					
+						<span class="property-value" aria-labelledby="tipo-label"><g:fieldValue bean="${avaliacaoInstance}" field="tipo"/></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${avaliacaoInstance?.resultados}">
 				<li class="fieldcontain">
 					<span id="resultados-label" class="property-label"><g:message code="avaliacao.resultados.label" default="Resultados" /></span>

@@ -43,6 +43,15 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${matriculaInstance?.turma}">
+				<li class="fieldcontain">
+					<span id="turma-label" class="property-label"><g:message code="matricula.turma.label" default="Turma" /></span>
+					
+						<span class="property-value" aria-labelledby="turma-label"><g:link controller="turma" action="show" id="${matriculaInstance?.turma?.id}">${matriculaInstance?.turma?.encodeAsHTML()}</g:link></span>
+					
+				</li>
+				</g:if>
+			
 			</ol>
 			<g:form url="[resource:matriculaInstance, action:'delete']" method="DELETE">
 				<fieldset class="buttons">
