@@ -16,6 +16,6 @@ class Turma {
     }
 
     String toString() {
-        return this.nome
+        this.nome
     }
 }

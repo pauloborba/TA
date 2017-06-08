@@ -14,6 +14,6 @@ class Aluno {
     }
 
     String toString() {
-        return this.nome
+        this.nome
     }
 }

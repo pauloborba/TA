@@ -10,6 +10,6 @@ class Avaliacao {
     }
 
     public Avaliacao(){
-        this.resultados = []
+        resultados = []
     }
 }

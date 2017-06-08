@@ -16,6 +16,6 @@ class Matricula {
     }
 
     String toString() {
-        return this.aluno.toString()
+        this.aluno.toString()
     }
 }
