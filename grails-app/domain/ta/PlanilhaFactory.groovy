@@ -19,6 +19,7 @@ public class PlanilhaFactory {
 
         if (tipoPlanilha.equalsIgnoreCase("avaliacao")){
             //aqui retorna uma plalinha com avaliacoes
+            return new PlanilhaAvaliacao(url)
         }
 
         return null

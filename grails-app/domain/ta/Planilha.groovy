@@ -16,8 +16,8 @@ class Planilha {
     private File arquivo // arquivo .xls que sera lido
     private String url // endereco do arquivo .xls
     private String[][] matriz //matriz que vai ser povoada pelo arquivo
-    private int sizeRow
-    private int sizeColumn
+    public int sizeLinha
+    public int sizeColuna
 
     Planilha(String url) {
         this.url = url
@@ -33,8 +33,8 @@ class Planilha {
 
             matriz = new String[aba.getRows()][aba.getColumns()]
 
-            sizeRow = matriz.length
-            sizeColumn = matriz[0].length
+            sizeLinha = matriz.length
+            sizeColuna = matriz[0].length
 
             Cell[] cel // instancia um array de células que ira auxiliar no povoamento da matriz
 
