@@ -10,6 +10,8 @@ class TurmaController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    int totalTurma = 0
+
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Turma.list(params), model:[turmaInstanceCount: Turma.count()]
