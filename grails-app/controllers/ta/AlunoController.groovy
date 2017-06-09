@@ -101,4 +101,8 @@ class AlunoController {
             '*'{ render status: NOT_FOUND }
         }
     }
+
+    def upload() {
+        
+    }
 }
