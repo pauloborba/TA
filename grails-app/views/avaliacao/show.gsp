@@ -32,6 +32,24 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${avaliacaoInstance?.conceito}">
+				<li class="fieldcontain">
+					<span id="conceito-label" class="property-label"><g:message code="avaliacao.conceito.label" default="Conceito" /></span>
+					
+						<span class="property-value" aria-labelledby="conceito-label"><g:fieldValue bean="${avaliacaoInstance}" field="conceito"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${avaliacaoInstance?.meta}">
+				<li class="fieldcontain">
+					<span id="meta-label" class="property-label"><g:message code="avaliacao.meta.label" default="Meta" /></span>
+					
+						<span class="property-value" aria-labelledby="meta-label"><g:link controller="meta" action="show" id="${avaliacaoInstance?.meta?.id}">${avaliacaoInstance?.meta?.encodeAsHTML()}</g:link></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${avaliacaoInstance?.resultados}">
 				<li class="fieldcontain">
 					<span id="resultados-label" class="property-label"><g:message code="avaliacao.resultados.label" default="Resultados" /></span>
@@ -39,6 +57,15 @@
 						<g:each in="${avaliacaoInstance.resultados}" var="r">
 						<span class="property-value" aria-labelledby="resultados-label"><g:link controller="resultado" action="show" id="${r.id}">${r?.encodeAsHTML()}</g:link></span>
 						</g:each>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${avaliacaoInstance?.turma}">
+				<li class="fieldcontain">
+					<span id="turma-label" class="property-label"><g:message code="avaliacao.turma.label" default="Turma" /></span>
+					
+						<span class="property-value" aria-labelledby="turma-label"><g:link controller="turma" action="show" id="${avaliacaoInstance?.turma?.id}">${avaliacaoInstance?.turma?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>

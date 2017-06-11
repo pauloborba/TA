@@ -1,9 +1,11 @@
 package ta
 
-
+import org.springframework.web.multipart.MultipartFile
+import org.springframework.web.multipart.MultipartHttpServletRequest
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import org.springframework.web.multipart.MultipartRequest
 
 @Transactional(readOnly = true)
 class AvaliacaoController {
@@ -22,7 +24,59 @@ class AvaliacaoController {
     def create() {
         respond new Avaliacao(params)
     }
+    //-----------------------------------------
 
+    def importarAvaliacao() {
+        respond new Avaliacao(params)
+    }
+
+    String getPath(){
+        def path = null
+
+        String content = request.getContentType()
+        if (content.contains("multipart/form-data") || (request instanceof MultipartHttpServletRequest)) {
+            MultipartFile uploadedFile = request.getFile('sheet')
+            if (!uploadedFile) {
+                flash.message = "No attachment found for upload!"
+            }else{
+                flash.message = "File uploaded successfully."
+
+                def completePath = servletContext.getRealPath('/')
+                File spreadsheet = new File(completePath, 'spreadsheets.xls')
+                uploadedFile.transferTo(spreadsheet)
+
+                path = spreadsheet.getAbsolutePath()
+                println("PATH - " + path)
+            }
+        } else {
+            flash.message = "Unable to upload file, Bad Request!"
+        }
+
+        return path
+    }
+
+    def salvarAvaliacoes(){
+
+        def path = getPath()
+
+        //path para teste
+        //def defaultPathBase = new File( "." ).getCanonicalPath()
+        //println ("Current dir: " + defaultPathBase + "/test/resources/arq.xls")
+        //path = defaultPathBase + "/test/resources/arq.xls"
+
+        if (path != null){
+            PlanilhaAvaliacao avaliacoes = PlanilhaFactory.getPlanilha(path, "avaliacao")
+
+            for(int i=0; i<avaliacoes.sizeLinha; i++){
+                println(avaliacoes.getLinha(i))
+            }
+        }
+
+        redirect action:"index", method:"GET"
+    }
+
+
+    //-----------------------------------------
     @Transactional
     def save(Avaliacao avaliacaoInstance) {
         if (avaliacaoInstance == null) {

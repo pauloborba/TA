@@ -20,12 +20,3 @@
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: matriculaInstance, field: 'turma', 'error')} required">
-	<label for="turma">
-		<g:message code="matricula.turma.label" default="Turma" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select id="turma" name="turma.id" from="${ta.Turma.list()}" optionKey="id" required="" value="${matriculaInstance?.turma?.id}" class="many-to-one"/>
-
-</div>
-

@@ -2,17 +2,16 @@ package ta
 
 class Matricula {
     Aluno aluno
-    Turma turma
     List avaliacoes
 
-    static hasMany = [avaliacoes:Avaliacao]
-    static belongsTo = [turma:Turma]
+    static belongsTo = [Aluno]
+    static hasMany = [avaliacoes: Avaliacao]
 
     static constraints = {
         aluno unique: true
     }
 
-    public Matricula(){
+    public Matricula() {
         this.avaliacoes = []
     }
 

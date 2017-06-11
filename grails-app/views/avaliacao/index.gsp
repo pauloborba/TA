@@ -13,6 +13,7 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
 				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+				<li><g:link class="importarAvaliacao" action="importarAvaliacao"><g:message code="Importar Avaliacao" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
 		<div id="list-avaliacao" class="content scaffold-list" role="main">
@@ -26,6 +27,12 @@
 					
 						<g:sortableColumn property="nome" title="${message(code: 'avaliacao.nome.label', default: 'Nome')}" />
 					
+						<g:sortableColumn property="conceito" title="${message(code: 'avaliacao.conceito.label', default: 'Conceito')}" />
+					
+						<th><g:message code="avaliacao.meta.label" default="Meta" /></th>
+					
+						<th><g:message code="avaliacao.turma.label" default="Turma" /></th>
+					
 					</tr>
 				</thead>
 				<tbody>
@@ -33,6 +40,12 @@
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
 						<td><g:link action="show" id="${avaliacaoInstance.id}">${fieldValue(bean: avaliacaoInstance, field: "nome")}</g:link></td>
+					
+						<td>${fieldValue(bean: avaliacaoInstance, field: "conceito")}</td>
+					
+						<td>${fieldValue(bean: avaliacaoInstance, field: "meta")}</td>
+					
+						<td>${fieldValue(bean: avaliacaoInstance, field: "turma")}</td>
 					
 					</tr>
 				</g:each>
