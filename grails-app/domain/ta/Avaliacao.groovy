@@ -11,12 +11,20 @@ class Avaliacao {
     static belongsTo = [meta: Meta, turma: Turma]
 
     static constraints = {
-        nome unique: true
+//        nome unique: true
         nome inList: ["Prova", "Mini-prova", "Formulário", "Final", "Segunda Chamada"], blank: false
         conceito inList :["MA","MPA","MANA","--"], blank :false
     }
 
-    public Avaliacao() {
+    public Avaliacao(String nome, String meta, String conceito, String idTurma) {
+        this.nome = nome
+        this.meta = Meta.findByNome(meta)
+        this.conceito = conceito
+        this.turma = Turma.findById(Long.parseLong(idTurma))
+        this.resultados = []
+    }
+
+    public Avaliacao(){
         this.resultados = []
     }
 

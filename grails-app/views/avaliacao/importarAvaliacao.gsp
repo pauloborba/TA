@@ -34,25 +34,25 @@
         </ul>
     </g:hasErrors>
 
-    <div class="fieldcontain ${hasErrors(bean: avaliacaoInstance, field: 'nome', 'error')} required">
-        <label for="nome">
-            <g:message code="avaliacao.nome.label" default="Nome" />
-            <span class="required-indicator">*</span>
-        </label>
-        <g:select name="nome" from="${avaliacaoInstance.constraints.nome.inList}" required="" value="${avaliacaoInstance?.nome}" valueMessagePrefix="avaliacao.nome"/>
+    <g:form enctype="multipart/form-data" url="[action:'salvarAvaliacoes']" method="POST" >
 
-    </div>
+        <div class="fieldcontain ${hasErrors(bean: avaliacaoInstance, field: 'nome', 'error')} required">
+            <label for="nome">
+                <g:message code="avaliacao.nome.label" default="Nome" />
+                <span class="required-indicator">*</span>
+            </label>
+            <g:select name="nome" from="${avaliacaoInstance.constraints.nome.inList}" required="" value="${avaliacaoInstance?.nome}" valueMessagePrefix="avaliacao.nome"/>
 
-    <div class="fieldcontain ${hasErrors(bean: avaliacaoInstance, field: 'turma', 'error')} required">
-        <label for="turma">
-            <g:message code="avaliacao.turma.label" default="Turma" />
-            <span class="required-indicator">*</span>
-        </label>
-        <g:select id="turma" name="turma.id" from="${ta.Turma.list()}" optionKey="id" required="" value="${avaliacaoInstance?.turma?.id}" class="many-to-one"/>
+        </div>
 
-    </div>
+        <div class="fieldcontain ${hasErrors(bean: avaliacaoInstance, field: 'turma', 'error')} required">
+            <label for="turma">
+                <g:message code="avaliacao.turma.label" default="Turma" />
+                <span class="required-indicator">*</span>
+            </label>
+            <g:select id="turma" name="turma.id" from="${ta.Turma.list()}" optionKey="id" required="" value="${avaliacaoInstance?.turma?.id}" class="many-to-one"/>
+        </div>
 
-    <g:form enctype="multipart/form-data" url="[resource:path, action:'salvarAvaliacoes']" method="POST" >
         <fieldset class="form">
             <label for="fileInput">Escolha o arquivo de Planilha.xls</label>
             <input type="file" id="fileInput"  name="sheet" />

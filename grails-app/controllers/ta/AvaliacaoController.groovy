@@ -41,12 +41,18 @@ class AvaliacaoController {
             }else{
                 flash.message = "File uploaded successfully."
 
-                def completePath = servletContext.getRealPath('/')
-                File spreadsheet = new File(completePath, 'spreadsheets.xls')
-                uploadedFile.transferTo(spreadsheet)
+                String nomeOriginal = uploadedFile.getOriginalFilename()
 
-                path = spreadsheet.getAbsolutePath()
-                println("PATH - " + path)
+                if(nomeOriginal.contains(".xls")){
+                    def completePath = servletContext.getRealPath('/')
+                    File spreadsheet = new File(completePath, 'spreadsheets.xls')
+                    uploadedFile.transferTo(spreadsheet)
+
+                    path = spreadsheet.getAbsolutePath()
+                    println("PATH - " + path)
+                }else{
+                    flash.message = "Arquivo não tem o formato .xls"
+                }
             }
         } else {
             flash.message = "Unable to upload file, Bad Request!"
@@ -67,16 +73,35 @@ class AvaliacaoController {
         if (path != null){
             PlanilhaAvaliacao avaliacoes = PlanilhaFactory.getPlanilha(path, "avaliacao")
 
-            for(int i=0; i<avaliacoes.sizeLinha; i++){
+            for(int i=1; i<avaliacoes.sizeLinha; i++){
                 println(avaliacoes.getLinha(i))
+
+                String loginCin = avaliacoes.getLinha(i).get(0)
+                Aluno aluno = Aluno.findByLoginCin(loginCin)
+                Matricula matricula = Matricula.findByAluno(aluno)
+
+                println("LoginCin  " + loginCin)
+                println("Aluno  " + aluno)
+                println("Matricula  " + matricula)
+
+                for (int j=1; j<avaliacoes.sizeColuna; j++){
+                    Avaliacao novaAvaliacao = new Avaliacao(params.nome, avaliacoes.getTitulosPlanilha().get(j), avaliacoes.getLinha(i).get(j), (String)params.turma.id)
+                    novaAvaliacao.save flush: true
+
+                    println("id Avaliacao  " + novaAvaliacao.id)
+
+                    if(novaAvaliacao!=null && matricula!=null){
+                        matricula.avaliacoes.add(Avaliacao.findById(novaAvaliacao.id))
+                    }
+                }
             }
         }
 
         redirect action:"index", method:"GET"
     }
 
-
     //-----------------------------------------
+
     @Transactional
     def save(Avaliacao avaliacaoInstance) {
         if (avaliacaoInstance == null) {

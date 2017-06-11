@@ -31,17 +31,40 @@
 					
 				</li>
 				</g:if>
-			
-				<g:if test="${matriculaInstance?.avaliacoes}">
-				<li class="fieldcontain">
-					<span id="avaliacoes-label" class="property-label"><g:message code="matricula.avaliacoes.label" default="Avaliacoes" /></span>
-					
-						<g:each in="${matriculaInstance.avaliacoes}" var="a">
-						<span class="property-value" aria-labelledby="avaliacoes-label"><g:link controller="avaliacao" action="show" id="${a.id}">${a?.encodeAsHTML()}</g:link></span>
+
+				<div><h1></h1></div>
+
+				<div id="list-avaliacao" class="content scaffold-list" role="main">
+
+					<table>
+						<thead>
+						<tr>
+							<g:sortableColumn property="nome" title="${message(code: 'avaliacao.nome.label', default: 'Nome')}" />
+							<g:sortableColumn property="conceito" title="${message(code: 'avaliacao.conceito.label', default: 'Conceito')}" />
+							<th><g:message code="avaliacao.meta.label" default="Meta" /></th>
+							<th><g:message code="avaliacao.turma.label" default="Turma" /></th>
+						</tr>
+						</thead>
+						<tbody>
+						<g:each in="${matriculaInstance?.avaliacoes}" status="i" var="avaliacaoInstance">
+							<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+
+								<td><g:link controller="avaliacao"action="show" id="${avaliacaoInstance.id}">${fieldValue(bean: avaliacaoInstance, field: "nome")}</g:link></td>
+
+								<td>${fieldValue(bean: avaliacaoInstance, field: "conceito")}</td>
+
+								<td>${fieldValue(bean: avaliacaoInstance, field: "meta")}</td>
+
+								<td>${fieldValue(bean: avaliacaoInstance, field: "turma")}</td>
+
+							</tr>
 						</g:each>
-					
-				</li>
-				</g:if>
+						</tbody>
+					</table>
+					<div class="pagination">
+						<g:paginate total="${avaliacaoInstanceCount ?: 0}" />
+					</div>
+				</div>
 			
 			</ol>
 			<g:form url="[resource:matriculaInstance, action:'delete']" method="DELETE">
