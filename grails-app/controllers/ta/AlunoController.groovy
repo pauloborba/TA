@@ -101,4 +101,15 @@ class AlunoController {
             '*'{ render status: NOT_FOUND }
         }
     }
+
+    boolean alunoExiste(String loginCin){
+
+        def aluno = Aluno.findByLoginCin(loginCin)
+
+        if (aluno!=null){
+            return true
+        }
+
+        return false
+    }
 }

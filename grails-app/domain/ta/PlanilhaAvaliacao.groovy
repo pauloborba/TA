@@ -54,4 +54,24 @@ class PlanilhaAvaliacao extends Planilha{
         return linha
     }
 
+    boolean metaExiste(String nome){
+        for (int i=0; i<metas.size(); i++){
+            String metaAtual = metas.get(i)
+            if (metaAtual.equalsIgnoreCase(nome)){
+                return true
+            }
+        }
+        return false
+    }
+
+    boolean alunoExiste(String loginCin){
+        for (int i=0; i<logins.size(); i++){
+            String alunoAtual = logins.get(i)
+            if (alunoAtual.equalsIgnoreCase(loginCin)){
+                return true
+            }
+        }
+        return false
+    }
+
 }

@@ -7,6 +7,10 @@ class Meta {
         nome unique: true, blank : false
     }
 
+    Meta(String nome){
+        this.nome = nome
+    }
+
     String toString() {
         return nome
     }
