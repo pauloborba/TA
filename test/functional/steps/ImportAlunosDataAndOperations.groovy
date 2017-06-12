@@ -1,6 +1,9 @@
 package steps
 
+import org.springframework.web.multipart.MultipartFile
 import ta.AlunoController
+import ta.Matricula
+import ta.MatriculaController
 import ta.PlanilhaAlunos
 import ta.PlanilhaFactory
 import ta.Turma
@@ -10,7 +13,7 @@ import ta.TurmaController
  * Created by wellington.felix on 6/12/17.
  */
 class ImportAlunosDataAndOperations {
-    static String path = '../resources/alunos.xls'
+    static String path = AlunoController.servletContext.getRealPath('/')
     static AlunoController alunoCtrl = AlunoController
     static TurmaController turmaCtrl = TurmaController
     static Turma turma
@@ -20,8 +23,8 @@ class ImportAlunosDataAndOperations {
      * Asserts file exists in given path
      * @param path
      */
-    static void assertFileExists(String path) {
-        assert new File(path).exists()
+    static void assertFileExists(String file) {
+        assert new File(path, file).exists()
     }
 
     /**
@@ -49,12 +52,15 @@ class ImportAlunosDataAndOperations {
     }
 
     /**
-     * Uploads spreadsheet to server and register all students in it
+     * Uploads spreadsheet to server and register all students to a class
      * @param path
      * @param className
      */
     static void uploadSpreadsheet(String path, String className) {
-
+        turma = Turma.findByNome(className)
+        alunoCtrl.request.addFile(new File(path) as MultipartFile)
+        alunoCtrl.params.turma.id = turma.id
+        alunoCtrl.upload()
     }
 
     /**
@@ -62,8 +68,8 @@ class ImportAlunosDataAndOperations {
      * @param cinUsername
      * @param className
      */
-    static void assertStudentsImported(String cinUsername, String className) {
-
+    static void assertStudentsImported(String name, String className) {
+        assert Matricula.findByAlunoAndTurma(name, className)
     }
 
 }

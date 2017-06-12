@@ -9,7 +9,7 @@ import ta.*
 this.metaClass.mixin(cucumber.api.groovy.Hooks)
 this.metaClass.mixin(cucumber.api.groovy.EN)
 
-PlanilhaAlunos planilha = PlanilhaFactory.getPlanilha('../resources/alunos.xls', 'addaluno')
+//PlanilhaAlunos planilha = PlanilhaFactory.getPlanilha('alunos.xls', 'addaluno')
 
 Given(~/^I have the file "([^"]*)" which contains the students names and user names$/) { String path ->
      ImportAlunosDataAndOperations.assertFileExists(path)
@@ -24,5 +24,5 @@ When(~/^I import the file "([^"]*)" for the "([^"]*)" class$/) { String path, St
     ImportAlunosDataAndOperations.uploadSpreadsheet(path, className)
 }
 Then(~/^the system adds the student "([^"]*)" with cin username "([^"]*)" to the class "([^"]*)"$/) { String name, String cinUsername, String className ->
-    ImportAlunosDataAndOperations.assertStudentsImported(cinUsername, className)
+    ImportAlunosDataAndOperations.assertStudentsImported(name, className)
 }
