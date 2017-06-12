@@ -11,6 +11,9 @@ class TurmaController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     int totalTurma = 0
+    int mediaGeral =0
+    int numAM = 0
+    int numA = 0
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)

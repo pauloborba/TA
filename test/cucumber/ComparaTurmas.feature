@@ -36,9 +36,9 @@ Feature: Estatistica da Turma
  #Cenário GUI
   Scenario: Exibir comparacao
     Given eu estou na pagina de "Turmas List"
-    And eu tenho aa turma "2017.1"
-    And eu tenho aa turma "2016.2"
-    And eu tenho aa turma "2016.1"
+    And eu tenho a turma "2017.1"
+    And eu tenho a turma "2016.2"
+    And eu tenho a turma "2016.1"
     When eu seleciono a turma "2017.1" para ver os alunos
     Then eu consigo ver o numero de turmas que "2017.1" supera em questão de media geral, numero percentual de alunos
          aprovados e numeros percentual de alunos aprovados por media em comparacao com o total de turmas cadastradas

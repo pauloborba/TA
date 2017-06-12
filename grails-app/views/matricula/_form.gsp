@@ -11,6 +11,24 @@
 
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: matriculaInstance, field: 'media', 'error')} required">
+	<label for="media">
+		<g:message code="matricula.media.label" default="Media" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:field name="media" value="${fieldValue(bean: matriculaInstance, field: 'media')}" required=""/>
+
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: matriculaInstance, field: 'aprovacao', 'error')} required">
+	<label for="aprovacao">
+		<g:message code="matricula.aprovacao.label" default="Aprovacao" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:select name="aprovacao" from="${matriculaInstance.constraints.aprovacao.inList}" required="" value="${matriculaInstance?.aprovacao}" valueMessagePrefix="matricula.aprovacao"/>
+
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: matriculaInstance, field: 'avaliacoes', 'error')} ">
 	<label for="avaliacoes">
 		<g:message code="matricula.avaliacoes.label" default="Avaliacoes" />

@@ -26,6 +26,10 @@
 					
 						<th><g:message code="matricula.aluno.label" default="Aluno" /></th>
 					
+						<g:sortableColumn property="media" title="${message(code: 'matricula.media.label', default: 'Media')}" />
+					
+						<g:sortableColumn property="aprovacao" title="${message(code: 'matricula.aprovacao.label', default: 'Aprovacao')}" />
+					
 						<th><g:message code="matricula.turma.label" default="Turma" /></th>
 					
 					</tr>
@@ -35,6 +39,10 @@
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
 						<td><g:link action="show" id="${matriculaInstance.id}">${fieldValue(bean: matriculaInstance, field: "aluno")}</g:link></td>
+					
+						<td>${fieldValue(bean: matriculaInstance, field: "media")}</td>
+					
+						<td>${fieldValue(bean: matriculaInstance, field: "aprovacao")}</td>
 					
 						<td>${fieldValue(bean: matriculaInstance, field: "turma")}</td>
 					
