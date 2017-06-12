@@ -73,25 +73,40 @@ class AvaliacaoController {
         if (path != null){
             PlanilhaAvaliacao avaliacoes = PlanilhaFactory.getPlanilha(path, "avaliacao")
 
+            String idTurma = (String)params.turma.id
+            String nomeAvaliacao = params.nome
+            def titulosPlanilha = avaliacoes.getTitulosPlanilha()
+
+            def logins = avaliacoes.logins
+            def metas = avaliacoes.metas
+
+            def turma = Turma.findById(params.turma.id)
+            def metasTurma = turma.metas
+
+
+
             for(int i=1; i<avaliacoes.sizeLinha; i++){
-                println(avaliacoes.getLinha(i))
 
                 String loginCin = avaliacoes.getLinha(i).get(0)
                 Aluno aluno = Aluno.findByLoginCin(loginCin)
                 Matricula matricula = Matricula.findByAluno(aluno)
 
-                println("LoginCin  " + loginCin)
-                println("Aluno  " + aluno)
-                println("Matricula  " + matricula)
+                if(TurmaController.alunoEstaNaTurma(loginCin , turma)){
+                    for (int j=1; j<avaliacoes.sizeColuna; j++){
 
-                for (int j=1; j<avaliacoes.sizeColuna; j++){
-                    Avaliacao novaAvaliacao = new Avaliacao(params.nome, avaliacoes.getTitulosPlanilha().get(j), avaliacoes.getLinha(i).get(j), (String)params.turma.id)
-                    novaAvaliacao.save flush: true
+                        def linhaPlanilha = avaliacoes.getLinha(i)
+                        def meta = titulosPlanilha.get(j)
+                        def conceito = linhaPlanilha.get(j)
 
-                    println("id Avaliacao  " + novaAvaliacao.id)
+                        if (TurmaController.metaEstaNaTurma(meta, turma)){
+                            Avaliacao novaAvaliacao = new Avaliacao(nomeAvaliacao, meta, conceito, idTurma)
+                            novaAvaliacao.save flush: true
 
-                    if(novaAvaliacao!=null && matricula!=null){
-                        matricula.avaliacoes.add(Avaliacao.findById(novaAvaliacao.id))
+                            //verificar se a avaliacao e a matricula existe no sistema
+                            if(novaAvaliacao!=null && matricula!=null){
+                                matricula.avaliacoes.add(Avaliacao.findById(novaAvaliacao.id))
+                            }
+                        }
                     }
                 }
             }

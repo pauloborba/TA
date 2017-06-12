@@ -101,4 +101,40 @@ class TurmaController {
             '*'{ render status: NOT_FOUND }
         }
     }
+
+    static boolean alunoEstaNaTurma(String loginCIn, Turma turma){
+
+        def matriculas = turma.matriculas
+        def sim = false
+
+        for(int i=0; i<matriculas.size(); i++){
+
+            Matricula aluno = matriculas.get(i)
+
+            if(aluno.aluno.loginCin.equalsIgnoreCase(loginCIn)){
+                sim = true
+            }
+        }
+
+        return sim
+    }
+
+    static boolean metaEstaNaTurma(String meta, Turma turma){
+
+        def metas = turma.metas
+        def sim = false
+
+        for(int i=0; i<metas.size(); i++){
+
+            String m = metas.get(i)
+
+            if(m.equalsIgnoreCase(meta)){
+                sim = true
+            }
+        }
+
+        return sim
+    }
+
+
 }
