@@ -114,7 +114,6 @@ class AlunoController {
 
         if(content.contains("multipart/form-data") || (request instanceof MultipartHttpServletRequest)) {
             def file = request.getFile('file')
-            //request.getFileNames().each {print(it)}
             if(!file) {
                 flash.message = "Nenhuma planilha escolhida!"
                 redirect action:"index", method:"GET"
