@@ -19,16 +19,23 @@
         <h1><g:message code="importAlunos.title" args="[entityName]"/></h1>
         <g:if test="${flash.message}"><div class="message" role="status">${flash.message}</div></g:if>
         <g:uploadForm action="upload">
-            <fieldset class="dropdown">
-                
-            </fieldset>
-            <fieldset class="form">
-                <input type="file" name="file" />
-            </fieldset>
-            <fieldset class="buttons">
-                <g:submitButton name="upload" class="save" value="Upload" />
-            </fieldset>
+            <div class="content" role="form">
+                <div class="fieldcontain required">
+                    <label for="turma">
+                        <g:message code="importAlunos.turmas" default="Turmas" />
+                        <span class="required-indicator">*</span>
+                    </label>
+                </div>
+                <g:select id="turma" name="turma.id" from="${ta.Turma.list()}" optionKey="id" required="" class="many-to-one"/>
+                <fieldset class="form">
+                    <input type="file" name="file" />
+                </fieldset>
+                <fieldset class="buttons">
+                    <g:submitButton name="upload" class="save" value="Upload" />
+                </fieldset>
+            </div>
         </g:uploadForm>
+
     </div>
 </body>
 </html>

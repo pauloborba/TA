@@ -132,8 +132,10 @@ class AlunoController {
 
         if(path) {
             PlanilhaAlunos planilhaAlunos = PlanilhaFactory.getPlanilha(path, "addaluno")
+            def turma = Turma.findByNome(params.turma)
             planilhaAlunos.alunos.each {
                 it.save()
+                
             }
         }
         redirect action:"index", method:"GET"
