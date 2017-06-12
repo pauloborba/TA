@@ -15,8 +15,8 @@ Feature: Add students from spreadsheet
   #GUI Scenario
   Scenario: Import students from spreadsheet
     Given I am at the "Add Students" page
-    And I want to add students from the "students_2016-2.xls" spreadsheet file
-    And The file "students_2016-2.xls" has the student "Joao Paulo" with user name "jp"
-    When I add the "students_2016-2.xls" spreadsheet file
+    And I want to add students from the "alunos.xls" spreadsheet file
+    And The file "alunos.xls" has the student "WELLINGTON FELIX MARTINS FILHO" with user name "wfmf"
+    When I add the "alunos.xls" spreadsheet file
     Then I can see the list of all students
-    And the student "Joao Paulo" with user name "jp" is listed
+    And the student "WELLINGTON FELIX MARTINS" with user name "wfmf" is listed
