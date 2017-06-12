@@ -74,7 +74,7 @@ class Planilha {
      */
     ArrayList<String> getLinha(int index) {
 
-        if (index >= sizeLinha()){
+        if (index >= sizeLinha){
             return null
         }
 

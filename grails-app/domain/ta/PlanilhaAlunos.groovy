@@ -8,15 +8,20 @@ class PlanilhaAlunos extends Planilha {
 
     PlanilhaAlunos(String url) {
         super(url)
+        alunos = []
         fillData()
     }
 
     void fillData() {
-        1..<sizeLinha.each { i ->
+        (1..<sizeLinha).each { i ->
             def linha = getLinha(i)
             def nome = linha.get(0)
-            def logins = linha.get(1).split(" :: ")
-            alunos = new Aluno(nome: nome, loginCin: logins[0], loginGitHub: logins[1], loginSlack: logins[2])
+            def cin = linha.get(1)
+            def github = linha.get(2)
+            def slack = linha.get(3)
+            def aluno = new Aluno(nome: nome, loginCin: cin, loginGitHub: github, loginSlack: slack)
+            if(aluno)
+                alunos.add(aluno)
         }
     }
 }

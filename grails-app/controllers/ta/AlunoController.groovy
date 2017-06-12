@@ -1,6 +1,8 @@
 package ta
 
-
+import org.springframework.web.multipart.MultipartFile
+import org.springframework.web.multipart.MultipartHttpServletRequest
+import org.springframework.web.multipart.MultipartRequest
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
@@ -102,7 +104,38 @@ class AlunoController {
         }
     }
 
+    def importAlunos() {
+        respond('importAlunos')
+    }
+
     def upload() {
-        
+        def content = request.getContentType()
+        def path
+
+        if(content.contains("multipart/form-data") || (request instanceof MultipartHttpServletRequest)) {
+            def file = request.getFile('file')
+            //request.getFileNames().each {print(it)}
+            if(!file) {
+                flash.message = "Nenhuma planilha escolhida!"
+                redirect action:"index", method:"GET"
+            } else {
+                def completePath = servletContext.getRealPath('/')
+                File spreadsheet = new File(completePath, 'spreadsheet.xls')
+                file.transferTo(spreadsheet)
+
+                path = spreadsheet.getAbsolutePath()
+            }
+        } else {
+            flash.message = "Houve um erro ao carregar a planilha :("
+            redirect action:"index", method:"GET"
+        }
+
+        if(path) {
+            PlanilhaAlunos planilhaAlunos = PlanilhaFactory.getPlanilha(path, "addaluno")
+            planilhaAlunos.alunos.each {
+                it.save()
+            }
+        }
+        redirect action:"index", method:"GET"
     }
 }

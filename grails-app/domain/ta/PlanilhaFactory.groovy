@@ -15,6 +15,7 @@ class PlanilhaFactory {
 
         if (tipoPlanilha.equalsIgnoreCase("addaluno")){
             //aqui retorna uma planilha com alunos
+            return new PlanilhaAlunos(url)
         }
 
         if (tipoPlanilha.equalsIgnoreCase("avaliacao")){
