@@ -132,10 +132,17 @@ class AlunoController {
 
         if(path) {
             PlanilhaAlunos planilhaAlunos = PlanilhaFactory.getPlanilha(path, "addaluno")
-            def turma = Turma.findByNome(params.turma)
+            def turma = Turma.findById(params.turma.id)
             planilhaAlunos.alunos.each {
-                it.save()
-                
+                def aluno
+                if(!Aluno.findByLoginCin(it.loginCin)) {
+                    aluno = it.save()
+                } else {
+                    aluno = Aluno.findByLoginCin(it.loginCin)
+                    assert aluno != null
+                }
+                def matricula = new Matricula(aluno: aluno, turma: turma)
+                matricula.save()
             }
         }
         redirect action:"index", method:"GET"
