@@ -9,6 +9,7 @@ import ta.Meta
 import ta.MetaController
 import ta.PlanilhaAvaliacao
 import ta.PlanilhaFactory
+import ta.Resultado
 import ta.Turma
 import ta.TurmaController
 
@@ -96,6 +97,30 @@ class ClassTestDataAndOperations {
         return Matricula.findByAluno(aluno)
     }
 
+    static File arquivo(String arquivo){
+        //path para teste
+        def defaultPathBase = new File( "." ).getCanonicalPath()
+        println ("Current dir: " + defaultPathBase + "/test/resources/" + arquivo)
+        def path = defaultPathBase + "/test/resources/" + arquivo
+
+        //existe uma planilha
+        return new File(path)
+    }
+
+    static void deletarTudo(){
+        apagarListas(Aluno.list())
+        apagarListas(Avaliacao.list())
+        apagarListas(Matricula.list())
+        apagarListas(Meta.list())
+        apagarListas(Resultado.list())
+        apagarListas(Turma.list())
+    }
+
+    static void apagarListas(List l) {
+        l.each { e ->
+            e.delete(flush: true)
+        }
+    }
 
 
 }

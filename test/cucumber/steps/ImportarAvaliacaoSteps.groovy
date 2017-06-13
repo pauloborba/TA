@@ -23,13 +23,14 @@ String origemAvaliacaoGlobal = null
 Meta metaGlobal = null
 Turma turmaGlobal = null
 
-Given(~/^existe uma planilha "([^"]*)" com os conceitos da meta "([^"]*)" de um "([^"]*)" da turma "([^"]*)"$/) { String pathPlanilha, String meta, String origem, String turma ->
+Given(~/^existe uma planilha "([^"]*)" com os conceitos da meta "([^"]*)" de um "([^"]*)" da turma "([^"]*)"$/) { String planilha, String meta, String origem, String turma ->
 
-    //existe uma planilha
-    File file =  new File(pathPlanilha)
+    ClassTestDataAndOperations.deletarTudo()
+
+    File file = ClassTestDataAndOperations.arquivo(planilha)
     assert file.exists() // se nao existir o arquivo sai do teste
 
-    pathGlobal = pathPlanilha
+    pathGlobal = file.path
     origemAvaliacaoGlobal = origem
 
     //criando uma meta
@@ -51,9 +52,9 @@ Given(~/^existe uma planilha "([^"]*)" com os conceitos da meta "([^"]*)" de um 
     ClassTestDataAndOperations.criarAlunosNaTurma(turmaGlobal, avaliacoes)
 
 }
-And(~/^o aluno "([^"]*)" tem o conceito "([^"]*)"$/) { String aluno, String conceito ->
+And(~/^o aluno "([^"]*)" tem o conceito "([^"]*)" na meta "([^"]*)"$/) { String aluno, String conceito, String meta ->
 
-    assert ClassTestDataAndOperations.alunoTemConceitoNaMeta(pathGlobal, metaGlobal, conceito, aluno)
+    assert ClassTestDataAndOperations.alunoTemConceitoNaMeta(pathGlobal, Meta.findByNome(meta), conceito, aluno)
 
 }
 When(~/^eu tento salvar as avaliações com os conceitos da meta "([^"]*)" do "([^"]*)"$/) { String meta, String origem ->
@@ -68,7 +69,6 @@ Then(~/^o aluno "([^"]*)" fica com o conceito "([^"]*)" na meta "([^"]*)"$/) { S
 
     //procurando se o aluno ficou com os dados corretos
     assert ClassTestDataAndOperations.procurarAvaliacaoByMatricula(matricula, conceito, meta)
-
 }
 
 
@@ -89,3 +89,14 @@ Then(~/^eu consigo ver as avaliações salvas na pagina "([^"]*)"$/) { String ar
 
 
 
+
+Given(~/^existe uma planilha "([^"]*)" com os conceitos de varias metas de uma "([^"]*)" da turma "([^"]*)"$/) { String planilha, String origem, String turma ->
+
+//    ClassTestDataAndOperations.deletarTudo()
+
+}
+
+When(~/^eu tento salvar as avaliações com os conceitos de todas as metas da turma "([^"]*)"$/) { String arg1 ->
+
+
+}

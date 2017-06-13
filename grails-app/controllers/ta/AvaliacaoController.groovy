@@ -5,7 +5,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
-import org.springframework.web.multipart.MultipartRequest
 
 @Transactional(readOnly = true)
 class AvaliacaoController {
@@ -142,11 +141,6 @@ class AvaliacaoController {
     def salvarAvaliacoes(){
 
         def path = getPath()
-
-        //path para teste
-        //def defaultPathBase = new File( "." ).getCanonicalPath()
-        //println ("Current dir: " + defaultPathBase + "/test/resources/arq.xls")
-        //path = defaultPathBase + "/test/resources/arq.xls"
 
         if (path != null){
             Turma turma = Turma.findById(params.turma.id)

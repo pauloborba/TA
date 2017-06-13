@@ -28,17 +28,31 @@ Feature: Importar Avaliação
 
 
 #Controller Scenario
-  Scenario: Importar Avaliação de uma Planilha
-    Given existe uma planilha "/Users/isaacdouglas1/git/TA/test/resources/arq.xls" com os conceitos da meta "Escrever bem requisitos" de um "Formulário" da turma "ESS"
-    And o aluno "idrn" tem o conceito "MA"
-    And o aluno "wfmf" tem o conceito "MPA"
+  Scenario: Importar Avaliacao de uma Planilha
+    Given existe uma planilha "arq.xls" com os conceitos da meta "Escrever bem requisitos" de um "Formulário" da turma "ESS"
+    And o aluno "idrn" tem o conceito "MA" na meta "Escrever bem requisitos"
+    And o aluno "wfmf" tem o conceito "MPA" na meta "Escrever bem requisitos"
     When eu tento salvar as avaliações com os conceitos da meta "Escrever bem requisitos" do "Formulário"
     Then o aluno "idrn" fica com o conceito "MA" na meta "Escrever bem requisitos"
     And o aluno "wfmf" fica com o conceito "MPA" na meta "Escrever bem requisitos"
+
+#Controller Scenario
+  Scenario: Importar Todas as Avaliacoes de uma Planilha
+    Given existe uma planilha "arq.xls" com os conceitos de varias metas de uma "Prova" da turma "ESS"
+    And o aluno "idrn" tem o conceito "MA" na meta "Escrever bem requisitos"
+#    And o aluno "idrn" tem o conceito "MANA" na meta "Entender conceitos de gerencia de projetos"
+    And o aluno "wfmf" tem o conceito "MPA" na meta "Escrever bem requisitos"
+#    And o aluno "wfmf" tem o conceito "MA" na meta "Entender conceitos de gerencia de projetos"
+    When eu tento salvar as avaliações com os conceitos de todas as metas da turma "ESS"
+    Then o aluno "idrn" fica com o conceito "MA" na meta "Escrever bem requisitos"
+#    And o aluno "idrn" fica com o conceito "MANA" na meta "Entender conceitos de gerencia de projetos"
+    And o aluno "wfmf" fica com o conceito "MPA" na meta "Escrever bem requisitos"
+#    And o aluno "wfmf" fica com o conceito "MA" na meta "Entender conceitos de gerencia de projetos"
+
 
 
 #GUI Scenario
   Scenario: Ver avaliações importadas
     Given eu estou na pagina "Importar Avaliacoes"
-    When eu salvo as avaliações da planilha "/Users/isaacdouglas1/git/TA/test/resources/arq.xls"
+    When eu salvo as avaliações da planilha "arq.xls"
     Then eu consigo ver as avaliações salvas na pagina "Listar Avaliacoes"
