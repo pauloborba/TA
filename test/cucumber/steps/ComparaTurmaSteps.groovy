@@ -1,5 +1,8 @@
 import javafx.beans.binding.When
+import steps.ComparaTurmasTestDataAndOperations
 import org.spockframework.compiler.model.ThenBlock
+import steps.ComparaTurmasTestDataAndOperations
+import ta.Turma
 
 /* #Cenario Controller
 
@@ -15,35 +18,40 @@ import org.spockframework.compiler.model.ThenBlock
     When eu seleciono a turma "2017.1"
     Then a media geral de "2017.1" e calculada*/
 
-Given(~'^eu tenho uma turma "[(^")*]" cadastrada$'){
-    String nome ->
-}
-And(~'^o aluno "[(^")*]" esta matriculado em "[(^")*]"$'){
-    String nome, String nomeA  ->
-}
-And(~'^"[(^")*]"possui media final$'){
-    String nome ->
-}
-And(~'^o aluno "[(^")*]" esta matriculado em "[(^")*]"$'){
-    String nome, String nomeA  ->
-}
-And(~'^"[(^")*]"possui media final$'){
-    String nome ->
-}
-And(~'^o aluno "[(^")*]" esta matriculado em "[(^")*]"$'){
-    String nome, String nomeA  ->
-}
-And(~'^"[(^")*]"possui media final$'){
-    String nome ->
-}
-When(~'^eu seleciono a turma "[(^")*]"$'){
-    String nome ->
-}
-Then(~'^a media geral de "[(^")*]" e calculada$'){
-    String nome ->
+Given(~'^eu tenho uma turma "[(^")*]" cadastrada$'){ String nome ->
+    ComparaTurmasTestDataAndOperations.createTurma(nome)
+    assert ComparaTurmasTestDataAndOperations.getTurma(nome) != null
 }
 
- /*#Cenario GUI
+
+
+
+/*And(~'^o aluno "[(^")*]" esta matriculado em "[(^")*]"$'){ String nomeT, nomeA ->
+    assert ComparaTurmasTestDataAndOperations.checkAluno(nomeT,nomeA) == true
+}
+And(~'^"[(^")*]"possui media final$'){ String nome ->
+    assert ComparaTurmasTestDataAndOperations.checkMedia() != '--'
+}
+And(~'^o aluno "[(^")*]" esta matriculado em "[(^")*]"$'){ String nomeT, nomeA ->
+    assert ComparaTurmasTestDataAndOperations.checkAluno(nomeT,nomeA) == true
+}
+And(~'^"[(^")*]"possui media final$'){ String nome ->
+    assert ComparaTurmasTestDataAndOperations.checkMedia() != '--'
+}
+And(~'^o aluno "[(^")*]" esta matriculado em "[(^")*]"$'){ String nomeT, nomeA ->
+    assert ComparaTurmasTestDataAndOperations.checkAluno(nomeT,nomeA) == true
+}
+And(~'^"[(^")*]"possui media final$'){ String nome ->
+    assert ComparaTurmasTestDataAndOperations.checkMedia() != '--'
+}
+When(~'^eu seleciono a turma "[(^")*]"$'){ String nome ->
+    assert ComparaTurmasTestDataAndOperations.getTurma(nome) != null
+}
+Then(~'^a media geral de "[(^")*]" e calculada$'){ String nome ->
+
+}*/
+
+/* /*#Cenario GUI
 
   Scenario: Exibir media geral
     Given eu estou na pagina de "Turmas List"
@@ -103,8 +111,8 @@ de alunos aprovados por media inferior a "2017.1" e calculado*/
  */
 
 Given(~'^eu tenho uma turma "[(^")*]" cadastrada$'){
-        String nome ->
-    }
+    String nome ->
+}
 And(~'^o aluno "[(^")*]" esta matriculado em "[(^")*]"$'){
     String nome, String nomeA  ->
 }
@@ -187,12 +195,12 @@ When
 
 
 When(~'^eu seleciono a turma "[(^")*]"$'){
-        String nome ->
-    }
+    String nome ->
+}
 Then(~'^o numero de turmas que possuem media geral, numero percentual de alunos aprovados e numeros percentual\n' +
         'de alunos aprovados por media inferior a "[(^")*]" e calculado$'){
-        String nome ->
-    }
+    String nome ->
+}
 
 /*ta.Matricula.aluno.nome nome
 
@@ -229,3 +237,8 @@ Then(~'^eu consigo ver o numero de turmas que "[(^")*]" supera em questão de me
         'aprovados e numeros percentual de alunos aprovados por media em comparacao com o total de turmas cadastradas$'){
     String nome ->
 }
+
+
+
+
+

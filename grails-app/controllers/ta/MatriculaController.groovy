@@ -10,6 +10,18 @@ class MatriculaController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    Matricula getMatricula() {
+        def matriculaInstance = new Matricula(params)
+        return Matricula.findByAluno(matriculaInstance.aluno)
+    }
+
+    String checkMedia() {
+        def matriculaInstance = new Matricula(params)
+        return Matricula.findByAluno(matriculaInstance.aluno)
+    }
+
+
+
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Matricula.list(params), model:[matriculaInstanceCount: Matricula.count()]

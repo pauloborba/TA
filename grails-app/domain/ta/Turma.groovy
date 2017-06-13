@@ -10,8 +10,7 @@ class Turma {
         nome unique : true , blank : false
     }
 
-    public Turma(){
-        this.matriculas = []
-        this.metas = []
+    public Turma(String nome){
+        this.nome = nome
     }
 }

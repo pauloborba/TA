@@ -1,7 +1,5 @@
 package ta
 
-
-
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
@@ -16,6 +14,20 @@ class TurmaController {
     int numA = 0
 
     //inicio de testes
+
+    Turma getTurma() {
+        def turmaInstance = new Turma(params)
+        return Turma.findByNome(turmaInstance.nome)
+    }
+
+    /*boolean checkAluno(Turma t, Matricula m){
+        for(int i = 0; i < t.matriculas.size(); i++){
+            if (t.matriculas[i] == m){
+                return true
+            }
+        }
+        return false
+    }
 
     def calcularMedia(){
         for(int i=0; i < matriculas.size(); i++){
@@ -45,7 +57,26 @@ class TurmaController {
         numA = (numA * 100) / totalTurma
     }
 
-    // fim de testes
+    // fim de testes*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)

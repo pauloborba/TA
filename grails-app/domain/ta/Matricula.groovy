@@ -15,7 +15,7 @@ class Matricula {
         aprovacao inList :["AM","A","R","--"], blank :false
     }
 
-    public Matricula(){
-        this.avaliacoes = []
+    public Matricula(Aluno aluno1){
+        this.aluno = aluno
     }
 }
