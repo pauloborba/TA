@@ -9,7 +9,7 @@ class ShowEvaluationPage extends Page {
     static url = "evaluation/show"
 
     static at = {
-        title ==~ /Ver Create property/
+        title ==~ /Show Evaluation/
     }
 
     def selectDeleteEvaluation() {
