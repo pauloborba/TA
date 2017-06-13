@@ -8,11 +8,11 @@ class CreateClassPage extends Page{
     static url = "class/create"
 
     static at = {
-        title ==~ /Create Class/
+        title ==~ /Criar Class/
     }
 
     def fillClassDetails(String id, String periodo){
-        $("form").name = id
+        $("form").classID = id
         $("form").periodo = periodo
     }
 

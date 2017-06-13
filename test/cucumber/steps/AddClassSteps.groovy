@@ -5,7 +5,10 @@ this.metaClass.mixin(EN)
 import pages.ClassPages.CreateClassPage
 import pages.ClassPages.TurmasPage
 import steps.ClassTestDataAndOperations
+import ta.Class
+import ta.ClassController
 
+Class c
 
 Given(~'^the system has no class named "([^"]*)" and period "([^"]*)"$'){
     String id, String periodo ->
@@ -15,81 +18,77 @@ Given(~'^the system has no class named "([^"]*)" and period "([^"]*)"$'){
 When(~'^I add a class with ID "([^"]*)" and period "([^"]*)"$'){
     String id, String periodo ->
         ClassTestDataAndOperations.createClass(id, periodo)
-        cl = ClassTestDataAndOperations.get_Class(id, periodo)
+        c = ClassTestDataAndOperations.get_Class(id,periodo)
+        assert ClassTestDataAndOperations.get_Class(id,periodo) != null
 }
+
 Then(~'^the class "([^"]*)" with period "([^"]*)" is properly stored in the system$'){
-    String id, periodo ->
-        assert ClassTestDataAndOperations.compatibleTo(id, periodo, cl)
+    String id, String periodo ->
+        assert ClassTestDataAndOperations.compatibleTo(id, periodo, c)
 }
 
 Given(~'^the system already has a class with ID "([^"]*)" and period "([^"]*)"$'){
     String id, String periodo ->
-        assert ClassTestDataAndOperations.get_Class(id, periodo) != null
+        ClassTestDataAndOperations.createClass(id,periodo)
+        c = ClassTestDataAndOperations.get_Class(id, periodo)
+        assert c != null
 }
-When(~'^I add a class with ID "([^"]*)" and period "([^"]*)"$'){
-    String id, String periodo ->
-        ClassTestDataAndOperations.createClass(id, periodo)
-        cl = ClassTestDataAndOperations.get_Class(id, periodo)
-}
+
 Then(~'^the class "([^"]*)" with period "([^"]*)" is not stored twice in the system$'){
     String id, periodo ->
-        assert !ClassTestDataAndOperations.compatibleTo(id, periodo, cl)
+        assert ClassTestDataAndOperations.onlyClass(id,periodo)
 }
 
-Given(~'^I am at the Create Class page$'){
-    String page ->
-        to TurmasPage
-        at TurmasPage
+Given(~/^I am at the Create Class page$/){
+    ->
+        to CreateClassPage
+        at CreateClassPage
 
 }
-When(~'^I fill the class details with name "([^"]*)", period "([^"]*)"$') {
+
+When(~/^I fill the class details with name "([^"]*)", period "([^"]*)"$/) {
     String id, String periodo ->
-        at TurmasPage
+        at CreateClassPage
         page.fillClassDetails(id, periodo)
 
 }
-And(~'^I save the class$'){
+
+And(~/^I save the class$/){
     ->
     at CreateClassPage
     page.selectCreateClass()
 }
-Then(~'^I can see a confirmation message$'){
+//errado aqui tbm
+Then(~/^I can see a confirmation message$/){
     ->
     at CreateClassPage
 }
-And(~'^I can see the information for class "([^"]*)", period "([^"]*)" at the Turmas page$'){
+
+And(~'^I can see the information for class "([^"]*)", period "([^"]*)" at the Turma Lista page$'){
     String id, String periodo ->
         to TurmasPage
         at TurmasPage
-        page.assertClass(id, periodo)
+        assert page.confirmTurma(id,periodo)
 }
-
 Given(~'^the system already has a class with name "([^"]*)" and period "([^"]*)"$'){
     String id, String periodo ->
         to CreateClassPage
         at CreateClassPage
         page.fillClassDetails(id, periodo)
-}
-And(~'^I am at the Create Class page$'){
-    String page ->
-        to CreateClassPage
-        at CreateClassPage
+        page.selectCreateClass()
 }
 When(~'^I fill the class details with name "([^"]*)" and period "([^"]*)"$'){
     String id, String periodo ->
         at CreateClassPage
         page.fillClassDetails(id, periodo)
-}
-And(~'^I save the class$'){
-    ->
-    at CreateClassPage
-    page.selectCreateClass()
+        page.selectCreateClass()
 }
 Then(~'^I see an error message$'){
     ->
     at CreateClassPage
     page.checkErrors()
 }
+//muito errado
 And(~'^I am taken to the Turmas page where class "([^"]*)", period "([^"]*)" is not listed twice$'){
     String id, String periodo ->
         to TurmasPage
