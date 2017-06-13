@@ -101,4 +101,11 @@ class MatriculaController {
             '*'{ render status: NOT_FOUND }
         }
     }
+
+    Matricula salvar(Aluno aluno){
+        Matricula matricula = new Matricula(aluno)
+        matricula.save flush: true
+
+        return Matricula.findByAluno(aluno)
+    }
 }

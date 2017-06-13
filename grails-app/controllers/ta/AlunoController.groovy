@@ -105,6 +105,7 @@ class AlunoController {
     boolean alunoExiste(String loginCin){
 
         def aluno = Aluno.findByLoginCin(loginCin)
+        println(aluno)
 
         if (aluno!=null){
             return true
@@ -112,4 +113,6 @@ class AlunoController {
 
         return false
     }
+
+
 }

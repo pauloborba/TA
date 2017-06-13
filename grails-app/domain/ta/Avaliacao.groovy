@@ -16,11 +16,11 @@ class Avaliacao {
         conceito inList :["MA","MPA","MANA","--"], blank :false
     }
 
-    public Avaliacao(String nome, String meta, String conceito, String idTurma) {
+    public Avaliacao(String nome, String meta, String conceito, Turma turma) {
         this.nome = nome
         this.meta = Meta.findByNome(meta)
         this.conceito = conceito
-        this.turma = Turma.findById(Long.parseLong(idTurma))
+        this.turma = turma
         this.resultados = []
     }
 

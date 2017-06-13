@@ -24,98 +24,6 @@ class AvaliacaoController {
     def create() {
         respond new Avaliacao(params)
     }
-    //-----------------------------------------
-
-    def importarAvaliacao() {
-        respond new Avaliacao(params)
-    }
-
-    String getPath(){
-        def path = null
-
-        String content = request.getContentType()
-        if (content.contains("multipart/form-data") || (request instanceof MultipartHttpServletRequest)) {
-            MultipartFile uploadedFile = request.getFile('sheet')
-            if (!uploadedFile) {
-                flash.message = "No attachment found for upload!"
-            }else{
-                flash.message = "File uploaded successfully."
-
-                String nomeOriginal = uploadedFile.getOriginalFilename()
-
-                if(nomeOriginal.contains(".xls")){
-                    def completePath = servletContext.getRealPath('/')
-                    File spreadsheet = new File(completePath, 'spreadsheets.xls')
-                    uploadedFile.transferTo(spreadsheet)
-
-                    path = spreadsheet.getAbsolutePath()
-                    println("PATH - " + path)
-                }else{
-                    flash.message = "Arquivo não tem o formato .xls"
-                }
-            }
-        } else {
-            flash.message = "Unable to upload file, Bad Request!"
-        }
-
-        return path
-    }
-
-    def salvarAvaliacoes(){
-
-        def path = getPath()
-
-        //path para teste
-        //def defaultPathBase = new File( "." ).getCanonicalPath()
-        //println ("Current dir: " + defaultPathBase + "/test/resources/arq.xls")
-        //path = defaultPathBase + "/test/resources/arq.xls"
-
-        if (path != null){
-            PlanilhaAvaliacao avaliacoes = PlanilhaFactory.getPlanilha(path, "avaliacao")
-
-            String idTurma = (String)params.turma.id
-            String nomeAvaliacao = params.nome
-            def titulosPlanilha = avaliacoes.getTitulosPlanilha()
-
-            def logins = avaliacoes.logins
-            def metas = avaliacoes.metas
-
-            def turma = Turma.findById(params.turma.id)
-            def metasTurma = turma.metas
-
-
-
-            for(int i=1; i<avaliacoes.sizeLinha; i++){
-
-                String loginCin = avaliacoes.getLinha(i).get(0)
-                Aluno aluno = Aluno.findByLoginCin(loginCin)
-                Matricula matricula = Matricula.findByAluno(aluno)
-
-                if(TurmaController.alunoEstaNaTurma(loginCin , turma)){
-                    for (int j=1; j<avaliacoes.sizeColuna; j++){
-
-                        def linhaPlanilha = avaliacoes.getLinha(i)
-                        def meta = titulosPlanilha.get(j)
-                        def conceito = linhaPlanilha.get(j)
-
-                        if (TurmaController.metaEstaNaTurma(meta, turma)){
-                            Avaliacao novaAvaliacao = new Avaliacao(nomeAvaliacao, meta, conceito, idTurma)
-                            novaAvaliacao.save flush: true
-
-                            //verificar se a avaliacao e a matricula existe no sistema
-                            if(novaAvaliacao!=null && matricula!=null){
-                                matricula.avaliacoes.add(Avaliacao.findById(novaAvaliacao.id))
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        redirect action:"index", method:"GET"
-    }
-
-    //-----------------------------------------
 
     @Transactional
     def save(Avaliacao avaliacaoInstance) {
@@ -193,6 +101,91 @@ class AvaliacaoController {
                 redirect action: "index", method: "GET"
             }
             '*'{ render status: NOT_FOUND }
+        }
+    }
+
+    def importarAvaliacao() {
+        respond new Avaliacao(params)
+    }
+
+    String getPath(){
+        def path = null
+
+        String content = request.getContentType()
+        if (content.contains("multipart/form-data") || (request instanceof MultipartHttpServletRequest)) {
+            MultipartFile uploadedFile = request.getFile('sheet')
+            if (!uploadedFile) {
+                flash.message = "No attachment found for upload!"
+            }else{
+                flash.message = "File uploaded successfully."
+
+                String nomeOriginal = uploadedFile.getOriginalFilename()
+
+                if(nomeOriginal.contains(".xls")){
+                    def completePath = servletContext.getRealPath('/')
+                    File spreadsheet = new File(completePath, 'spreadsheets.xls')
+                    uploadedFile.transferTo(spreadsheet)
+
+                    path = spreadsheet.getAbsolutePath()
+                    println("PATH - " + path)
+                }else{
+                    flash.message = "Arquivo não tem o formato .xls"
+                }
+            }
+        } else {
+            flash.message = "Unable to upload file, Bad Request!"
+        }
+
+        return path
+    }
+
+    def salvarAvaliacoes(){
+
+        def path = getPath()
+
+        //path para teste
+        //def defaultPathBase = new File( "." ).getCanonicalPath()
+        //println ("Current dir: " + defaultPathBase + "/test/resources/arq.xls")
+        //path = defaultPathBase + "/test/resources/arq.xls"
+
+        if (path != null){
+            Turma turma = Turma.findById(params.turma.id)
+            String nomeAvaliacao = params.nome
+            salvarAvaliacoesAux(path, turma, nomeAvaliacao)
+        }
+
+        redirect action:"index", method:"GET"
+    }
+
+    def salvarAvaliacoesAux(String path, Turma turma, String nomeAvaliacao){
+        PlanilhaAvaliacao avaliacoes = PlanilhaFactory.getPlanilha(path, "avaliacao")
+
+        def titulosPlanilha = avaliacoes.getTitulosPlanilha()
+
+        for(int i=1; i<avaliacoes.sizeLinha; i++){
+
+            String loginCin = avaliacoes.getLinha(i).get(0)
+            Aluno aluno = Aluno.findByLoginCin(loginCin)
+            Matricula matricula = Matricula.findByAluno(aluno)
+
+            if(TurmaController.alunoEstaNaTurma(loginCin , turma)){
+                for (int j=1; j<avaliacoes.sizeColuna; j++){
+
+                    def linhaPlanilha = avaliacoes.getLinha(i)
+                    def meta = titulosPlanilha.get(j)
+                    def conceito = linhaPlanilha.get(j)
+
+                    if (TurmaController.metaEstaNaTurma(meta, turma)){
+                        Avaliacao novaAvaliacao = new Avaliacao(nomeAvaliacao, meta, conceito, turma)
+                        novaAvaliacao.save flush: true
+
+                        //verificar se a avaliacao e a matricula existe no sistema
+                        if(novaAvaliacao!=null && matricula!=null){
+                            matricula.avaliacoes.add(Avaliacao.findById(novaAvaliacao.id))
+                        }
+                    }
+                }
+            }
         }
     }
 }

@@ -15,6 +15,11 @@ class Matricula {
         this.avaliacoes = []
     }
 
+    Matricula(Aluno aluno) {
+        this.aluno = aluno
+        this.avaliacoes = []
+    }
+
     String toString() {
         return aluno.toString()
     }

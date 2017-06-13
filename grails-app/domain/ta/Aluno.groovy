@@ -13,6 +13,13 @@ class Aluno {
         loginGitHub unique : true , blank : false
     }
 
+    Aluno(String nome, String loginCin, String loginSlack, String loginGitHub) {
+        this.nome = nome
+        this.loginCin = loginCin
+        this.loginSlack = loginSlack
+        this.loginGitHub = loginGitHub
+    }
+
     @Override
     String toString() {
         return nome

@@ -29,7 +29,7 @@ Feature: Importar Avaliação
 
 #Controller Scenario
   Scenario: Importar Avaliação de uma Planilha
-    Given existe uma planilha "/Users/isaacdouglas1/git/TA/test/resources/arq.xls" com os conceitos da meta "Escrever bem requisitos" de um "Formulário"
+    Given existe uma planilha "/Users/isaacdouglas1/git/TA/test/resources/arq.xls" com os conceitos da meta "Escrever bem requisitos" de um "Formulário" da turma "ESS"
     And o aluno "idrn" tem o conceito "MA"
     And o aluno "wfmf" tem o conceito "MPA"
     When eu tento salvar as avaliações com os conceitos da meta "Escrever bem requisitos" do "Formulário"

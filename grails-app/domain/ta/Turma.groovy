@@ -15,6 +15,12 @@ class Turma {
         this.metas = []
     }
 
+    Turma(String nome) {
+        this.nome = nome
+        this.matriculas = []
+        this.metas = []
+    }
+
     String toString() {
         return nome
     }

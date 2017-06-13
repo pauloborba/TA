@@ -136,5 +136,14 @@ class TurmaController {
         return sim
     }
 
+    def salvar(String nome){
+        Turma turma = new Turma(nome)
+        turma.save flush: true
+    }
+
+    boolean turmaExiste(String nome){
+        return Turma.findByNome(nome)
+    }
+
 
 }
