@@ -1,6 +1,69 @@
 import javafx.beans.binding.When
 import org.spockframework.compiler.model.ThenBlock
 
+/* #Cenario Controller
+
+  Scenario: Media de turma
+
+    Given eu tenho uma turma "2017.1"
+    And o aluno "Pedro" esta matriculado em "2017.1"
+    And "Pedro" possui media final
+    And o aluno "Douglas" esta matriculado em "2017.1"
+    And "Douglas" possui media final
+    And o aluno "Jeff" esta matriculado em "2017.1"
+    And "Jeff" possui media final
+    When eu seleciono a turma "2017.1"
+    Then a media geral de "2017.1" e calculada*/
+
+Given(~'^eu tenho uma turma "[(^")*]" cadastrada$'){
+    String nome ->
+}
+And(~'^o aluno "[(^")*]" esta matriculado em "[(^")*]"$'){
+    String nome, String nomeA  ->
+}
+And(~'^"[(^")*]"possui media final$'){
+    String nome ->
+}
+And(~'^o aluno "[(^")*]" esta matriculado em "[(^")*]"$'){
+    String nome, String nomeA  ->
+}
+And(~'^"[(^")*]"possui media final$'){
+    String nome ->
+}
+And(~'^o aluno "[(^")*]" esta matriculado em "[(^")*]"$'){
+    String nome, String nomeA  ->
+}
+And(~'^"[(^")*]"possui media final$'){
+    String nome ->
+}
+When(~'^eu seleciono a turma "[(^")*]"$'){
+    String nome ->
+}
+Then(~'^a media geral de "[(^")*]" e calculada$'){
+    String nome ->
+}
+
+ /*#Cenario GUI
+
+  Scenario: Exibir media geral
+    Given eu estou na pagina de "Turmas List"
+    And eu tenho a turma "2017.1"
+    When eu seleciono a turma "2017.1" para ver os alunos
+    Then eu consigo ver a media geral de "2017.1"*/
+
+Given(~'^eu estou na pagina de "[(^")*]"$'){
+    String page ->
+}
+And(~'^eu tenho a turma "[(^")*]"$'){
+    String nome ->
+}
+When(~'^eu seleciono a turma "[(^")*]" para ver os alunos$' ){
+    String nome ->
+}
+Then(~'^eu consigo ver a media geral de "[(^")*]"$'){
+    String nome ->
+}
+
 /*Cenário Controller
 Scenario: Quantidade de turmas superadas
 

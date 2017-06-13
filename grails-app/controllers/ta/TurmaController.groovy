@@ -11,9 +11,41 @@ class TurmaController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     int totalTurma = 0
-    int mediaGeral =0
+    double mediaGeral = 0
     int numAM = 0
     int numA = 0
+
+    //inicio de testes
+
+    def calcularMedia(){
+        for(int i=0; i < matriculas.size(); i++){
+            mediaGeral = mediaGeral + matriculas[i].media
+        }
+        totalTurma = matriculas.size()
+        mediaGeral = mediaGera.div(totalTurma)
+    }
+
+    def contAM(){
+        for(int i = 0; i < matriculas.size(); i++){
+            if (matriculas[i].aprovacao == "AP"){
+                numAM = numAM + 1
+            }
+        }
+        totalTurma = matriculas.size()
+        numAM = (numAM * 100) / totalTurma
+    }
+
+    def contA(){
+        for(int i = 0; i < matriculas.size(); i++){
+            if (matriculas[i].aprovacao == "A"){
+                numA = numA + 1
+            }
+        }
+        totalTurma = matriculas.size()
+        numA = (numA * 100) / totalTurma
+    }
+
+    // fim de testes
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)

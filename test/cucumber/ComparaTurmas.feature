@@ -3,7 +3,29 @@ Feature: Estatistica da Turma
   Eu quero ver como ver como uma única turma se compara com as demais
   Para que eu possa medir se as mudanças aplicadas a didatica foram positivas ou negativas
 
- #Cenário Controller
+ #Cenario Controller
+
+  Scenario: Media de turma
+
+    Given eu tenho uma turma "2017.1"
+    And o aluno "Pedro" esta matriculado em "2017.1"
+    And "Pedro" possui media final
+    And o aluno "Douglas" esta matriculado em "2017.1"
+    And "Douglas" possui media final
+    And o aluno "Jeff" esta matriculado em "2017.1"
+    And "Jeff" possui media final
+    When eu seleciono a turma "2017.1"
+    Then a media geral de "2017.1" e calculada
+
+ #Cenario GUI
+
+  Scenario: Exibir media geral
+    Given eu estou na pagina de "Turmas List"
+    And eu tenho a turma "2017.1"
+    When eu seleciono a turma "2017.1" para ver os alunos
+    Then eu consigo ver a media geral de "2017.1"
+
+ #Cenario Controller
   Scenario: Quantidade de turmas superadas
 
     Given eu tenho uma turma "2017.1" cadastrada
@@ -34,6 +56,7 @@ Feature: Estatistica da Turma
          de alunos aprovados por media inferior a "2017.1" e calculado
 
  #Cenário GUI
+
   Scenario: Exibir comparacao
     Given eu estou na pagina de "Turmas List"
     And eu tenho a turma "2017.1"

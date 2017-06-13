@@ -2,7 +2,6 @@ package ta
 
 class Matricula {
     Aluno aluno
-    Turma turma
     List avaliacoes
     Double media
     String aprovacao
