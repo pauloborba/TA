@@ -82,8 +82,8 @@ class ClassTestDataAndOperations {
         MatriculaController matriculaController = new MatriculaController()
 
         for(int i=0; i< logins.size(); i++) {
-            Aluno aluno = new Aluno(logins.get(i), logins.get(i), logins.get(i), logins.get(i),)
-            aluno.save flush: true
+            alunoController.params << [nome: logins.get(i), loginCin: logins.get(i), loginSlack: logins.get(i), loginGitHub: logins.get(i)]
+            Aluno aluno = alunoController.salvar()
 
             assert alunoController.alunoExiste(logins.get(i)) //sai do teste se nao conseguir criar o estudante
 

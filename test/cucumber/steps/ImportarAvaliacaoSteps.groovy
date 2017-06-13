@@ -25,7 +25,7 @@ Turma turmaGlobal = null
 
 Given(~/^existe uma planilha "([^"]*)" com os conceitos da meta "([^"]*)" de um "([^"]*)" da turma "([^"]*)"$/) { String planilha, String meta, String origem, String turma ->
 
-    ClassTestDataAndOperations.deletarTudo()
+//    ClassTestDataAndOperations.deletarTudo()
 
     File file = ClassTestDataAndOperations.arquivo(planilha)
     assert file.exists() // se nao existir o arquivo sai do teste
@@ -46,9 +46,9 @@ Given(~/^existe uma planilha "([^"]*)" com os conceitos da meta "([^"]*)" de um 
 
     //verifica se na planilha existe os conceitos da meta
     PlanilhaAvaliacao avaliacoes = PlanilhaFactory.getPlanilha(pathGlobal, "avaliacao")
-    assert avaliacoes.metaExiste(meta) // se nao exister o conceito na planilha sai do teste
+    assert avaliacoes.metaExiste(meta) // se nao existir o conceito na planilha sai do teste
 
-    //criando alunos na turma
+    //criando alunos e matriculando na turma
     ClassTestDataAndOperations.criarAlunosNaTurma(turmaGlobal, avaliacoes)
 
 }
@@ -60,7 +60,7 @@ And(~/^o aluno "([^"]*)" tem o conceito "([^"]*)" na meta "([^"]*)"$/) { String 
 When(~/^eu tento salvar as avaliações com os conceitos da meta "([^"]*)" do "([^"]*)"$/) { String meta, String origem ->
 
     AvaliacaoController avaliacaoController = new AvaliacaoController()
-    avaliacaoController.salvarAvaliacoesAux(pathGlobal, turmaGlobal, origemAvaliacaoGlobal)
+    avaliacaoController.salvarAvaliacoesAux(pathGlobal, turmaGlobal, origem)
 
 }
 Then(~/^o aluno "([^"]*)" fica com o conceito "([^"]*)" na meta "([^"]*)"$/) { String login, String conceito, String meta ->
@@ -94,9 +94,41 @@ Given(~/^existe uma planilha "([^"]*)" com os conceitos de varias metas de uma "
 
 //    ClassTestDataAndOperations.deletarTudo()
 
+    File file = ClassTestDataAndOperations.arquivo(planilha)
+    assert file.exists() // se nao existir o arquivo sai do teste
+
+    pathGlobal = file.path
+    origemAvaliacaoGlobal = origem
+
+    PlanilhaAvaliacao avaliacoes = PlanilhaFactory.getPlanilha(pathGlobal, "avaliacao")
+
+    //criando varias metas
+    avaliacoes.metas.each{ nomeMeta ->
+        assert ClassTestDataAndOperations.criarMeta(nomeMeta) != null
+    }
+
+    //cria uma turma
+    turmaGlobal = ClassTestDataAndOperations.criarTurma(turma)
+    assert turmaGlobal != null
+
+    //adicionando metas na turma
+    Meta.list().each { meta ->
+        turmaGlobal.metas.add(meta)
+    }
+
+    //verifica se na planilha existe os conceitos das metas
+    Meta.list().each { m ->
+        assert avaliacoes.metaExiste(m.nome) // se nao existir o conceito na planilha sai do teste
+    }
+
+    //criando alunos e matriculando na turma
+    ClassTestDataAndOperations.criarAlunosNaTurma(turmaGlobal, avaliacoes)
+
 }
 
-When(~/^eu tento salvar as avaliações com os conceitos de todas as metas da turma "([^"]*)"$/) { String arg1 ->
+When(~/^eu tento salvar as avaliações com os conceitos de todas as metas da "([^"]*)"$/) { String origem ->
 
+    AvaliacaoController avaliacaoController = new AvaliacaoController()
+    avaliacaoController.salvarAvaliacoesAux(pathGlobal, turmaGlobal, origem)
 
 }

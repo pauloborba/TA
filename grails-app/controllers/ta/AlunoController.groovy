@@ -114,5 +114,12 @@ class AlunoController {
         return false
     }
 
+    Aluno salvar(){
+        Aluno aluno = new Aluno(params)
+        aluno.save flush: true
+
+        return Aluno.findByLoginCin(params.loginCin)
+    }
+
 
 }

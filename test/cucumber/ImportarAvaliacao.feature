@@ -40,14 +40,14 @@ Feature: Importar Avaliação
   Scenario: Importar Todas as Avaliacoes de uma Planilha
     Given existe uma planilha "arq.xls" com os conceitos de varias metas de uma "Prova" da turma "ESS"
     And o aluno "idrn" tem o conceito "MA" na meta "Escrever bem requisitos"
-#    And o aluno "idrn" tem o conceito "MANA" na meta "Entender conceitos de gerencia de projetos"
+    And o aluno "idrn" tem o conceito "MANA" na meta "Entender conceitos de gerencia de projetos"
     And o aluno "wfmf" tem o conceito "MPA" na meta "Escrever bem requisitos"
-#    And o aluno "wfmf" tem o conceito "MA" na meta "Entender conceitos de gerencia de projetos"
-    When eu tento salvar as avaliações com os conceitos de todas as metas da turma "ESS"
+    And o aluno "wfmf" tem o conceito "MA" na meta "Entender conceitos de gerencia de projetos"
+    When eu tento salvar as avaliações com os conceitos de todas as metas da "Prova"
     Then o aluno "idrn" fica com o conceito "MA" na meta "Escrever bem requisitos"
-#    And o aluno "idrn" fica com o conceito "MANA" na meta "Entender conceitos de gerencia de projetos"
+    And o aluno "idrn" fica com o conceito "MANA" na meta "Entender conceitos de gerencia de projetos"
     And o aluno "wfmf" fica com o conceito "MPA" na meta "Escrever bem requisitos"
-#    And o aluno "wfmf" fica com o conceito "MA" na meta "Entender conceitos de gerencia de projetos"
+    And o aluno "wfmf" fica com o conceito "MA" na meta "Entender conceitos de gerencia de projetos"
 
 
 
