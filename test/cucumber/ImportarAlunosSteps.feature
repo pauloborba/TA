@@ -9,7 +9,7 @@ Feature: Add students from spreadsheet
     And the system has the class "ESS 2016-2"
     When I import the file "file.xls" for the "ESS 2016.2" class
     Then the system adds the student "WELLINGTON FELIX MARTINS FILHO" with cin username "wfmf" to the class "ESS 2016-2"
-    
+
   #GUI Scenario
   Scenario: Import students from spreadsheet
     Given I am at the "Add Students" page

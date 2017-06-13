@@ -13,9 +13,9 @@ import ta.TurmaController
  * Created by wellington.felix on 6/12/17.
  */
 class ImportAlunosDataAndOperations {
-    static String path = AlunoController.servletContext.getRealPath('/')
-    static AlunoController alunoCtrl = AlunoController
-    static TurmaController turmaCtrl = TurmaController
+    static AlunoController alunoCtrl = new AlunoController()
+    static TurmaController turmaCtrl = new TurmaController()
+    static String path = "C:\\Users\\wfeli\\IdeaProjects\\TA\\test\\resources\\alunos.xls"
     static Turma turma
     static PlanilhaAlunos planilha
 
@@ -24,7 +24,8 @@ class ImportAlunosDataAndOperations {
      * @param path
      */
     static void assertFileExists(String file) {
-        assert new File(path, file).exists()
+        //print("FULL_PATH: " + new File().getAbsoluteFile())
+        assert new File(path).exists()
     }
 
     /**
@@ -33,11 +34,11 @@ class ImportAlunosDataAndOperations {
      * @param cinUsername
      */
     static void assertStudentIsInSpreadsheet(String fileName, String cinUsername) {
-        planilha = PlanilhaFactory.getPlanilha(path: fileName, tipoPlanilha:'addaluno')
+        planilha = PlanilhaFactory.getPlanilha(path, 'addaluno')
         def aluno = planilha.alunos.find {
-            it.loginCin.equals(cinUsername)
+            (it.loginCin == cinUsername)
         }
-        assert !aluno
+        assert aluno
     }
 
     /**
@@ -46,7 +47,7 @@ class ImportAlunosDataAndOperations {
      */
     static void createAndSaveClass(String className) {
         turmaCtrl = new TurmaController()
-        turmaCtrl.params.turma.nome = className
+        turmaCtrl.params << [nome: className]
         Turma ess = turmaCtrl.create()
         turmaCtrl.save(ess)
     }
@@ -56,10 +57,10 @@ class ImportAlunosDataAndOperations {
      * @param path
      * @param className
      */
-    static void uploadSpreadsheet(String path, String className) {
+    static void uploadSpreadsheet(String file, String className) {
         turma = Turma.findByNome(className)
-        alunoCtrl.request.addFile(new File(path) as MultipartFile)
-        alunoCtrl.params.turma.id = turma.id
+        alunoCtrl.request.addFile(new File('file') as MultipartFile)
+        alunoCtrl.params.turma = turma
         alunoCtrl.upload()
     }
 
