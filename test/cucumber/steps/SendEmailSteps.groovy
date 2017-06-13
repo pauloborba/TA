@@ -1,3 +1,6 @@
+import steps.AlunoTestDataAndOperations
+import steps.TurmaTestDataAndOperations
+import steps.MatriculaTestDataAndOperations
 import ta.Avaliacao
 import ta.AvaliacaoController
 import ta.MatriculaController
@@ -19,20 +22,19 @@ this.metaClass.mixin(cucumber.api.groovy.EN)
 
 
 Given(~'^que o sistema tem o aluno "([^"]*)" matriculado na turma "([^"]*)"$'){ String nomeAluno, String nomeTurma ->
-    def alunoController = new AlunoController()
     def turmaController = new TurmaController()
     def matriculaController = new MatriculaController()
 
-    criarAluno(nomeAluno,alunoController)
-    Aluno aluno = Aluno.findByNome(nomeAluno)
+    AlunoTestDataAndOperations.criarAluno(nomeAluno)
+    Aluno aluno = AlunoTestDataAndOperations.getAluno(nomeAluno)
 
-    criarTurma(nomeTurma,turmaController)
-    Turma turma = Turma.findByNome(nomeTurma)
+    TurmaTestDataAndOperations.criarTurma(nomeTurma)
+    Turma turma = TurmaTestDataAndOperations.getTurma(nomeTurma)
 
-    criarMatricula(aluno, turma, matriculaController)
-    Matricula matricula = Matricula.findByAluno(aluno)
+    MatriculaTestDataAndOperations.criarMatricula(aluno, turma)
+    Matricula matricula = MatriculaTestDataAndOperations.getMatricula(aluno)
 
-    assert aluno!=null
+    assert matricula.aluno == aluno && matricula.turma == turma
 }
 
 And(~'^o aluno "([^"]*)" tem conceito "([^"]*)" na meta "([^"]*)" e conceito "([^"]*)" na meta "([^"]*)" na avaliação "([^"]*)"$'){
@@ -132,8 +134,8 @@ def atualizaMatricula(Matricula matricula, MatriculaController matriculaControll
 }
 
 
-def criarAluno(String nome, AlunoController alunoController) {
-    alunoController.params << [nome: nome]
+def criarAluno(String nomeAluno, AlunoController alunoController) {
+    alunoController.params << [nome: nomeAluno, loginCin:"loginCin",loginSlack:"loginSlack",loginGitHub:"loginGitHub"]
     alunoController.save()
     alunoController.response.reset()
 }

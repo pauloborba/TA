@@ -46,6 +46,23 @@ class MatriculaController {
         }
     }
 
+    @Transactional
+    def createAndSaveMatricula() {
+        Matricula matriculaInstance = new Matricula(params)
+        if (Matricula.findByAluno(matriculaInstance.aluno) == null) {
+            if (matriculaInstance.hasErrors()) {
+                respond matriculaInstance.errors, view: 'create'
+                return
+            }
+            if(!matriculaInstance.save(flush: true)){
+                render(view: "create", model: [classInstance: matriculaInstance])
+                return
+            }
+            flash.message = message(code: 'default.created.message', args: [message(code: 'matricula.label', default: 'Class'), matriculaInstance.aluno])
+            redirect(action: "show", id: matriculaInstance.aluno)
+        }
+    }
+
     def edit(Matricula matriculaInstance) {
         respond matriculaInstance
     }
@@ -100,5 +117,14 @@ class MatriculaController {
             }
             '*'{ render status: NOT_FOUND }
         }
+    }
+
+    public Matricula getMatricula() {
+        //def alunoInstance = new Aluno(params)
+        return Matricula.findByAluno(params.aluno)
+    }
+
+    public int onlyMatricula() {
+        return Matricula.all.size()
     }
 }

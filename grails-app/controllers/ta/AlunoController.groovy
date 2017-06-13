@@ -46,6 +46,23 @@ class AlunoController {
         }
     }
 
+    @Transactional
+    def createAndSaveAluno() {
+        Aluno alunoInstance = new Aluno(params)
+        if (Aluno.findByNome(alunoInstance.nome) == null) {
+            if (alunoInstance.hasErrors()) {
+                respond alunoInstance.errors, view: 'create'
+                return
+            }
+            if(!alunoInstance.save(flush: true)){
+                render(view: "create", model: [classInstance: alunoInstance])
+                return
+            }
+            flash.message = message(code: 'default.created.message', args: [message(code: 'class.label', default: 'Class'), alunoInstance.nome])
+            redirect(action: "show", id: alunoInstance.nome)
+        }
+    }
+
     def edit(Aluno alunoInstance) {
         respond alunoInstance
     }
@@ -100,5 +117,14 @@ class AlunoController {
             }
             '*'{ render status: NOT_FOUND }
         }
+    }
+
+    public Aluno getAluno() {
+        //def alunoInstance = new Aluno(params)
+        return Aluno.findByNome(params.nome)
+    }
+
+    public int onlyAluno() {
+        return Aluno.all.size()
     }
 }

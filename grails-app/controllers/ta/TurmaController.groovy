@@ -46,6 +46,23 @@ class TurmaController {
         }
     }
 
+    @Transactional
+    def createAndSaveTurma() {
+        Turma turmaInstance = new Turma(params)
+        if (Turma.findByNome(turmaInstance.nome) == null) {
+            if (turmaInstance.hasErrors()) {
+                respond turmaInstance.errors, view: 'create'
+                return
+            }
+            if(!turmaInstance.save(flush: true)){
+                render(view: "create", model: [classInstance: turmaInstance])
+                return
+            }
+            flash.message = message(code: 'default.created.message', args: [message(code: 'turma.label', default: 'Class'), turmaInstance.nome])
+            redirect(action: "show", id: turmaInstance.nome)
+        }
+    }
+
     def edit(Turma turmaInstance) {
         respond turmaInstance
     }
@@ -100,5 +117,14 @@ class TurmaController {
             }
             '*'{ render status: NOT_FOUND }
         }
+    }
+
+    public Turma getTurma() {
+        //def alunoInstance = new Aluno(params)
+        return Turma.findByNome(params.nome)
+    }
+
+    public int onlyTurma() {
+        return Turma.all.size()
     }
 }
