@@ -15,7 +15,7 @@ Given(~'^the system has no class named "([^"]*)" and period "([^"]*)"$'){
         assert ClassTestDataAndOperations.get_Class(id, periodo) == null
 
 }
-When(~'^I add a class with ID "([^"]*)" and period "([^"]*)"$'){
+When(~'^I add a class with name "([^"]*)" and period "([^"]*)"$'){
     String id, String periodo ->
         ClassTestDataAndOperations.createClass(id, periodo)
         c = ClassTestDataAndOperations.get_Class(id,periodo)
@@ -54,25 +54,17 @@ When(~/^I fill the class details with name "([^"]*)", period "([^"]*)"$/) {
 
 And(~/^I save the class$/){
     ->
-    at CreateClassPage
-    page.selectCreateClass()
+        at CreateClassPage
+        page.selectCreateClass()
 }
-//errado aqui tbm
-Then(~/^I can see a confirmation message, and the information for class "([^"]*)", period "([^"]*)" at the Turma Lista page$/){
-    String id, String periodo ->
-//    at CreateClassPage
-//    page.checkErrors()
-        to TurmasPage
-        at TurmasPage
-        assert page.confirmTurma(id,periodo)
-}
-/*
-And(~'^I can see the information for class "([^"]*)", period "([^"]*)" at the Turma Lista page$'){
+
+Then(~/^I can see a confirmation message, and the information for class "([^"]*)", period "([^"]*)" at the Class Lista page$/){
     String id, String periodo ->
         to TurmasPage
         at TurmasPage
         assert page.confirmTurma(id,periodo)
-}*/
+}
+
 Given(~'^the system already has a class with name "([^"]*)" and period "([^"]*)"$'){
     String id, String periodo ->
         to CreateClassPage
@@ -80,7 +72,7 @@ Given(~'^the system already has a class with name "([^"]*)" and period "([^"]*)"
         page.fillClassDetails(id, periodo)
         page.selectCreateClass()
 }
-When(~'^I fill the class details with name "([^"]*)" and period "([^"]*)"$'){
+When(~'^I fill in the class details with name "([^"]*)" and period "([^"]*)"$'){
     String id, String periodo ->
         at CreateClassPage
         page.fillClassDetails(id, periodo)
@@ -91,11 +83,3 @@ Then(~'^I see an error message$'){
     at CreateClassPage
     page.checkErrors()
 }
-/*
-And(~'^I am taken to the Turmas page where class "([^"]*)", period "([^"]*)" is not listed twice$'){
-    String id, String periodo ->
-        to TurmasPage
-        at TurmasPage
-        page.assertNotDuplicateClass(id, periodo)
-}
-*/
