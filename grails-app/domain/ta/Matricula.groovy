@@ -1,6 +1,7 @@
 package ta
 
 class Matricula {
+    String id
     Aluno aluno
     List avaliacoes
     Double media
@@ -11,11 +12,12 @@ class Matricula {
 
     static constraints = {
         aluno unique: true
-        media unique:true
-        aprovacao inList :["AM","A","R","--"], blank :false
+        media unique:true, nullable: true
+        aprovacao inList :["AM","A","R","--"], blank :false, nullable: true
     }
 
-    public Matricula(Aluno aluno1){
-        this.aluno = aluno
+    public Matricula(String id){
+        this.id = id
+        this.aprovacao = "--"
     }
 }

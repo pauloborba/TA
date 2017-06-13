@@ -1,6 +1,7 @@
 package steps
 
 import ta.Turma
+import ta.Aluno
 import ta.Matricula
 
 /**
@@ -13,20 +14,67 @@ import ta.MatriculaController
 
 class ComparaTurmasTestDataAndOperations {
 
+    // CREATE AND GET TURMA
+
     static void createTurma(String nomeT) {
         def controller = new TurmaController()
         controller.params << [nome:nomeT]
         controller.create()
-        controller.save()
+        controller.createAndSave()
         controller.response.reset()
     }
 
     static Turma getTurma(String nomeT) {
         def controller = new TurmaController()
         controller.params << [nome: nomeT]
-        controller.create()
-        controller.save()
         return controller.getTurma()
+    }
+
+    // CREATE AND GET ALUNO
+
+    static void createAluno(String nomeA) {
+        def controller = new AlunoController()
+        controller.params << [nome:nomeA]
+        controller.create()
+        controller.createAndSave()
+        controller.response.reset()
+    }
+
+    static Aluno getAluno(String nomeT) {
+        def controller = new AlunoController()
+        controller.params << [nome: nomeT]
+        return controller.getAluno()
+    }
+
+    // CREATE AND GET MATRICULA
+
+    /*static void createMatricula(String id) {
+        def controller = new TurmaController()
+        controller.params << [id:id]
+        controller.create()
+        controller.createAndSave()
+        controller.response.reset()
+    }
+
+    static Matricula getMatricula(String id) {
+        def controller = new MatriculaController()
+        controller.params << [id: id]
+        return controller.getMatricula()
+    }*/
+
+    // INSERE MATRICULA EM TURMA
+
+    static void insereEmTurma(String nomeA, nomeT){
+        Aluno a = getAluno(nomeA)
+        Turma t = getTurma(nomeT)
+        t.inserir(a)
+    }
+
+    // CALCULA MEDIA DE TURMA
+
+    public void calculaMedia(String nome){
+        Turma tm = getTurma(nome)
+        print(tm.id)
     }
 
 }

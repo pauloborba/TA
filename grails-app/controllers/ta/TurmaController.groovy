@@ -8,17 +8,51 @@ class TurmaController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    int totalTurma = 0
-    double mediaGeral = 0
-    int numAM = 0
-    int numA = 0
-
     //inicio de testes
 
     Turma getTurma() {
         def turmaInstance = new Turma(params)
         return Turma.findByNome(turmaInstance.nome)
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /*boolean checkAluno(Turma t, Matricula m){
         for(int i = 0; i < t.matriculas.size(); i++){
@@ -95,8 +129,8 @@ class TurmaController {
     def save(Turma turmaInstance) {
         if (turmaInstance == null) {
             notFound()
-            return
         }
+            return
 
         if (turmaInstance.hasErrors()) {
             respond turmaInstance.errors, view:'create'
@@ -113,6 +147,23 @@ class TurmaController {
             '*' { respond turmaInstance, [status: CREATED] }
         }
     }
+
+    def createAndSave() {
+        Turma turmaInstance = new Turma(params)
+        if (Turma.findByNome(turmaInstance.nome) == null) {
+            if (turmaInstance.hasErrors()) {
+                respond turmaInstance.errors, view: 'create'
+                return
+            }
+            if(!turmaInstance.save(flush: true)){
+                render(view: "create", model: [turmaInstance: turmaInstance])
+                return
+            }
+            flash.message = message(code: 'default.created.message', args: [message(code: 'turma.label', default: 'Turma'), turmaInstance.id])
+            redirect(action: "show", id: turmaInstance.id)
+        }
+    }
+
 
     def edit(Turma turmaInstance) {
         respond turmaInstance

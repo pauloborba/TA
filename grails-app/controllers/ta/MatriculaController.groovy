@@ -12,13 +12,40 @@ class MatriculaController {
 
     Matricula getMatricula() {
         def matriculaInstance = new Matricula(params)
-        return Matricula.findByAluno(matriculaInstance.aluno)
+        return Matricula.findById(matriculaInstance.id)
     }
 
-    String checkMedia() {
+    /*String checkMedia() {
         def matriculaInstance = new Matricula(params)
         return Matricula.findByAluno(matriculaInstance.aluno)
-    }
+    }*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -55,6 +82,22 @@ class MatriculaController {
                 redirect matriculaInstance
             }
             '*' { respond matriculaInstance, [status: CREATED] }
+        }
+    }
+
+    def createAndSave() {
+        Matricula matriculaInstance = new Matricula(params)
+        if (Matricula.findById(matriculaInstance.id) == null) {
+            if (matriculaInstance.hasErrors()) {
+                respond matriculaInstance.errors, view: 'create'
+                return
+            }
+            if(!matriculaInstance.save(flush: true)){
+                render(view: "create", model: [matriculaInstance: matriculaInstance])
+                return
+            }
+            flash.message = message(code: 'default.created.message', args: [message(code: 'matricula.label', default: 'Matricula'), matriculaInstance.id])
+            redirect(action: "show", id: matriculaInstance.id)
         }
     }
 

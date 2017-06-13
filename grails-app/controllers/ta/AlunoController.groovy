@@ -10,7 +10,55 @@ class AlunoController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
+
+    Aluno getAluno(){
+        def alunoInstance = new Aluno(params)
+        return Aluno.findByNome(alunoInstance.nome)
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Aluno.list(params), model:[alunoInstanceCount: Aluno.count()]
     }
@@ -43,6 +91,22 @@ class AlunoController {
                 redirect alunoInstance
             }
             '*' { respond alunoInstance, [status: CREATED] }
+        }
+    }
+
+    def createAndSave() {
+        Aluno alunoInstance = new Aluno(params)
+        if (Aluno.findByNome(alunoInstance.nome) == null) {
+            if (alunoInstance.hasErrors()) {
+                respond alunoInstance.errors, view: 'create'
+                return
+            }
+            if(!alunoInstance.save(flush: true)){
+                render(view: "create", model: [alunoInstance: alunoInstance])
+                return
+            }
+            flash.message = message(code: 'default.created.message', args: [message(code: 'aluno.label', default: 'Aluno'), alunoInstance.id])
+            redirect(action: "show", id: alunoInstance.id)
         }
     }
 
