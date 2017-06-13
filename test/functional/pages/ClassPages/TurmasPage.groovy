@@ -9,7 +9,7 @@ class TurmasPage extends Page{
     static url = "class/index"
 
     static at = {
-        title ==~ /Class Listagem/
+        title ==~ /Class List/
     }
 
     def assertClass(id, periodo){
