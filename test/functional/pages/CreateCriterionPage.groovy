@@ -12,7 +12,7 @@ class CreateCriterionPage extends Page {
     static url = "criterion/create"
 
     static at = {
-        title ==~ /Criar Criterion/
+        title ==~ /Create Criterion/
     }
 
     def createCriterion(desc) {

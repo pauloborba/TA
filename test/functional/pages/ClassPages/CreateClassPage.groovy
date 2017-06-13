@@ -8,7 +8,7 @@ class CreateClassPage extends Page{
     static url = "class/create"
 
     static at = {
-        title ==~ /Criar Class/
+        title ==~ /Create Class/
     }
 
     def fillClassDetails(String id, String periodo){
