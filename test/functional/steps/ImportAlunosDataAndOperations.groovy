@@ -15,7 +15,7 @@ import ta.TurmaController
 class ImportAlunosDataAndOperations {
     static AlunoController alunoCtrl = new AlunoController()
     static TurmaController turmaCtrl = new TurmaController()
-    static String path = "C:\\Users\\wfeli\\IdeaProjects\\TA\\test\\resources\\alunos.xls"
+    static String path = "C:\\Users\\wfeli\\IdeaProjects\\TA\\test\\resources\\sheet.xls"
     static Turma turma
     static PlanilhaAlunos planilha
 
@@ -48,8 +48,7 @@ class ImportAlunosDataAndOperations {
     static void createAndSaveClass(String className) {
         turmaCtrl = new TurmaController()
         turmaCtrl.params.nome = className
-        Turma ess = turmaCtrl.create()
-        assert ess.nome == "ESS 2016-2"
+        def ess = (Turma)turmaCtrl.create()
         turmaCtrl.save(ess)
     }
 
@@ -60,8 +59,9 @@ class ImportAlunosDataAndOperations {
      */
     static void uploadSpreadsheet(String file, String className) {
         turma = Turma.findByNome(className)
-        alunoCtrl.request.addFile(new File('sheet') as MultipartFile)
-        alunoCtrl.params.file = path
+        alunoCtrl.request.addFile(new File(path) as MultipartFile)
+//        alunoCtrl.request.addFile(path, new File(path).getBytes())
+        //alunoCtrl.params.file = path
         alunoCtrl.params.turma = turma
         alunoCtrl.upload()
     }

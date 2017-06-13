@@ -3,13 +3,14 @@ package ta
 import grails.transaction.Transactional
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.multipart.MultipartHttpServletRequest
+import java.io.File
 
 import static org.springframework.http.HttpStatus.*
 
 @Transactional(readOnly = true)
 class AlunoController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", upload: "POST"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -121,7 +122,44 @@ class AlunoController {
                 File spreadsheet = new File(completePath, 'spreadsheet.xls')
                 file.transferTo(spreadsheet)
 
+
                 path = spreadsheet.getAbsolutePath()
+            }
+        } else {
+            flash.message = "Houve um erro ao carregar a planilha :("
+            redirect action:"index", method:"GET"
+        }
+
+        if(path) {
+            PlanilhaAlunos planilhaAlunos = PlanilhaFactory.getPlanilha(path, "addaluno")
+            def turma = Turma.findById(params.turma.id)
+            planilhaAlunos.alunos.each {
+                def aluno = Aluno.findByLoginCin(it.loginCin)
+                if(!aluno) {
+                    aluno = it.save()
+                }
+                def matricula = new Matricula(aluno: aluno, turma: turma)
+                matricula.save()
+            }
+            flash.message = "Planilha importada com sucesso!"
+        }
+        redirect action:"index", method:"GET"
+    }
+
+    def uploadTest() {
+        def content = request.getContentType()
+        def path
+
+        if(content.contains("multipart/form-data") || (request instanceof MultipartHttpServletRequest)) {
+            MultipartFile file = request.getFile('sheet') as MultipartFile
+            if(!file) {
+                flash.message = "Nenhuma planilha escolhida!"
+                redirect action:"index", method:"GET"
+            } else {
+                def filename = file.originalFilename()
+                path = servletContext.getRealPath('/') + filename
+
+                //path = spreadsheet.getAbsolutePath()
             }
         } else {
             flash.message = "Houve um erro ao carregar a planilha :("

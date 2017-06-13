@@ -7,4 +7,13 @@ import geb.Page
  */
 class TurmaPage extends Page {
     static url = "/TA/turma/create"
+
+    static at = {
+        title ==~ /Criar Turma/
+    }
+
+    def createAndSaveClass(String className) {
+        $("form").nome = className
+        $("form").create.click()
+    }
 }
