@@ -10,11 +10,9 @@ Feature: Add students from spreadsheet
     When I import the file "file.xls" for the "ESS 2016.2" class
     Then the system adds the student "WELLINGTON FELIX MARTINS FILHO" with cin username "wfmf" to the class "ESS 2016-2"
 
-  #GUI Scenario
-  Scenario: Import students from spreadsheet
-    Given I am at the "Add Students" page
-    And I want to add students from the "alunos.xls" spreadsheet file
-    And The file "alunos.xls" has the student "WELLINGTON FELIX MARTINS FILHO" with user name "wfmf"
-    When I add the "alunos.xls" spreadsheet file
+  Scenario: Import a spreadsheet file
+    Given I have the class "ESS 2017-1"
+    And I am at the "Importar Alunos" page
+    And the class "ESS 2017-1" is registered in the system
+    When I choose the class "ESS 2017-1" and the file "alunos.xls"
     Then I can see the list of all students
-    And the student "WELLINGTON FELIX MARTINS" with user name "wfmf" is listed

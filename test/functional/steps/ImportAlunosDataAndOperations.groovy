@@ -47,8 +47,9 @@ class ImportAlunosDataAndOperations {
      */
     static void createAndSaveClass(String className) {
         turmaCtrl = new TurmaController()
-        turmaCtrl.params << [nome: className]
+        turmaCtrl.params.nome = className
         Turma ess = turmaCtrl.create()
+        assert ess.nome == "ESS 2016-2"
         turmaCtrl.save(ess)
     }
 
@@ -59,7 +60,8 @@ class ImportAlunosDataAndOperations {
      */
     static void uploadSpreadsheet(String file, String className) {
         turma = Turma.findByNome(className)
-        alunoCtrl.request.addFile(new File('file') as MultipartFile)
+        alunoCtrl.request.addFile(new File('sheet') as MultipartFile)
+        alunoCtrl.params.file = path
         alunoCtrl.params.turma = turma
         alunoCtrl.upload()
     }

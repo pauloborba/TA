@@ -1,6 +1,9 @@
 package steps
 
-import ta.*
+import cucumber.api.PendingException
+import pages.ImportarAlunosPage
+import geb.Page
+import pages.TurmaPage
 
 /**
  * Created by wfeli on 12/06/2017.
@@ -25,4 +28,21 @@ When(~/^I import the file "([^"]*)" for the "([^"]*)" class$/) { String path, St
 }
 Then(~/^the system adds the student "([^"]*)" with cin username "([^"]*)" to the class "([^"]*)"$/) { String name, String cinUsername, String className ->
     ImportAlunosDataAndOperations.assertStudentsImported(name, className)
+}
+
+Given(~/^I have the class "([^"]*)"$/) { String className ->
+    to TurmaPage
+    ImportarAlunosPage.createAndSaveClass(className)
+}
+And(~/^I am at the "([^"]*)" page$/) { String page ->
+    //ImportarAlunosPage.gotoImportarAlunos()
+    to ImportarAlunosPage
+}
+And(~/^the class "([^"]*)" is registered in the system$/) { String className ->
+}
+When(~/^I choose the class "([^"]*)" and the file "([^"]*)"$/) { String className, String file ->
+    ImportarAlunosPage.selectClass()
+}
+Then(~/^I can see the list of all students$/) { ->
+
 }

@@ -25,7 +25,7 @@
                 <span class="required-indicator">*</span>
             </label>
             <g:select id="turma" name="turma.id" from="${ta.Turma.list()}" optionKey="id" required="" class="many-to-one"/>
-            <g:field type="file" name="file" required=""/>
+            <g:field type="file" name="sheet" required=""/>
             <g:submitButton name="upload" class="save" value="Upload" />
         </g:uploadForm>
      </div>

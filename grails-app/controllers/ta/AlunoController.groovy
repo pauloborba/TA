@@ -1,11 +1,10 @@
 package ta
 
+import grails.transaction.Transactional
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.multipart.MultipartHttpServletRequest
-import org.springframework.web.multipart.MultipartRequest
 
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class AlunoController {
@@ -113,7 +112,7 @@ class AlunoController {
         def path
 
         if(content.contains("multipart/form-data") || (request instanceof MultipartHttpServletRequest)) {
-            MultipartFile file = request.getFile('file') as MultipartFile
+            MultipartFile file = request.getFile('sheet') as MultipartFile
             if(!file) {
                 flash.message = "Nenhuma planilha escolhida!"
                 redirect action:"index", method:"GET"
@@ -140,6 +139,7 @@ class AlunoController {
                 def matricula = new Matricula(aluno: aluno, turma: turma)
                 matricula.save()
             }
+            flash.message = "Planilha importada com sucesso!"
         }
         redirect action:"index", method:"GET"
     }
