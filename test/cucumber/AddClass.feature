@@ -20,8 +20,8 @@ Feature: Add class
     Given I am at the Create Class page
     When I fill the class details with name "PLC", period "2018.2"
     And I save the class
-    Then I can see a confirmation message
-    And I can see the information for class "PLC", period "2018.2" at the Turmas page
+    Then I can see a confirmation message, and the information for class "PLC", period "2018.2" at the Turma Lista page
+    #And I can see the information for class "PLC", period "2018.2" at the Turma Lista page
 
 #GUI scenario
   Scenario: new class with duplicate ID and periodo gui
@@ -30,4 +30,3 @@ Feature: Add class
     When I fill the class details with name "PLC" and period "2017.2"
     And I save the class
     Then I see an error message
-    And I am taken to the Turmas page where class "PLC", period "2017.2" is not listed twice

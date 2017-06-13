@@ -50,7 +50,6 @@ When(~/^I fill the class details with name "([^"]*)", period "([^"]*)"$/) {
     String id, String periodo ->
         at CreateClassPage
         page.fillClassDetails(id, periodo)
-
 }
 
 And(~/^I save the class$/){
@@ -59,17 +58,21 @@ And(~/^I save the class$/){
     page.selectCreateClass()
 }
 //errado aqui tbm
-Then(~/^I can see a confirmation message$/){
-    ->
-    at CreateClassPage
+Then(~/^I can see a confirmation message, and the information for class "([^"]*)", period "([^"]*)" at the Turma Lista page$/){
+    String id, String periodo ->
+//    at CreateClassPage
+//    page.checkErrors()
+        to TurmasPage
+        at TurmasPage
+        assert page.confirmTurma(id,periodo)
 }
-
+/*
 And(~'^I can see the information for class "([^"]*)", period "([^"]*)" at the Turma Lista page$'){
     String id, String periodo ->
         to TurmasPage
         at TurmasPage
         assert page.confirmTurma(id,periodo)
-}
+}*/
 Given(~'^the system already has a class with name "([^"]*)" and period "([^"]*)"$'){
     String id, String periodo ->
         to CreateClassPage
@@ -88,10 +91,11 @@ Then(~'^I see an error message$'){
     at CreateClassPage
     page.checkErrors()
 }
-//muito errado
+/*
 And(~'^I am taken to the Turmas page where class "([^"]*)", period "([^"]*)" is not listed twice$'){
     String id, String periodo ->
         to TurmasPage
         at TurmasPage
         page.assertNotDuplicateClass(id, periodo)
 }
+*/
