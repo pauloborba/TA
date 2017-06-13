@@ -1,6 +1,7 @@
 package steps
 
 import ta.Aluno
+import ta.Avaliacao
 import ta.Matricula
 import ta.MatriculaController
 import ta.Turma
@@ -27,14 +28,19 @@ class MatriculaTestDataAndOperations {
         return false
     }
 
-    public static boolean onlyMatricula(Aluno aluno, Turma turma){
-        def matriculaController = new MatriculaController()
-        matriculaController.params << [aluno: aluno, turma: turma]
-        return matriculaController.onlyMatricula()
+    public static void addAvaliacao(Aluno aluno, Avaliacao avaliacao) {
+        def controller = new MatriculaController()
+        Matricula matricula = controller.getMatricula()
+        matricula.avaliacoes.add(avaliacao)
+        controller.params << [aluno: aluno, avaliacoes:matricula.avaliacoes]
+
+        controller.updateMatricula()
     }
+
+
 
     public static int countMatricula(){
         def matriculaController = new MatriculaController()
-        return matriculaController.onlyMatricula()
+        return matriculaController.count()
     }
 }

@@ -63,6 +63,31 @@ class MatriculaController {
         }
     }
 
+    @Transactional
+    def updateMatricula() {
+        Matricula matriculaInstance = new Matricula(params)
+
+        if (matriculaInstance == null) {
+            notFound()
+            return
+        }
+
+        if (matriculaInstance.hasErrors()) {
+            respond matriculaInstance.errors, view:'edit'
+            return
+        }
+
+        matriculaInstance.save flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'Matricula.label', default: 'Matricula'), matriculaInstance.id])
+                redirect matriculaInstance
+            }
+            '*'{ respond matriculaInstance, [status: OK] }
+        }
+    }
+
     def edit(Matricula matriculaInstance) {
         respond matriculaInstance
     }
@@ -124,7 +149,7 @@ class MatriculaController {
         return Matricula.findByAluno(params.aluno)
     }
 
-    public int onlyMatricula() {
+    public int count(){
         return Matricula.all.size()
     }
 }

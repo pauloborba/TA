@@ -123,8 +123,4 @@ class TurmaController {
         //def alunoInstance = new Aluno(params)
         return Turma.findByNome(params.nome)
     }
-
-    public int onlyTurma() {
-        return Turma.all.size()
-    }
 }

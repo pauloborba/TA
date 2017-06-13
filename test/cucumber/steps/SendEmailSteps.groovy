@@ -1,9 +1,13 @@
 import steps.AlunoTestDataAndOperations
+import steps.AvaliacaoTestDataAndOperations
+import steps.MetaTestDataAndOperations
+import steps.ResultadoTestDataAndOperations
 import steps.TurmaTestDataAndOperations
 import steps.MatriculaTestDataAndOperations
 import ta.Avaliacao
 import ta.AvaliacaoController
 import ta.MatriculaController
+import ta.Meta
 import ta.ResultadoController
 import ta.TurmaController
 import ta.AlunoController
@@ -22,63 +26,75 @@ this.metaClass.mixin(cucumber.api.groovy.EN)
 
 
 Given(~'^que o sistema tem o aluno "([^"]*)" matriculado na turma "([^"]*)"$'){ String nomeAluno, String nomeTurma ->
-    def turmaController = new TurmaController()
-    def matriculaController = new MatriculaController()
+        AlunoTestDataAndOperations.criarAluno(nomeAluno)
+        Aluno aluno = AlunoTestDataAndOperations.getAluno(nomeAluno)
 
-    AlunoTestDataAndOperations.criarAluno(nomeAluno)
-    Aluno aluno = AlunoTestDataAndOperations.getAluno(nomeAluno)
+        TurmaTestDataAndOperations.criarTurma(nomeTurma)
+        Turma turma = TurmaTestDataAndOperations.getTurma(nomeTurma)
 
-    TurmaTestDataAndOperations.criarTurma(nomeTurma)
-    Turma turma = TurmaTestDataAndOperations.getTurma(nomeTurma)
+        MatriculaTestDataAndOperations.criarMatricula(aluno, turma)
+        Matricula matricula = MatriculaTestDataAndOperations.getMatricula(aluno)
 
-    MatriculaTestDataAndOperations.criarMatricula(aluno, turma)
-    Matricula matricula = MatriculaTestDataAndOperations.getMatricula(aluno)
-
-    assert matricula.aluno == aluno && matricula.turma == turma
+        assert turma.matriculas.contains(matricula)
 }
 
 And(~'^o aluno "([^"]*)" tem conceito "([^"]*)" na meta "([^"]*)" e conceito "([^"]*)" na meta "([^"]*)" na avaliação "([^"]*)"$'){
     String nomeAluno, String conceito1, String meta1, String conceito2, String meta2, String nomeAvaliacao->
-        def avaliacaoController = new AvaliacaoController()
-        def resultadoController = new ResultadoController()
-        def matriculaController = new MatriculaController()
 
-        criarAvaliacao(nomeAvaliacao,avaliacaoController)
-        Avaliacao avaliacao = Avaliacao.findByNome(nomeAvaliacao)
+        Aluno aluno = AlunoTestDataAndOperations.getAluno(nomeAluno)
+        Matricula matricula = MatriculaTestDataAndOperations.getMatricula(aluno)
 
-        criarResultado(conceito1,meta1, avaliacao, resultadoController)
-        criarResultado(conceito2,meta2, avaliacao, resultadoController)
+        AvaliacaoTestDataAndOperations.criarAvaliacao(nomeAvaliacao, matricula)
+        Avaliacao avaliacao = AvaliacaoTestDataAndOperations.getAvaliacao(nomeAvaliacao,matricula)
 
-        Aluno aluno = Aluno.findByNome(nomeAluno)
-        Matricula matricula = Matricula.findByAluno(aluno)
-        matricula.avaliacoes.add(avaliacao)
-        atualizaMatricula(matricula,matriculaController)
+        MetaTestDataAndOperations.criarMeta(meta1)
+        Meta metaAux1 = MetaTestDataAndOperations.getMeta(meta1)
+
+        MetaTestDataAndOperations.criarMeta(meta2)
+        Meta metaAux2 = MetaTestDataAndOperations.getMeta(meta2)
+
+        ResultadoTestDataAndOperations.criarResultado(conceito1, metaAux1,avaliacao)
+        ResultadoTestDataAndOperations.criarResultado(conceito2,metaAux2,avaliacao)
+
+        MatriculaTestDataAndOperations.addAvaliacao(aluno,avaliacao)
+
 
         assert matricula.avaliacoes.contains(avaliacao)
         assert avaliacao.resultados.size() == 2
-        Resultado resultado1 = avaliacao.resultados.get(0)
-        Resultado resultado2 = avaliacao.resultados.get(1)
-        assert resultado1.meta.nome == meta1 && resultado1.conceito.nome == conceito1
-        assert resultado2.meta.nome == meta2 && resultado2.conceito.nome == conceito2
+
+        Resultado resultado1 = (Resultado) avaliacao.resultados.get(0)
+        Resultado resultado2 = (Resultado) avaliacao.resultados.get(1)
+
+        assert resultado1.meta.nome == meta1 && resultado1.conceito == conceito1
+        assert resultado2.meta.nome == meta2 && resultado2.conceito == conceito2
 }
+
+
+
+
+
+
 
 And(~'^o sistema tem o aluno "([^"]*)" matriculado na turma "([^"]*)"$'){
     String nomeAluno, String nomeTurma ->
-        def alunoController = new AlunoController()
-        def turmaController = new TurmaController()
-        def matriculaController = new MatriculaController()
+        assert nomeAluno != null
+        AlunoTestDataAndOperations.criarAluno(nomeAluno)
+        Aluno aluno = AlunoTestDataAndOperations.getAluno(nomeAluno)
 
-        criarAluno(nomeAluno,alunoController)
-        Aluno aluno = Aluno.findByNome(nomeAluno)
+        TurmaTestDataAndOperations.criarTurma(nomeTurma)
+        Turma turma = TurmaTestDataAndOperations.getTurma(nomeAluno)
 
-        criarTurma(nomeTurma,turmaController)
-        Turma turma = Turma.findByNome(nomeAluno)
-
-        criarMatricula(aluno, turma, matriculaController)
-        Matricula matricula = Matricula.findByAluno(aluno)
+        MatriculaTestDataAndOperations.criarMatricula(aluno, turma)
+        Matricula matricula = MatriculaTestDataAndOperations.getMatricula(aluno)
 
         assert turma.matriculas.contains(matricula.aluno)
 }
+
+
+
+
+
+
 
 
 When(~'^eu solicitar o envio de email para alunos com problemas$'){
@@ -91,51 +107,4 @@ Then(~'^será enviado um email para os alunos "([^"]*)" e "([^"]*)", apenas$') {
         assert alunos.size() == 2
         assert alunos.contains(Aluno.findByNome(nomeAluno1))
         assert alunos.contains(Aluno.findByNome(nomeAluno2))
-}
-
-
-def criarResultado(String conceito, String meta, ResultadoController resultadoController) {
-    resultadoController.params << [conceito: conceito, meta: meta]
-    resultadoController.save()
-    resultadoController.response.reset()
-}
-
-def criarAvaliacao(String nome, AvaliacaoController avaliacaoController) {
-    avaliacaoController.params << [nome: nome]
-    avaliacaoController.save()
-    avaliacaoController.response.reset()
-}
-
-def atualizaAvaliacao(Avaliacao avaliacao, AvaliacaoController avaliacaoController) {
-    avaliacaoController.update(avaliacao)
-    avaliacaoController.response.reset()
-}
-
-def criarTurma(String nome, TurmaController turmaController) {
-    turmaController.params << [nome: nome]
-    turmaController.save()
-    turmaController.response.reset()
-}
-
-def atualizaTurma(Turma turma, TurmaController turmaController) {
-    turmaController.update(turma)
-    turmaController.response.reset()
-}
-
-def criarMatricula(Aluno aluno, Turma turma, MatriculaController matriculaController) {
-    matriculaController.params << [aluno: aluno, turma:turma]
-    matriculaController.save()
-    matriculaController.response.reset()
-}
-
-def atualizaMatricula(Matricula matricula, MatriculaController matriculaController) {
-    matriculaController.update(matricula)
-    matriculaController.response.reset()
-}
-
-
-def criarAluno(String nomeAluno, AlunoController alunoController) {
-    alunoController.params << [nome: nomeAluno, loginCin:"loginCin",loginSlack:"loginSlack",loginGitHub:"loginGitHub"]
-    alunoController.save()
-    alunoController.response.reset()
 }

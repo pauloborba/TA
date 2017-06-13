@@ -46,6 +46,21 @@ class AvaliacaoController {
         }
     }
 
+    @Transactional
+    def createAndSaveAvaliacao() {
+        Avaliacao avaliacaoInstance = new Avaliacao(params)
+        if (avaliacaoInstance.hasErrors()) {
+            respond avaliacaoInstance.errors, view: 'create'
+            return
+        }
+        if(!avaliacaoInstance.save(flush: true)){
+            render(view: "create", model: [classInstance: avaliacaoInstance])
+            return
+        }
+        flash.message = message(code: 'default.created.message', args: [message(code: 'avaliacao.label', default: 'Class'), avaliacaoInstance.nome])
+        redirect(action: "show", id: avaliacaoInstance.nome)
+    }
+
     def edit(Avaliacao avaliacaoInstance) {
         respond avaliacaoInstance
     }
@@ -101,4 +116,14 @@ class AvaliacaoController {
             '*'{ render status: NOT_FOUND }
         }
     }
+
+    public Avaliacao getAvaliacao() {
+        def avaliacaoInstance = new Avaliacao(params)
+        return Avaliacao.findByNomeAndMatricula(avaliacaoInstance.nome,avaliacaoInstance.matricula)
+    }
+
+    public int count(){
+        return Avaliacao.all.size()
+    }
 }
+

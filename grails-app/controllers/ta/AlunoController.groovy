@@ -1,11 +1,11 @@
 package ta
 
-
+import org.springframework.transaction.annotation.Propagation
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
-@Transactional(readOnly = true)
+//@Transactional(readOnly = true)
 class AlunoController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -46,10 +46,10 @@ class AlunoController {
         }
     }
 
-    @Transactional
+    //@Transactional(propagation=Propagation.NEVER)
     def createAndSaveAluno() {
         Aluno alunoInstance = new Aluno(params)
-        if (Aluno.findByNome(alunoInstance.nome) == null) {
+        if (Aluno.findByNome(params.nome) == null) {
             if (alunoInstance.hasErrors()) {
                 respond alunoInstance.errors, view: 'create'
                 return
@@ -58,7 +58,7 @@ class AlunoController {
                 render(view: "create", model: [classInstance: alunoInstance])
                 return
             }
-            flash.message = message(code: 'default.created.message', args: [message(code: 'class.label', default: 'Class'), alunoInstance.nome])
+            flash.message = message(code: 'default.created.message', args: [message(code: 'aluno.label', default: 'Class'), alunoInstance.nome])
             redirect(action: "show", id: alunoInstance.nome)
         }
     }
@@ -124,7 +124,7 @@ class AlunoController {
         return Aluno.findByNome(params.nome)
     }
 
-    public int onlyAluno() {
+    public int count(){
         return Aluno.all.size()
     }
 }

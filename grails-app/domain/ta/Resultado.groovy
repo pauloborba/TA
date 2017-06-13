@@ -8,6 +8,6 @@ class Resultado {
     static belongsTo = [avaliacao:Avaliacao]
 
     static constraints = {
-        conceito inList :["MA","MPA","MANA","--"], blank :false
+        //conceito inList :["MA","MPA","MANA","--"], blank :false
     }
 }

@@ -46,6 +46,24 @@ class MetaController {
         }
     }
 
+
+    @Transactional
+    def createAndSaveMeta() {
+        Meta metaInstance = new Meta(params)
+        if (Meta.findByNome(metaInstance.nome) == null) {
+            if (metaInstance.hasErrors()) {
+                respond metaInstance.errors, view: 'create'
+                return
+            }
+            if(!metaInstance.save(flush: true)){
+                render(view: "create", model: [classInstance: metaInstance])
+                return
+            }
+            flash.message = message(code: 'default.created.message', args: [message(code: 'resultado.label', default: 'Class'), metaInstance.nome])
+            redirect(action: "show", id: metaInstance.nome)
+        }
+    }
+
     def edit(Meta metaInstance) {
         respond metaInstance
     }
@@ -100,5 +118,14 @@ class MetaController {
             }
             '*'{ render status: NOT_FOUND }
         }
+    }
+
+    public static int count(){
+        return Meta.all.size()
+    }
+
+    public Meta getMeta() {
+        //def alunoInstance = new Aluno(params)
+        return Meta.findByNome(params.nome)
     }
 }

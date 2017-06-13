@@ -25,14 +25,8 @@ class AlunoTestDataAndOperations {
         return false
     }
 
-    public static boolean onlyAluno(String nome, String period){
-        def alunoController = new AlunoController()
-        alunoController.params << [nome: nome]
-        return alunoController.onlyAluno()
-    }
-
     public static int countAluno(){
         def alunoController = new AlunoController()
-        return alunoController.onlyAluno()
+        return alunoController.count()
     }
 }
