@@ -3,13 +3,8 @@ import org.openqa.selenium.firefox.FirefoxDriver
 
 environments {
     chrome {
-        if (!System.getProperty("webdriver.chrome.driver")) {
-            def osPath = System.getProperty("os.name").toLowerCase().split(" ").first()
-
-            def webDriver = new File("chromedrivers", osPath).listFiles({ File dir, String name -> !dir.hidden } as FilenameFilter).first()
-
-            System.setProperty("webdriver.chrome.driver", webDriver.getAbsolutePath())
-        }
+        def chromeDriver = new File('chromedrivers/macOS/chromedriver')
+        System.setProperty('webdriver.chrome.driver', chromeDriver.absolutePath)
 
         driver = { new ChromeDriver() }
     }

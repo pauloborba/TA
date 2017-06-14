@@ -5,6 +5,8 @@ grails version: 2.4.3
 
 JDK 1.7.0_65 SDK 7 (1.8 Não funciona)
 
+Faça o download do jxl-2.6.jar, coloque na pasta lib e adicione ele no caminho: file -> Project Structure -> Libraries -> mais -> java
+
 Faça o download do chromedriver compatível com sua máquina e coloque ele na pasta chromedrivers.
 
 Em GebConfig.groovy setar caminho do chromeDriver no File
