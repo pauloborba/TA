@@ -109,6 +109,7 @@ local.properties
 
 # Package Files #
 *.jar
+!jxl-2.6.jar
 *.war
 *.ear
 
@@ -131,7 +132,6 @@ grails-app/migrations/
 grails-app/services/
 grails-app/taglib/
 grails-app/utils/
-lib/
 scripts/
 src/
 test/integration/
