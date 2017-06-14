@@ -15,19 +15,17 @@ Feature: Add students from spreadsheet
     Then the system adds the student "WELLINGTON FELIX MARTINS FILHO" with cin username "wfmf" to the class "ESS 2016-2"
 
   # GUI
+  # Este cenário recai sobre o problema do primeiro pois seria necessário passar para o controlador
+  # o caminho do aquivo uma vez que não é possível utilizar geb para selecionar o arquivo no file picker
+  @ignore
   Scenario: Import a spreadsheet file
     Given I have the class "ESS 2017-1"
-    And I am at the "Importar Alunos" page
-    And the class "ESS 2017-1" is registered in the system
+    And I am at the Importar Alunos page
     When I choose the class "ESS 2017-1" and the file "alunos.xls"
     Then I can see the list of all students
 
-  Scenario: Import only .xls files
-    Given I'm at the "Import Students" page
-    When I try to import a .txt file
-    Then I can a message saying that I cannot upload the file
-
   Scenario: Import an empty file
-    Given I am the "Importar Alunos" page
+    Given I am at the Importar Alunos page
+    And I have the class "ESS 2017-1"
     When I try to import without selecting a file
     Then I can see a message asking to choose a file

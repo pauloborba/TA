@@ -7,9 +7,16 @@ import geb.Page
  */
 class ImportarAlunosPage extends Page {
     static url = "/TA/aluno/importAlunos"
-    static turmaPage = new TurmaPage()
 
-    static def selectClass() {
-        $('select').click()
+    static at = {
+        title ==~ /Importar Alunos/
+    }
+
+    boolean importWithoutFile() {
+        $("input", name: "upload").click()
+    }
+
+    boolean openFileDialog() {
+        $("input", name: "sheet").click()
     }
 }

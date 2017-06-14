@@ -1,6 +1,7 @@
 package steps
 
 import cucumber.api.PendingException
+import org.junit.Before
 import org.junit.Ignore
 import pages.ImportarAlunosPage
 import geb.Page
@@ -44,42 +45,27 @@ Given(~/^I have the class "([^"]*)"$/) { String className ->
     at TurmaPage
     page.createAndSaveClass(className)
 }
-And(~/^I am at the "([^"]*)" page$/) { String page ->
-    //ImportarAlunosPage.gotoImportarAlunos()
-
-}
-And(~/^the class "([^"]*)" is registered in the system$/) { String className ->
+And(~/^I am at the Importar Alunos page$/) { ->
+    to ImportarAlunosPage
+    at ImportarAlunosPage
 }
 When(~/^I choose the class "([^"]*)" and the file "([^"]*)"$/) { String className, String file ->
-    //ImportarAlunosPage.selectClass()
+    at ImportarAlunosPage
+    page.openFileDialog()
 }
 Then(~/^I can see the list of all students$/) { ->
 
 }
 
-//GUI test
-Given(~/^I'm at the "([^"]*)" page$/) { String page ->
-    
-}
-When(~/^I try to import a \.txt file$/) { ->
-    // Write code here that turns the phrase above into concrete actions
-    throw new PendingException()
-}
-Then(~/^I can a message saying that I cannot upload the file$/) { ->
-    // Write code here that turns the phrase above into concrete actions
-    throw new PendingException()
-}
-
-//GUI test
 Given(~/^I am the "([^"]*)" page$/) { String arg1 ->
-    // Write code here that turns the phrase above into concrete actions
-    throw new PendingException()
+    to ImportarAlunosPage
+    at ImportarAlunosPage
 }
 When(~/^I try to import without selecting a file$/) { ->
-    // Write code here that turns the phrase above into concrete actions
-    throw new PendingException()
+    to ImportarAlunosPage
+    at ImportarAlunosPage
+    page.importWithoutFile()
 }
 Then(~/^I can see a message asking to choose a file$/) { ->
-    // Write code here that turns the phrase above into concrete actions
-    throw new PendingException()
+    at ImportarAlunosPage
 }

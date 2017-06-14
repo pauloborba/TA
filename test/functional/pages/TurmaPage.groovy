@@ -9,11 +9,11 @@ class TurmaPage extends Page {
     static url = "/TA/turma/create"
 
     static at = {
-        title ==~ /Criar Turma/
+        title ==~ /Create Turma/
     }
 
-    def createAndSaveClass(String className) {
+    boolean createAndSaveClass(className) {
         $("form").nome = className
-        $("form").create.click()
+        $("input", name: "create").click()
     }
 }

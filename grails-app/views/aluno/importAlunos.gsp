@@ -9,7 +9,7 @@
 <head>
     <meta name="layout" content="main">
     <g:set var="entityName" value="${message(code: 'aluno.label', default: 'Aluno')}" />
-    <title><g:message code="default.show.label" args="[entityName]" /></title>
+    <title><g:message code="importAlunos.title" args="[entityName]" /></title>
 </head>
 <body>
     <div class="nav" role="navigation">
