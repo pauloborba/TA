@@ -1,10 +1,10 @@
-import ta.ReportController
-
+import ta.*
 class BootStrap {
 
     def init = {
 
-        //init app
+        BootStrapper.boot()
+
     }
     def destroy = {
     }

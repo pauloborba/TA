@@ -11,3 +11,107 @@
 *= require mobile
 *= require_self
 */
+#modal{
+    display: none;
+    background: rgba(0,0,0,.8);
+
+}
+.bg-center{
+    background-repeat: no-repeat;
+    background-size: 5em;
+    background-position: center center;
+}
+.loading{
+
+}
+.fullscreen{
+    height:100%;
+    width: 100%;
+    position: absolute;
+    top: 0; left: 0;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
+#modal > .content{
+
+    max-width:25%;
+    overflow-y: auto;
+    background-color: beige;
+    padding:1em;
+
+}
+.text-center,
+.text-center > input{
+    text-align: center;
+}
+.text-left{
+    text-align: left
+}
+.content-middle{
+    vertical-align: middle;
+}
+.flex{
+    display: flex !important;
+}
+.flex > * {
+    flex: 1 1 auto;
+}
+
+.shrink{
+    flex-shrink: 1;
+}
+.grow{
+    flex-grow: 1;
+}
+.no-grow{
+    flex-grow: 0;
+}
+input{
+    border: 1px solid transparent;
+}
+tr{
+    display: flex !important;
+}
+td, th{
+    flex: 1 1 100%;
+}
+.black{
+    color: black
+}
+.green{
+    color: #48802c
+}
+.red{
+    color: red
+}
+.transparent{
+    opacity: .2;
+}
+.inline-content{
+    display: flex;
+}
+.inline-content > *{
+    flex: 1 1 auto
+}
+input[type='submit'], a > div{
+    width: 90%;
+    display: block;
+    line-height: 1.5em;
+    font-size: 1.2em;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 0 0 4px 0px black;
+    margin: 1em auto;
+    text-align: center;
+    transition: box-shadow .5s
+}
+input[type='submit']:hover, a:hover > div{
+    box-shadow: 0 0 2px 0px black;
+}
+select{
+    border:none
+}
+h1, h2, h3, h4, h5{
+    font-weight: 200;
+}

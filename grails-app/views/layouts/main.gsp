@@ -23,7 +23,7 @@
 	</style>
 	</head>
 	<body>
-		<div id="grailsLogo" role="banner"><a href="/TAv2">HOME</a></div>
+		<div id="grailsLogo" role="banner"><a href="/TA">HOME</a></div>
 		<div class="main-container">
 			<g:layoutBody/>
 		</div>

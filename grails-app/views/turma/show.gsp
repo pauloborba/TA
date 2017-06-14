@@ -119,7 +119,7 @@
 
             <g:each in="${turmas}" var="turma" status="i">
                 <g:if test="${turma && turma.metas}">
-                <h3>
+                <h3 class="text-left">
                     ${turma}
                 </h3>
                 <g:each in="${turma.metas}" var="meta" status="j">

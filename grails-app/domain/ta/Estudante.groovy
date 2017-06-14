@@ -1,4 +1,4 @@
-package tav2
+package ta
 
 class Estudante {
     /**

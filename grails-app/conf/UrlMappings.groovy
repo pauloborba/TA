@@ -1,7 +1,8 @@
 class UrlMappings {
 
-	static mappings = {
-        "/$controller/$action?/$id?(.$format)?"{
+    static mappings = {
+        "/autoaval/$turma/$login?" (controller: "AutoAvaliacao", action: "form")
+        "/$controller/$action?/$id?/$extra?(.$format)?"{
             constraints {
                 // apply constraints here
             }
@@ -9,5 +10,5 @@ class UrlMappings {
 
         "/"(view:"/index")
         "500"(view:'/error')
-	}
+    }
 }

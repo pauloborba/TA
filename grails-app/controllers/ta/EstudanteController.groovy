@@ -1,6 +1,4 @@
-package tav2
-
-import grails.converters.JSON
+package ta
 
 class EstudanteController {
     static scaffold = Estudante
@@ -23,17 +21,13 @@ class EstudanteController {
     }
     static Estudante randomizeEstudante(Estudante estudante){
 
-        Turma turma = Turma.findByCod(estudante.turma.cod)
+        Turma turma = estudante.turma
 
         List metas  = turma.metas
 
         Classificacao classificacao
         metas.each{
-            classificacao = new Classificacao(
-                    meta: it,
-                    nota: Nota.getRandom()
-            )
-            classificacao.save(flush: true)
+            classificacao = Classificacao.getRandomWithMeta(it)
             estudante.addClassificacao(
                 classificacao
             )

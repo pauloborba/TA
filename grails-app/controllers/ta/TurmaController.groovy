@@ -1,6 +1,4 @@
-package tav2
-
-import grails.converters.JSON
+package ta
 
 class TurmaController {
     static scaffold = Turma
@@ -53,7 +51,7 @@ class TurmaController {
         Meta existing = turma.metas.find {
             ((Meta)it).descricao == incoming.descricao
         }
-        if (!existing)
+        if (!existing && incoming)
             turma.addMeta(incoming)
 
         else return false

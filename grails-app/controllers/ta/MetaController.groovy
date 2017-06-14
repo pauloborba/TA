@@ -1,6 +1,4 @@
-package tav2
-
-import grails.converters.JSON
+package ta
 
 class MetaController {
     static scaffold = Meta

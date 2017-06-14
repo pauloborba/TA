@@ -18,3 +18,37 @@ if (typeof jQuery !== 'undefined') {
 		});
 	})(jQuery);
 }
+
+$(function(){
+
+    closeModal = function(){
+        $("#modal").removeClass("flex")
+    }
+    openModal = function(){
+
+        $("#modal").addClass("flex")
+    }
+
+    $("#modal > .content").click(function(e){
+        e.stopPropagation()
+    })
+    $("#modal_bt").click(function(e){
+        e.stopPropagation()
+        openModal()
+    })
+    $("#modalclose_bt, #modal").click(function(e){
+        e.stopPropagation()
+        closeModal()
+    })
+
+})
+
+function reload(selector, data){
+    data = data || {}
+    var url = location.href
+    console.log("Atualizando " + selector)
+    $.post(url,data, function(html){
+        var newContent = $(html).find(selector).html()
+        $(selector).html(newContent)
+    })
+}

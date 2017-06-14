@@ -1,4 +1,4 @@
-package tav2
+package ta
 
 class Classificacao {
     Meta meta
@@ -15,6 +15,15 @@ class Classificacao {
     }
     String getValor(){
         return nota.toString()
+    }
+    static Classificacao getRandomWithMeta(Meta it){
+        Classificacao rand = new Classificacao(
+                meta: it,
+                nota: Nota.getRandom()
+        )
+        rand.save(flush: true)
+
+        return rand
     }
 
 }
