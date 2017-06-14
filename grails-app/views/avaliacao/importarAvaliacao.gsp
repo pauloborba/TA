@@ -58,7 +58,8 @@
         <fieldset class="form">
             <label for="fileInput">Escolha o arquivo de Planilha.xls</label>
             <span class="required-indicator">*</span>
-            <input type="file" id="fileInput"  name="sheet" />
+            <input type="file" id="fileInput"  name="sheet" required=""/>
+
         </fieldset>
 
         <fieldset class="buttons">

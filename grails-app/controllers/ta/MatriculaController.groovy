@@ -108,13 +108,4 @@ class MatriculaController {
 
         return Matricula.findByAluno(aluno)
     }
-
-    def salvar(String nome){
-        Meta meta = new Meta(nome)
-        meta.save flush: true
-    }
-
-    boolean metaExiste(String nome){
-        return Meta.findByNome(nome)
-    }
 }
