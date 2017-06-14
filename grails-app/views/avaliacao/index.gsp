@@ -5,7 +5,7 @@
 	<head>
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'avaliacao.label', default: 'Avaliacao')}" />
-		<title><g:message code="default.list.label" args="[entityName]" /></title>
+		<title>Lista de Avaliações</title>
 	</head>
 	<body>
 		<a href="#list-avaliacao" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>

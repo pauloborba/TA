@@ -6,7 +6,7 @@ class VisualizarAvaliacoesPage extends Page {
     static url = "/TA/avaliacao/index/"
 
     static at =  {
-        title ==~ /Create property Listagem/
+        title ==~ /Lista de Avaliações/
     }
 
 }
