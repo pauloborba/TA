@@ -107,20 +107,4 @@ class ClassTestDataAndOperations {
         return new File(path)
     }
 
-    static void deletarTudo(){
-        apagarListas(Aluno.list())
-        apagarListas(Avaliacao.list())
-        apagarListas(Matricula.list())
-        apagarListas(Meta.list())
-        apagarListas(Resultado.list())
-        apagarListas(Turma.list())
-    }
-
-    static void apagarListas(List l) {
-        l.each { e ->
-            e.delete(flush: true)
-        }
-    }
-
-
 }

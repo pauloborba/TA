@@ -9,6 +9,9 @@ import ta.PlanilhaAvaliacao
 import ta.PlanilhaFactory
 import ta.Turma
 
+import pages.ImportarAvaliacoesPage
+import pages.VisualizarAvaliacoesPage
+
 
 /**
  * Created by Isaac Douglas on 28/05/17.
@@ -19,37 +22,28 @@ this.metaClass.mixin(cucumber.api.groovy.EN)
 
 
 String pathGlobal = null
-String origemAvaliacaoGlobal = null
-Meta metaGlobal = null
-Turma turmaGlobal = null
 
 Given(~/^existe uma planilha "([^"]*)" com os conceitos da meta "([^"]*)" de um "([^"]*)" da turma "([^"]*)"$/) { String planilha, String meta, String origem, String turma ->
 
-//    ClassTestDataAndOperations.deletarTudo()
-
-    File file = ClassTestDataAndOperations.arquivo(planilha)
-    assert file.exists() // se nao existir o arquivo sai do teste
-
-    pathGlobal = file.path
-    origemAvaliacaoGlobal = origem
+    PlanilhaAvaliacao avaliacoes = planilhaAvaliacao(planilha)
+    pathGlobal = avaliacoes.url
 
     //criando uma meta
-    metaGlobal = ClassTestDataAndOperations.criarMeta(meta)
-    assert metaGlobal != null
+    Meta m = ClassTestDataAndOperations.criarMeta(meta)
+    assert m != null
 
     //cria uma turma
-    turmaGlobal = ClassTestDataAndOperations.criarTurma(turma)
-    assert turmaGlobal != null
+    Turma t = ClassTestDataAndOperations.criarTurma(turma)
+    assert t != null
 
     //adicionando meta na turma
-    turmaGlobal.metas.add(metaGlobal)
+    t.metas.add(m)
 
     //verifica se na planilha existe os conceitos da meta
-    PlanilhaAvaliacao avaliacoes = PlanilhaFactory.getPlanilha(pathGlobal, "avaliacao")
     assert avaliacoes.metaExiste(meta) // se nao existir o conceito na planilha sai do teste
 
     //criando alunos e matriculando na turma
-    ClassTestDataAndOperations.criarAlunosNaTurma(turmaGlobal, avaliacoes)
+    ClassTestDataAndOperations.criarAlunosNaTurma(t, avaliacoes)
 
 }
 And(~/^o aluno "([^"]*)" tem o conceito "([^"]*)" na meta "([^"]*)"$/) { String aluno, String conceito, String meta ->
@@ -57,10 +51,9 @@ And(~/^o aluno "([^"]*)" tem o conceito "([^"]*)" na meta "([^"]*)"$/) { String 
     assert ClassTestDataAndOperations.alunoTemConceitoNaMeta(pathGlobal, Meta.findByNome(meta), conceito, aluno)
 
 }
-When(~/^eu tento salvar as avaliações com os conceitos da meta "([^"]*)" do "([^"]*)"$/) { String meta, String origem ->
+When(~/^eu tento salvar as avaliações com os conceitos da meta "([^"]*)" do "([^"]*)" da turma "([^"]*)"$/) { String meta, String origem, String turma ->
 
-    AvaliacaoController avaliacaoController = new AvaliacaoController()
-    avaliacaoController.salvarAvaliacoesAux(pathGlobal, turmaGlobal, origem)
+    salvarAvaliacoesConceitos(pathGlobal, turma, origem)
 
 }
 Then(~/^o aluno "([^"]*)" fica com o conceito "([^"]*)" na meta "([^"]*)"$/) { String login, String conceito, String meta ->
@@ -74,17 +67,18 @@ Then(~/^o aluno "([^"]*)" fica com o conceito "([^"]*)" na meta "([^"]*)"$/) { S
 
 
 
-Given(~/^eu estou na pagina "([^"]*)"$/) { String arg1 ->
-
-
+Given(~/^eu estou na pagina Importar Avaliacoes$/) { ->
+    to ImportarAvaliacoesPage
+    at ImportarAvaliacoesPage
 }
-When(~/^eu salvo as avaliações da planilha "([^"]*)"$/) { String arg1 ->
-
-
+And(~/^eu seleciono a avaliacao "([^"]*)" para a turma "([^"]*)" e escolho a planilha "([^"]*)" para importar$/) { String origem, String turma, String planilha ->
+    at ImportarAvaliacoesPage
+    page.origem(origem)
+    page.turma(turma)
 }
-Then(~/^eu consigo ver as avaliações salvas na pagina "([^"]*)"$/) { String arg1 ->
-
-
+Then(~/^eu consigo ver as avaliações salvas na pagina "([^"]*)"$/) { String pagina ->
+    to VisualizarAvaliacoesPage
+    at VisualizarAvaliacoesPage
 }
 
 
@@ -92,15 +86,8 @@ Then(~/^eu consigo ver as avaliações salvas na pagina "([^"]*)"$/) { String ar
 
 Given(~/^existe uma planilha "([^"]*)" com os conceitos de varias metas de uma "([^"]*)" da turma "([^"]*)"$/) { String planilha, String origem, String turma ->
 
-//    ClassTestDataAndOperations.deletarTudo()
-
-    File file = ClassTestDataAndOperations.arquivo(planilha)
-    assert file.exists() // se nao existir o arquivo sai do teste
-
-    pathGlobal = file.path
-    origemAvaliacaoGlobal = origem
-
-    PlanilhaAvaliacao avaliacoes = PlanilhaFactory.getPlanilha(pathGlobal, "avaliacao")
+    PlanilhaAvaliacao avaliacoes = planilhaAvaliacao(planilha)
+    pathGlobal = avaliacoes.url
 
     //criando varias metas
     avaliacoes.metas.each{ nomeMeta ->
@@ -108,12 +95,12 @@ Given(~/^existe uma planilha "([^"]*)" com os conceitos de varias metas de uma "
     }
 
     //cria uma turma
-    turmaGlobal = ClassTestDataAndOperations.criarTurma(turma)
-    assert turmaGlobal != null
+    Turma t = ClassTestDataAndOperations.criarTurma(turma)
+    assert t != null
 
     //adicionando metas na turma
     Meta.list().each { meta ->
-        turmaGlobal.metas.add(meta)
+        t.metas.add(meta)
     }
 
     //verifica se na planilha existe os conceitos das metas
@@ -122,13 +109,24 @@ Given(~/^existe uma planilha "([^"]*)" com os conceitos de varias metas de uma "
     }
 
     //criando alunos e matriculando na turma
-    ClassTestDataAndOperations.criarAlunosNaTurma(turmaGlobal, avaliacoes)
+    ClassTestDataAndOperations.criarAlunosNaTurma(t, avaliacoes)
 
 }
 
-When(~/^eu tento salvar as avaliações com os conceitos de todas as metas da "([^"]*)"$/) { String origem ->
+When(~/^eu tento salvar as avaliações com os conceitos de todas as metas da "([^"]*)" da turma "([^"]*)"$/) { String origem, String turma ->
 
+    salvarAvaliacoesConceitos(pathGlobal, turma, origem)
+
+}
+
+PlanilhaAvaliacao planilhaAvaliacao(String planilha){
+    File file = ClassTestDataAndOperations.arquivo(planilha)
+    assert file.exists() // se nao existir o arquivo sai do teste
+
+    return PlanilhaFactory.getPlanilha(file.path, "avaliacao")
+}
+
+def salvarAvaliacoesConceitos(String path, String turma, String origem){
     AvaliacaoController avaliacaoController = new AvaliacaoController()
-    avaliacaoController.salvarAvaliacoesAux(pathGlobal, turmaGlobal, origem)
-
+    avaliacaoController.salvarAvaliacoesAux(path, Turma.findByNome(turma), origem)
 }

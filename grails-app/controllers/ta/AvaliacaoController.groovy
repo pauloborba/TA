@@ -143,7 +143,7 @@ class AvaliacaoController {
         def path = getPath()
 
         if (path != null){
-            Turma turma = Turma.findById(params.turma.id)
+            Turma turma = Turma.findById(params.turma)
             String nomeAvaliacao = params.nome
             salvarAvaliacoesAux(path, turma, nomeAvaliacao)
         }

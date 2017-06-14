@@ -36,6 +36,7 @@
 
     <g:form enctype="multipart/form-data" url="[action:'salvarAvaliacoes']" method="POST" >
 
+
         <div class="fieldcontain ${hasErrors(bean: avaliacaoInstance, field: 'nome', 'error')} required">
             <label for="nome">
                 <g:message code="avaliacao.nome.label" default="Nome" />
@@ -50,8 +51,9 @@
                 <g:message code="avaliacao.turma.label" default="Turma" />
                 <span class="required-indicator">*</span>
             </label>
-            <g:select id="turma" name="turma.id" from="${ta.Turma.list()}" optionKey="id" required="" value="${avaliacaoInstance?.turma?.id}" class="many-to-one"/>
+            <g:select id="turma" name="turma" from="${ta.Turma.list()}" optionKey="id" required="" value="${avaliacaoInstance?.turma?.id}" class="many-to-one"/>
         </div>
+
 
         <fieldset class="form">
             <label for="fileInput">Escolha o arquivo de Planilha.xls</label>
