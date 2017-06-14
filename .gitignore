@@ -131,7 +131,6 @@ grails-app/migrations/
 grails-app/services/
 grails-app/taglib/
 grails-app/utils/
-lib/
 scripts/
 src/
 test/integration/
