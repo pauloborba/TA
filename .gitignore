@@ -108,8 +108,8 @@ local.properties
 .mtj.tmp/
 
 # Package Files #
-jxl-2.6.jar
 *.jar
+!jxl-2.6.jar
 *.war
 *.ear
 
