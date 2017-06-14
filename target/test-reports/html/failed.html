@@ -1,0 +1,360 @@
+<!DOCTYPE html><html xmlns:stringutils="xalan://org.apache.tools.ant.util.StringUtils" xmlns:lxslt="http://xml.apache.org/xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>
+        Unit Test Results
+     - Failed tests</title>
+<link href="stylesheet.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div id="report" class="container container_8">
+<div class="grid_6 alpha">
+<div class="grailslogo"></div>
+<h1>
+        Unit Test Results
+     - Failed tests</h1>
+<p class="intro">
+                        Executed
+                        4
+                        tests
+                    
+                        with
+                        2 errors
+                        .
+                    </p>
+</div>
+<div class="grid_2 omega">
+<nav id="navigationlinks">
+<p>
+<a href="failed.html">
+                    Tests with failure and errors
+                </a>
+</p>
+<p>
+<a href="index.html">
+                    Package summary
+                </a>
+</p>
+<p>
+<a href="all.html">
+                    Show all tests
+                </a>
+</p>
+</nav>
+</div>
+<div class="clear"></div>
+<div class="testsuite error">
+<div class="header">
+<h2>Estatistica da Turma</h2>
+<h3>
+                        Executed
+                        4
+                        tests
+                    
+                        with
+                        2 errors
+                        .
+                    </h3>
+</div>
+<div class="testcase clearfix error grid_8 alpha omega" data-name="Media de turma">
+<div class="grid_3 alpha">
+<p>
+<span class="icon error"></span><b class="testname message error">Media de turma</b>
+</p>
+<p class="summary">Executed in 1.284 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo">
+<div class="details">
+<p>
+<b class="message">Cannot invoke method size() on null object</b>
+</p>
+<pre>java.lang.NullPointerException: Cannot invoke method size() on null object
+	at ta.Turma.inserir(Turma.groovy:30)
+	at steps.ComparaTurmasTestDataAndOperations.insereEmTurma(ComparaTurmasTestDataAndOperations.groovy:70)
+	at ComparaTurmasSteps$_run_closure3.doCall(ComparaTurmasSteps.groovy:27)
+	at ✽.And o aluno "Pedro" esta matriculado em "2017.1"(ComparaTurmas.feature:10)
+</pre>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="Exibir media geral">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">Exibir media geral</b>
+</p>
+<p class="summary">Executed in 0.126 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix error grid_8 alpha omega" data-name="Quantidade de turmas superadas">
+<div class="grid_3 alpha">
+<p>
+<span class="icon error"></span><b class="testname message error">Quantidade de turmas superadas</b>
+</p>
+<p class="summary">Executed in 0.148 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo">
+<div class="details">
+<p>
+<b class="message">Cannot invoke method size() on null object</b>
+</p>
+<pre>java.lang.NullPointerException: Cannot invoke method size() on null object
+	at ta.Turma.inserir(Turma.groovy:30)
+	at steps.ComparaTurmasTestDataAndOperations.insereEmTurma(ComparaTurmasTestDataAndOperations.groovy:70)
+	at ComparaTurmasSteps$_run_closure3.doCall(ComparaTurmasSteps.groovy:27)
+	at ✽.And o aluno "Pedro" esta matriculado em "2017.1"(ComparaTurmas.feature:30)
+</pre>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="Exibir comparacao">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">Exibir comparacao</b>
+</p>
+<p class="summary">Executed in 0.04 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="clearfix output footer">
+<div class="sysout">
+<h2>Standard output</h2>
+<pre class="stdout">Feature: Estatistica da Turma
+  Como um professor
+  Eu quero ver como uma &uacute;nica turma se compara com as demais
+  Para que eu possa medir se as mudan&ccedil;as aplicadas a didatica foram positivas ou negativas
+
+--Output from Media de turma--
+--Output from Exibir media geral--
+  #Cenario Controller
+  Scenario: Media de turma                             # ComparaTurmas.feature:8
+    Given eu tenho a turma "2017.1"                    # ComparaTurmasSteps.groovy:11
+    And o aluno "Pedro" esta matriculado em "2017.1"   # ComparaTurmasSteps.groovy:21
+      java.lang.NullPointerException: Cannot invoke method size() on null object
+      	at ta.Turma.inserir(Turma.groovy:30)
+      	at ta.Turma$inserir$2.call(Unknown Source)
+      	at steps.ComparaTurmasTestDataAndOperations.insereEmTurma(ComparaTurmasTestDataAndOperations.groovy:70)
+      	at steps.ComparaTurmasTestDataAndOperations$insereEmTurma$3.call(Unknown Source)
+      	at ComparaTurmasSteps$_run_closure3.doCall(ComparaTurmasSteps.groovy:27)
+      	at ✽.And o aluno "Pedro" esta matriculado em "2017.1"(ComparaTurmas.feature:10)
+
+    And "Pedro" possui media final "10"                # ComparaTurmasSteps.groovy:16
+    And o aluno "Douglas" esta matriculado em "2017.1" # ComparaTurmasSteps.groovy:21
+    And "Douglas" possui media final "7"               # ComparaTurmasSteps.groovy:16
+    And o aluno "Jeff" esta matriculado em "2017.1"    # ComparaTurmasSteps.groovy:21
+    And "Jeff" possui media final "8"                  # ComparaTurmasSteps.groovy:16
+    When eu seleciono a turma "2017.1"                 # ComparaTurmasSteps.groovy:31
+    Then a media geral de "2017.1" e calculada         # ComparaTurmasSteps.groovy:35
+
+--Output from Quantidade de turmas superadas--
+  #Cenario GUI
+  Scenario: Exibir media geral                    # ComparaTurmas.feature:21
+    Given eu estou na pagina de "Turmas List"     # ComparaTurmasSteps.groovy:44
+    And eu tenho a turma "2017.1"                 # ComparaTurmasSteps.groovy:11
+    When eu seleciono a turma "2017.1"            # ComparaTurmasSteps.groovy:31
+    Then eu consigo ver a media geral de "2017.1" # ComparaTurmasSteps.groovy:39
+
+--Output from Exibir comparacao--
+  #Cenario Controller
+  Scenario: Quantidade de turmas superadas                                                                                                                                    # ComparaTurmas.feature:28
+    Given eu tenho a turma "2017.1"                                                                                                                                           # ComparaTurmasSteps.groovy:11
+    And o aluno "Pedro" esta matriculado em "2017.1"                                                                                                                          # ComparaTurmasSteps.groovy:21
+      java.lang.NullPointerException: Cannot invoke method size() on null object
+      	at ta.Turma.inserir(Turma.groovy:30)
+      	at ta.Turma$inserir$2.call(Unknown Source)
+      	at steps.ComparaTurmasTestDataAndOperations.insereEmTurma(ComparaTurmasTestDataAndOperations.groovy:70)
+      	at steps.ComparaTurmasTestDataAndOperations$insereEmTurma$3.call(Unknown Source)
+      	at ComparaTurmasSteps$_run_closure3.doCall(ComparaTurmasSteps.groovy:27)
+      	at ✽.And o aluno "Pedro" esta matriculado em "2017.1"(ComparaTurmas.feature:30)
+
+    And "Pedro" possui media final "9"                                                                                                                                        # ComparaTurmasSteps.groovy:16
+    And o aluno "Douglas" esta matriculado em "2017.1"                                                                                                                        # ComparaTurmasSteps.groovy:21
+    And "Douglas" possui media final "7"                                                                                                                                      # ComparaTurmasSteps.groovy:16
+    And o aluno "Jeff" esta matriculado em "2017.1"                                                                                                                           # ComparaTurmasSteps.groovy:21
+    And "Jeff" possui media final "5"                                                                                                                                         # ComparaTurmasSteps.groovy:16
+    And eu tenho a turma "2016.2"                                                                                                                                             # ComparaTurmasSteps.groovy:11
+    And o aluno "Pedro" esta matriculado em "2016.2"                                                                                                                          # ComparaTurmasSteps.groovy:21
+    And "Pedro" possui media final "4"                                                                                                                                        # ComparaTurmasSteps.groovy:16
+    And o aluno "Dante" esta matriculado em "2016.2"                                                                                                                          # ComparaTurmasSteps.groovy:21
+    And "Dante" possui media final "7"                                                                                                                                        # ComparaTurmasSteps.groovy:16
+    And o aluno "Vergil" esta matriculado em "2016.2"                                                                                                                         # ComparaTurmasSteps.groovy:21
+    And "Vergil" possui media final "6"                                                                                                                                       # ComparaTurmasSteps.groovy:16
+    And eu tenho a turma "2016.1"                                                                                                                                             # ComparaTurmasSteps.groovy:11
+    And o aluno "Bill" esta matriculado em "2016.1"                                                                                                                           # ComparaTurmasSteps.groovy:21
+    And "Bill" possui media final "8"                                                                                                                                         # ComparaTurmasSteps.groovy:16
+    And o aluno "Lucio" esta matriculado em "2016.1"                                                                                                                          # ComparaTurmasSteps.groovy:21
+    And "Lucio" possui media final "3"                                                                                                                                        # ComparaTurmasSteps.groovy:16
+    And o aluno "Lucio" esta matriculado em "2016.1"                                                                                                                          # ComparaTurmasSteps.groovy:21
+    And "Lucio" possui media final "6"                                                                                                                                        # ComparaTurmasSteps.groovy:16
+    And o aluno "Lloyd" esta matriculado em "2016.1"                                                                                                                          # ComparaTurmasSteps.groovy:21
+    And "Lloyd" possui media final "2"                                                                                                                                        # ComparaTurmasSteps.groovy:16
+    When eu seleciono a turma "2017.1"                                                                                                                                        # ComparaTurmasSteps.groovy:31
+    Then o numero de turmas que possuem media geral, numero percentual de alunos aprovados e numeros percentual de alunos aprovados por media inferior a "2017.1" e calculado # ComparaTurmasSteps.groovy:48
+
+  #Cen&aacute;rio GUI
+  Scenario: Exibir comparacao                                                                                                                                                                                                      # ComparaTurmas.feature:57
+    Given eu estou na pagina de "Turmas List"                                                                                                                                                                                      # ComparaTurmasSteps.groovy:44
+    And eu tenho a turma "2017.1"                                                                                                                                                                                                  # ComparaTurmasSteps.groovy:11
+    And eu tenho a turma "2016.2"                                                                                                                                                                                                  # ComparaTurmasSteps.groovy:11
+    And eu tenho a turma "2016.1"                                                                                                                                                                                                  # ComparaTurmasSteps.groovy:11
+    When eu seleciono a turma "2017.1"                                                                                                                                                                                             # ComparaTurmasSteps.groovy:31
+    Then eu consigo ver o numero de turmas que "2017.1" supera em quest&atilde;o de media geral, numero percentual de alunos aprovados e numeros percentual de alunos aprovados por media em comparacao com o total de turmas cadastradas # ComparaTurmasSteps.groovy:54
+</pre>
+</div>
+<div class="syserr">
+<h2>System error</h2>
+<pre class="syserr">
+--Output from Media de turma--
+--Output from Exibir media geral--
+--Output from Quantidade de turmas superadas--
+--Output from Exibir comparacao--</pre>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</div>
+<!--
+            Parses JUnit output and associates it with the corresponding test case
+        -->
+<script language="javascript">
+
+
+/**
+ * The JUnit report format is incredibly stuipd in the
+ * sense that it accumulates output from all test methods
+ * into a single xml node.
+ */
+(function() {
+
+    var outputElements = findOutputElements();
+    for (var i in outputElements) {
+        var outputElement = outputElements[i];
+        var textOutput = outputElement.element.firstChild.nodeValue;
+        var header = outputElement.getHeader();
+        appendTestMethodOutput(textOutput, header);
+    }
+
+    function findOutputElements() {
+        var outputElements = [];
+        var preElements = document.getElementsByTagName("pre");
+        for (var i in preElements) {
+            var preElement = preElements[i];
+            var className = preElement.className || "";
+            if (className.indexOf("stdout") >= 0) {
+                var outputElement = new OutputElement(preElement, "output");
+                outputElements.push(outputElement);
+            } else if (className.indexOf("syserr") >= 0) {
+                var outputElement = new OutputElement(preElement, "error");
+                outputElements.push(outputElement);
+            }
+        }
+
+        return outputElements;
+    }
+
+    function OutputElement(element, type) {
+        this.element = element;
+        this.type = type;
+
+        this.getHeader = function() {
+            if (type === "output") {
+                return "System output";
+            } else if ("error") {
+                return "System error";
+            }
+        }
+    }
+
+    function appendTestMethodOutput(text, header) {
+        var testOutput = new TestMethodOutput(header);
+
+        var lines = text.split(/\r\n|\r|\n/);
+        for (var i in lines) {
+            var line = lines[i];
+            var matches = line.match(/^--Output from (.*)--$/);
+            if (matches !== null && matches.length == 2) {
+                testOutput.flushToDom();
+                testOutput.testName = matches[1];
+            } else {
+                testOutput.addLine(line);
+            }
+        }
+
+        testOutput.flushToDom();
+    }
+
+    function TestMethodOutput(header) {
+        this.header = header;
+        this.testName = undefined;
+        this.buffer = "";
+
+        this.addLine = function(line) {
+            this.buffer += line + "\n";
+        }
+
+        this.flushToDom = function() {
+            if (this.testName !== undefined) {
+                var domNode = getTestcaseElementByName(this.testName);
+                if (domNode !== undefined && trimString(this.buffer).length > 0) {
+                    this.appendTo(domNode);
+                }
+
+                this.reset();
+            }
+        }
+
+        this.appendTo = function(domNode) {
+            var node = document.createElement("div");
+            node.innerHTML = '<p><b class="message">' + header + '</b></p>';
+
+            var preNode = document.createElement("pre");
+            preNode.appendChild(document.createTextNode(this.buffer));
+            node.appendChild(preNode);
+
+            var outputContainer = findElementByTagClassAndParent("div", "outputinfo", domNode);
+            outputContainer.appendChild(node);
+        }
+
+        this.reset = function() {
+            this.methodName = undefined;
+            this.buffer = "";
+        }
+    }
+
+    function getTestcaseElementByName(name) {
+        var divElements = document.getElementsByTagName("div");
+        var elementCount = divElements.length;
+        for (var i=0; i<elementCount; i++) {
+            var el = divElements[i];
+            if (el.getAttribute("data-name") === name) {
+                return el;
+            }
+        }
+    }
+
+    function findElementByTagClassAndParent(tagName, className, parentNode) {
+        var elements = parentNode.getElementsByTagName(tagName);
+        for (var i in elements) {
+            var element = elements[i];
+
+            // Not 100% correct, but good enough here
+            if (element.className !== undefined && element.className.indexOf(className) >= 0) {
+                return element;
+            }
+        }
+    }
+
+    function trimString(str) {
+        return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+    }
+
+})();
+
+        </script>
+</body>
+</html>
