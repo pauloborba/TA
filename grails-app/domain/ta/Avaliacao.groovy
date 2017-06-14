@@ -4,9 +4,7 @@ class Avaliacao {
     String nome
     String tipo
     List resultados
-    Matricula matricula
 
-    static belongsTo = [matricula:Matricula]
     static hasMany = [resultados:Resultado]
 
     static constraints = {

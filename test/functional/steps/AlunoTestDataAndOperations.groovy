@@ -12,6 +12,7 @@ class AlunoTestDataAndOperations {
         alunoController.params << [nome: nomeAluno]
         alunoController.createAndSaveAluno()
         alunoController.response.reset()
+        alunoController.params.clear()
     }
 
     public static Aluno getAluno(String nomeAluno) {

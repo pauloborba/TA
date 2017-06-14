@@ -8,7 +8,9 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class MatriculaController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [update: "PUT"]//, delete: "DELETE"]
+    // save: "POST" foi retirado porque dá problema com o cucumber, que
+    // provavelmente simula a chamada dessa ação como um GET
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -49,17 +51,24 @@ class MatriculaController {
     @Transactional
     def createAndSaveMatricula() {
         Matricula matriculaInstance = new Matricula(params)
-        if (Matricula.findByAluno(matriculaInstance.aluno) == null) {
-            if (matriculaInstance.hasErrors()) {
-                respond matriculaInstance.errors, view: 'create'
-                return
+        if (matriculaInstance == null) {
+            notFound()
+            return
+        }
+
+        if (matriculaInstance.hasErrors()) {
+            respond matriculaInstance.errors, view:'create'
+            return
+        }
+
+        matriculaInstance.save flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.created.message', args: [message(code: 'matricula.label', default: 'Matricula'), matriculaInstance.id])
+                redirect matriculaInstance
             }
-            if(!matriculaInstance.save(flush: true)){
-                render(view: "create", model: [classInstance: matriculaInstance])
-                return
-            }
-            flash.message = message(code: 'default.created.message', args: [message(code: 'matricula.label', default: 'Class'), matriculaInstance.aluno])
-            redirect(action: "show", id: matriculaInstance.aluno)
+            '*' { respond matriculaInstance, [status: CREATED] }
         }
     }
 
@@ -151,5 +160,10 @@ class MatriculaController {
 
     public int count(){
         return Matricula.all.size()
+    }
+
+    public void cadastrarAvaliacao(Matricula matricula,String nomeAvaliacao){
+        matricula.avaliacoes.add(new Avaliacao(nome: nomeAvaliacao))
+        matricula.save()
     }
 }

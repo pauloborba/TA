@@ -5,7 +5,7 @@
 	<head>
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'turma.label', default: 'Turma')}" />
-		<title><g:message code="default.list.label" args="[entityName]" /></title>
+		<title>Turma</title>
 	</head>
 	<body>
 		<a href="#list-turma" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
@@ -32,7 +32,7 @@
 				<g:each in="${turmaInstanceList}" status="i" var="turmaInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${turmaInstance.id}">${fieldValue(bean: turmaInstance, field: "nome")}</g:link></td>
+						<td><g:link action="show" id="${turmaInstance.id}" elementId="${turmaInstance.nome}">${fieldValue(bean: turmaInstance, field: "nome")}</g:link></td>
 					
 					</tr>
 				</g:each>

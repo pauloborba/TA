@@ -1,4 +1,4 @@
-package service
+package ta
 
 import ta.Aluno
 
@@ -8,7 +8,11 @@ import ta.Aluno
  ESTA GROOVY É DE RESPONSABILIDADE DE OUTRO MEMBRO DO GRUPO
 
  */
-class EnviarEmail {
+import static org.springframework.http.HttpStatus.*
+import grails.transaction.Transactional
+
+@Transactional(readOnly = true)
+class EnviarEmailController {
 
     public static List<Aluno> enviarAlunosComProblemas(String turma){
         //Coloquei o retorno desejado, supondo que seriam esses os alunos que receberiam mesmo o email

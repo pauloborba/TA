@@ -11,9 +11,9 @@
 
 	<tag>
 		<description>
-			Sets default HTML escape value for the current page.
-			Overrides a "defaultHtmlEscape" context-param in web.xml, if any.
-		</description>
+            Sets default HTML escape value for the current pages.
+            Overrides a "defaultHtmlEscape" context-param in web.xml, if any.
+        </description>
 		<name>htmlEscape</name>
 		<tag-class>org.springframework.web.servlet.tags.HtmlEscapeTag</tag-class>
 		<body-content>JSP</body-content>
@@ -29,7 +29,7 @@
 	<tag>
 		<description>
 			Escapes its enclosed body content, applying HTML escaping and/or JavaScript escaping.
-			The HTML escaping flag participates in a page-wide or application-wide setting
+			The HTML escaping flag participates in a pages-wide or application-wide setting
 			(i.e. by HtmlEscapeTag or a "defaultHtmlEscape" context-param in web.xml).
 		</description>
 		<name>escapeBody</name>
@@ -37,7 +37,7 @@
 		<body-content>JSP</body-content>
 		<attribute>
 			<description>Set HTML escaping for this tag, as boolean value. Overrides the
-			default HTML escaping setting for the current page.</description>
+                default HTML escaping setting for the current pages.</description>
 			<name>htmlEscape</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -54,7 +54,7 @@
 	<tag>
 		<description>
 			Retrieves the message with the given code, or text if code isn't resolvable.
-			The HTML escaping flag participates in a page-wide or application-wide setting
+			The HTML escaping flag participates in a pages-wide or application-wide setting
 			(i.e. by HtmlEscapeTag or a "defaultHtmlEscape" context-param in web.xml).
 		</description>
 		<name>message</name>
@@ -104,7 +104,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The string to use when binding the result to the page,
+			<description>The string to use when binding the result to the pages,
 			request, session or application scope. If not specified, the result
 			gets outputted to the writer (i.e. typically directly to the JSP).</description>
 			<name>var</name>
@@ -114,14 +114,14 @@
 		<attribute>
 			<description>The scope to use when exporting the result to a variable.
 			This attribute is only used when var is also set. Possible values are
-			page, request, session and application.</description>
+			pages, request, session and application.</description>
 			<name>scope</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description>Set HTML escaping for this tag, as boolean value.
-			Overrides the default HTML escaping setting for the current page.</description>
+                Overrides the default HTML escaping setting for the current pages.</description>
 			<name>htmlEscape</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -137,7 +137,7 @@
 	<tag>
 		<description>
 			Retrieves the theme message with the given code, or text if code isn't resolvable.
-			The HTML escaping flag participates in a page-wide or application-wide setting
+			The HTML escaping flag participates in a pages-wide or application-wide setting
 			(i.e. by HtmlEscapeTag or a "defaultHtmlEscape" context-param in web.xml).
 		</description>
 		<name>theme</name>
@@ -181,7 +181,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The string to use when binding the result to the page,
+			<description>The string to use when binding the result to the pages,
 			request, session or application scope. If not specified, the result
 			gets outputted to the writer (i.e. typically directly to the JSP).</description>
 			<name>var</name>
@@ -191,14 +191,14 @@
 		<attribute>
 			<description>The scope to use when exporting the result to a variable.
 			This attribute is only used when var is also set. Possible values are
-			page, request, session and application.</description>
+			pages, request, session and application.</description>
 			<name>scope</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description>Set HTML escaping for this tag, as boolean value.
-			Overrides the default HTML escaping setting for the current page.</description>
+                Overrides the default HTML escaping setting for the current pages.</description>
 			<name>htmlEscape</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -214,7 +214,7 @@
 	<tag>
 		<description>
 			Provides Errors instance in case of bind errors.
-			The HTML escaping flag participates in a page-wide or application-wide setting
+			The HTML escaping flag participates in a pages-wide or application-wide setting
 			(i.e. by HtmlEscapeTag or a "defaultHtmlEscape" context-param in web.xml).
 		</description>
 		<name>hasBindErrors</name>
@@ -234,7 +234,7 @@
 		</attribute>
 		<attribute>
 			<description>Set HTML escaping for this tag, as boolean value.
-			Overrides the default HTML escaping setting for the current page.</description>
+                Overrides the default HTML escaping setting for the current pages.</description>
 			<name>htmlEscape</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -265,7 +265,7 @@
 	<tag>
 		<description>
 			Provides BindStatus object for the given bind path.
-			The HTML escaping flag participates in a page-wide or application-wide setting
+			The HTML escaping flag participates in a pages-wide or application-wide setting
 			(i.e. by HtmlEscapeTag or a "defaultHtmlEscape" context-param in web.xml).
 		</description>
 		<name>bind</name>
@@ -278,7 +278,7 @@
 		<attribute>
 			<description>The path to the bean or bean property to bind status
 			information for. For instance account.name, company.address.zipCode
-			or just employee. The status object will exported to the page scope,
+			or just employee. The status object will exported to the pages scope,
 			specifically for this bean or bean property</description>
 			<name>path</name>
 			<required>true</required>
@@ -292,7 +292,7 @@
 		</attribute>
 		<attribute>
 			<description>Set HTML escaping for this tag, as boolean value. Overrides
-			the default HTML escaping setting for the current page.</description>
+                the default HTML escaping setting for the current pages.</description>
 			<name>htmlEscape</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -303,7 +303,7 @@
 		<description>
 			Provides transformation of variables to Strings, using an appropriate
 			custom PropertyEditor from BindTag (can only be used inside BindTag).
-			The HTML escaping flag participates in a page-wide or application-wide setting
+			The HTML escaping flag participates in a pages-wide or application-wide setting
 			(i.e. by HtmlEscapeTag or a 'defaultHtmlEscape' context-param in web.xml).
 		</description>
 		<name>transform</name>
@@ -318,7 +318,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The string to use when binding the result to the page,
+			<description>The string to use when binding the result to the pages,
 			request, session or application scope. If not specified, the result gets
 			outputted to the writer (i.e. typically directly to the JSP).</description>
 			<name>var</name>
@@ -328,14 +328,14 @@
 		<attribute>
 			<description>The scope to use when exported the result to a variable.
 			This attribute is only used when var is also set. Possible values are
-			page, request, session and application.</description>
+			pages, request, session and application.</description>
 			<name>scope</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description>Set HTML escaping for this tag, as boolean value. Overrides
-			the default HTML escaping setting for the current page.</description>
+                the default HTML escaping setting for the current pages.</description>
 			<name>htmlEscape</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -372,7 +372,7 @@
 		</attribute>
 		<attribute>
 			<description>The scope for the var.  'application', 'session', 'request' and 
-			'page' scopes are supported.  Defaults to page scope.  This attribute has no 
+			'pages' scopes are supported.  Defaults to pages scope.  This attribute has no
 			effect unless the var attribute is also defined.</description>
 			<name>scope</name>
 			<required>false</required>
@@ -380,7 +380,7 @@
 		</attribute>
 		<attribute>
 			<description>Set HTML escaping for this tag, as a boolean value. Overrides the
-			default HTML escaping setting for the current page.</description>
+                default HTML escaping setting for the current pages.</description>
 			<name>htmlEscape</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -433,7 +433,7 @@
 		</attribute>
 		<attribute>
 			<description>The scope for the var.  'application', 'session', 'request' and 
-			'page' scopes are supported.  Defaults to page scope.  This attribute has no 
+			'pages' scopes are supported.  Defaults to pages scope.  This attribute has no
 			effect unless the var attribute is also defined.</description>
 			<name>scope</name>
 			<required>false</required>
@@ -441,7 +441,7 @@
 		</attribute>
 		<attribute>
 			<description>Set HTML escaping for this tag, as a boolean value. Overrides the
-			default HTML escaping setting for the current page.</description>
+                default HTML escaping setting for the current pages.</description>
 			<name>htmlEscape</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

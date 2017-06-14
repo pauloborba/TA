@@ -1,3 +1,13 @@
+import cucumber.api.groovy.EN
+import cucumber.api.groovy.Hooks
+import pages.EnviarEmailAutoAvaliacao
+
+this.metaClass.mixin(Hooks)
+this.metaClass.mixin(EN)
+
+import pages.EnviarEmailComProblemasPage
+import pages.ShowTurmaPage
+import pages.TurmasPage
 import steps.AlunoTestDataAndOperations
 import steps.AvaliacaoTestDataAndOperations
 import steps.MetaTestDataAndOperations
@@ -5,12 +15,8 @@ import steps.ResultadoTestDataAndOperations
 import steps.TurmaTestDataAndOperations
 import steps.MatriculaTestDataAndOperations
 import ta.Avaliacao
-import ta.AvaliacaoController
-import ta.MatriculaController
+import ta.EnviarEmailController
 import ta.Meta
-import ta.ResultadoController
-import ta.TurmaController
-import ta.AlunoController
 import ta.Aluno
 import ta.Turma
 import ta.Matricula
@@ -20,8 +26,6 @@ import ta.Resultado
  * Created by Ricardo on 5/11/2017.
  */
 
-this.metaClass.mixin(cucumber.api.groovy.Hooks)
-this.metaClass.mixin(cucumber.api.groovy.EN)
 
 
 
@@ -29,11 +33,13 @@ Given(~'^que o sistema tem o aluno "([^"]*)" matriculado na turma "([^"]*)"$'){ 
         AlunoTestDataAndOperations.criarAluno(nomeAluno)
         Aluno aluno = AlunoTestDataAndOperations.getAluno(nomeAluno)
 
+        MatriculaTestDataAndOperations.criarMatricula(aluno)
+        Matricula matricula = MatriculaTestDataAndOperations.getMatricula(aluno)
+
         TurmaTestDataAndOperations.criarTurma(nomeTurma)
         Turma turma = TurmaTestDataAndOperations.getTurma(nomeTurma)
 
-        MatriculaTestDataAndOperations.criarMatricula(aluno, turma)
-        Matricula matricula = MatriculaTestDataAndOperations.getMatricula(aluno)
+        TurmaTestDataAndOperations.matricular(turma,matricula)
 
         assert turma.matriculas.contains(matricula)
 }
@@ -70,41 +76,86 @@ And(~'^o aluno "([^"]*)" tem conceito "([^"]*)" na meta "([^"]*)" e conceito "([
 }
 
 
-
-
-
-
-
 And(~'^o sistema tem o aluno "([^"]*)" matriculado na turma "([^"]*)"$'){
     String nomeAluno, String nomeTurma ->
-        assert nomeAluno != null
         AlunoTestDataAndOperations.criarAluno(nomeAluno)
         Aluno aluno = AlunoTestDataAndOperations.getAluno(nomeAluno)
 
-        TurmaTestDataAndOperations.criarTurma(nomeTurma)
-        Turma turma = TurmaTestDataAndOperations.getTurma(nomeAluno)
-
-        MatriculaTestDataAndOperations.criarMatricula(aluno, turma)
+        MatriculaTestDataAndOperations.criarMatricula(aluno)
         Matricula matricula = MatriculaTestDataAndOperations.getMatricula(aluno)
 
-        assert turma.matriculas.contains(matricula.aluno)
+        TurmaTestDataAndOperations.criarTurma(nomeTurma)
+        Turma turma = TurmaTestDataAndOperations.getTurma(nomeTurma)
+
+        TurmaTestDataAndOperations.matricular(turma,matricula)
+
+        assert turma.matriculas.contains(matricula)
 }
 
 
-
-
-
-
-
-
-When(~'^eu solicitar o envio de email para alunos com problemas$'){
-    EnviarEmail.enviarAlunosComProblemas()
+When(~'^eu solicitar o envio de email para alunos com problemas para a turma "([^"]*)"$'){
+    String nomeTurma ->
+        EnviarEmailController.enviarAlunosComProblemas(nomeTurma)
 }
 
-Then(~'^será enviado um email para os alunos "([^"]*)" e "([^"]*)", apenas$') {
-    String nomeAluno1, String nomeAluno2 ->
-        List alunos = EnviarEmail.enviarAlunosComProblemas()
+Then(~'^será enviado um email para os alunos "([^"]*)" e "([^"]*)" da turma "([^"]*)", apenas$') {
+    String nomeAluno1, String nomeAluno2, String nomeTurma->
+        List alunos = EnviarEmailController.enviarAlunosComProblemas(nomeTurma)
         assert alunos.size() == 2
         assert alunos.contains(Aluno.findByNome(nomeAluno1))
         assert alunos.contains(Aluno.findByNome(nomeAluno2))
+}
+
+
+When(~'^eu solicitar o envio de email de autoavaliação para a turma "([^"]*)"$'){
+    String nomeTurma ->
+        EnviarEmailController.enviarAutoavaliacao(nomeTurma)
+}
+
+Then(~'^será enviado um email com link de autoavaliação para os alunos email "([^"]*)", o aluno "([^"]*)" e o aluno "([^"]*)" da turma "([^"]*)"$') {
+    String nomeAluno1, String nomeAluno2, String nomeAluno3, String nomeTurma->
+        List alunos = EnviarEmailController.enviarAutoavaliacao(nomeTurma)
+        assert alunos.size() == 3
+        assert alunos.contains(Aluno.findByNome(nomeAluno1))
+        assert alunos.contains(Aluno.findByNome(nomeAluno2))
+        assert alunos.contains(Aluno.findByNome(nomeAluno3))
+}
+
+
+Given(~'^que eu estou na pagina de visualizar as turmas e tenho a turma "([^"]*)" cadastrada$'){
+    String nomeTurma ->
+        TurmaTestDataAndOperations.criarTurma(nomeTurma)
+        to TurmasPage
+        at TurmasPage
+
+}
+
+When(~/^eu seleciono a turma "([^"]*)"$/) {
+    String nomeTurma ->
+        at TurmasPage
+        page.selecionaTurma(nomeTurma)
+}
+
+And(~'^eu escolho enviar email para alunos com problemas na turma "([^"]*)"$') {
+    String nomeTurma ->
+        at ShowTurmaPage
+        page.selecionaEnviarEmailAlunosComProblemas()
+}
+
+Then(~'^eu vejo a lista dos alunos com problemas da turma "([^"]*)" que receberam os emails$') {
+    String ShowTurmaPage ->
+        at EnviarEmailComProblemasPage
+}
+
+Then(~'^eu vejo a lista dos alunos da turma "([^"]*)" que receberam os emails de autoavaliacao$') {
+    String ShowTurmaPage ->
+        at EnviarEmailAutoAvaliacao
+}
+
+
+
+And(~'^eu escolho enviar email de autoavaliacao para alunos da turma "([^"]*)"$') {
+    String nomeTurma ->
+        at ShowTurmaPage
+        page.selecionaEnviarEmailAutoAvaliacao()
 }

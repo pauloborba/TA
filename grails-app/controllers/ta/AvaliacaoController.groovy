@@ -8,7 +8,9 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class AvaliacaoController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [update: "PUT"]//, delete: "DELETE"]
+    // save: "POST" foi retirado porque dá problema com o cucumber, que
+    // provavelmente simula a chamada dessa ação como um GET
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -49,16 +51,25 @@ class AvaliacaoController {
     @Transactional
     def createAndSaveAvaliacao() {
         Avaliacao avaliacaoInstance = new Avaliacao(params)
+        if (avaliacaoInstance == null) {
+            notFound()
+            return
+        }
+
         if (avaliacaoInstance.hasErrors()) {
-            respond avaliacaoInstance.errors, view: 'create'
+            respond avaliacaoInstance.errors, view:'create'
             return
         }
-        if(!avaliacaoInstance.save(flush: true)){
-            render(view: "create", model: [classInstance: avaliacaoInstance])
-            return
+
+        avaliacaoInstance.save flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.created.message', args: [message(code: 'avaliacao.label', default: 'Avaliacao'), avaliacaoInstance.id])
+                redirect avaliacaoInstance
+            }
+            '*' { respond avaliacaoInstance, [status: CREATED] }
         }
-        flash.message = message(code: 'default.created.message', args: [message(code: 'avaliacao.label', default: 'Class'), avaliacaoInstance.nome])
-        redirect(action: "show", id: avaliacaoInstance.nome)
     }
 
     def edit(Avaliacao avaliacaoInstance) {
@@ -115,11 +126,6 @@ class AvaliacaoController {
             }
             '*'{ render status: NOT_FOUND }
         }
-    }
-
-    public Avaliacao getAvaliacao() {
-        def avaliacaoInstance = new Avaliacao(params)
-        return Avaliacao.findByNomeAndMatricula(avaliacaoInstance.nome,avaliacaoInstance.matricula)
     }
 
     public int count(){

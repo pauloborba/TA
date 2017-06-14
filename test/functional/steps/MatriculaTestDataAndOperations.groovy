@@ -10,9 +10,9 @@ import ta.Turma
  * Created by rrms on 13/06/2017.
  */
 class MatriculaTestDataAndOperations {
-    public static void criarMatricula(Aluno aluno, Turma turma){
+    public static void criarMatricula(Aluno aluno){
         def matriculaController = new MatriculaController()
-        matriculaController.params << [aluno: aluno, turma: turma]
+        matriculaController.params << [aluno: aluno]
         matriculaController.createAndSaveMatricula()
         matriculaController.response.reset()
     }

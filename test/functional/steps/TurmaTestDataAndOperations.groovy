@@ -1,5 +1,6 @@
 package steps
 
+import ta.Matricula
 import ta.Turma
 import ta.TurmaController
 
@@ -34,5 +35,10 @@ class TurmaTestDataAndOperations {
     public static int countTurma(){
         def turmaController = new TurmaController()
         return turmaController.onlyTurma()
+    }
+
+    public static void matricular(Turma turma, Matricula matricula){
+        def turmaController = new TurmaController()
+        turmaController.matricular(turma,matricula)
     }
 }

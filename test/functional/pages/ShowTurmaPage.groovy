@@ -7,16 +7,13 @@ package pages
 import geb.Page
 
 
-class TurmasPage extends Page{
-    static url = "turma"
+class ShowTurmaPage extends Page{
+    static url = "turma/show"
 
     static at = {
-        title ==~ /Create property List/
+        title ==~ /Show Turma/
     }
 
-    def selecionaTurma(String nomeTurma) {
-        $("a",text: nomeTurma).click()
-    }
 
     def boolean selecionaEnviarEmailAlunosComProblemas() {
         $("#enviarEmailAlunosComProblemas").click()

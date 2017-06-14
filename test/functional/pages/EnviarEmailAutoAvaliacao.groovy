@@ -7,8 +7,8 @@ package pages
 import geb.Page
 
 
-class EnviarEmailComProblemasPage extends Page{
-    static url = "turma/enviarEmailAlunosComProblemas"
+class EnviarEmailAutoAvaliacao extends Page{
+    static url = "turma/enviarEmailAutoAvaliacao"
 
     static at = {
         title ==~ /Enviar Email/

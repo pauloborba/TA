@@ -1,4 +1,4 @@
-package page
+package pages
 
 /**
  * Created by Ricardo on 6/13/2017.
@@ -11,18 +11,10 @@ class TurmasPage extends Page{
     static url = "turma"
 
     static at = {
-        title ==~ /TurmasPage/
+        title ==~ /Turma/
     }
 
     def selecionaTurma(String nomeTurma) {
-        $("a:contains('"+nomeTurma+"')").click()
-    }
-
-    def boolean selecionaEnviarEmailAlunosComProblemas() {
-        $("#enviarEmailAlunosComProblemas").click()
-    }
-
-    def boolean selecionaEnviarEmailAutoAvaliacao() {
-        $("#enviarEmailAutoAvaliacao").click()
+        $("a",text: nomeTurma).click()
     }
 }

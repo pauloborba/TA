@@ -1,14 +1,14 @@
 package ta
 
-
-
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class TurmaController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [update: "PUT"]//, delete: "DELETE"]
+    // save: "POST" foi retirado porque dá problema com o cucumber, que
+    // provavelmente simula a chamada dessa ação como um GET
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -49,23 +49,39 @@ class TurmaController {
     @Transactional
     def createAndSaveTurma() {
         Turma turmaInstance = new Turma(params)
-        if (Turma.findByNome(turmaInstance.nome) == null) {
-            if (turmaInstance.hasErrors()) {
-                respond turmaInstance.errors, view: 'create'
-                return
+        if (turmaInstance == null) {
+            notFound()
+            return
+        }
+
+        if (turmaInstance.hasErrors()) {
+            respond turmaInstance.errors, view:'create'
+            return
+        }
+
+        turmaInstance.save flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.created.message', args: [message(code: 'turma.label', default: 'Turma'), turmaInstance.id])
+                redirect turmaInstance
             }
-            if(!turmaInstance.save(flush: true)){
-                render(view: "create", model: [classInstance: turmaInstance])
-                return
-            }
-            flash.message = message(code: 'default.created.message', args: [message(code: 'turma.label', default: 'Class'), turmaInstance.nome])
-            redirect(action: "show", id: turmaInstance.nome)
+            '*' { respond turmaInstance, [status: CREATED] }
         }
     }
 
     def edit(Turma turmaInstance) {
         respond turmaInstance
     }
+
+    def enviarEmailAlunosComProblemas(){
+        respond model:[alunos: EnviarEmailController.enviarAlunosComProblemas("")]
+    }
+
+    def enviarEmailAutoAvaliacao(){
+        respond model:[alunos: EnviarEmailController.enviarAutoavaliacao("")]
+    }
+
 
     @Transactional
     def update(Turma turmaInstance) {
@@ -122,5 +138,11 @@ class TurmaController {
     public Turma getTurma() {
         //def alunoInstance = new Aluno(params)
         return Turma.findByNome(params.nome)
+    }
+
+    public void matricular(Turma turma, Matricula matricula) {
+        Turma turmaAux = Turma.findById(turma.id)
+        turmaAux.matriculas.add(matricula)
+        turmaAux.save()
     }
 }

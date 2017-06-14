@@ -5,10 +5,12 @@ import org.springframework.transaction.annotation.Propagation
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
-//@Transactional(readOnly = true)
+@Transactional(readOnly = true)
 class AlunoController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [update: "PUT"]//, delete: "DELETE"]
+    // save: "POST" foi retirado porque dá problema com o cucumber, que
+    // provavelmente simula a chamada dessa ação como um GET
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -46,20 +48,27 @@ class AlunoController {
         }
     }
 
-    //@Transactional(propagation=Propagation.NEVER)
+    @Transactional
     def createAndSaveAluno() {
         Aluno alunoInstance = new Aluno(params)
-        if (Aluno.findByNome(params.nome) == null) {
-            if (alunoInstance.hasErrors()) {
-                respond alunoInstance.errors, view: 'create'
-                return
+        if (alunoInstance == null) {
+            notFound()
+            return
+        }
+
+        if (alunoInstance.hasErrors()) {
+            respond alunoInstance.errors, view:'create'
+            return
+        }
+
+        alunoInstance.save flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.created.message', args: [message(code: 'aluno.label', default: 'Aluno'), alunoInstance.id])
+                redirect alunoInstance
             }
-            if(!alunoInstance.save(flush: true)){
-                render(view: "create", model: [classInstance: alunoInstance])
-                return
-            }
-            flash.message = message(code: 'default.created.message', args: [message(code: 'aluno.label', default: 'Class'), alunoInstance.nome])
-            redirect(action: "show", id: alunoInstance.nome)
+            '*' { respond alunoInstance, [status: CREATED] }
         }
     }
 

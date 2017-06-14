@@ -3,6 +3,7 @@ package steps
 import ta.Avaliacao
 import ta.AvaliacaoController
 import ta.Matricula
+import ta.MatriculaController
 import ta.ResultadoController
 
 /**
@@ -10,16 +11,12 @@ import ta.ResultadoController
  */
 class AvaliacaoTestDataAndOperations {
     public static void criarAvaliacao(String nomeAvaliacao, Matricula matricula){
-        def avaliacaoController = new AvaliacaoController()
-        avaliacaoController.params << [nome: nomeAvaliacao, matricula:matricula]
-        avaliacaoController.createAndSaveAvaliacao()
-        avaliacaoController.response.reset()
+        def matriculaController = new MatriculaController()
+        matriculaController.cadastrarAvaliacao(matricula, nomeAvaliacao)
     }
 
     public static Avaliacao getAvaliacao(String nomeAvaliacao, Matricula matricula) {
-        def controller = new AvaliacaoController()
-        controller.params << [nome: nomeAvaliacao,matricula:matricula]
-        return controller.getAvaliacao()
+        return matricula.avaliacoes.find{((Avaliacao)it).nome == nomeAvaliacao}
     }
 
     public static boolean compatibleTo(String nome, Avaliacao avaliacao) {

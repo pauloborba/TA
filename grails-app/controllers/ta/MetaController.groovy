@@ -8,7 +8,9 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class MetaController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [update: "PUT"]//, delete: "DELETE"]
+    // save: "POST" foi retirado porque dá problema com o cucumber, que
+    // provavelmente simula a chamada dessa ação como um GET
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -50,17 +52,24 @@ class MetaController {
     @Transactional
     def createAndSaveMeta() {
         Meta metaInstance = new Meta(params)
-        if (Meta.findByNome(metaInstance.nome) == null) {
-            if (metaInstance.hasErrors()) {
-                respond metaInstance.errors, view: 'create'
-                return
+        if (metaInstance == null) {
+            notFound()
+            return
+        }
+
+        if (metaInstance.hasErrors()) {
+            respond metaInstance.errors, view:'create'
+            return
+        }
+
+        metaInstance.save flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.created.message', args: [message(code: 'meta.label', default: 'Meta'), metaInstance.id])
+                redirect metaInstance
             }
-            if(!metaInstance.save(flush: true)){
-                render(view: "create", model: [classInstance: metaInstance])
-                return
-            }
-            flash.message = message(code: 'default.created.message', args: [message(code: 'resultado.label', default: 'Class'), metaInstance.nome])
-            redirect(action: "show", id: metaInstance.nome)
+            '*' { respond metaInstance, [status: CREATED] }
         }
     }
 
