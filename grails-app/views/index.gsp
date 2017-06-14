@@ -11,9 +11,9 @@
 				padding: 1em;
 				width: 12em;
 				float: left;
-				-moz-box-shadow: 0 0 1.25em #ccc;
-				-webkit-box-shadow: 0 0 1.25em #ccc;
-				box-shadow: 0 0 1.25em #ccc;
+				-moz-box-shadow: 0px 0px 1.25em #ccc;
+				-webkit-box-shadow: 0px 0px 1.25em #ccc;
+				box-shadow: 0px 0px 1.25em #ccc;
 				-moz-border-radius: 0.6em;
 				-webkit-border-radius: 0.6em;
 				border-radius: 0.6em;
@@ -41,7 +41,7 @@
 			}
 
 			#page-body {
-				margin: 2em 1em 1.25em 18em;
+				/*margin: 2em 1em 1.25em 18em;*/
 			}
 
 			h2 {
@@ -78,47 +78,53 @@
 					margin-top: 0;
 				}
 			}
+			li.controller{
+				display: block;
+				text-align: center;
+				text-transform: uppercase;
+				border-style: solid;
+				border-color: transparent;
+			}
+
 		</style>
 	</head>
 	<body>
 		<a href="#page-body" class="skip"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div id="status" role="complementary">
-			<h1>Application Status</h1>
-			<ul>
-				<li>App version: <g:meta name="app.version"/></li>
-				<li>Grails version: <g:meta name="app.grails.version"/></li>
-				<li>Groovy version: ${GroovySystem.getVersion()}</li>
-				<li>JVM version: ${System.getProperty('java.version')}</li>
-				<li>Reloading active: ${grails.util.Environment.reloadingAgentEnabled}</li>
-				<li>Controllers: ${grailsApplication.controllerClasses.size()}</li>
-				<li>Domains: ${grailsApplication.domainClasses.size()}</li>
-				<li>Services: ${grailsApplication.serviceClasses.size()}</li>
-				<li>Tag Libraries: ${grailsApplication.tagLibClasses.size()}</li>
-			</ul>
-			<h1>Installed Plugins</h1>
-			<ul>
-				<g:each var="plugin" in="${applicationContext.getBean('pluginManager').allPlugins}">
-					<li>${plugin.name} - ${plugin.version}</li>
-				</g:each>
-			</ul>
-		</div>
+		%{--<div id="status" role="complementary">--}%
+			%{--<h1>Application Status</h1>--}%
+			%{--<ul>--}%
+				%{--<li>App version: <g:meta name="app.version"/></li>--}%
+				%{--<li>Grails version: <g:meta name="app.grails.version"/></li>--}%
+				%{--<li>Groovy version: ${GroovySystem.getVersion()}</li>--}%
+				%{--<li>JVM version: ${System.getProperty('java.version')}</li>--}%
+				%{--<li>Reloading active: ${grails.util.Environment.reloadingAgentEnabled}</li>--}%
+				%{--<li>Controllers: ${grailsApplication.controllerClasses.size()}</li>--}%
+				%{--<li>Domains: ${grailsApplication.domainClasses.size()}</li>--}%
+				%{--<li>Services: ${grailsApplication.serviceClasses.size()}</li>--}%
+				%{--<li>Tag Libraries: ${grailsApplication.tagLibClasses.size()}</li>--}%
+			%{--</ul>--}%
+			%{--<h1>Installed Plugins</h1>--}%
+			%{--<ul>--}%
+				%{--<g:each var="plugin" in="${applicationContext.getBean('pluginManager').allPlugins}">--}%
+					%{--<li>${plugin.name} - ${plugin.version}</li>--}%
+				%{--</g:each>--}%
+			%{--</ul>--}%
+		%{--</div>--}%
 		<div id="page-body" role="main">
-			<h1>Welcome to Grails</h1>
-			<p>Congratulations, you have successfully started your first Grails application! At the moment
-			   this is the default page, feel free to modify it to either redirect to a controller or display whatever
-			   content you may choose. Below is a list of controllers that are currently deployed in this application,
-			   click on each to execute its default action:</p>
 
 			<div id="controller-list" role="navigation">
-				<h2>Available Controllers:</h2>
-				<ul>
+				<ul class="controllers">
 					<g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
-						<g:if test="${c.fullName!='ta.EvaluationsByCriterionController'}">
-							<li class="controller"><g:link controller="${c.logicalPropertyName}">${c.fullName}</g:link></li>
-						</g:if>
+						<li class="controller <% if(c.name == 'AutoAvaliacao' || c.name == 'Turma') print 'checkthisout' %>"><g:link controller="${c.logicalPropertyName}">${c.name}</g:link></li>
 					</g:each>
 				</ul>
 			</div>
+
+		<div style="margin: 1em 0">
+			<p>AutoAvaliação (seleciona aluno/auto avaliação [botão enviar link não faz nada])</p>
+			<p>Clonar Metas (Turma/seleciona uma/clonar metas)</p>
+		</div>
+
 		</div>
 	</body>
 </html>
