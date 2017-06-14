@@ -82,6 +82,8 @@
 				display: block;
 				text-align: center;
 				text-transform: uppercase;
+				border-style: solid;
+				border-color: transparent;
 			}
 
 		</style>
@@ -113,10 +115,16 @@
 			<div id="controller-list" role="navigation">
 				<ul class="controllers">
 					<g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
-						<li class="controller"><g:link controller="${c.logicalPropertyName}">${c.name}</g:link></li>
+						<li class="controller <% if(c.name == 'AutoAvaliacao' || c.name == 'Turma') print 'checkthisout' %>"><g:link controller="${c.logicalPropertyName}">${c.name}</g:link></li>
 					</g:each>
 				</ul>
 			</div>
+
+		<div style="margin: 1em 0">
+			<p>AutoAvaliação (seleciona aluno/auto avaliação [botão enviar link não faz nada])</p>
+			<p>Clonar Metas (Turma/seleciona uma/clonar metas)</p>
+		</div>
+
 		</div>
 	</body>
 </html>

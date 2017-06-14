@@ -115,3 +115,17 @@ select{
 h1, h2, h3, h4, h5{
     font-weight: 200;
 }
+
+.checkthisout{
+    border-style: solid;
+    border-color: transparent;
+    border-width: .2em;
+    animation: checkout .4s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(0.4, 0, 1, 1);
+}
+@keyframes checkout {
+    from{border-color: transparent}
+    to{border-color: #AA0E0E}
+}
