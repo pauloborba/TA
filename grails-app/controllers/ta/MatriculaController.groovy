@@ -8,9 +8,46 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class MatriculaController {
 
-    static allowedMethods = [update: "PUT"]//, delete: "DELETE"]
-    // save: "POST" foi retirado porque dá problema com o cucumber, que
-    // provavelmente simula a chamada dessa ação como um GET
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+
+    Matricula getMatricula() {
+        def matriculaInstance = new Matricula(params)
+        return Matricula.findById(matriculaInstance.id)
+    }
+
+    /*String checkMedia() {
+        def matriculaInstance = new Matricula(params)
+        return Matricula.findByAluno(matriculaInstance.aluno)
+    }*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -48,52 +85,19 @@ class MatriculaController {
         }
     }
 
-    @Transactional
-    def createAndSaveMatricula() {
+    def createAndSave() {
         Matricula matriculaInstance = new Matricula(params)
-        if (matriculaInstance == null) {
-            notFound()
-            return
-        }
-
-        if (matriculaInstance.hasErrors()) {
-            respond matriculaInstance.errors, view:'create'
-            return
-        }
-
-        matriculaInstance.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'matricula.label', default: 'Matricula'), matriculaInstance.id])
-                redirect matriculaInstance
+        if (Matricula.findById(matriculaInstance.id) == null) {
+            if (matriculaInstance.hasErrors()) {
+                respond matriculaInstance.errors, view: 'create'
+                return
             }
-            '*' { respond matriculaInstance, [status: CREATED] }
-        }
-    }
-
-    @Transactional
-    def updateMatricula() {
-        Matricula matriculaInstance = new Matricula(params)
-
-        if (matriculaInstance == null) {
-            notFound()
-            return
-        }
-
-        if (matriculaInstance.hasErrors()) {
-            respond matriculaInstance.errors, view:'edit'
-            return
-        }
-
-        matriculaInstance.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Matricula.label', default: 'Matricula'), matriculaInstance.id])
-                redirect matriculaInstance
+            if(!matriculaInstance.save(flush: true)){
+                render(view: "create", model: [matriculaInstance: matriculaInstance])
+                return
             }
-            '*'{ respond matriculaInstance, [status: OK] }
+            flash.message = message(code: 'default.created.message', args: [message(code: 'matricula.label', default: 'Matricula'), matriculaInstance.id])
+            redirect(action: "show", id: matriculaInstance.id)
         }
     }
 
@@ -151,19 +155,5 @@ class MatriculaController {
             }
             '*'{ render status: NOT_FOUND }
         }
-    }
-
-    public Matricula getMatricula() {
-        //def alunoInstance = new Aluno(params)
-        return Matricula.findByAluno(params.aluno)
-    }
-
-    public int count(){
-        return Matricula.all.size()
-    }
-
-    public void cadastrarAvaliacao(Matricula matricula,String nomeAvaliacao){
-        matricula.avaliacoes.add(new Avaliacao(nome: nomeAvaliacao))
-        matricula.save()
     }
 }

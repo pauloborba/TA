@@ -32,6 +32,24 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${matriculaInstance?.media}">
+				<li class="fieldcontain">
+					<span id="media-label" class="property-label"><g:message code="matricula.media.label" default="Media" /></span>
+					
+						<span class="property-value" aria-labelledby="media-label"><g:fieldValue bean="${matriculaInstance}" field="media"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${matriculaInstance?.aprovacao}">
+				<li class="fieldcontain">
+					<span id="aprovacao-label" class="property-label"><g:message code="matricula.aprovacao.label" default="Aprovacao" /></span>
+					
+						<span class="property-value" aria-labelledby="aprovacao-label"><g:fieldValue bean="${matriculaInstance}" field="aprovacao"/></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${matriculaInstance?.avaliacoes}">
 				<li class="fieldcontain">
 					<span id="avaliacoes-label" class="property-label"><g:message code="matricula.avaliacoes.label" default="Avaliacoes" /></span>

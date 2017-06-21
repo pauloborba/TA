@@ -8,9 +8,7 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class ResultadoController {
 
-    static allowedMethods = [update: "PUT"]//, delete: "DELETE"]
-    // save: "POST" foi retirado porque dá problema com o cucumber, que
-    // provavelmente simula a chamada dessa ação como um GET
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -27,31 +25,6 @@ class ResultadoController {
 
     @Transactional
     def save(Resultado resultadoInstance) {
-        if (resultadoInstance == null) {
-            notFound()
-            return
-        }
-
-        if (resultadoInstance.hasErrors()) {
-            respond resultadoInstance.errors, view:'create'
-            return
-        }
-
-        resultadoInstance.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'resultado.label', default: 'Resultado'), resultadoInstance.id])
-                redirect resultadoInstance
-            }
-            '*' { respond resultadoInstance, [status: CREATED] }
-        }
-    }
-
-
-    @Transactional
-    def createAndSaveResultado() {
-        Resultado resultadoInstance = new Resultado(params)
         if (resultadoInstance == null) {
             notFound()
             return
@@ -127,20 +100,5 @@ class ResultadoController {
             }
             '*'{ render status: NOT_FOUND }
         }
-    }
-
-    public static boolean onlyResultado(String nome){
-        def resultadoController = new ResultadoController()
-        resultadoController.params << [nome: nome]
-        return resultadoController.onlyResultado()
-    }
-
-    public static int count(){
-        return Resultado.all.size()
-    }
-
-    public Resultado getResultado() {
-        def resultadoInstance = new Resultado(params)
-        return Resultado.findByMetaAndAvaliacao(resultadoInstance.meta,resultadoInstance.avaliacao)
     }
 }

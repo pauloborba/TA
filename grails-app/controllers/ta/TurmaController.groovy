@@ -6,9 +6,111 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class TurmaController {
 
-    static allowedMethods = [update: "PUT"]//, delete: "DELETE"]
-    // save: "POST" foi retirado porque dá problema com o cucumber, que
-    // provavelmente simula a chamada dessa ação como um GET
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+
+    //inicio de testes
+
+    Turma getTurma() {
+        def turmaInstance = new Turma(params)
+        return Turma.findByNome(turmaInstance.nome)
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*boolean checkAluno(Turma t, Matricula m){
+        for(int i = 0; i < t.matriculas.size(); i++){
+            if (t.matriculas[i] == m){
+                return true
+            }
+        }
+        return false
+    }
+
+    def calcularMedia(){
+        for(int i=0; i < matriculas.size(); i++){
+            mediaGeral = mediaGeral + matriculas[i].media
+        }
+        totalTurma = matriculas.size()
+        mediaGeral = mediaGera.div(totalTurma)
+    }
+
+    def contAM(){
+        for(int i = 0; i < matriculas.size(); i++){
+            if (matriculas[i].aprovacao == "AP"){
+                numAM = numAM + 1
+            }
+        }
+        totalTurma = matriculas.size()
+        numAM = (numAM * 100) / totalTurma
+    }
+
+    def contA(){
+        for(int i = 0; i < matriculas.size(); i++){
+            if (matriculas[i].aprovacao == "A"){
+                numA = numA + 1
+            }
+        }
+        totalTurma = matriculas.size()
+        numA = (numA * 100) / totalTurma
+    }
+
+    // fim de testes*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -27,8 +129,8 @@ class TurmaController {
     def save(Turma turmaInstance) {
         if (turmaInstance == null) {
             notFound()
-            return
         }
+            return
 
         if (turmaInstance.hasErrors()) {
             respond turmaInstance.errors, view:'create'
@@ -46,42 +148,26 @@ class TurmaController {
         }
     }
 
-    @Transactional
-    def createAndSaveTurma() {
+    def createAndSave() {
         Turma turmaInstance = new Turma(params)
-        if (turmaInstance == null) {
-            notFound()
-            return
-        }
-
-        if (turmaInstance.hasErrors()) {
-            respond turmaInstance.errors, view:'create'
-            return
-        }
-
-        turmaInstance.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'turma.label', default: 'Turma'), turmaInstance.id])
-                redirect turmaInstance
+        if (Turma.findByNome(turmaInstance.nome) == null) {
+            if (turmaInstance.hasErrors()) {
+                respond turmaInstance.errors, view: 'create'
+                return
             }
-            '*' { respond turmaInstance, [status: CREATED] }
+            if(!turmaInstance.save(flush: true)){
+                render(view: "create", model: [turmaInstance: turmaInstance])
+                return
+            }
+            flash.message = message(code: 'default.created.message', args: [message(code: 'turma.label', default: 'Turma'), turmaInstance.id])
+            redirect(action: "show", id: turmaInstance.id)
         }
     }
+
 
     def edit(Turma turmaInstance) {
         respond turmaInstance
     }
-
-    def enviarEmailAlunosComProblemas(){
-        respond model:[alunos: EnviarEmailController.enviarAlunosComProblemas("")]
-    }
-
-    def enviarEmailAutoAvaliacao(){
-        respond model:[alunos: EnviarEmailController.enviarAutoavaliacao("")]
-    }
-
 
     @Transactional
     def update(Turma turmaInstance) {
@@ -133,16 +219,5 @@ class TurmaController {
             }
             '*'{ render status: NOT_FOUND }
         }
-    }
-
-    public Turma getTurma() {
-        //def alunoInstance = new Aluno(params)
-        return Turma.findByNome(params.nome)
-    }
-
-    public void matricular(Turma turma, Matricula matricula) {
-        Turma turmaAux = Turma.findById(turma.id)
-        turmaAux.matriculas.add(matricula)
-        turmaAux.save()
     }
 }

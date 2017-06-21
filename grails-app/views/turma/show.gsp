@@ -5,7 +5,7 @@
 	<head>
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'turma.label', default: 'Turma')}" />
-		<title>Show Turma</title>
+		<title><g:message code="default.show.label" args="[entityName]" /></title>
 	</head>
 	<body>
 		<a href="#show-turma" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
@@ -59,9 +59,6 @@
 				<fieldset class="buttons">
 					<g:link class="edit" action="edit" resource="${turmaInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
 					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-					<g:link elementId="enviarEmailAlunosComProblemas" action="enviarEmailAlunosComProblemas" resource="${turmaInstance}">Envia email para alunos com problemas</g:link>
-					<g:link elementId="enviarEmailAutoAvaliacao" action="enviarEmailAutoAvaliacao" resource="${turmaInstance}">Envia email para autoavaliação</g:link>
-
 				</fieldset>
 			</g:form>
 		</div>

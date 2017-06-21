@@ -8,9 +8,7 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class AvaliacaoController {
 
-    static allowedMethods = [update: "PUT"]//, delete: "DELETE"]
-    // save: "POST" foi retirado porque dá problema com o cucumber, que
-    // provavelmente simula a chamada dessa ação como um GET
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -27,30 +25,6 @@ class AvaliacaoController {
 
     @Transactional
     def save(Avaliacao avaliacaoInstance) {
-        if (avaliacaoInstance == null) {
-            notFound()
-            return
-        }
-
-        if (avaliacaoInstance.hasErrors()) {
-            respond avaliacaoInstance.errors, view:'create'
-            return
-        }
-
-        avaliacaoInstance.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'avaliacao.label', default: 'Avaliacao'), avaliacaoInstance.id])
-                redirect avaliacaoInstance
-            }
-            '*' { respond avaliacaoInstance, [status: CREATED] }
-        }
-    }
-
-    @Transactional
-    def createAndSaveAvaliacao() {
-        Avaliacao avaliacaoInstance = new Avaliacao(params)
         if (avaliacaoInstance == null) {
             notFound()
             return
@@ -127,9 +101,4 @@ class AvaliacaoController {
             '*'{ render status: NOT_FOUND }
         }
     }
-
-    public int count(){
-        return Avaliacao.all.size()
-    }
 }
-

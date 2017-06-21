@@ -1,6 +1,6 @@
 package ta
 
-import org.springframework.transaction.annotation.Propagation
+
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
@@ -8,11 +8,57 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class AlunoController {
 
-    static allowedMethods = [update: "PUT"]//, delete: "DELETE"]
-    // save: "POST" foi retirado porque dá problema com o cucumber, que
-    // provavelmente simula a chamada dessa ação como um GET
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
+
+    Aluno getAluno(){
+        def alunoInstance = new Aluno(params)
+        return Aluno.findByNome(alunoInstance.nome)
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Aluno.list(params), model:[alunoInstanceCount: Aluno.count()]
     }
@@ -48,27 +94,19 @@ class AlunoController {
         }
     }
 
-    @Transactional
-    def createAndSaveAluno() {
+    def createAndSave() {
         Aluno alunoInstance = new Aluno(params)
-        if (alunoInstance == null) {
-            notFound()
-            return
-        }
-
-        if (alunoInstance.hasErrors()) {
-            respond alunoInstance.errors, view:'create'
-            return
-        }
-
-        alunoInstance.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'aluno.label', default: 'Aluno'), alunoInstance.id])
-                redirect alunoInstance
+        if (Aluno.findByNome(alunoInstance.nome) == null) {
+            if (alunoInstance.hasErrors()) {
+                respond alunoInstance.errors, view: 'create'
+                return
             }
-            '*' { respond alunoInstance, [status: CREATED] }
+            if(!alunoInstance.save(flush: true)){
+                render(view: "create", model: [alunoInstance: alunoInstance])
+                return
+            }
+            flash.message = message(code: 'default.created.message', args: [message(code: 'aluno.label', default: 'Aluno'), alunoInstance.id])
+            redirect(action: "show", id: alunoInstance.id)
         }
     }
 
@@ -126,14 +164,5 @@ class AlunoController {
             }
             '*'{ render status: NOT_FOUND }
         }
-    }
-
-    public Aluno getAluno() {
-        //def alunoInstance = new Aluno(params)
-        return Aluno.findByNome(params.nome)
-    }
-
-    public int count(){
-        return Aluno.all.size()
     }
 }
